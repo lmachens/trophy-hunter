@@ -1,42 +1,18 @@
 import { NextPage } from 'next';
 import gql from 'graphql-tag';
 import Form from '../auth/login';
+import { useAuth } from '../auth/context';
 
-interface Props {
-  me: any;
-}
+const Index: NextPage = () => {
+  const { user, logout } = useAuth();
 
-const Index: NextPage<Props> = ({ me }) => (
-  <main>
-    Hello: {me?.name}
-    {!me && <Form />}
-    {me && (
-      <button
-        onClick={async () => {
-          await fetch('/api/logout', { method: 'POST' });
-          document.cookie = 'jwt=;Max-Age=0;';
-        }}
-      >
-        Logout
-      </button>
-    )}
-  </main>
-);
-
-Index.getInitialProps = async ({ apolloClient }) => {
-  const result = await apolloClient.query({
-    query: gql`
-      {
-        me {
-          name
-          token
-        }
-      }
-    `
-  });
-  const { me } = result.data;
-
-  return { me };
+  return (
+    <main>
+      <p>User: {user ? user.name : 'Not logged in'}</p>
+      {!user && <Form />}
+      {user && <button onClick={logout}>Logout</button>}
+    </main>
+  );
 };
 
 export default Index;

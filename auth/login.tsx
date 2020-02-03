@@ -1,40 +1,15 @@
 import { useState } from 'react';
-
-const url = '/api/login';
+import { useAuth } from './context';
 
 const Form = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useAuth();
 
   const submitForm = event => {
     event.preventDefault();
 
-    const options = {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      },
-      body: `email=${email}&password=${password}`
-    };
-
-    fetch(url, options)
-      .then(response => {
-        if (!response.ok) {
-          if (response.status === 404) {
-            alert('Email not found, please retry');
-          }
-          if (response.status === 401) {
-            alert('Email and password do not match, please retry');
-          }
-        }
-        return response;
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          document.cookie = 'jwt=' + data.token;
-        }
-      });
+    login(email, password);
   };
 
   return (

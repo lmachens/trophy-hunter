@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getApolloClient } from '../../graphql/client';
+import { queryUser } from '../../users/queries';
 
 const SECRET_KEY = 'secret!';
 const theUser = { id: 1, email: 'leon.machens@gmail.com', password: '123' };
@@ -29,8 +31,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const token = jwt.sign({ email: theUser.email, id: theUser.id }, SECRET_KEY);
 
-  res.send({
-    success: true,
-    token: token
-  });
+  const apolloClient = getApolloClient(req);
+  // ToDo: Update my token
+  const user = await queryUser(apolloClient);
+  res.send({ ...user, token });
 };

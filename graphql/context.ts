@@ -1,10 +1,8 @@
 import { NextApiRequest } from 'next';
-import cookies from 'next-cookies';
+import { getAuthToken } from '../auth/cookie';
 
 export function handleContext(ctx: { req: NextApiRequest }) {
-  const allCookies = cookies(ctx || {});
-
-  const token = allCookies.jwt || '';
+  const token = getAuthToken(ctx);
 
   // try to retrieve a user with the token
   const user = token ? { name: 'Leon', token } : null; //getUser(token);

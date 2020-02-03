@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getAuthToken } from '../../auth/cookie';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     return res.status(404).end();
   }
 
-  const { token } = req.body;
+  const token = getAuthToken({ req });
 
-  res.send({
-    success: true
-  });
+  console.log('logout', token);
+  res.end();
 };

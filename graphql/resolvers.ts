@@ -1,11 +1,15 @@
+import { getUsersCollection } from '../users/collection';
+
 export const resolvers = {
   Query: {
-    me(parent, args, context, info) {
-      console.log('_context', context);
-      return context.user;
+    async me(_parent, _args, context) {
+      const Users = await getUsersCollection();
+      const user = Users.findOne({ authToken: context.authToken });
+      return user;
     },
-    user() {
-      return { name: 'Test' };
+    user(_parent, args) {
+      console.log(args);
+      return { email: 'Test' };
     }
   }
 };

@@ -4,7 +4,7 @@ import { useAuth } from './context';
 const Form = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const { login, register } = useAuth();
 
   const submitForm = event => {
     event.preventDefault();
@@ -27,7 +27,15 @@ const Form = () => {
           />
         </p>
         <p>
-          <button type="submit">Login</button>
+          <button disabled={!email || !password} type="submit">
+            Login
+          </button>
+          <button
+            disabled={!email || !password}
+            onClick={() => register(email, password)}
+          >
+            Register
+          </button>
         </p>
       </form>
     </div>

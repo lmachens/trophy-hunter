@@ -5,7 +5,7 @@ export async function queryUser(apolloClient) {
     query: gql`
       {
         user {
-          name
+          email
         }
       }
     `

@@ -5,8 +5,8 @@ export async function queryMe(apolloClient) {
     query: gql`
       {
         me {
-          name
-          token
+          email
+          authToken
         }
       }
     `

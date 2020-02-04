@@ -5,6 +5,7 @@ const AuthContext = createContext(null);
 
 const LOGIN_URL = '/api/login';
 const LOGOUT_URL = '/api/logout';
+const REGISTER_URL = '/api/register';
 
 interface AuthProviderProps {
   initialUser: any;
@@ -20,23 +21,27 @@ export const AuthProvider: FC<AuthProviderProps> = ({
     const options: RequestInit = {
       method: 'POST',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        'Content-type': 'application/json'
       },
-      body: `email=${email}&password=${password}`
+      body: JSON.stringify({ email, password })
     };
-    const response = await fetch(LOGIN_URL, options);
+    try {
+      const response = await fetch(LOGIN_URL, options);
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        alert('Email not found, please retry');
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('Email not found, please retry');
+        }
+        if (response.status === 401) {
+          throw new Error('Email and password do not match, please retry');
+        }
       }
-      if (response.status === 401) {
-        alert('Email and password do not match, please retry');
-      }
+      const user = await response.json();
+      setAuthToken(user.authToken);
+      setUser(user);
+    } catch (error) {
+      console.error(error);
     }
-    const user = await response.json();
-    setAuthToken(user.token);
-    setUser(user);
   }
 
   async function logout() {
@@ -45,13 +50,35 @@ export const AuthProvider: FC<AuthProviderProps> = ({
     setUser(null);
   }
 
+  async function register(email, password) {
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    };
+    try {
+      const response = await fetch(REGISTER_URL, options);
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const user = await response.json();
+      setAuthToken(user.authToken);
+      setUser(user);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const value = {
     user,
     login,
-    logout
+    logout,
+    register
   };
 
-  console.log('refresh', user);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

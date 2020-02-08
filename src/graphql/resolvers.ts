@@ -21,10 +21,6 @@ export const resolvers = {
         }
       );
       return user.value;
-    },
-    user(_parent, args) {
-      console.log(args);
-      return { email: 'Test' };
     }
   }
 };

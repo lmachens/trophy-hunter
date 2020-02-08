@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getApolloClient } from '../../graphql/client';
-import { queryUser } from '../../users/queries';
-import { getUsersCollection } from '../../users/collection';
+import { getUsersCollection, calculateExpireAt } from '../../users/collection';
 import { hashPassword } from '../../utils/crypto';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -22,10 +20,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const hashedPassword = hashPassword(password);
 
   const authToken = jwt.sign({ email }, process.env.JWT_SECRET);
+  const expiresAt = calculateExpireAt();
+  await Users.insertOne({
+    email,
+    authTokens: [{ token: authToken, expiresAt }],
+    hashedPassword
+  });
 
-  await Users.insertOne({ email, authToken, hashedPassword });
-
-  const apolloClient = getApolloClient(req);
-  const loggedInUser = await queryUser(apolloClient);
-  res.json({ ...loggedInUser, authToken });
+  res.json({ authToken });
 };

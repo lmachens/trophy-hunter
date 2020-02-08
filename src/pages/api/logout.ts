@@ -10,7 +10,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const authToken = getAuthToken({ req });
 
   const Users = await getUsersCollection();
-  await Users.updateOne({ authToken }, { $unset: { authToken: '' } });
+  await Users.updateOne(
+    { authToken },
+    { $pull: { authTokens: { token: authToken } } }
+  );
 
   res.end();
 };

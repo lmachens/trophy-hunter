@@ -25,7 +25,8 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
 
   if (authToken) {
-    appProps.pageProps.me = await queryMe(apolloClient);
+    const me = await queryMe(apolloClient);
+    appProps.pageProps.me = me;
   }
 
   return { ...appProps };

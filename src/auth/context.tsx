@@ -1,5 +1,7 @@
-import { createContext, useContext, useState, FC } from 'react';
+import { createContext, useContext, useState, FC, useEffect } from 'react';
 import { setAuthToken, clearAuthToken } from './cookie';
+import { queryMe } from './queries';
+import { useApolloClient } from '@apollo/react-hooks';
 
 const AuthContext = createContext(null);
 
@@ -16,6 +18,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({
   initialUser
 }) => {
   const [user, setUser] = useState(initialUser);
+  const apolloClient = useApolloClient();
+
+  useEffect(() => {
+    if (!initialUser) {
+      clearAuthToken();
+    }
+  }, [initialUser]);
 
   async function login(email, password) {
     const options: RequestInit = {
@@ -36,8 +45,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({
           throw new Error('Email and password do not match, please retry');
         }
       }
-      const user = await response.json();
-      setAuthToken(user.authToken);
+      const { authToken } = await response.json();
+      setAuthToken(authToken);
+      const user = await queryMe(apolloClient);
       setUser(user);
     } catch (error) {
       console.error(error);
@@ -64,8 +74,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({
         throw new Error(response.statusText);
       }
 
-      const user = await response.json();
-      setAuthToken(user.authToken);
+      const { authToken } = await response.json();
+      setAuthToken(authToken);
+      const user = await queryMe(apolloClient);
       setUser(user);
     } catch (error) {
       console.error(error);

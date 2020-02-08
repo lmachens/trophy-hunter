@@ -10,7 +10,8 @@ export const resolvers = {
           authTokens: {
             $elemMatch: {
               token: context.authToken,
-              expiresAt: { $gt: Date.now() }
+              expiresAt: { $gt: Date.now() },
+              verifyToken: { $exists: false }
             }
           }
         },

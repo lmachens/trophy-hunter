@@ -10,7 +10,8 @@ const QUERY_ME = gql`
 
 export async function queryMe(apolloClient) {
   const result = await apolloClient.query({
-    query: QUERY_ME
+    query: QUERY_ME,
+    fetchPolicy: 'network-only'
   });
   const { me } = result.data;
   return me;

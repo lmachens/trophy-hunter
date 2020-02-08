@@ -2,12 +2,12 @@ import { createContext, useContext, useState, FC, useEffect } from 'react';
 import { setAuthToken, clearAuthToken } from './cookie';
 import { queryMe } from './queries';
 import { useApolloClient } from '@apollo/react-hooks';
+import useStorage from '../utils/useStorage';
 
 const AuthContext = createContext(null);
 
 const LOGIN_URL = '/api/login';
 const LOGOUT_URL = '/api/logout';
-const REGISTER_URL = '/api/register';
 
 interface AuthProviderProps {
   initialUser: any;
@@ -18,6 +18,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({
   initialUser
 }) => {
   const [user, setUser] = useState(initialUser);
+  const [securityCode, setSecurityCode] = useStorage('securityCode');
+
   const apolloClient = useApolloClient();
 
   useEffect(() => {
@@ -25,6 +27,22 @@ export const AuthProvider: FC<AuthProviderProps> = ({
       clearAuthToken();
     }
   }, [initialUser]);
+
+  useEffect(() => {
+    if (!securityCode) {
+      return;
+    }
+    const interval = setInterval(() => {
+      console.log('try to update');
+      queryMe(apolloClient).then(user => {
+        if (user) {
+          setUser(user);
+          setSecurityCode('');
+          clearInterval(interval);
+        }
+      });
+    }, 2000);
+  }, [securityCode]);
 
   async function login(email, password) {
     const options: RequestInit = {
@@ -45,10 +63,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({
           throw new Error('Email and password do not match, please retry');
         }
       }
-      const { authToken } = await response.json();
+      const { securityCode, authToken } = await response.json();
       setAuthToken(authToken);
-      const user = await queryMe(apolloClient);
-      setUser(user);
+      setSecurityCode(securityCode);
     } catch (error) {
       console.error(error);
     }
@@ -60,34 +77,11 @@ export const AuthProvider: FC<AuthProviderProps> = ({
     setUser(null);
   }
 
-  async function register(email, password) {
-    const options: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
-    };
-    try {
-      const response = await fetch(REGISTER_URL, options);
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const { authToken } = await response.json();
-      setAuthToken(authToken);
-      const user = await queryMe(apolloClient);
-      setUser(user);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   const value = {
     user,
     login,
     logout,
-    register
+    securityCode
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

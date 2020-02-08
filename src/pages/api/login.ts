@@ -1,44 +1,36 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUsersCollection, calculateExpireAt } from '../../users/collection';
-import { verifyHash } from '../../utils/crypto';
+import crypto from 'crypto';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     return res.status(404).end();
   }
 
-  const { email, password } = req.body;
+  const { email } = req.body;
   const Users = await getUsersCollection();
-  const user = await Users.findOne({ email });
 
-  if (!user) {
-    res.status(404).send(`Could not find account: ${email}`);
-    return;
-  }
-
-  if (!verifyHash(password, user.hashedPassword)) {
-    res.status(401).send('Incorrect credentials');
-    return;
-  }
-
-  const authToken = jwt.sign(
-    { email: user.email, password },
-    process.env.JWT_SECRET
-  );
+  const authToken = jwt.sign({ email }, process.env.JWT_SECRET);
 
   const expiresAt = calculateExpireAt();
+  const verifyToken = crypto.randomBytes(32).toString('hex');
   await Users.updateOne(
-    { _id: user._id },
+    { email },
     {
       $addToSet: {
         authTokens: {
           token: authToken,
-          expiresAt
+          expiresAt,
+          verifyToken
         }
       }
+    },
+    {
+      upsert: true
     }
   );
 
-  res.json({ authToken });
+  const securityCode = 'Random Stuff';
+  res.json({ securityCode, authToken });
 };

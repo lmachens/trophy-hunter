@@ -4,6 +4,7 @@ import { ONE_YEAR } from '../utils/dates';
 interface AuthToken {
   token: string;
   expiresAt: number;
+  verifyToken?: string;
 }
 
 interface User {
@@ -11,7 +12,6 @@ interface User {
   _id?: any;
   email: string;
   authTokens: AuthToken[];
-  hashedPassword: string;
 }
 
 const USERS_COLLECTION_NAME = 'users';

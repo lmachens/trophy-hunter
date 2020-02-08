@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const Users = await getUsersCollection();
   await Users.updateOne(
-    { authToken },
+    { 'authTokens.token': authToken },
     { $pull: { authTokens: { token: authToken } } }
   );
 

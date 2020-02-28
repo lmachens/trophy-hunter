@@ -16,13 +16,6 @@ const endpoint = ssrMode
   : publicRuntimeConfig.ENDPOINT;
 
 function createIsomorphLink(ctx) {
-  // if (ssrMode) {
-  //   const { SchemaLink } = require('apollo-link-schema');
-  //   const { schema } = require('./schema');
-  //   const { handleContext } = require('./context');
-  //   const context = handleContext(req);
-  //   return new SchemaLink({ schema, context });
-  // } else {
   const authLink = new ApolloLink((operation, forward) => {
     if (ctx?.req) {
       operation.setContext({
@@ -39,7 +32,6 @@ function createIsomorphLink(ctx) {
       fetch
     })
   );
-  // }
 }
 
 function createApolloClient(ctx) {

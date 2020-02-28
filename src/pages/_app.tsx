@@ -5,14 +5,20 @@ import { getApolloClient } from '../graphql/client';
 import { AuthProvider } from '../auth/provider';
 import { getAuthToken } from '../auth/authToken';
 import { queryMe } from '../auth/queries';
+import { CacheProvider } from '@emotion/core';
+import { globalStyles } from '../styles/global';
+import { cache } from 'emotion';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={getApolloClient(null)}>
-      <AuthProvider initialUser={pageProps.me}>
-        <Component {...pageProps} />
-      </AuthProvider>
-    </ApolloProvider>
+    <CacheProvider value={cache}>
+      {globalStyles}
+      <ApolloProvider client={getApolloClient(null)}>
+        <AuthProvider initialUser={pageProps.me}>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </ApolloProvider>
+    </CacheProvider>
   );
 }
 

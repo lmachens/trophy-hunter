@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import Link from 'next/link';
+import Link from '../common/Link';
 import { useAuth } from '../auth/provider';
 import { clearAuthToken } from '../auth/authToken';
 
@@ -17,7 +17,7 @@ const Index: NextPage = () => {
   return (
     <main>
       <p>User: {user ? user.email : 'Not logged in'}</p>
-      {!user && <Link href="/login">Login</Link>}
+      {!user && <Link href="/login">Link</Link>}
       {user && <button onClick={logout}>Logout</button>}
     </main>
   );

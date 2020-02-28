@@ -21,7 +21,6 @@ const Login: NextPage = () => {
       return;
     }
     const interval = setInterval(() => {
-      console.log('try to update');
       queryMe(apolloClient).then(user => {
         if (user) {
           setUser(user);
@@ -30,6 +29,10 @@ const Login: NextPage = () => {
         }
       });
     }, 2000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [securityCode]);
 
   async function login(email) {

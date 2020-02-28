@@ -2,7 +2,8 @@ import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 const fakeStorage = {
   getItem: () => '',
-  setItem: () => ''
+  setItem: () => '',
+  removeItem: () => ''
 };
 
 function useStorage(
@@ -15,7 +16,16 @@ function useStorage(
     setData(storage.getItem(key));
   }, [key]);
 
-  return [data, setData];
+  function updateData(data) {
+    if (!data) {
+      storage.removeItem(key);
+    } else {
+      storage.setItem(key, data);
+    }
+    setData(data);
+  }
+
+  return [data, updateData];
 }
 
 export default useStorage;

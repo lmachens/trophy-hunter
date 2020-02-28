@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getAuthToken } from '../../auth/cookie';
+import { getAuthToken } from '../../auth/authToken';
 import { getUsersCollection } from '../../users/collection';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

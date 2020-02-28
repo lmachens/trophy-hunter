@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Form from '../auth/login';
-import { useAuth } from '../auth/context';
+import { useAuth } from '../auth/provider';
 
 const Index: NextPage = () => {
   const { user, logout } = useAuth();

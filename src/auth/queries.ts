@@ -13,6 +13,5 @@ export async function queryMe(apolloClient) {
     query: QUERY_ME,
     fetchPolicy: 'network-only'
   });
-  const { me } = result.data;
-  return me;
+  return result.data.me;
 }

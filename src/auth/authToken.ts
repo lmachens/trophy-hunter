@@ -1,9 +1,9 @@
 import { NextApiRequest } from 'next';
 import cookies from 'next-cookies';
 import { IncomingMessage } from 'http';
+import { ONE_YEAR } from '../utils/dates';
 
 const TOKEN_COOKIE_NAME = 'th-jwt';
-const ONE_YEAR = 12 * 30 * 24 * 60 * 60 * 1000;
 
 export function getAuthToken(ctx: { req?: NextApiRequest | IncomingMessage }) {
   const allCookies = cookies(ctx || {});
@@ -11,7 +11,7 @@ export function getAuthToken(ctx: { req?: NextApiRequest | IncomingMessage }) {
 }
 
 export function setAuthToken(token) {
-  document.cookie = `${TOKEN_COOKIE_NAME}=${token};Max-Age=${ONE_YEAR};`;
+  document.cookie = `${TOKEN_COOKIE_NAME}=${token};Max-Age=${ONE_YEAR / 1000};`;
 }
 
 export function clearAuthToken() {

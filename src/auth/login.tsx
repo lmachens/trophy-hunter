@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from './context';
+import { useAuth } from './provider';
 
 const Form = () => {
   const [email, setEmail] = useState('');

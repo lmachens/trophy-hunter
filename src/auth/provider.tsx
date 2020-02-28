@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, FC, useEffect } from 'react';
-import { setAuthToken, clearAuthToken } from './cookie';
+import { setAuthToken, clearAuthToken } from './authToken';
 import { queryMe } from './queries';
 import { useApolloClient } from '@apollo/react-hooks';
 import useStorage from '../utils/useStorage';
@@ -10,6 +10,7 @@ const LOGIN_URL = '/api/login';
 const LOGOUT_URL = '/api/logout';
 
 interface AuthProviderProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialUser: any;
 }
 
@@ -21,12 +22,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({
   const [securityCode, setSecurityCode] = useStorage('securityCode');
 
   const apolloClient = useApolloClient();
-
-  useEffect(() => {
-    if (!initialUser) {
-      clearAuthToken();
-    }
-  }, [initialUser]);
 
   useEffect(() => {
     if (!securityCode) {
@@ -44,13 +39,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({
     }, 2000);
   }, [securityCode]);
 
-  async function login(email, password) {
+  async function login(email) {
     const options: RequestInit = {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email })
     };
     try {
       const response = await fetch(LOGIN_URL, options);

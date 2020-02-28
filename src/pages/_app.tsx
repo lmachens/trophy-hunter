@@ -2,8 +2,8 @@ import App, { AppContext } from 'next/app';
 import { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { getApolloClient } from '../graphql/client';
-import { AuthProvider } from '../auth/context';
-import { getAuthToken } from '../auth/cookie';
+import { AuthProvider } from '../auth/provider';
+import { getAuthToken } from '../auth/authToken';
 import { queryMe } from '../auth/queries';
 
 function MyApp({ Component, pageProps }: AppProps) {

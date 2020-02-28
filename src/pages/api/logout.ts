@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getAuthToken } from '../../auth/authToken';
-import { getUsersCollection } from '../../users/collection';
+import { getUsersCollection } from '../../auth/collection';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {

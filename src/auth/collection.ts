@@ -3,7 +3,7 @@ import { ONE_YEAR } from '../utils/dates';
 
 interface AuthToken {
   token: string;
-  expiresAt: number;
+  expiresAt: Date;
   verifyToken?: string;
 }
 
@@ -22,5 +22,5 @@ export async function getUsersCollection() {
 }
 
 export function calculateExpireAt() {
-  return Date.now() + ONE_YEAR;
+  return new Date(Date.now() + ONE_YEAR);
 }

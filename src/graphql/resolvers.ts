@@ -1,4 +1,4 @@
-import { getUsersCollection, calculateExpireAt } from '../users/collection';
+import { getUsersCollection, calculateExpireAt } from '../auth/collection';
 
 export const resolvers = {
   Query: {
@@ -10,7 +10,7 @@ export const resolvers = {
           authTokens: {
             $elemMatch: {
               token: context.authToken,
-              expiresAt: { $gt: Date.now() },
+              expiresAt: { $gt: new Date() },
               verifyToken: { $exists: false }
             }
           }
@@ -21,6 +21,7 @@ export const resolvers = {
           }
         }
       );
+
       return user.value;
     }
   }

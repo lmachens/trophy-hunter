@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUsersCollection, calculateExpireAt } from '../../users/collection';
+import { getUsersCollection, calculateExpireAt } from '../../auth/collection';
 import crypto from 'crypto';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

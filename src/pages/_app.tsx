@@ -8,6 +8,7 @@ import { queryMe } from '../auth/queries';
 import { CacheProvider } from '@emotion/core';
 import { globalStyles } from '../styles/global';
 import { cache } from 'emotion';
+import AppHeader from '../overwolf/AppHeader';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       {globalStyles}
       <ApolloProvider client={getApolloClient(null)}>
         <AuthProvider initialUser={pageProps.me}>
+          <AppHeader />
           <Component {...pageProps} />
         </AuthProvider>
       </ApolloProvider>

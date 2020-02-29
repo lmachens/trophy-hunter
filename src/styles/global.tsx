@@ -11,7 +11,7 @@ export const globalStyles = (
 
       body {
         margin: 0;
-        background: #2b2a30;
+        background: #26252b;
         color: #eaeaea;
         font-family: Helvetica, Arial, sans-serif;
         font-size: 16px;

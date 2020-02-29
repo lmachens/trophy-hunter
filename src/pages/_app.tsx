@@ -9,6 +9,7 @@ import { CacheProvider } from '@emotion/core';
 import { globalStyles } from '../styles/global';
 import { cache } from 'emotion';
 import AppHeader from '../overwolf/AppHeader';
+import { OverwolfWindowProvider } from '../overwolf/OverwolfWindow';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -16,8 +17,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       {globalStyles}
       <ApolloProvider client={getApolloClient(null)}>
         <AuthProvider initialUser={pageProps.me}>
-          <AppHeader />
-          <Component {...pageProps} />
+          <OverwolfWindowProvider>
+            <AppHeader />
+            <Component {...pageProps} />
+          </OverwolfWindowProvider>
         </AuthProvider>
       </ApolloProvider>
     </CacheProvider>

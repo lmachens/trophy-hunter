@@ -10,6 +10,7 @@ import EpicIsland from '../islands/EpicIsland';
 import ObjectivesIsland from '../islands/ObjectivesIsland';
 import EyeIsland from '../islands/EyeIsland';
 import styled from '@emotion/styled';
+import IslandDetails from '../common/IslandDetails';
 
 const CombatIslandPositioned = styled(CombatIsland)`
   position: absolute;
@@ -60,6 +61,7 @@ const LeagueOfLegends: NextPage = () => {
         <ObjectivesIslandPositioned />
         <EyeIslandPositioned />
       </Islands>
+      <IslandDetails />
       <Overview />
     </Main>
   );

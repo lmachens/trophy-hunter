@@ -6,6 +6,7 @@ const Container = styled.aside`
   background: #1f1f1f;
   border-left: 1px solid #77777a;
   width: 436px;
+  z-index: 1;
 `;
 
 const Overview: FC = () => {

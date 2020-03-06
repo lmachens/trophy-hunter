@@ -8,6 +8,7 @@ import Restore from '../icons/Restore';
 import Close from '../icons/Close';
 import styled from '@emotion/styled';
 import { useOverwolfWindow } from '../overwolf/OverwolfWindow';
+import Link from './Link';
 
 const Header = styled.header`
   display: flex;
@@ -90,7 +91,9 @@ const AppHeader: FC = () => {
   return (
     <Header>
       <LogoContainer>
-        <Logo src="/trophy-hunter-logo.png" />
+        <Link href="/">
+          <Logo src="/trophy-hunter-logo.png" />
+        </Link>
         <Background viewBox="0 0 200 48" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 0H200V30H200L183 48H0V0Z" />
         </Background>

@@ -11,7 +11,6 @@ class MyDocument extends Document<EmotionCritical> {
             data-emotion-css={this.props.ids.join(' ')}
             dangerouslySetInnerHTML={{ __html: this.props.css }}
           />
-          <title>Trophy Hunter</title>
         </Head>
         <body>
           <Main />

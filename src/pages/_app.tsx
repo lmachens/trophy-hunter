@@ -12,28 +12,34 @@ import AppHeader from '../common/AppHeader';
 import { OverwolfWindowProvider } from '../overwolf/OverwolfWindow';
 import Sidebar from '../common/Sidebar';
 import styled from '@emotion/styled';
+import Head from 'next/head';
 
-const Main = styled.main`
+const Container = styled.div`
   display: flex;
   height: 100vh;
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <CacheProvider value={cache}>
-      {globalStyles}
-      <ApolloProvider client={getApolloClient(null)}>
-        <AuthProvider initialUser={pageProps.me}>
-          <OverwolfWindowProvider>
-            <AppHeader />
-            <Main>
-              <Sidebar />
-              <Component {...pageProps} />
-            </Main>
-          </OverwolfWindowProvider>
-        </AuthProvider>
-      </ApolloProvider>
-    </CacheProvider>
+    <>
+      <Head>
+        <title>Trophy Hunter</title>
+      </Head>
+      <CacheProvider value={cache}>
+        {globalStyles}
+        <ApolloProvider client={getApolloClient(null)}>
+          <AuthProvider initialUser={pageProps.me}>
+            <OverwolfWindowProvider>
+              <AppHeader />
+              <Container>
+                <Sidebar />
+                <Component {...pageProps} />
+              </Container>
+            </OverwolfWindowProvider>
+          </AuthProvider>
+        </ApolloProvider>
+      </CacheProvider>
+    </>
   );
 }
 

@@ -46,17 +46,17 @@ const SidebarBottomButton = styled(SidebarButton)`
 const Sidebar: FC = () => {
   return (
     <Aside>
-      <Link href="#">
+      <Link href="/league-of-legends">
         <SidebarButton active>
           <img src="/league-of-legends.png" />
         </SidebarButton>
       </Link>
-      <Link href="#">
+      <Link href="/teamfight-tactics">
         <SidebarButton>
           <img src="/teamfight-tactics.png" />
         </SidebarButton>
       </Link>
-      <Link href="#">
+      <Link href="/legends-of-runeterra">
         <SidebarButton>
           <img src="/legends-of-runeterra.png" />
         </SidebarButton>

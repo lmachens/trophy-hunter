@@ -1,26 +1,14 @@
 import { NextPage } from 'next';
-import Link from '../common/Link';
-import { useAuth } from '../auth/provider';
-import { clearAuthToken } from '../auth/authToken';
-
-const LOGOUT_URL = '/api/logout';
+import Router from 'next/router';
+import LeagueOfLegends from './league-of-legends';
+import { useEffect } from 'react';
 
 const Index: NextPage = () => {
-  const { user, setUser } = useAuth();
+  useEffect(() => {
+    Router.replace('/league-of-legends');
+  });
 
-  async function logout() {
-    await fetch(LOGOUT_URL, { method: 'POST' });
-    clearAuthToken();
-    setUser(null);
-  }
-
-  return (
-    <main>
-      <p>User: {user ? user.email : 'Not logged in'}</p>
-      {!user && <Link href="/login">Link</Link>}
-      {user && <button onClick={logout}>Logout</button>}
-    </main>
-  );
+  return <LeagueOfLegends />;
 };
 
 export default Index;

@@ -7,11 +7,15 @@ import Maximize from '../icons/Maximize';
 import Restore from '../icons/Restore';
 import Close from '../icons/Close';
 import styled from '@emotion/styled';
-import { useOverwolfWindow } from './OverwolfWindow';
+import { useOverwolfWindow } from '../overwolf/OverwolfWindow';
 
 const Header = styled.header`
   display: flex;
   height: 48px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 `;
 
 const Background = styled.svg`

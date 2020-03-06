@@ -8,8 +8,15 @@ import { queryMe } from '../auth/queries';
 import { CacheProvider } from '@emotion/core';
 import { globalStyles } from '../styles/global';
 import { cache } from 'emotion';
-import AppHeader from '../overwolf/AppHeader';
+import AppHeader from '../common/AppHeader';
 import { OverwolfWindowProvider } from '../overwolf/OverwolfWindow';
+import Sidebar from '../common/Sidebar';
+import styled from '@emotion/styled';
+
+const Main = styled.main`
+  display: flex;
+  height: 100vh;
+`;
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,7 +26,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <AuthProvider initialUser={pageProps.me}>
           <OverwolfWindowProvider>
             <AppHeader />
-            <Component {...pageProps} />
+            <Main>
+              <Sidebar />
+              <Component {...pageProps} />
+            </Main>
           </OverwolfWindowProvider>
         </AuthProvider>
       </ApolloProvider>

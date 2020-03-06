@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { FC } from 'react';
 
 const A = styled.a`
-  text-decoration: underline;
+  text-decoration: none;
   color: inherit;
   cursor: pointer;
 `;

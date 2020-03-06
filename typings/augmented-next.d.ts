@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import 'next';
 import ApolloClient from 'apollo-boost';
 

@@ -12,31 +12,7 @@ import EyeIsland from '../islands/EyeIsland';
 import styled from '@emotion/styled';
 import IslandDetails from '../common/IslandDetails';
 import { useState } from 'react';
-import { css } from '@emotion/core';
-
-const hover = css`
-  &:hover {
-    background: radial-gradient(
-      circle,
-      rgba(246, 246, 246, 1) 0%,
-      rgba(148, 187, 233, 0) 100%
-    );
-  }
-`;
-
-function transformIsland({ name, top, left, Component }) {
-  return {
-    name,
-    top,
-    left,
-    Component: styled(Component)`
-      position: absolute;
-      top: ${top}px;
-      left: ${left}px;
-      ${hover}
-    `
-  };
-}
+import { transformIsland } from '../islands/utils';
 
 const islands = [
   transformIsland({

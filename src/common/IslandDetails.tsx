@@ -1,6 +1,7 @@
 import { FC, useState, HTMLAttributes, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Trophy from './Trophy';
+import ChooseALevel from './ChooseALevel';
 
 type Open = { open: boolean };
 
@@ -18,6 +19,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 15px;
 `;
 
 const ToggleContainer = styled.div`
@@ -92,7 +94,7 @@ const IslandDetails: FC<IslandDetailsProps> = ({ island, onHide }) => {
 
   let content;
   if (open && !island) {
-    content = <div>Choose a level</div>;
+    content = <ChooseALevel />;
   } else if (island) {
     content = (
       <>

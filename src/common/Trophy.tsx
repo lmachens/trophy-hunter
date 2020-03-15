@@ -20,11 +20,11 @@ const Trophy: FC<HTMLAttributes<HTMLDivElement>> = props => {
     <ListItem {...props}>
       <CategoryIcon src="/combat.png" />
       <div>
-        <div>Key Targets</div>
-        <small>
+        <h3>Key Targets</h3>
+        <p>
           Achieve three kills on the opponent with the highest amount of gold in
           the game at that point.
-        </small>
+        </p>
       </div>
     </ListItem>
   );

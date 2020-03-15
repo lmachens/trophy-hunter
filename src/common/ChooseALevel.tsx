@@ -8,6 +8,7 @@ const Container = styled.aside`
   border-bottom: 1px solid #3f3e43;
   text-align: center;
   width: 100%;
+  padding-bottom: 30px;
 `;
 
 const ChooseALevel: FC = () => {

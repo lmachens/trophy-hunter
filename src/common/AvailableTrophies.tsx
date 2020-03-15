@@ -11,7 +11,7 @@ const List = styled.div`
 const AvailableTrophies: FC = () => {
   return (
     <>
-      <h3>Available Trophies</h3>
+      <h2>Available Trophies</h2>
       <List>
         <Trophy />
         <Trophy />

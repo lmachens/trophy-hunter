@@ -24,6 +24,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Trophy Hunter</title>
+        <link
+          href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <CacheProvider value={cache}>
         {globalStyles}

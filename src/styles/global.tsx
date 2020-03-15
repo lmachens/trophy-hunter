@@ -9,6 +9,26 @@ export const globalStyles = (
         box-sizing: border-box;
       }
 
+      /* width */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #646468;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #77777a;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #888;
+      }
+
       body {
         margin: 0;
         background: #26252b;

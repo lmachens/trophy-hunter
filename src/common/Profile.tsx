@@ -18,7 +18,7 @@ const Profile: FC = () => {
       <Avatar src="/avatar.png" />
       <div>
         <h4>sirlunchalot619</h4>
-        <p>24/217 Points</p>
+        <p>24/217 TH points</p>
       </div>
     </Container>
   );

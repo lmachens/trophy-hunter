@@ -1,4 +1,4 @@
-import { FC, useState, HTMLAttributes } from 'react';
+import { FC, useState, HTMLAttributes, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Trophy from './Trophy';
 
@@ -74,22 +74,52 @@ const Toggle: FC<ToggleProps> = ({ open, onClick }) => {
   );
 };
 
-const IslandDetails: FC = () => {
-  const [open, setOpen] = useState(true);
+interface IslandDetailsProps {
+  island: {
+    name: string;
+    top: number;
+    left: number;
+  };
+  onHide(): void;
+}
 
-  return (
-    <Container open={open}>
-      <Toggle open={open} onClick={() => setOpen(!open)} />
-      <Content>
+const IslandDetails: FC<IslandDetailsProps> = ({ island, onHide }) => {
+  const [open, setOpen] = useState(Boolean(island));
+
+  useEffect(() => {
+    setOpen(Boolean(island));
+  }, [island]);
+
+  let content;
+  if (open && !island) {
+    content = <div>Choose a level</div>;
+  } else if (island) {
+    content = (
+      <>
         <img src="/combat-big.png" />
-        <h3>Combat island Lvl.1</h3>
+        <h3>{island.name} Lvl.1</h3>
         <List>
           <TrophyWithBorder />
           <TrophyWithBorder />
           <TrophyWithBorder />
           <TrophyWithBorder />
         </List>
-      </Content>
+      </>
+    );
+  }
+
+  return (
+    <Container open={open}>
+      <Toggle
+        open={open}
+        onClick={() => {
+          if (open) {
+            onHide();
+          }
+          setOpen(!open);
+        }}
+      />
+      <Content>{content}</Content>
     </Container>
   );
 };

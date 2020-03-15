@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, SVGProps } from 'react';
 
-const TeamWorkIsland: FC = props => {
+const TeamWorkIsland: FC<SVGProps<SVGSVGElement>> = props => {
   return (
     <svg
       width="235"

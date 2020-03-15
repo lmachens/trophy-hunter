@@ -11,57 +11,111 @@ import ObjectivesIsland from '../islands/ObjectivesIsland';
 import EyeIsland from '../islands/EyeIsland';
 import styled from '@emotion/styled';
 import IslandDetails from '../common/IslandDetails';
+import { useState } from 'react';
+import { css } from '@emotion/core';
 
-const CombatIslandPositioned = styled(CombatIsland)`
-  position: absolute;
-  top: 100px;
-  left: 30px;
+const hover = css`
+  &:hover {
+    background: radial-gradient(
+      circle,
+      rgba(246, 246, 246, 1) 0%,
+      rgba(148, 187, 233, 0) 100%
+    );
+  }
 `;
 
-const SkillsIslandPositioned = styled(SkillsIsland)`
+function transformIsland({ name, top, left, Component }) {
+  return {
+    name,
+    top,
+    left,
+    Component: styled(Component)`
+      position: absolute;
+      top: ${top}px;
+      left: ${left}px;
+      ${hover}
+    `
+  };
+}
+
+const islands = [
+  transformIsland({
+    name: 'combatIsland',
+    top: 70,
+    left: 0,
+    Component: CombatIsland
+  }),
+  transformIsland({
+    name: 'skillsIsland',
+    top: 30,
+    left: 270,
+    Component: SkillsIsland
+  }),
+  transformIsland({
+    name: 'teamWorkIsland',
+    top: 70,
+    left: 510,
+    Component: TeamWorkIsland
+  }),
+  transformIsland({
+    name: 'specialIsland',
+    top: 350,
+    left: 0,
+    Component: SpecialIsland
+  }),
+  transformIsland({
+    name: 'epicIsland',
+    top: 460,
+    left: 250,
+    Component: EpicIsland
+  }),
+  transformIsland({
+    name: 'objectivesIsland',
+    top: 340,
+    left: 500,
+    Component: ObjectivesIsland
+  }),
+  transformIsland({
+    name: 'eyeIsland',
+    top: 250,
+    left: 270,
+    Component: EyeIsland
+  })
+];
+
+const SizeContainer = styled.div`
   position: absolute;
-  top: 60px;
-  left: 300px;
-`;
-const TeamWorkIslandPositioned = styled(TeamWorkIsland)`
-  position: absolute;
-  top: 100px;
-  left: 540px;
-`;
-const SpecialIslandPositioned = styled(SpecialIsland)`
-  position: absolute;
-  top: 380px;
-  left: 30px;
-`;
-const EpicIslandPositioned = styled(EpicIsland)`
-  position: absolute;
-  top: 490px;
-  left: 280px;
-`;
-const ObjectivesIslandPositioned = styled(ObjectivesIsland)`
-  position: absolute;
-  top: 370px;
-  left: 530px;
-`;
-const EyeIslandPositioned = styled(EyeIsland)`
-  position: absolute;
-  top: 280px;
-  left: 300px;
+  width: 820px;
+  height: 720px;
+  transition: 0.15s;
+  margin: 30px;
 `;
 
 const LeagueOfLegends: NextPage = () => {
+  const [activeIsland, setActiveIsland] = useState(null);
+
   return (
     <Main>
       <Islands>
-        <CombatIslandPositioned />
-        <SkillsIslandPositioned />
-        <TeamWorkIslandPositioned />
-        <SpecialIslandPositioned />
-        <EpicIslandPositioned />
-        <ObjectivesIslandPositioned />
-        <EyeIslandPositioned />
+        <SizeContainer
+          style={{
+            left: `${-activeIsland?.left || 0}px`,
+            top: `${-activeIsland?.top || 0}px`,
+            marginTop: `${activeIsland ? 100 : 30}px`
+          }}
+        >
+          {islands.map(({ name, top, left, Component }) => (
+            <Component
+              key={name}
+              onClick={() => setActiveIsland({ name, top, left })}
+            />
+          ))}
+        </SizeContainer>
       </Islands>
-      <IslandDetails />
+      <IslandDetails
+        island={activeIsland}
+        onHide={() => setActiveIsland(null)}
+      />
       <Overview />
     </Main>
   );

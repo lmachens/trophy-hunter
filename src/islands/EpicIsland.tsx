@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, SVGProps } from 'react';
 
-const EpicIsland: FC = props => {
+const EpicIsland: FC<SVGProps<SVGSVGElement>> = props => {
   return (
     <svg
       width="207"

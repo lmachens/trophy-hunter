@@ -3,9 +3,9 @@ import { FC } from 'react';
 
 const Container = styled.div`
   flex-grow: 1;
-  padding-top: 48px;
+  margin-top: 48px;
+  overflow: hidden;
   position: relative;
-  overflow: auto;
 `;
 
 const Islands: FC = ({ children }) => {

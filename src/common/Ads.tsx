@@ -9,10 +9,13 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url(/trophy-hunter-bg-logo.png);
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const Ads: FC = () => {
-  return <Container>400x300 ad</Container>;
+  return <Container />;
 };
 
 export default Ads;

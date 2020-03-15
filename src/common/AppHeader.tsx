@@ -1,14 +1,11 @@
 import { FC } from 'react';
 import Discord from '../icons/Discord';
-import Settings from '../icons/Settings';
 import Support from '../icons/Support';
 import Minimize from '../icons/Minimize';
-import Maximize from '../icons/Maximize';
-import Restore from '../icons/Restore';
 import Close from '../icons/Close';
 import styled from '@emotion/styled';
-import { useOverwolfWindow } from '../overwolf/OverwolfWindow';
 import Link from './Link';
+import Feedback from '../icons/Feedback';
 
 const Header = styled.header`
   display: flex;
@@ -33,6 +30,7 @@ const LogoContainer = styled.div`
 `;
 
 const Logo = styled.img`
+  display: block;
   width: 175px;
   height: 27px;
   margin-left: 14px;
@@ -44,6 +42,7 @@ const Toolbar = styled.div`
   background: #3f3e43;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -86,9 +85,31 @@ const ExitButton = styled(Button)`
   }
 `;
 
-const AppHeader: FC = () => {
-  const { isMaximized } = useOverwolfWindow();
+const WriteUsFeedback = styled.div`
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 
+  &:hover {
+    background-color: #958fb2;
+  }
+`;
+
+const Hotkey = styled.div`
+  position: absolute;
+  left: 500px;
+`;
+
+const Description = styled.span`
+  color: #77777a;
+  margin-right: 6px;
+`;
+
+const AppHeader: FC = () => {
   return (
     <Header>
       <LogoContainer>
@@ -99,21 +120,24 @@ const AppHeader: FC = () => {
           <path d="M0 0H200V30H200L183 48H0V0Z" />
         </Background>
       </LogoContainer>
-
       <Toolbar>
+        <Hotkey>
+          <Description>Show/hide</Description>
+          <span>Ctrl+H</span>
+        </Hotkey>
+        <WriteUsFeedback>
+          <Feedback />
+          Write us a feedback
+        </WriteUsFeedback>
         <DiscordButton>
           <Discord />
         </DiscordButton>
-        <Button>
-          <Settings />
-        </Button>
         <Button>
           <Support />
         </Button>
         <Button>
           <Minimize />
         </Button>
-        <Button>{isMaximized ? <Restore /> : <Maximize />}</Button>
         <ExitButton>
           <Close />
         </ExitButton>

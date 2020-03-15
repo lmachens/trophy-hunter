@@ -6,6 +6,7 @@ const A = styled.a`
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  display: flex;
 `;
 
 const MyLink: FC<LinkProps> = ({ children, ...other }) => {

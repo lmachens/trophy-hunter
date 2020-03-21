@@ -2,6 +2,8 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 import Link from './Link';
 import Tooltip from './Tooltip';
+import ArrowRight from '../icons/ArrowRight';
+import Settings from '../icons/Settings';
 
 const Aside = styled.aside`
   width: 75px;
@@ -44,6 +46,25 @@ const Grow = styled.div`
 const SidebarBottomButton = styled(SidebarButton)`
   border-bottom: none;
   border-top: 1px solid #3f3e43;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+`;
+
+const BottomPartialLeft = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+`;
+
+const BottomPartialRight = styled.div`
+  border-left: 1px solid #3f3e43;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
 `;
 
 const Sidebar: FC = () => {
@@ -66,7 +87,20 @@ const Sidebar: FC = () => {
       </Tooltip>
       <Grow />
       <SidebarBottomButton>
-        <img src="/trophies.png" />
+        <BottomPartialLeft>
+          <img src="/trophies.png" />
+        </BottomPartialLeft>
+        <BottomPartialRight>
+          <ArrowRight />
+        </BottomPartialRight>
+      </SidebarBottomButton>
+      <SidebarBottomButton>
+        <BottomPartialLeft>
+          <Settings />
+        </BottomPartialLeft>
+        <BottomPartialRight>
+          <ArrowRight />
+        </BottomPartialRight>
       </SidebarBottomButton>
     </Aside>
   );

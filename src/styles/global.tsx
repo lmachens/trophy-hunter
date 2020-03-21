@@ -70,6 +70,10 @@ export const globalStyles = (
       p {
         margin: 0;
       }
+
+      button {
+        color: inherit;
+      }
     `}
   />
 );

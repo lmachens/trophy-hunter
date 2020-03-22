@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC } from 'react';
 import styled from '@emotion/styled';
 import Trophy from './Trophy';
 import ChooseALevel from './ChooseALevel';
@@ -33,30 +33,31 @@ const List = styled.div`
   margin-bottom: 20px;
 `;
 
+type IslandProps = {
+  name: string;
+  top: number;
+  left: number;
+};
+
 interface IslandDetailsProps {
-  island: {
-    name: string;
-    top: number;
-    left: number;
-  };
-  onHide(): void;
+  activeIsland: IslandProps;
+  onToggleClick(): void;
+  open: boolean;
 }
 
-const IslandDetails: FC<IslandDetailsProps> = ({ island, onHide }) => {
-  const [open, setOpen] = useState(Boolean(island));
-
-  useEffect(() => {
-    setOpen(Boolean(island));
-  }, [island]);
-
+const IslandDetails: FC<IslandDetailsProps> = ({
+  activeIsland,
+  open,
+  onToggleClick
+}) => {
   let content;
-  if (open && !island) {
+  if (open && !activeIsland) {
     content = <ChooseALevel />;
-  } else if (island) {
+  } else if (activeIsland) {
     content = (
       <>
         <img src="/combat-big.png" />
-        <h3>{island.name} Lvl.1</h3>
+        <h3>{activeIsland.name} Lvl.1</h3>
         <List>
           <TrophyWithBorder />
           <TrophyWithBorder />
@@ -69,15 +70,7 @@ const IslandDetails: FC<IslandDetailsProps> = ({ island, onHide }) => {
 
   return (
     <Container open={open}>
-      <DetailsToggle
-        open={open}
-        onClick={() => {
-          if (open) {
-            onHide();
-          }
-          setOpen(!open);
-        }}
-      />
+      <DetailsToggle open={open} onClick={onToggleClick} />
       <Content>{content}</Content>
     </Container>
   );

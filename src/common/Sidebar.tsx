@@ -2,8 +2,8 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 import Link from './Link';
 import Tooltip from './Tooltip';
-import ArrowRight from '../icons/ArrowRight';
 import Settings from '../icons/Settings';
+import ToolButton from './ToolButton';
 
 const Aside = styled.aside`
   width: 75px;
@@ -43,31 +43,12 @@ const Grow = styled.div`
   flex-grow: 1;
 `;
 
-const SidebarBottomButton = styled(SidebarButton)`
-  border-bottom: none;
-  border-top: 1px solid #3f3e43;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-`;
+interface SidebarProps {
+  activeTool: 'settings' | 'collection';
+  onToolClick(tool: 'settings' | 'collection'): void;
+}
 
-const BottomPartialLeft = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
-`;
-
-const BottomPartialRight = styled.div`
-  border-left: 1px solid #3f3e43;
-  height: 50px;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-`;
-
-const Sidebar: FC = () => {
+const Sidebar: FC<SidebarProps> = ({ activeTool, onToolClick }) => {
   return (
     <Aside>
       <Link href="/league-of-legends">
@@ -86,22 +67,16 @@ const Sidebar: FC = () => {
         </SidebarButton>
       </Tooltip>
       <Grow />
-      <SidebarBottomButton>
-        <BottomPartialLeft>
-          <img src="/trophies.png" />
-        </BottomPartialLeft>
-        <BottomPartialRight>
-          <ArrowRight />
-        </BottomPartialRight>
-      </SidebarBottomButton>
-      <SidebarBottomButton>
-        <BottomPartialLeft>
-          <Settings />
-        </BottomPartialLeft>
-        <BottomPartialRight>
-          <ArrowRight />
-        </BottomPartialRight>
-      </SidebarBottomButton>
+      <ToolButton
+        icon={<img src="/trophies.png" />}
+        active={activeTool === 'collection'}
+        onClick={() => onToolClick('collection')}
+      />
+      <ToolButton
+        icon={<Settings />}
+        active={activeTool === 'settings'}
+        onClick={() => onToolClick('settings')}
+      />
     </Aside>
   );
 };

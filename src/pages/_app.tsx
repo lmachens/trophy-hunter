@@ -13,6 +13,13 @@ import { OverwolfWindowProvider } from '../overwolf/OverwolfWindow';
 import Sidebar from '../common/Sidebar';
 import styled from '@emotion/styled';
 import Head from 'next/head';
+import Main from '../common/Main';
+import { useState } from 'react';
+import ToolPane from '../common/ToolPane';
+import Settings from '../common/Settings';
+import Collection from '../common/Collection';
+import IslandDetails from '../common/IslandDetails';
+import Overview from '../common/Overview';
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +27,10 @@ const Container = styled.div`
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [activeTool, setActiveTool] = useState(null);
+  const [activeIsland, setActiveIsland] = useState(null);
+  const [openIslandDetails, setOpenIslandDetails] = useState(false);
+
   return (
     <>
       <Head>
@@ -36,8 +47,45 @@ function MyApp({ Component, pageProps }: AppProps) {
             <OverwolfWindowProvider>
               <AppHeader />
               <Container>
-                <Sidebar />
-                <Component {...pageProps} />
+                <Sidebar
+                  activeTool={activeTool}
+                  onToolClick={tool => {
+                    setOpenIslandDetails(null);
+                    setActiveIsland(null);
+                    setActiveTool(activeTool === tool ? null : tool);
+                  }}
+                />
+                <Main>
+                  <Component
+                    {...pageProps}
+                    activeIsland={activeIsland}
+                    onIslandClick={island => {
+                      setActiveTool(null);
+                      setActiveIsland(island);
+                      setOpenIslandDetails(true);
+                    }}
+                  />
+                  <IslandDetails
+                    activeIsland={activeIsland}
+                    open={openIslandDetails}
+                    onToggleClick={() => {
+                      setActiveTool(null);
+                      if (openIslandDetails) {
+                        setOpenIslandDetails(false);
+                        setActiveIsland(null);
+                      } else {
+                        setOpenIslandDetails(true);
+                      }
+                    }}
+                  />
+                  <Overview />
+                  {activeTool && (
+                    <ToolPane>
+                      {activeTool === 'settings' && <Settings />}
+                      {activeTool === 'collection' && <Collection />}
+                    </ToolPane>
+                  )}
+                </Main>
               </Container>
             </OverwolfWindowProvider>
           </AuthProvider>

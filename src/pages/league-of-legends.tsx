@@ -1,6 +1,4 @@
 import { NextPage } from 'next';
-import Main from '../common/Main';
-import Overview from '../common/Overview';
 import Islands from '../common/Islands';
 import CombatIsland from '../islands/CombatIsland';
 import SkillsIsland from '../islands/SkillsIsland';
@@ -10,8 +8,6 @@ import EpicIsland from '../islands/EpicIsland';
 import ObjectivesIsland from '../islands/ObjectivesIsland';
 import EyeIsland from '../islands/EyeIsland';
 import styled from '@emotion/styled';
-import IslandDetails from '../common/IslandDetails';
-import { useState } from 'react';
 import { transformIsland } from '../islands/utils';
 
 const islands = [
@@ -67,33 +63,38 @@ const SizeContainer = styled.div`
   margin: 30px;
 `;
 
-const LeagueOfLegends: NextPage = () => {
-  const [activeIsland, setActiveIsland] = useState(null);
+type IslandProps = {
+  name: string;
+  top: number;
+  left: number;
+};
 
+interface GamePageProps {
+  activeIsland: IslandProps;
+  onIslandClick(island: IslandProps): void;
+}
+
+const LeagueOfLegends: NextPage<GamePageProps> = ({
+  activeIsland,
+  onIslandClick
+}) => {
   return (
-    <Main>
-      <Islands>
-        <SizeContainer
-          style={{
-            left: `${-activeIsland?.left || 0}px`,
-            top: `${-activeIsland?.top || 0}px`,
-            marginTop: `${activeIsland ? 100 : 30}px`
-          }}
-        >
-          {islands.map(({ name, top, left, Component }) => (
-            <Component
-              key={name}
-              onClick={() => setActiveIsland({ name, top, left })}
-            />
-          ))}
-        </SizeContainer>
-      </Islands>
-      <IslandDetails
-        island={activeIsland}
-        onHide={() => setActiveIsland(null)}
-      />
-      <Overview />
-    </Main>
+    <Islands>
+      <SizeContainer
+        style={{
+          left: `${-activeIsland?.left || 0}px`,
+          top: `${-activeIsland?.top || 0}px`,
+          marginTop: `${activeIsland ? 100 : 30}px`
+        }}
+      >
+        {islands.map(({ name, top, left, Component }) => (
+          <Component
+            key={name}
+            onClick={() => onIslandClick({ name, top, left })}
+          />
+        ))}
+      </SizeContainer>
+    </Islands>
   );
 };
 

@@ -20,6 +20,7 @@ import Settings from '../common/Settings';
 import Collection from '../common/Collection';
 import IslandDetails from '../common/IslandDetails';
 import Overview from '../common/Overview';
+import { welcome } from '../api/trophies';
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
   const [activeIsland, setActiveIsland] = useState(null);
   const [openIslandDetails, setOpenIslandDetails] = useState(false);
+  const [availableTrophies, setAvailableTrophies] = useState([welcome]);
 
   return (
     <>
@@ -78,7 +80,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                       }
                     }}
                   />
-                  <Overview />
+                  <Overview availableTrophies={availableTrophies} />
                   {activeTool && (
                     <ToolPane>
                       {activeTool === 'settings' && <Settings />}

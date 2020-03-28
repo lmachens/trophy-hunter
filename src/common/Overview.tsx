@@ -3,6 +3,7 @@ import { FC } from 'react';
 import Profile from './Profile';
 import AvailableTrophies from './AvailableTrophies';
 import Ads from './Ads';
+import { TrophyData } from '../api/trophies/trophy';
 
 const Container = styled.aside`
   padding: 48px 20px 20px 20px;
@@ -14,11 +15,15 @@ const Container = styled.aside`
   flex-direction: column;
 `;
 
-const Overview: FC = () => {
+interface OverviewProps {
+  availableTrophies: TrophyData[];
+}
+
+const Overview: FC<OverviewProps> = ({ availableTrophies }) => {
   return (
     <Container>
       <Profile />
-      <AvailableTrophies />
+      <AvailableTrophies trophies={availableTrophies} />
       <Ads />
     </Container>
   );

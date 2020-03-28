@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import Trophy from './Trophy';
 import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
+import { TrophyData } from '../api/trophies/trophy';
 
 const List = styled.div`
   flex-grow: 1;
@@ -29,7 +30,11 @@ const Filter = styled.div`
   justify-content: center;
 `;
 
-const AvailableTrophies: FC = () => {
+interface AvailableTrophiesProps {
+  trophies: TrophyData[];
+}
+
+const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophies }) => {
   return (
     <>
       <Header>
@@ -42,15 +47,9 @@ const AvailableTrophies: FC = () => {
         </Filter>
       </Header>
       <List>
-        <Trophy />
-        <Trophy />
-        <Trophy />
-        <Trophy />
-        <Trophy />
-        <Trophy />
-        <Trophy />
-        <Trophy />
-        <Trophy />
+        {trophies.map(trophy => (
+          <Trophy trophy={trophy} key={trophy.id} />
+        ))}
       </List>
     </>
   );

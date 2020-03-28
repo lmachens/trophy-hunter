@@ -1,5 +1,7 @@
-import { FC, HTMLAttributes } from 'react';
+import { FC } from 'react';
 import styled from '@emotion/styled';
+import { TrophyData } from '../api/trophies/trophy';
+import TrophyProgressIcon from './TrophyProgressIcon';
 
 const ListItem = styled.div`
   background: #2b2a30;
@@ -9,22 +11,17 @@ const ListItem = styled.div`
   align-items: center;
 `;
 
-const CategoryIcon = styled.img`
-  margin: 10px;
-  height: 40px;
-  width: 22px;
-`;
+interface TrophyProps {
+  trophy: TrophyData;
+}
 
-const Trophy: FC<HTMLAttributes<HTMLDivElement>> = props => {
+const Trophy: FC<TrophyProps> = ({ trophy }) => {
   return (
-    <ListItem {...props}>
-      <CategoryIcon src="/combat.png" />
+    <ListItem>
+      <TrophyProgressIcon />
       <div>
-        <h3>Key Targets</h3>
-        <p>
-          Achieve three kills on the opponent with the highest amount of gold in
-          the game at that point.
-        </p>
+        <h3>{trophy.title}</h3>
+        <p>{trophy.description}</p>
       </div>
     </ListItem>
   );

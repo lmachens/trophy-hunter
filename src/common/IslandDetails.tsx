@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import Trophy from './Trophy';
+// import Trophy from './Trophy';
 import ChooseALevel from './ChooseALevel';
 import DetailsToggle from './DetailsToggle';
 
@@ -21,10 +21,6 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 15px;
-`;
-
-const TrophyWithBorder = styled(Trophy)`
-  border-top: 1px solid #3f3e43;
 `;
 
 const List = styled.div`
@@ -58,12 +54,7 @@ const IslandDetails: FC<IslandDetailsProps> = ({
       <>
         <img src="/combat-big.png" />
         <h3>{activeIsland.name} Lvl.1</h3>
-        <List>
-          <TrophyWithBorder />
-          <TrophyWithBorder />
-          <TrophyWithBorder />
-          <TrophyWithBorder />
-        </List>
+        <List>TBA</List>
       </>
     );
   }

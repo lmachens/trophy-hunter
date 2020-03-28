@@ -99,16 +99,6 @@ const WriteUsFeedback = styled.div`
   }
 `;
 
-const Hotkey = styled.div`
-  position: absolute;
-  left: 500px;
-`;
-
-const Description = styled.span`
-  color: #77777a;
-  margin-right: 6px;
-`;
-
 const AppHeader: FC = () => {
   return (
     <Header>
@@ -121,10 +111,6 @@ const AppHeader: FC = () => {
         </Background>
       </LogoContainer>
       <Toolbar>
-        <Hotkey>
-          <Description>Show/hide</Description>
-          <span>Ctrl+H</span>
-        </Hotkey>
         <WriteUsFeedback>
           <Feedback />
           Write us a feedback

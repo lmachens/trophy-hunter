@@ -24,6 +24,9 @@ const Filter = styled.div`
   margin-left: 4px;
   height: 20px;
   width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const AvailableTrophies: FC = () => {

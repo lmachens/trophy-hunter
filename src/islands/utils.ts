@@ -1,6 +1,19 @@
+import { ComponentType } from 'react';
 import styled from '@emotion/styled';
 
-export function transformIsland({ name, top, left, Component }) {
+interface TransformIslandProps {
+  name: string;
+  top: number;
+  left: number;
+  Component: ComponentType<IslandProps>;
+}
+
+export function transformIsland({
+  name,
+  top,
+  left,
+  Component
+}: TransformIslandProps) {
   return {
     name,
     top,
@@ -19,4 +32,11 @@ export function transformIsland({ name, top, left, Component }) {
       }
     `
   };
+}
+
+export interface IslandProps {
+  className?: string;
+  onClick?(): void;
+  open?: boolean;
+  done?: boolean;
 }

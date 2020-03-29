@@ -1,6 +1,7 @@
-import { FC, SVGProps } from 'react';
+import { FC } from 'react';
+import { IslandProps } from './utils';
 
-const EpicIsland: FC<SVGProps<SVGSVGElement>> = props => {
+const EpicIsland: FC<IslandProps> = ({ ...svgProps }) => {
   return (
     <svg
       width="207"
@@ -8,7 +9,7 @@ const EpicIsland: FC<SVGProps<SVGSVGElement>> = props => {
       viewBox="0 0 207 182"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...svgProps}
     >
       <path
         d="M192 131.989L192 69.4892L182.914 56L62.0743 56L33 87.4748L46.1743 139L46.1743 159.867L46.1743 173.806L55.26 181L118.86 181L134.76 176.504L150.206 164.363L150.206 141.432L192 131.989Z"

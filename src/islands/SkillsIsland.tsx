@@ -1,6 +1,7 @@
-import { FC, SVGProps } from 'react';
+import { FC } from 'react';
+import { IslandProps } from './utils';
 
-const SkillsIsland: FC<SVGProps<SVGSVGElement>> = props => {
+const SkillsIsland: FC<IslandProps> = ({ ...svgProps }) => {
   return (
     <svg
       width="161"
@@ -8,7 +9,7 @@ const SkillsIsland: FC<SVGProps<SVGSVGElement>> = props => {
       viewBox="0 0 161 177"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...svgProps}
     >
       <path
         d="M1 126.989V64.4892L10.0857 51H130.926L160 82.4748V141.827L146.826 154.867V168.806L137.74 176H74.14L58.24 171.504L42.7943 159.363V136.432L1 126.989Z"

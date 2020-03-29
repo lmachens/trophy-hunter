@@ -6,7 +6,7 @@ import TeamWorkIsland from '../islands/TeamWorkIsland';
 import SpecialIsland from '../islands/SpecialIsland';
 import EpicIsland from '../islands/EpicIsland';
 import ObjectivesIsland from '../islands/ObjectivesIsland';
-import EyeIsland from '../islands/EyeIsland';
+import HubIsland from '../islands/HubIsland';
 import styled from '@emotion/styled';
 import { transformIsland } from '../islands/utils';
 
@@ -48,10 +48,10 @@ const islands = [
     Component: ObjectivesIsland
   }),
   transformIsland({
-    name: 'eyeIsland',
+    name: 'hubIsland',
     top: 250,
     left: 270,
-    Component: EyeIsland
+    Component: HubIsland
   })
 ];
 
@@ -91,6 +91,7 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
           <Component
             key={name}
             onClick={() => onIslandClick({ name, top, left })}
+            open
           />
         ))}
       </SizeContainer>

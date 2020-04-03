@@ -22,14 +22,6 @@ export function transformIsland({
       position: absolute;
       top: ${top}px;
       left: ${left}px;
-
-      &:hover {
-        background: radial-gradient(
-          circle,
-          rgba(246, 246, 246, 1) 0%,
-          rgba(148, 187, 233, 0) 100%
-        );
-      }
     `
   };
 }
@@ -39,4 +31,5 @@ export interface IslandProps {
   onClick?(): void;
   open?: boolean;
   done?: boolean;
+  closed?: boolean;
 }

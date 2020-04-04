@@ -9,7 +9,7 @@ import {
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
-type Placement = 'right';
+type Placement = 'right' | 'bottom';
 
 interface ContainerProps {
   isVisible: boolean;
@@ -20,9 +20,15 @@ interface ContainerProps {
 
 const arrows = {
   right: css`
-    border-width: 6px 6px 6px 0em;
+    border-width: 6px 6px 6px 0px;
     top: calc(50% - 6px);
     left: -6px;
+  `,
+  bottom: css`
+    border-width: 6px 6px 6px 0px;
+    transform: rotate(-90deg);
+    top: calc(100% - 3px);
+    left: calc(50% - 6px);
   `
 };
 
@@ -37,6 +43,8 @@ const Container = styled.div<ContainerProps>`
   pointer-events: none;
   z-index: 10;
   font-family: 'Roboto Mono', monospace;
+  max-width: 300px;
+  transition: opacity 0.15s;
 
   ::after {
     position: absolute;
@@ -48,18 +56,29 @@ const Container = styled.div<ContainerProps>`
   }
 `;
 
+const Text = styled.p`
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+`;
+
 interface TooltipProps {
   title: ReactNode;
+  text?: ReactNode;
   placement: Placement;
-  children: ReactElement;
+  children?: ReactElement;
   offset?: number;
+  visible?: boolean;
+  className?: string;
 }
 
 const Tooltip: FC<TooltipProps> = ({
   children,
   title,
+  text,
   placement,
-  offset = 10
+  offset = 10,
+  visible,
+  className
 }) => {
   const containerNode = useRef<HTMLDivElement>();
   const [isVisible, setIsVisible] = useState(false);
@@ -91,18 +110,21 @@ const Tooltip: FC<TooltipProps> = ({
 
   return (
     <>
-      {cloneElement(children, {
-        onMouseEnter: handleMouseEnter,
-        onMouseLeave: handleMouseLeave
-      })}
+      {children &&
+        cloneElement(children, {
+          onMouseEnter: handleMouseEnter,
+          onMouseLeave: handleMouseLeave
+        })}
       <Container
         ref={containerNode}
-        isVisible={isVisible}
+        isVisible={visible || isVisible}
         left={left}
         top={top}
         placement={placement}
+        className={className}
       >
-        {title}
+        <h3>{title}</h3>
+        {text && <Text>{text}</Text>}
       </Container>
     </>
   );

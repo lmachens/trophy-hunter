@@ -21,10 +21,17 @@ import Collection from '../common/Collection';
 import IslandDetails from '../common/IslandDetails';
 import Overview from '../common/Overview';
 import { welcome } from '../api/trophies';
+import Tooltip from '../common/Tooltip';
 
 const Container = styled.div`
   display: flex;
   height: 100vh;
+`;
+
+const WelcomeTooltip = styled(Tooltip)`
+  width: 300px;
+  top: 240px;
+  left: 246px;
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -75,6 +82,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       status: 'closed'
     }
   };
+
+  const showWelcomeMessage =
+    userIslands.hubIsland.levels.welcome.status === 'active' && !activeIsland;
 
   return (
     <>
@@ -130,6 +140,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                       {activeTool === 'settings' && <Settings />}
                       {activeTool === 'collection' && <Collection />}
                     </ToolPane>
+                  )}
+                  {showWelcomeMessage && (
+                    <WelcomeTooltip
+                      title="Welcome to Trophy Hunter!"
+                      text="Click on the first level to open the trophies shelf and view trophies, description and progress."
+                      placement="bottom"
+                      visible={true}
+                    />
                   )}
                 </Main>
               </Container>

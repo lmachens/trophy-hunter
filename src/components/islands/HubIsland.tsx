@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { IslandProps } from './utils';
-import CombatLevel from './levels/CombatLevel';
-import SkillsLevel from './levels/SkillsLevel';
-import TeamplayLevel from './levels/TeamplayLevel';
-import ObjectivesLevel from './levels/ObjectivesLevel';
-import EpicLevel from './levels/EpicLevel';
-import SpecialLevel from './levels/SpecialLevel';
 import IslandSVG from './IslandSVG';
-import Level from './levels/Level';
+import Level from '../levels/Level';
+import CombatLevel from '../levels/CombatLevel';
+import SkillsLevel from '../levels/SkillsLevel';
+import TeamplayLevel from '../levels/TeamplayLevel';
+import ObjectivesLevel from '../levels/ObjectivesLevel';
+import EpicLevel from '../levels/EpicLevel';
+import SpecialLevel from '../levels/SpecialLevel';
 
 const HubIsland: FC<IslandProps> = ({ status, levels, ...svgProps }) => {
   return (

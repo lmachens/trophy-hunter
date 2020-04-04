@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
-import { SpecialLevelGradients } from '../islands/levels/SpecialLevel';
+import { SpecialLevelGradients } from '../levels/SpecialLevel';
 
 const Container = styled.div`
   flex-grow: 1;

@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-// import Trophy from './Trophy';
 import ChooseALevel from './ChooseALevel';
 import DetailsToggle from './DetailsToggle';
 
@@ -35,25 +34,25 @@ type IslandProps = {
   left: number;
 };
 
-interface IslandDetailsProps {
-  activeIsland: IslandProps;
+interface LevelDetailsProps {
+  targetLevel: IslandProps;
   onToggleClick(): void;
   open: boolean;
 }
 
-const IslandDetails: FC<IslandDetailsProps> = ({
-  activeIsland,
+const LevelDetails: FC<LevelDetailsProps> = ({
+  targetLevel,
   open,
   onToggleClick
 }) => {
   let content;
-  if (open && !activeIsland) {
+  if (open && !targetLevel) {
     content = <ChooseALevel />;
-  } else if (activeIsland) {
+  } else if (targetLevel) {
     content = (
       <>
         <img src="/combat-big.png" />
-        <h3>{activeIsland.name} Lvl.1</h3>
+        <h3>{targetLevel.name} Lvl.1</h3>
         <List>TBA</List>
       </>
     );
@@ -67,4 +66,4 @@ const IslandDetails: FC<IslandDetailsProps> = ({
   );
 };
 
-export default IslandDetails;
+export default LevelDetails;

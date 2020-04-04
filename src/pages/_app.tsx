@@ -18,7 +18,7 @@ import { useState } from 'react';
 import ToolPane from '../common/ToolPane';
 import Settings from '../common/Settings';
 import Collection from '../common/Collection';
-import IslandDetails from '../common/IslandDetails';
+import LevelDetails from '../common/LevelDetails';
 import Overview from '../common/Overview';
 import { welcome } from '../api/trophies';
 import Tooltip from '../common/Tooltip';
@@ -36,7 +36,7 @@ const WelcomeTooltip = styled(Tooltip)`
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
-  const [activeIsland, setActiveIsland] = useState(null);
+  const [targetLevel, setTargetLevel] = useState(null);
   const [openIslandDetails, setOpenIslandDetails] = useState(false);
   const [availableTrophies, setAvailableTrophies] = useState([welcome]);
 
@@ -84,7 +84,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const showWelcomeMessage =
-    userIslands.hubIsland.levels.welcome.status === 'active' && !activeIsland;
+    userIslands.hubIsland.levels.welcome.status === 'active' && !targetLevel;
 
   return (
     <>
@@ -106,29 +106,29 @@ function MyApp({ Component, pageProps }: AppProps) {
                   activeTool={activeTool}
                   onToolClick={tool => {
                     setOpenIslandDetails(null);
-                    setActiveIsland(null);
+                    setTargetLevel(null);
                     setActiveTool(activeTool === tool ? null : tool);
                   }}
                 />
                 <Main>
                   <Component
                     {...pageProps}
-                    activeIsland={activeIsland}
+                    targetLevel={targetLevel}
                     userIslands={userIslands}
-                    onIslandClick={island => {
+                    onLevelClick={island => {
                       setActiveTool(null);
-                      setActiveIsland(island);
+                      setTargetLevel(island);
                       setOpenIslandDetails(true);
                     }}
                   />
-                  <IslandDetails
-                    activeIsland={activeIsland}
+                  <LevelDetails
+                    targetLevel={targetLevel}
                     open={openIslandDetails}
                     onToggleClick={() => {
                       setActiveTool(null);
                       if (openIslandDetails) {
                         setOpenIslandDetails(false);
-                        setActiveIsland(null);
+                        setTargetLevel(null);
                       } else {
                         setOpenIslandDetails(true);
                       }

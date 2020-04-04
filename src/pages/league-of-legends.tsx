@@ -1,14 +1,14 @@
 import { NextPage } from 'next';
-import Islands from '../common/Islands';
-import CombatIsland from '../islands/CombatIsland';
-import SkillsIsland from '../islands/SkillsIsland';
-import TeamWorkIsland from '../islands/TeamWorkIsland';
-import SpecialIsland from '../islands/SpecialIsland';
-import EpicIsland from '../islands/EpicIsland';
-import ObjectivesIsland from '../islands/ObjectivesIsland';
-import HubIsland from '../islands/HubIsland';
 import styled from '@emotion/styled';
-import { transformIsland, UserIslands } from '../islands/utils';
+import Islands from '../components/islands/Islands';
+import CombatIsland from '../components/islands/CombatIsland';
+import SkillsIsland from '../components/islands/SkillsIsland';
+import TeamWorkIsland from '../components/islands/TeamWorkIsland';
+import SpecialIsland from '../components/islands/SpecialIsland';
+import EpicIsland from '../components/islands/EpicIsland';
+import ObjectivesIsland from '../components/islands/ObjectivesIsland';
+import HubIsland from '../components/islands/HubIsland';
+import { transformIsland, UserIslands } from '../components/islands/utils';
 
 const islands = [
   transformIsland({
@@ -71,13 +71,13 @@ type IslandProps = {
 
 interface GamePageProps {
   activeIsland: IslandProps;
-  onIslandClick(island: IslandProps): void;
+  onLevelClick(island: IslandProps): void;
   userIslands: UserIslands;
 }
 
 const LeagueOfLegends: NextPage<GamePageProps> = ({
   activeIsland,
-  onIslandClick,
+  onLevelClick,
   userIslands
 }) => {
   return (
@@ -89,15 +89,15 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
           marginTop: `${activeIsland ? 100 : 30}px`
         }}
       >
-        {islands.map(({ name, top, left, Component }) => {
+        {islands.map(({ name, top, left, Component: Island }) => {
           const { status, levels } = userIslands[name] || {
             status: 'closed',
             levels: {}
           };
           return (
-            <Component
+            <Island
               key={name}
-              onClick={() => onIslandClick({ name, top, left })}
+              onClick={() => onLevelClick({ name, top, left })}
               status={status}
               levels={levels}
             />

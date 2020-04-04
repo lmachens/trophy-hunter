@@ -34,9 +34,16 @@ const WelcomeTooltip = styled(Tooltip)`
   left: 246px;
 `;
 
+type TargetLevel = {
+  islandName: string;
+  levelName: string;
+  top: number;
+  left: number;
+};
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
-  const [targetLevel, setTargetLevel] = useState(null);
+  const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
   const [openIslandDetails, setOpenIslandDetails] = useState(false);
   const [availableTrophies, setAvailableTrophies] = useState([welcome]);
 
@@ -113,16 +120,18 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Main>
                   <Component
                     {...pageProps}
-                    targetLevel={targetLevel}
+                    top={targetLevel?.top}
+                    left={targetLevel?.left}
                     userIslands={userIslands}
-                    onLevelClick={island => {
+                    onLevelClick={targetLevel => {
                       setActiveTool(null);
-                      setTargetLevel(island);
+                      setTargetLevel(targetLevel);
                       setOpenIslandDetails(true);
                     }}
                   />
                   <LevelDetails
-                    targetLevel={targetLevel}
+                    islandName={targetLevel?.islandName}
+                    levelName={targetLevel?.levelName}
                     open={openIslandDetails}
                     onToggleClick={() => {
                       setActiveTool(null);

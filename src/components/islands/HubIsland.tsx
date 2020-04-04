@@ -9,7 +9,12 @@ import ObjectivesLevel from '../levels/ObjectivesLevel';
 import EpicLevel from '../levels/EpicLevel';
 import SpecialLevel from '../levels/SpecialLevel';
 
-const HubIsland: FC<IslandProps> = ({ status, levels, ...svgProps }) => {
+const HubIsland: FC<IslandProps> = ({
+  status,
+  levels,
+  onLevelClick,
+  ...svgProps
+}) => {
   return (
     <IslandSVG
       width="187"
@@ -129,21 +134,40 @@ const HubIsland: FC<IslandProps> = ({ status, levels, ...svgProps }) => {
         strokeWidth="0.781893"
       />
 
-      <Level transform="translate(90 58)" status={levels.welcome.status} />
-      <CombatLevel transform="translate(48 30)" status={levels.combat.status} />
-      <SkillsLevel transform="translate(89 13)" status={levels.skills.status} />
+      <Level
+        transform="translate(90 58)"
+        status={levels.welcome.status}
+        onClick={() => onLevelClick('welcome')}
+      />
+      <CombatLevel
+        transform="translate(48 30)"
+        status={levels.combat.status}
+        onClick={() => onLevelClick('combat')}
+      />
+      <SkillsLevel
+        transform="translate(89 13)"
+        status={levels.skills.status}
+        onClick={() => onLevelClick('skills')}
+      />
       <TeamplayLevel
         transform="translate(132 30)"
         status={levels.teamplay.status}
+        onClick={() => onLevelClick('teamplay')}
       />
       <ObjectivesLevel
         transform="translate(132 90)"
         status={levels.objectives.status}
+        onClick={() => onLevelClick('objectives')}
       />
-      <EpicLevel transform="translate(89 105)" status={levels.epic.status} />
+      <EpicLevel
+        transform="translate(89 105)"
+        status={levels.epic.status}
+        onClick={() => onLevelClick('epic')}
+      />
       <SpecialLevel
         transform="translate(48 90)"
         status={levels.special.status}
+        onClick={() => onLevelClick('special')}
       />
     </IslandSVG>
   );

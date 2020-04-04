@@ -28,31 +28,29 @@ const List = styled.div`
   margin-bottom: 20px;
 `;
 
-type IslandProps = {
-  name: string;
-  top: number;
-  left: number;
-};
-
 interface LevelDetailsProps {
-  targetLevel: IslandProps;
+  levelName?: string;
+  islandName?: string;
   onToggleClick(): void;
   open: boolean;
 }
 
 const LevelDetails: FC<LevelDetailsProps> = ({
-  targetLevel,
+  levelName,
+  islandName,
   open,
   onToggleClick
 }) => {
   let content;
-  if (open && !targetLevel) {
+  if (open && !islandName) {
     content = <ChooseALevel />;
-  } else if (targetLevel) {
+  } else if (islandName) {
     content = (
       <>
         <img src="/combat-big.png" />
-        <h3>{targetLevel.name} Lvl.1</h3>
+        <h3>
+          {islandName} {levelName} Lvl.1
+        </h3>
         <List>TBA</List>
       </>
     );

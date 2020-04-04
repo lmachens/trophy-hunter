@@ -63,20 +63,23 @@ const SizeContainer = styled.div`
   margin: 30px;
 `;
 
-type IslandProps = {
-  name: string;
+type TargetLevel = {
+  islandName: string;
+  levelName: string;
   top: number;
   left: number;
 };
 
 interface GamePageProps {
-  activeIsland: IslandProps;
-  onLevelClick(island: IslandProps): void;
+  top: number;
+  left: number;
+  onLevelClick(targetLevel: TargetLevel): void;
   userIslands: UserIslands;
 }
 
 const LeagueOfLegends: NextPage<GamePageProps> = ({
-  activeIsland,
+  top,
+  left,
   onLevelClick,
   userIslands
 }) => {
@@ -84,9 +87,9 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
     <Islands>
       <SizeContainer
         style={{
-          left: `${-activeIsland?.left || 0}px`,
-          top: `${-activeIsland?.top || 0}px`,
-          marginTop: `${activeIsland ? 100 : 30}px`
+          left: `${-left || 0}px`,
+          top: `${-top || 0}px`,
+          marginTop: `${top ? 100 : 30}px`
         }}
       >
         {islands.map(({ name, top, left, Component: Island }) => {
@@ -97,7 +100,9 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
           return (
             <Island
               key={name}
-              onClick={() => onLevelClick({ name, top, left })}
+              onLevelClick={levelName =>
+                onLevelClick({ islandName: name, levelName, top, left })
+              }
               status={status}
               levels={levels}
             />

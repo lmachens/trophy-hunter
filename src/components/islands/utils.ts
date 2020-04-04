@@ -28,7 +28,7 @@ export function transformIsland({
 
 export interface IslandProps extends UserIsland {
   className?: string;
-  onClick?(): void;
+  onLevelClick?(levelName: string): void;
 }
 
 export interface UserLevels {

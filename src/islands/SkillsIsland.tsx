@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { IslandProps } from './utils';
+import IslandSVG from './IslandSVG';
 
 const SkillsIsland: FC<IslandProps> = ({ ...svgProps }) => {
   return (
-    <svg
+    <IslandSVG
       width="161"
       height="177"
       viewBox="0 0 161 177"
@@ -153,7 +154,7 @@ const SkillsIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#FBFF2E"
         strokeWidth="1.5"
       />
-    </svg>
+    </IslandSVG>
   );
 };
 

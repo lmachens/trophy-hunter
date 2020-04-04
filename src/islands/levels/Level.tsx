@@ -13,17 +13,14 @@ const blink = keyframes`
 `;
 
 interface LevelProps extends SVGProps<SVGGElement> {
-  locked?: boolean;
-  active?: boolean;
-  unlocked?: boolean;
-  completed?: boolean;
+  status: 'active' | 'unlocked' | 'locked' | 'completed';
 }
 
 const Circle = styled.circle<LevelProps>`
-  opacity: ${props => (props.locked ? 0.4 : 1)};
+  opacity: ${props => (props.status === 'locked' ? 0.4 : 1)};
   stroke: inherit;
   stroke-width: 1.5px;
-  fill: ${props => (props.completed ? 'inherit' : 'none')};
+  fill: ${props => (props.status === 'completed' ? 'inherit' : 'none')};
 `;
 
 const Group = styled.g`
@@ -51,20 +48,13 @@ const HalfCircle = props => {
   return <Path d="M4.4,7 a1,1 0 0,0 0,-6" {...props} />;
 };
 
-const Level: FC<LevelProps> = ({
-  active,
-  unlocked,
-  className,
-  locked,
-  completed,
-  ...groupElementProps
-}) => {
+const Level: FC<LevelProps> = ({ status, className, ...groupElementProps }) => {
   return (
     <Group className={className} {...groupElementProps}>
       <PseudoCircle cx="4" cy="4" r="7" />
-      {active && <BlinkCircle cx="4" cy="4" r="7" />}
-      {unlocked && <HalfCircle />}
-      <Circle locked={locked} completed={completed} cx="4" cy="4" r="3.25" />
+      {status === 'active' && <BlinkCircle cx="4" cy="4" r="7" />}
+      {status === 'unlocked' && <HalfCircle />}
+      <Circle status={status} cx="4" cy="4" r="3.25" />
     </Group>
   );
 };

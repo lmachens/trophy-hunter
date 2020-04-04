@@ -33,6 +33,49 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [openIslandDetails, setOpenIslandDetails] = useState(false);
   const [availableTrophies, setAvailableTrophies] = useState([welcome]);
 
+  const userIslands = {
+    hubIsland: {
+      status: 'open',
+      levels: {
+        welcome: {
+          status: 'active',
+          trophies: {
+            playstyle: {
+              progress: 0
+            }
+          }
+        },
+        combat: {
+          status: 'locked',
+          trophies: {}
+        },
+        skills: {
+          status: 'locked',
+          trophies: {}
+        },
+        teamplay: {
+          status: 'locked',
+          trophies: {}
+        },
+        objectives: {
+          status: 'locked',
+          trophies: {}
+        },
+        epic: {
+          status: 'locked',
+          trophies: {}
+        },
+        special: {
+          status: 'locked',
+          trophies: {}
+        }
+      }
+    },
+    combatIsland: {
+      status: 'closed'
+    }
+  };
+
   return (
     <>
       <Head>
@@ -61,6 +104,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   <Component
                     {...pageProps}
                     activeIsland={activeIsland}
+                    userIslands={userIslands}
                     onIslandClick={island => {
                       setActiveTool(null);
                       setActiveIsland(island);

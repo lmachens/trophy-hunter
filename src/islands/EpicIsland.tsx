@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { IslandProps } from './utils';
+import IslandSVG from './IslandSVG';
 
 const EpicIsland: FC<IslandProps> = ({ ...svgProps }) => {
   return (
-    <svg
+    <IslandSVG
       width="207"
       height="182"
       viewBox="0 0 207 182"
@@ -125,7 +126,7 @@ const EpicIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#C956FF"
         strokeWidth="1.5"
       />
-    </svg>
+    </IslandSVG>
   );
 };
 

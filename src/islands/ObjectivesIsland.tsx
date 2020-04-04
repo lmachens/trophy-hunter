@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { IslandProps } from './utils';
+import IslandSVG from './IslandSVG';
 
 const ObjectivesIsland: FC<IslandProps> = ({ ...svgProps }) => {
   return (
-    <svg
+    <IslandSVG
       width="265"
       height="288"
       viewBox="0 0 265 288"
@@ -349,7 +350,7 @@ const ObjectivesIsland: FC<IslandProps> = ({ ...svgProps }) => {
       <circle cx="193" cy="224" r="1" fill="#C4C4C4" />
       <circle cx="181" cy="229" r="1" fill="#C4C4C4" />
       <circle cx="173" cy="230" r="1" fill="#C4C4C4" />
-    </svg>
+    </IslandSVG>
   );
 };
 

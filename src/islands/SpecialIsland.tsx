@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { IslandProps } from './utils';
+import IslandSVG from './IslandSVG';
 
 const SpecialIsland: FC<IslandProps> = ({ ...svgProps }) => {
   return (
-    <svg
+    <IslandSVG
       width="235"
       height="246"
       viewBox="0 0 235 246"
@@ -480,7 +481,7 @@ const SpecialIsland: FC<IslandProps> = ({ ...svgProps }) => {
           <stop offset="1" stopColor="#EFB31A" />
         </linearGradient>
       </defs>
-    </svg>
+    </IslandSVG>
   );
 };
 export default SpecialIsland;

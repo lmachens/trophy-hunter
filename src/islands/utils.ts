@@ -26,10 +26,27 @@ export function transformIsland({
   };
 }
 
-export interface IslandProps {
+export interface IslandProps extends UserIsland {
   className?: string;
   onClick?(): void;
-  open?: boolean;
-  done?: boolean;
-  closed?: boolean;
+}
+
+export interface UserLevels {
+  [levelName: string]: {
+    status: 'active' | 'unlocked' | 'locked' | 'completed';
+    trophies: {
+      [trophyName: string]: {
+        progress: number;
+      };
+    };
+  };
+}
+
+export interface UserIsland {
+  status: 'open' | 'done' | 'closed';
+  levels: UserLevels;
+}
+
+export interface UserIslands {
+  [islandName: string]: UserIsland;
 }

@@ -8,7 +8,7 @@ import EpicIsland from '../islands/EpicIsland';
 import ObjectivesIsland from '../islands/ObjectivesIsland';
 import HubIsland from '../islands/HubIsland';
 import styled from '@emotion/styled';
-import { transformIsland } from '../islands/utils';
+import { transformIsland, UserIslands } from '../islands/utils';
 
 const islands = [
   transformIsland({
@@ -72,11 +72,13 @@ type IslandProps = {
 interface GamePageProps {
   activeIsland: IslandProps;
   onIslandClick(island: IslandProps): void;
+  userIslands: UserIslands;
 }
 
 const LeagueOfLegends: NextPage<GamePageProps> = ({
   activeIsland,
-  onIslandClick
+  onIslandClick,
+  userIslands
 }) => {
   return (
     <Islands>
@@ -87,13 +89,20 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
           marginTop: `${activeIsland ? 100 : 30}px`
         }}
       >
-        {islands.map(({ name, top, left, Component }) => (
-          <Component
-            key={name}
-            onClick={() => onIslandClick({ name, top, left })}
-            open
-          />
-        ))}
+        {islands.map(({ name, top, left, Component }) => {
+          const { status, levels } = userIslands[name] || {
+            status: 'closed',
+            levels: {}
+          };
+          return (
+            <Component
+              key={name}
+              onClick={() => onIslandClick({ name, top, left })}
+              status={status}
+              levels={levels}
+            />
+          );
+        })}
       </SizeContainer>
     </Islands>
   );

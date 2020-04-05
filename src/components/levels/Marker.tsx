@@ -12,11 +12,11 @@ const blink = keyframes`
   }
 `;
 
-interface LevelProps extends SVGProps<SVGGElement> {
+interface MarkerProps extends SVGProps<SVGGElement> {
   status: 'active' | 'unlocked' | 'locked' | 'completed';
 }
 
-const Circle = styled.circle<LevelProps>`
+const Circle = styled.circle<MarkerProps>`
   opacity: ${props => (props.status === 'locked' ? 0.4 : 1)};
   stroke: inherit;
   stroke-width: 1.5px;
@@ -48,7 +48,11 @@ const HalfCircle = props => {
   return <Path d="M4.4,7 a1,1 0 0,0 0,-6" {...props} />;
 };
 
-const Level: FC<LevelProps> = ({ status, className, ...groupElementProps }) => {
+const Marker: FC<MarkerProps> = ({
+  status,
+  className,
+  ...groupElementProps
+}) => {
   return (
     <Group className={className} {...groupElementProps}>
       <PseudoCircle cx="4" cy="4" r="7" />
@@ -58,4 +62,4 @@ const Level: FC<LevelProps> = ({ status, className, ...groupElementProps }) => {
     </Group>
   );
 };
-export default Level;
+export default Marker;

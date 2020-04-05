@@ -1,7 +1,7 @@
-import Level from './Level';
+import Marker from '../Marker';
 import styled from '@emotion/styled';
 
-const SkillsLevel = styled(Level)`
+const SkillsMarker = styled(Marker)`
   color: #fbff2e;
 
   &:hover {
@@ -9,4 +9,4 @@ const SkillsLevel = styled(Level)`
   }
 `;
 
-export default SkillsLevel;
+export default SkillsMarker;

@@ -1,7 +1,7 @@
-import Level from './Level';
+import Marker from '../Marker';
 import styled from '@emotion/styled';
 
-const EpicLevel = styled(Level)`
+const EpicMarker = styled(Marker)`
   color: #c956ff;
 
   &:hover {
@@ -9,4 +9,4 @@ const EpicLevel = styled(Level)`
   }
 `;
 
-export default EpicLevel;
+export default EpicMarker;

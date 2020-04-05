@@ -1,19 +1,4 @@
-import Level from './Level';
-import styled from '@emotion/styled';
-
-const SpecialLevel = styled(Level)`
-  stroke: url(#specialColor);
-  fill: url(#specialColor);
-
-  &:hover {
-    stroke: url(#specialColorHover);
-    fill: url(#specialColorHover);
-  }
-`;
-
-export default SpecialLevel;
-
-export const SpecialLevelGradients = () => {
+const SpecialGradients = () => {
   return (
     <svg>
       <defs>
@@ -43,3 +28,5 @@ export const SpecialLevelGradients = () => {
     </svg>
   );
 };
+
+export default SpecialGradients;

@@ -1,7 +1,7 @@
-import Level from './Level';
+import Marker from '../Marker';
 import styled from '@emotion/styled';
 
-const CombatLevel = styled(Level)`
+const CombatMarker = styled(Marker)`
   color: #ff9330;
 
   &:hover {
@@ -9,4 +9,4 @@ const CombatLevel = styled(Level)`
   }
 `;
 
-export default CombatLevel;
+export default CombatMarker;

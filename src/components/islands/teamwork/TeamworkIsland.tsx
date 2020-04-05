@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { IslandProps } from './utils';
-import IslandSVG from './IslandSVG';
+import { IslandProps } from '../utils';
+import IslandSVG from '../IslandSVG';
 
 const TeamWorkIsland: FC<IslandProps> = ({ ...svgProps }) => {
   return (

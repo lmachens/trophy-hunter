@@ -1,14 +1,17 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import Islands from '../components/islands/Islands';
-import CombatIsland from '../components/islands/CombatIsland';
-import SkillsIsland from '../components/islands/SkillsIsland';
-import TeamWorkIsland from '../components/islands/TeamWorkIsland';
-import SpecialIsland from '../components/islands/SpecialIsland';
-import EpicIsland from '../components/islands/EpicIsland';
-import ObjectivesIsland from '../components/islands/ObjectivesIsland';
-import HubIsland from '../components/islands/HubIsland';
+import {
+  Islands,
+  CombatIsland,
+  SkillsIsland,
+  HubIsland,
+  TeamworkIsland,
+  SpecialIsland,
+  EpicIsland,
+  ObjectivesIsland
+} from '../components/islands';
 import { transformIsland, UserIslands } from '../components/islands/utils';
+import { Level } from '../components/levels/types';
 
 const islands = [
   transformIsland({
@@ -24,10 +27,10 @@ const islands = [
     Component: SkillsIsland
   }),
   transformIsland({
-    name: 'teamWorkIsland',
+    name: 'teamworkIsland',
     top: 70,
     left: 510,
-    Component: TeamWorkIsland
+    Component: TeamworkIsland
   }),
   transformIsland({
     name: 'specialIsland',
@@ -65,7 +68,7 @@ const SizeContainer = styled.div`
 
 type TargetLevel = {
   islandName: string;
-  levelName: string;
+  level: Level;
   top: number;
   left: number;
 };
@@ -100,8 +103,8 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
           return (
             <Island
               key={name}
-              onLevelClick={levelName =>
-                onLevelClick({ islandName: name, levelName, top, left })
+              onLevelClick={level =>
+                onLevelClick({ islandName: name, level, top, left })
               }
               status={status}
               levels={levels}

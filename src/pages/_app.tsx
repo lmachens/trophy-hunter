@@ -18,10 +18,11 @@ import { useState } from 'react';
 import ToolPane from '../common/ToolPane';
 import Settings from '../common/Settings';
 import Collection from '../common/Collection';
-import LevelDetails from '../common/LevelDetails';
+import LevelPanel from '../components/levels/LevelPanel';
 import Overview from '../common/Overview';
 import { welcome } from '../api/trophies';
 import Tooltip from '../common/Tooltip';
+import { Level } from '../components/levels/types';
 
 const Container = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const WelcomeTooltip = styled(Tooltip)`
 
 type TargetLevel = {
   islandName: string;
-  levelName: string;
+  level: Level;
   top: number;
   left: number;
 };
@@ -91,7 +92,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const showWelcomeMessage =
-    userIslands.hubIsland.levels.welcome.status === 'active' && !targetLevel;
+    userIslands.hubIsland.levels.welcome.status === 'active' &&
+    !openIslandDetails;
 
   return (
     <>
@@ -129,9 +131,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                       setOpenIslandDetails(true);
                     }}
                   />
-                  <LevelDetails
-                    islandName={targetLevel?.islandName}
-                    levelName={targetLevel?.levelName}
+                  <LevelPanel
+                    level={targetLevel?.level}
                     open={openIslandDetails}
                     onToggleClick={() => {
                       setActiveTool(null);

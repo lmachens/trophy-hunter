@@ -1,13 +1,20 @@
 import { FC } from 'react';
-import { IslandProps } from './utils';
-import IslandSVG from './IslandSVG';
-import Level from '../levels/Level';
-import CombatLevel from '../levels/CombatLevel';
-import SkillsLevel from '../levels/SkillsLevel';
-import TeamplayLevel from '../levels/TeamplayLevel';
-import ObjectivesLevel from '../levels/ObjectivesLevel';
-import EpicLevel from '../levels/EpicLevel';
-import SpecialLevel from '../levels/SpecialLevel';
+import { IslandProps } from '../utils';
+import IslandSVG from '../IslandSVG';
+// import SkillsLevel from '../levels/SkillsLevel';
+// import TeamplayLevel from '../levels/TeamplayLevel';
+// import ObjectivesLevel from '../levels/ObjectivesLevel';
+// import EpicLevel from '../levels/EpicLevel';
+// import SpecialLevel from '../levels/SpecialLevel';
+import {
+  combat,
+  epic,
+  objectives,
+  skills,
+  special,
+  teamplay,
+  welcome
+} from './levels';
 
 const HubIsland: FC<IslandProps> = ({
   status,
@@ -133,41 +140,40 @@ const HubIsland: FC<IslandProps> = ({
         stroke="#EAEAEA"
         strokeWidth="0.781893"
       />
-
-      <Level
+      <welcome.Marker
         transform="translate(90 58)"
         status={levels.welcome.status}
-        onClick={() => onLevelClick('welcome')}
+        onClick={() => onLevelClick(welcome)}
       />
-      <CombatLevel
+      <combat.Marker
         transform="translate(48 30)"
         status={levels.combat.status}
-        onClick={() => onLevelClick('combat')}
+        onClick={() => onLevelClick(combat)}
       />
-      <SkillsLevel
+      <skills.Marker
         transform="translate(89 13)"
         status={levels.skills.status}
-        onClick={() => onLevelClick('skills')}
+        onClick={() => onLevelClick(skills)}
       />
-      <TeamplayLevel
+      <teamplay.Marker
         transform="translate(132 30)"
         status={levels.teamplay.status}
-        onClick={() => onLevelClick('teamplay')}
+        onClick={() => onLevelClick(teamplay)}
       />
-      <ObjectivesLevel
+      <objectives.Marker
         transform="translate(132 90)"
         status={levels.objectives.status}
-        onClick={() => onLevelClick('objectives')}
+        onClick={() => onLevelClick(objectives)}
       />
-      <EpicLevel
+      <epic.Marker
         transform="translate(89 105)"
         status={levels.epic.status}
-        onClick={() => onLevelClick('epic')}
+        onClick={() => onLevelClick(epic)}
       />
-      <SpecialLevel
+      <special.Marker
         transform="translate(48 90)"
         status={levels.special.status}
-        onClick={() => onLevelClick('special')}
+        onClick={() => onLevelClick(special)}
       />
     </IslandSVG>
   );

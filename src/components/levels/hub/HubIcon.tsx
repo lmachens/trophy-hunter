@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const WelcomeIcon: FC = () => {
+const HubIcon: FC = () => {
   return (
     <svg
       width="60"
@@ -73,4 +73,4 @@ const WelcomeIcon: FC = () => {
   );
 };
 
-export default WelcomeIcon;
+export default HubIcon;

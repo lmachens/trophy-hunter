@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Profile from './Profile';
 import AvailableTrophies from './AvailableTrophies';
 import Ads from './Ads';
-import { TrophyData } from '../api/trophies/trophy';
+import { Trophy } from '../components/trophies/types';
 
 const Container = styled.aside`
   padding: 48px 20px 20px 20px;
@@ -16,7 +16,7 @@ const Container = styled.aside`
 `;
 
 interface OverviewProps {
-  availableTrophies: TrophyData[];
+  availableTrophies: Trophy[];
 }
 
 const Overview: FC<OverviewProps> = ({ availableTrophies }) => {

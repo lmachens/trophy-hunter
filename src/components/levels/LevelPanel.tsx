@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import ChooseALevel from '../../common/ChooseALevel';
 import DetailsToggle from '../../common/DetailsToggle';
 import { Level } from './types';
+import TrophyListItem from '../trophies/TrophyListItem';
 
 type Open = { open: boolean };
 
@@ -44,7 +45,11 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
       <>
         <level.Icon />
         <h3>{level.title}</h3>
-        <List>TBA</List>
+        <List>
+          {level.trophies.map(trophy => (
+            <TrophyListItem key={trophy.name} trophy={trophy} />
+          ))}
+        </List>
       </>
     );
   }

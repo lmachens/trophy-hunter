@@ -1,15 +1,14 @@
 import { Level } from '../../../levels/types';
-import { WelcomeIcon, WelcomeMarker } from '../../../levels/welcome';
+import { HubIcon, HubMarker } from '../../../levels/hub';
+import { playstyle } from '../../../trophies/hub';
 
 const welcome: Level = {
   island: 'hub',
   name: 'welcome',
   title: 'Welcome to Trophy Hunter',
-  Icon: WelcomeIcon,
-  Marker: WelcomeMarker,
-  trophies: [
-    /* playstyle */
-  ]
+  Icon: HubIcon,
+  Marker: HubMarker,
+  trophies: [playstyle]
 };
 
 export default welcome;

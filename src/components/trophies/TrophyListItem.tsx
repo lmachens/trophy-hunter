@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import { TrophyData } from '../api/trophies/trophy';
+import { Trophy } from './types';
 import TrophyProgressIcon from './TrophyProgressIcon';
 
 const ListItem = styled.div`
@@ -11,11 +11,11 @@ const ListItem = styled.div`
   align-items: center;
 `;
 
-interface TrophyProps {
-  trophy: TrophyData;
+interface TrophyListItemProps {
+  trophy: Trophy;
 }
 
-const Trophy: FC<TrophyProps> = ({ trophy }) => {
+const TrophyListItem: FC<TrophyListItemProps> = ({ trophy }) => {
   return (
     <ListItem>
       <TrophyProgressIcon />
@@ -27,4 +27,4 @@ const Trophy: FC<TrophyProps> = ({ trophy }) => {
   );
 };
 
-export default Trophy;
+export default TrophyListItem;

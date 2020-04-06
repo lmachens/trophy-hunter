@@ -1,4 +1,5 @@
 import { FC, SVGProps } from 'react';
+import { Trophy } from '../trophies/types';
 
 export interface MarkerProps extends SVGProps<SVGGElement> {
   status: 'active' | 'unlocked' | 'locked' | 'completed';
@@ -10,5 +11,5 @@ export interface Level {
   title: string;
   Icon: React.FC;
   Marker: FC<MarkerProps>;
-  trophies: /* Trophy */ [];
+  trophies: Trophy[];
 }

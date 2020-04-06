@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import Trophy from './Trophy';
 import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
-import { TrophyData } from '../api/trophies/trophy';
+import TrophyListItem from '../components/trophies/TrophyListItem';
+import { Trophy } from '../components/trophies/types';
 
 const List = styled.div`
   flex-grow: 1;
@@ -31,7 +31,7 @@ const Filter = styled.div`
 `;
 
 interface AvailableTrophiesProps {
-  trophies: TrophyData[];
+  trophies: Trophy[];
 }
 
 const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophies }) => {
@@ -48,7 +48,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophies }) => {
       </Header>
       <List>
         {trophies.map(trophy => (
-          <Trophy trophy={trophy} key={trophy.id} />
+          <TrophyListItem trophy={trophy} key={trophy.name} />
         ))}
       </List>
     </>

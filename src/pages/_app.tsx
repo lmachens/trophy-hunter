@@ -20,9 +20,9 @@ import Settings from '../common/Settings';
 import Collection from '../common/Collection';
 import LevelPanel from '../components/levels/LevelPanel';
 import Overview from '../common/Overview';
-import { welcome } from '../api/trophies';
 import Tooltip from '../common/Tooltip';
 import { Level } from '../components/levels/types';
+import { playstyle } from '../components/trophies/hub';
 
 const Container = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
   const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
   const [openIslandDetails, setOpenIslandDetails] = useState(false);
-  const [availableTrophies, setAvailableTrophies] = useState([welcome]);
+  const [availableTrophies, setAvailableTrophies] = useState([playstyle]);
 
   const userIslands = {
     hubIsland: {

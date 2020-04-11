@@ -30,6 +30,10 @@ const List = styled.div`
   margin-bottom: 20px;
 `;
 
+const Title = styled.h3`
+  margin-bottom: 12px;
+`;
+
 interface LevelPanelProps {
   level?: Level;
   onToggleClick(): void;
@@ -44,7 +48,7 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
     content = (
       <>
         <level.Icon />
-        <h3>{level.title}</h3>
+        <Title>{level.title}</Title>
         <List>
           {level.trophies.map(trophy => (
             <TrophyListItem key={trophy.name} trophy={trophy} />

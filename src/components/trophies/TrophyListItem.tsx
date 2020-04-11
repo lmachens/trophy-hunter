@@ -3,21 +3,25 @@ import styled from '@emotion/styled';
 import { Trophy } from './types';
 import TrophyProgressIcon from './TrophyProgressIcon';
 
-const ListItem = styled.div`
+interface ListItemProps {
+  borderless?: boolean;
+}
+const ListItem = styled.div<ListItemProps>`
   background: #2b2a30;
   height: 86px;
   margin-bottom: 4px;
   display: flex;
   align-items: center;
+  border-top: ${props => (props.borderless ? 'none' : '1px solid #3f3e43')};
 `;
 
-interface TrophyListItemProps {
+interface TrophyListItemProps extends ListItemProps {
   trophy: Trophy;
 }
 
-const TrophyListItem: FC<TrophyListItemProps> = ({ trophy }) => {
+const TrophyListItem: FC<TrophyListItemProps> = ({ trophy, borderless }) => {
   return (
-    <ListItem>
+    <ListItem borderless={borderless}>
       <TrophyProgressIcon />
       <div>
         <h3>{trophy.title}</h3>

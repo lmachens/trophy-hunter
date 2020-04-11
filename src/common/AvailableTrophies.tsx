@@ -48,7 +48,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophies }) => {
       </Header>
       <List>
         {trophies.map(trophy => (
-          <TrophyListItem trophy={trophy} key={trophy.name} />
+          <TrophyListItem trophy={trophy} key={trophy.name} borderless />
         ))}
       </List>
     </>

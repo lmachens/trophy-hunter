@@ -12,48 +12,49 @@ import {
 } from '../components/islands';
 import { transformIsland, UserIslands } from '../components/islands/utils';
 import { Level } from '../components/levels/types';
+import Background from '../components/islands/Background';
 
 const islands = [
   transformIsland({
     name: 'combatIsland',
-    top: 70,
+    top: 56,
     left: 0,
     Component: CombatIsland
   }),
   transformIsland({
     name: 'skillsIsland',
-    top: 30,
-    left: 270,
+    top: 8,
+    left: 285,
     Component: SkillsIsland
   }),
   transformIsland({
     name: 'teamworkIsland',
-    top: 70,
-    left: 510,
+    top: 20,
+    left: 535,
     Component: TeamworkIsland
   }),
   transformIsland({
     name: 'specialIsland',
-    top: 350,
+    top: 320,
     left: 0,
     Component: SpecialIsland
   }),
   transformIsland({
     name: 'epicIsland',
     top: 460,
-    left: 250,
+    left: 260,
     Component: EpicIsland
   }),
   transformIsland({
     name: 'objectivesIsland',
-    top: 340,
-    left: 500,
+    top: 275,
+    left: 530,
     Component: ObjectivesIsland
   }),
   transformIsland({
     name: 'hubIsland',
     top: 250,
-    left: 270,
+    left: 275,
     Component: HubIsland
   })
 ];
@@ -111,6 +112,7 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
             />
           );
         })}
+        <Background />
       </SizeContainer>
     </Islands>
   );

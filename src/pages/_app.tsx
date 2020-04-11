@@ -23,62 +23,17 @@ import Overview from '../common/Overview';
 import { TargetLevel } from '../components/levels/types';
 import { playstyle } from '../components/trophies/hub';
 import { WelcomeGuide } from '../components/guides';
+import { UserProvider } from '../contexts/user';
 
 const Container = styled.div`
   display: flex;
   height: 100vh;
 `;
 
-const userIslands = {
-  hubIsland: {
-    status: 'open',
-    levels: {
-      welcome: {
-        status: 'active',
-        trophies: {
-          playstyle: {
-            progress: 1
-          }
-        }
-      },
-      combat: {
-        status: 'locked',
-        trophies: {}
-      },
-      skills: {
-        status: 'locked',
-        trophies: {}
-      },
-      teamplay: {
-        status: 'locked',
-        trophies: {}
-      },
-      objectives: {
-        status: 'locked',
-        trophies: {}
-      },
-      epic: {
-        status: 'locked',
-        trophies: {}
-      },
-      special: {
-        status: 'locked',
-        trophies: {}
-      }
-    }
-  },
-  combatIsland: {
-    status: 'closed'
-  }
-};
-
 function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
   const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
   const [visibleIslandDetails, setVisibleIslandDetails] = useState(false);
-  const [availableTrophies, setAvailableTrophies] = useState([playstyle]);
-
-  const showGuide = userIslands.hubIsland.levels.welcome.status === 'active';
 
   return (
     <>
@@ -91,62 +46,57 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <CacheProvider value={cache}>
         {globalStyles}
-        <ApolloProvider client={getApolloClient(null)}>
-          <AuthProvider initialUser={pageProps.me}>
-            <OverwolfWindowProvider>
-              <AppHeader />
-              <Container>
-                <Sidebar
-                  activeTool={activeTool}
-                  onToolClick={tool => {
-                    setVisibleIslandDetails(null);
-                    setTargetLevel(null);
-                    setActiveTool(activeTool === tool ? null : tool);
+        <UserProvider>
+          <OverwolfWindowProvider>
+            <AppHeader />
+            <Container>
+              <Sidebar
+                activeTool={activeTool}
+                onToolClick={tool => {
+                  setVisibleIslandDetails(null);
+                  setTargetLevel(null);
+                  setActiveTool(activeTool === tool ? null : tool);
+                }}
+              />
+              <Main>
+                <Component
+                  {...pageProps}
+                  top={targetLevel?.top}
+                  left={targetLevel?.left}
+                  onLevelClick={targetLevel => {
+                    setActiveTool(null);
+                    setTargetLevel(targetLevel);
+                    setVisibleIslandDetails(true);
                   }}
                 />
-                <Main>
-                  <Component
-                    {...pageProps}
-                    top={targetLevel?.top}
-                    left={targetLevel?.left}
-                    userIslands={userIslands}
-                    onLevelClick={targetLevel => {
-                      setActiveTool(null);
-                      setTargetLevel(targetLevel);
+                <LevelPanel
+                  level={targetLevel?.level}
+                  open={visibleIslandDetails}
+                  onToggleClick={() => {
+                    setActiveTool(null);
+                    if (visibleIslandDetails) {
+                      setVisibleIslandDetails(false);
+                      setTargetLevel(null);
+                    } else {
                       setVisibleIslandDetails(true);
-                    }}
-                  />
-                  <LevelPanel
-                    level={targetLevel?.level}
-                    open={visibleIslandDetails}
-                    onToggleClick={() => {
-                      setActiveTool(null);
-                      if (visibleIslandDetails) {
-                        setVisibleIslandDetails(false);
-                        setTargetLevel(null);
-                      } else {
-                        setVisibleIslandDetails(true);
-                      }
-                    }}
-                  />
-                  <Overview availableTrophies={availableTrophies} />
-                  {activeTool && (
-                    <ToolPane>
-                      {activeTool === 'settings' && <Settings />}
-                      {activeTool === 'collection' && <Collection />}
-                    </ToolPane>
-                  )}
-                  {showGuide && (
-                    <WelcomeGuide
-                      visibleIslandDetails={visibleIslandDetails}
-                      targetLevel={targetLevel}
-                    />
-                  )}
-                </Main>
-              </Container>
-            </OverwolfWindowProvider>
-          </AuthProvider>
-        </ApolloProvider>
+                    }
+                  }}
+                />
+                <Overview />
+                {activeTool && (
+                  <ToolPane>
+                    {activeTool === 'settings' && <Settings />}
+                    {activeTool === 'collection' && <Collection />}
+                  </ToolPane>
+                )}
+                <WelcomeGuide
+                  visibleIslandDetails={visibleIslandDetails}
+                  targetLevel={targetLevel}
+                />
+              </Main>
+            </Container>
+          </OverwolfWindowProvider>
+        </UserProvider>
       </CacheProvider>
     </>
   );

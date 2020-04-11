@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 import { Trophy } from './types';
+import { useTrophyProgress } from '../../contexts/user';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -28,7 +29,8 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   borderless,
   ...props
 }) => {
-  const progress = 0.4;
+  const progress = useTrophyProgress(trophy);
+
   return (
     <ListItem borderless={borderless} {...props}>
       <Progress>

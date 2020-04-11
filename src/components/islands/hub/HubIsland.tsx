@@ -145,37 +145,37 @@ const HubIsland: FC<IslandProps> = ({
 
       <welcome.Marker
         transform="translate(90 58)"
-        status={levels.welcome.status}
+        status={levels.welcome?.status}
         onClick={() => onLevelClick(welcome)}
       />
       <combat.Marker
         transform="translate(48 30)"
-        status={levels.combat.status}
+        status={levels.combat?.status}
         onClick={() => onLevelClick(combat)}
       />
       <skills.Marker
         transform="translate(89 13)"
-        status={levels.skills.status}
+        status={levels.skills?.status}
         onClick={() => onLevelClick(skills)}
       />
       <teamplay.Marker
         transform="translate(132 30)"
-        status={levels.teamplay.status}
+        status={levels.teamplay?.status}
         onClick={() => onLevelClick(teamplay)}
       />
       <objectives.Marker
         transform="translate(132 90)"
-        status={levels.objectives.status}
+        status={levels.objectives?.status}
         onClick={() => onLevelClick(objectives)}
       />
       <epic.Marker
         transform="translate(89 105)"
-        status={levels.epic.status}
+        status={levels.epic?.status}
         onClick={() => onLevelClick(epic)}
       />
       <special.Marker
         transform="translate(48 90)"
-        status={levels.special.status}
+        status={levels.special?.status}
         onClick={() => onLevelClick(special)}
       />
     </IslandSVG>

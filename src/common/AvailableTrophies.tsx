@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import TrophyListItem from '../components/trophies/TrophyListItem';
-import { Trophy } from '../components/trophies/types';
+import { useAvailableTrophyNames } from '../contexts/user';
+import allTrophies from '../components/trophies/allTrophies';
 
 const List = styled.div`
   flex-grow: 1;
@@ -30,11 +31,9 @@ const Filter = styled.div`
   justify-content: center;
 `;
 
-interface AvailableTrophiesProps {
-  trophies: Trophy[];
-}
+const AvailableTrophies: FC = () => {
+  const availableTrophies = useAvailableTrophyNames();
 
-const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophies }) => {
   return (
     <>
       <Header>
@@ -47,9 +46,12 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophies }) => {
         </Filter>
       </Header>
       <List>
-        {trophies.map(trophy => (
-          <TrophyListItem trophy={trophy} key={trophy.name} borderless />
-        ))}
+        {availableTrophies.map(trophyName => {
+          const trophy = allTrophies[trophyName];
+          return (
+            <TrophyListItem trophy={trophy} key={trophy.name} borderless />
+          );
+        })}
       </List>
     </>
   );

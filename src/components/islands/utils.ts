@@ -47,7 +47,3 @@ export interface UserIsland {
   status: 'open' | 'done' | 'closed';
   levels: UserLevels;
 }
-
-export interface UserIslands {
-  [islandName: string]: UserIsland;
-}

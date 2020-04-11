@@ -10,9 +10,10 @@ import {
   EpicIsland,
   ObjectivesIsland
 } from '../components/islands';
-import { transformIsland, UserIslands } from '../components/islands/utils';
+import { transformIsland } from '../components/islands/utils';
 import { Level } from '../components/levels/types';
 import Background from '../components/islands/Background';
+import { useUser } from '../contexts/user';
 
 const islands = [
   transformIsland({
@@ -78,15 +79,15 @@ interface GamePageProps {
   top: number;
   left: number;
   onLevelClick(targetLevel: TargetLevel): void;
-  userIslands: UserIslands;
 }
 
 const LeagueOfLegends: NextPage<GamePageProps> = ({
   top,
   left,
-  onLevelClick,
-  userIslands
+  onLevelClick
 }) => {
+  const user = useUser();
+  const userIslands = user?.islands || {};
   return (
     <Islands>
       <SizeContainer

@@ -29,54 +29,54 @@ const Container = styled.div`
   height: 100vh;
 `;
 
+const userIslands = {
+  hubIsland: {
+    status: 'open',
+    levels: {
+      welcome: {
+        status: 'active',
+        trophies: {
+          playstyle: {
+            progress: 1
+          }
+        }
+      },
+      combat: {
+        status: 'locked',
+        trophies: {}
+      },
+      skills: {
+        status: 'locked',
+        trophies: {}
+      },
+      teamplay: {
+        status: 'locked',
+        trophies: {}
+      },
+      objectives: {
+        status: 'locked',
+        trophies: {}
+      },
+      epic: {
+        status: 'locked',
+        trophies: {}
+      },
+      special: {
+        status: 'locked',
+        trophies: {}
+      }
+    }
+  },
+  combatIsland: {
+    status: 'closed'
+  }
+};
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
   const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
   const [visibleIslandDetails, setVisibleIslandDetails] = useState(false);
   const [availableTrophies, setAvailableTrophies] = useState([playstyle]);
-
-  const userIslands = {
-    hubIsland: {
-      status: 'open',
-      levels: {
-        welcome: {
-          status: 'active',
-          trophies: {
-            playstyle: {
-              progress: 0
-            }
-          }
-        },
-        combat: {
-          status: 'locked',
-          trophies: {}
-        },
-        skills: {
-          status: 'locked',
-          trophies: {}
-        },
-        teamplay: {
-          status: 'locked',
-          trophies: {}
-        },
-        objectives: {
-          status: 'locked',
-          trophies: {}
-        },
-        epic: {
-          status: 'locked',
-          trophies: {}
-        },
-        special: {
-          status: 'locked',
-          trophies: {}
-        }
-      }
-    },
-    combatIsland: {
-      status: 'closed'
-    }
-  };
 
   const showGuide = userIslands.hubIsland.levels.welcome.status === 'active';
 

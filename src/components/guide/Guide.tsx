@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import Tooltip from '../../common/Tooltip';
+import { TargetLevel } from '../levels/types';
 
 interface GuideProps {
   visibleIslandDetails: boolean;
+  targetLevel: TargetLevel;
 }
 
-const Guide: FC<GuideProps> = ({ visibleIslandDetails }) => {
+const Guide: FC<GuideProps> = ({ visibleIslandDetails, targetLevel }) => {
   return (
     <>
       {!visibleIslandDetails && (
@@ -17,7 +19,7 @@ const Guide: FC<GuideProps> = ({ visibleIslandDetails }) => {
           offset={20}
         />
       )}
-      {visibleIslandDetails && (
+      {targetLevel?.islandName === 'hubIsland' && (
         <Tooltip
           title="It’s all about you :)"
           text="This is your time to conquer the world! Play one game of Summoner’s Rift with the trophy hunter app to begin your journey, once that’s done we will recommend which paths you should begin with based on your personal skills!"

@@ -20,7 +20,7 @@ import Settings from '../common/Settings';
 import Collection from '../common/Collection';
 import LevelPanel from '../components/levels/LevelPanel';
 import Overview from '../common/Overview';
-import { Level } from '../components/levels/types';
+import { TargetLevel } from '../components/levels/types';
 import { playstyle } from '../components/trophies/hub';
 import Guide from '../components/guide/Guide';
 
@@ -28,13 +28,6 @@ const Container = styled.div`
   display: flex;
   height: 100vh;
 `;
-
-type TargetLevel = {
-  islandName: string;
-  level: Level;
-  top: number;
-  left: number;
-};
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
@@ -144,7 +137,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </ToolPane>
                   )}
                   {showGuide && (
-                    <Guide visibleIslandDetails={visibleIslandDetails} />
+                    <Guide
+                      visibleIslandDetails={visibleIslandDetails}
+                      targetLevel={targetLevel}
+                    />
                   )}
                 </Main>
               </Container>

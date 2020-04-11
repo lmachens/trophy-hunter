@@ -13,3 +13,10 @@ export interface Level {
   Marker: FC<MarkerProps>;
   trophies: Trophy[];
 }
+
+export type TargetLevel = {
+  islandName: string;
+  level: Level;
+  top: number;
+  left: number;
+};

@@ -51,7 +51,11 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
         <Title>{level.title}</Title>
         <List>
           {level.trophies.map(trophy => (
-            <TrophyListItem key={trophy.name} trophy={trophy} />
+            <TrophyListItem
+              key={trophy.name}
+              trophy={trophy}
+              data-tooltip-id={trophy.name}
+            />
           ))}
         </List>
       </>

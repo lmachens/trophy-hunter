@@ -20,19 +20,13 @@ import Settings from '../common/Settings';
 import Collection from '../common/Collection';
 import LevelPanel from '../components/levels/LevelPanel';
 import Overview from '../common/Overview';
-import Tooltip from '../common/Tooltip';
 import { Level } from '../components/levels/types';
 import { playstyle } from '../components/trophies/hub';
+import Guide from '../components/guide/Guide';
 
 const Container = styled.div`
   display: flex;
   height: 100vh;
-`;
-
-const WelcomeTooltip = styled(Tooltip)`
-  width: 300px;
-  top: 240px;
-  left: 246px;
 `;
 
 type TargetLevel = {
@@ -45,7 +39,7 @@ type TargetLevel = {
 function MyApp({ Component, pageProps }: AppProps) {
   const [activeTool, setActiveTool] = useState(null);
   const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
-  const [openIslandDetails, setOpenIslandDetails] = useState(false);
+  const [visibleIslandDetails, setVisibleIslandDetails] = useState(false);
   const [availableTrophies, setAvailableTrophies] = useState([playstyle]);
 
   const userIslands = {
@@ -91,9 +85,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   };
 
-  const showWelcomeMessage =
-    userIslands.hubIsland.levels.welcome.status === 'active' &&
-    !openIslandDetails;
+  const showGuide = userIslands.hubIsland.levels.welcome.status === 'active';
 
   return (
     <>
@@ -114,7 +106,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Sidebar
                   activeTool={activeTool}
                   onToolClick={tool => {
-                    setOpenIslandDetails(null);
+                    setVisibleIslandDetails(null);
                     setTargetLevel(null);
                     setActiveTool(activeTool === tool ? null : tool);
                   }}
@@ -128,19 +120,19 @@ function MyApp({ Component, pageProps }: AppProps) {
                     onLevelClick={targetLevel => {
                       setActiveTool(null);
                       setTargetLevel(targetLevel);
-                      setOpenIslandDetails(true);
+                      setVisibleIslandDetails(true);
                     }}
                   />
                   <LevelPanel
                     level={targetLevel?.level}
-                    open={openIslandDetails}
+                    open={visibleIslandDetails}
                     onToggleClick={() => {
                       setActiveTool(null);
-                      if (openIslandDetails) {
-                        setOpenIslandDetails(false);
+                      if (visibleIslandDetails) {
+                        setVisibleIslandDetails(false);
                         setTargetLevel(null);
                       } else {
-                        setOpenIslandDetails(true);
+                        setVisibleIslandDetails(true);
                       }
                     }}
                   />
@@ -151,13 +143,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                       {activeTool === 'collection' && <Collection />}
                     </ToolPane>
                   )}
-                  {showWelcomeMessage && (
-                    <WelcomeTooltip
-                      title="Welcome to Trophy Hunter!"
-                      text="Click on the first level to open the trophies shelf and view trophies, description and progress."
-                      placement="bottom"
-                      visible={true}
-                    />
+                  {showGuide && (
+                    <Guide visibleIslandDetails={visibleIslandDetails} />
                   )}
                 </Main>
               </Container>

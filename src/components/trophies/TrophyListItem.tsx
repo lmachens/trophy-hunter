@@ -19,9 +19,13 @@ interface TrophyListItemProps extends ListItemProps {
   trophy: Trophy;
 }
 
-const TrophyListItem: FC<TrophyListItemProps> = ({ trophy, borderless }) => {
+const TrophyListItem: FC<TrophyListItemProps> = ({
+  trophy,
+  borderless,
+  ...props
+}) => {
   return (
-    <ListItem borderless={borderless}>
+    <ListItem borderless={borderless} {...props}>
       <TrophyProgressIcon />
       <div>
         <h3>{trophy.title}</h3>

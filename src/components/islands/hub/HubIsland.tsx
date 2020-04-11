@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
+
 // import SkillsLevel from '../levels/SkillsLevel';
 // import TeamplayLevel from '../levels/TeamplayLevel';
 // import ObjectivesLevel from '../levels/ObjectivesLevel';
@@ -30,6 +31,7 @@ const HubIsland: FC<IslandProps> = ({
       fill="#2B2A30"
       status={status}
       levels={levels}
+      data-tooltip-id="hub"
       {...svgProps}
     >
       <path
@@ -140,6 +142,7 @@ const HubIsland: FC<IslandProps> = ({
         stroke="#EAEAEA"
         strokeWidth="0.781893"
       />
+
       <welcome.Marker
         transform="translate(90 58)"
         status={levels.welcome.status}

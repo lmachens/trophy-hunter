@@ -22,7 +22,7 @@ import LevelPanel from '../components/levels/LevelPanel';
 import Overview from '../common/Overview';
 import { TargetLevel } from '../components/levels/types';
 import { playstyle } from '../components/trophies/hub';
-import Guide from '../components/guide/Guide';
+import { WelcomeGuide } from '../components/guides';
 
 const Container = styled.div`
   display: flex;
@@ -137,7 +137,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     </ToolPane>
                   )}
                   {showGuide && (
-                    <Guide
+                    <WelcomeGuide
                       visibleIslandDetails={visibleIslandDetails}
                       targetLevel={targetLevel}
                     />

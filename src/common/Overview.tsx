@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { FC } from 'react';
 import Profile from './Profile';
 import AvailableTrophies from './AvailableTrophies';
-import Ads from './Ads';
+import { VideoAds } from '../components/ads';
 import { Trophy } from '../components/trophies/types';
 
 const Container = styled.aside`
@@ -24,7 +24,7 @@ const Overview: FC<OverviewProps> = ({ availableTrophies }) => {
     <Container>
       <Profile />
       <AvailableTrophies trophies={availableTrophies} />
-      <Ads />
+      <VideoAds />
     </Container>
   );
 };

@@ -2,12 +2,15 @@ import { FC } from 'react';
 import Tooltip from '../../common/Tooltip';
 import { TargetLevel } from '../levels/types';
 
-interface GuideProps {
+interface WelcomeGuideProps {
   visibleIslandDetails: boolean;
   targetLevel: TargetLevel;
 }
 
-const Guide: FC<GuideProps> = ({ visibleIslandDetails, targetLevel }) => {
+const WelcomeGuide: FC<WelcomeGuideProps> = ({
+  visibleIslandDetails,
+  targetLevel
+}) => {
   return (
     <>
       {!visibleIslandDetails && (
@@ -31,4 +34,4 @@ const Guide: FC<GuideProps> = ({ visibleIslandDetails, targetLevel }) => {
   );
 };
 
-export default Guide;
+export default WelcomeGuide;

@@ -14,8 +14,8 @@ const Container = styled.div`
   background-position: center;
 `;
 
-const Ads: FC = () => {
+const VideoAds: FC = () => {
   return <Container />;
 };
 
-export default Ads;
+export default VideoAds;

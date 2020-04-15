@@ -76,24 +76,23 @@ type TargetLevel = {
 };
 
 interface GamePageProps {
-  top: number;
-  left: number;
+  targetLevel: TargetLevel;
   onLevelClick(targetLevel: TargetLevel): void;
 }
 
 const LeagueOfLegends: NextPage<GamePageProps> = ({
-  top,
-  left,
+  targetLevel,
   onLevelClick
 }) => {
   const user = useUser();
   const userIslands = user?.islands || {};
+  const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
     <Islands>
       <SizeContainer
         style={{
-          left: `${-left || 0}px`,
-          top: `${-top || 0}px`,
+          left: `${-left}px`,
+          top: `${-top}px`,
           marginTop: `${top ? 100 : 30}px`
         }}
       >
@@ -110,6 +109,7 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
               }
               status={status}
               levels={levels}
+              targetLevel={targetLevel}
             />
           );
         })}

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
-import { FC, SVGProps } from 'react';
+import { FC } from 'react';
+import { MarkerProps } from './types';
 
 const blink = keyframes`
   from, to {
@@ -11,10 +12,6 @@ const blink = keyframes`
     r: 7;
   }
 `;
-
-interface MarkerProps extends SVGProps<SVGGElement> {
-  status: 'active' | 'unlocked' | 'locked' | 'completed';
-}
 
 const Circle = styled.circle<MarkerProps>`
   opacity: ${props => (props.status === 'locked' ? 0.4 : 1)};
@@ -33,11 +30,14 @@ const PseudoCircle = styled.circle`
   opacity: 0;
 `;
 
-const BlinkCircle = styled.circle`
-  animation: ${blink} 2s ease infinite;
+const FocusCircle = styled.circle`
   fill: inherit;
   opacity: 0.2;
   stroke-width: 0;
+`;
+
+const BlinkCircle = styled(FocusCircle)`
+  animation: ${blink} 2s ease infinite;
 `;
 
 const Path = styled.path`
@@ -49,6 +49,7 @@ const HalfCircle = props => {
 };
 
 const Marker: FC<MarkerProps> = ({
+  focused,
   status = 'locked',
   className,
   ...groupElementProps
@@ -56,9 +57,10 @@ const Marker: FC<MarkerProps> = ({
   return (
     <Group className={className} {...groupElementProps}>
       <PseudoCircle cx="4" cy="4" r="7" />
-      {status === 'active' && <BlinkCircle cx="4" cy="4" r="7" />}
+      {status === 'active' && !focused && <BlinkCircle cx="4" cy="4" r="7" />}
+      {focused && <FocusCircle cx="4" cy="4" r="7" />}
       {status === 'unlocked' && <HalfCircle />}
-      <Circle status={status} cx="4" cy="4" r="3.25" />
+      <Circle focused={focused} status={status} cx="4" cy="4" r="3.25" />
     </Group>
   );
 };

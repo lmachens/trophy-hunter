@@ -63,8 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <Main>
                 <Component
                   {...pageProps}
-                  top={targetLevel?.top}
-                  left={targetLevel?.left}
+                  targetLevel={targetLevel}
                   onLevelClick={targetLevel => {
                     setActiveTool(null);
                     setTargetLevel(targetLevel);

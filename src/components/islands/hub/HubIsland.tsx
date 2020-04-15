@@ -12,6 +12,7 @@ import {
 } from './levels';
 
 const HubIsland: FC<IslandProps> = ({
+  targetLevel,
   status,
   levels,
   onLevelClick,
@@ -141,36 +142,43 @@ const HubIsland: FC<IslandProps> = ({
         transform="translate(90 58)"
         status={levels.welcome?.status}
         onClick={() => onLevelClick(welcome)}
+        focused={targetLevel?.level === welcome}
       />
       <combat.Marker
         transform="translate(48 30)"
         status={levels.combat?.status}
         onClick={() => onLevelClick(combat)}
+        focused={targetLevel?.level === combat}
       />
       <skills.Marker
         transform="translate(89 13)"
         status={levels.skills?.status}
         onClick={() => onLevelClick(skills)}
+        focused={targetLevel?.level === skills}
       />
       <teamplay.Marker
         transform="translate(132 30)"
         status={levels.teamplay?.status}
         onClick={() => onLevelClick(teamplay)}
+        focused={targetLevel?.level === teamplay}
       />
       <objectives.Marker
         transform="translate(132 90)"
         status={levels.objectives?.status}
         onClick={() => onLevelClick(objectives)}
+        focused={targetLevel?.level === objectives}
       />
       <epic.Marker
         transform="translate(89 105)"
         status={levels.epic?.status}
         onClick={() => onLevelClick(epic)}
+        focused={targetLevel?.level === epic}
       />
       <special.Marker
         transform="translate(48 90)"
         status={levels.special?.status}
         onClick={() => onLevelClick(special)}
+        focused={targetLevel?.level === special}
       />
     </IslandSVG>
   );

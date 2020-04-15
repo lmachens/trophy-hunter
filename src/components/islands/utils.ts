@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import styled from '@emotion/styled';
-import { Level } from '../levels/types';
+import { Level, TargetLevel } from '../levels/types';
 
 interface TransformIslandProps {
   name: string;
@@ -29,6 +29,7 @@ export function transformIsland({
 
 export interface IslandProps extends UserIsland {
   className?: string;
+  targetLevel?: TargetLevel;
   onLevelClick?(level: Level): void;
 }
 

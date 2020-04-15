@@ -1,8 +1,15 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
+import { lvl1, lvl2, lvl3, lvl4, lvl5, lvl6 } from './levels';
 
-const SkillsIsland: FC<IslandProps> = ({ ...svgProps }) => {
+const SkillsIsland: FC<IslandProps> = ({
+  status,
+  targetLevel,
+  levels,
+  onLevelClick,
+  ...svgProps
+}) => {
   return (
     <IslandSVG
       width="161"
@@ -10,6 +17,8 @@ const SkillsIsland: FC<IslandProps> = ({ ...svgProps }) => {
       viewBox="0 0 161 177"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      status={status}
+      levels={levels}
       {...svgProps}
     >
       <path
@@ -23,136 +32,153 @@ const SkillsIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
       />
       <path
-        d="M81.1466 6.5L86.5001 0.734807L91.8534 6.5H81.1466Z"
+        d="M16 84.5001L26.9999 55.0001"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
+      />
+      <path d="M41 105L22 98" stroke="#EAEAEA" strokeDasharray="2 2" />
+      <path
+        d="M61.0001 127L55.0001 114.5"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
+      />
+      <path d="M95.9999 144.5L75 139" stroke="#EAEAEA" strokeDasharray="2 2" />
+      <path d="M132 128L114 143" stroke="#EAEAEA" strokeDasharray="2 2" />
+      <path
+        d="M80.1466 6.5L85.5001 0.734807L90.8534 6.5H80.1466Z"
+        fill={status === 'done' ? '#FBFF2E' : 'none'}
         stroke="#EAEAEA"
       />
       <path
-        d="M149 110L146.639 105H142.443H138.246L133 110H141H149Z"
+        d="M137 98L134.639 93H130.443H126.246L121 98H129H137Z"
         fill="#2B2A30"
       />
       <path
-        d="M142.443 105H146.639L149 110H141M142.443 105H138.246L133 110H141M142.443 105L141 110"
+        d="M130.443 93H134.639L137 98H129M130.443 93H126.246L121 98H129M130.443 93L129 98"
         stroke="#EAEAEA"
       />
       <path
-        d="M92 122L94.3607 117H98.5574H102.754L108 122H100H92Z"
+        d="M91 122L93.3607 117H97.5574H101.754L107 122H99H91Z"
         fill="#2B2A30"
       />
       <path
-        d="M98.5574 117H94.3607L92 122H100M98.5574 117H102.754L108 122H100M98.5574 117L100 122"
+        d="M97.5574 117H93.3607L91 122H99M97.5574 117H101.754L107 122H99M97.5574 117L99 122"
         stroke="#EAEAEA"
       />
       <path
-        d="M69.8854 30.6084V11H104.057V30.6084H109.478V41.4757H117.49V51.3981H125.739V62.7379H133.752V73.1327H142V84H31V73.1327H39.4841V62.7379H47.9682V51.3981H55.9809V41.4757H63.758V30.6084H69.8854Z"
+        d="M68.8854 30.6084V11H103.057V30.6084H108.478V41.4757H116.49V51.3981H124.739V62.7379H132.752V73.1327H141V84H30V73.1327H38.4841V62.7379H46.9682V51.3981H54.9809V41.4757H62.758V30.6084H68.8854Z"
         fill="#2B2A30"
       />
       <path
-        d="M69.8854 30.6084V11H104.057V30.6084M69.8854 30.6084H104.057M69.8854 30.6084H63.758V41.4757M104.057 30.6084H109.478V41.4757M63.758 41.4757H109.478M63.758 41.4757H55.9809V51.3981M109.478 41.4757H117.49V51.3981M117.49 51.3981H55.9809M117.49 51.3981H125.739V62.7379M55.9809 51.3981H47.9682V62.7379M47.9682 62.7379H125.739M47.9682 62.7379H39.4841V73.1327M125.739 62.7379H133.752V73.1327M133.752 73.1327H39.4841M133.752 73.1327H142V84H31V73.1327H39.4841"
+        d="M68.8854 30.6084V11H103.057V30.6084M68.8854 30.6084H103.057M68.8854 30.6084H62.758V41.4757M103.057 30.6084H108.478V41.4757M62.758 41.4757H108.478M62.758 41.4757H54.9809V51.3981M108.478 41.4757H116.49V51.3981M116.49 51.3981H54.9809M116.49 51.3981H124.739V62.7379M54.9809 51.3981H46.9682V62.7379M46.9682 62.7379H124.739M46.9682 62.7379H38.4841V73.1327M124.739 62.7379H132.752V73.1327M132.752 73.1327H38.4841M132.752 73.1327H141V84H30V73.1327H38.4841"
         stroke="#EAEAEA"
       />
       <path
-        d="M69.9448 13.5807H86.6019M86.6019 13.5807H103.259M86.6019 13.5807V22.965"
+        d="M68.9448 13.5811H85.6019M85.6019 13.5811H102.259M85.6019 13.5811V22.9653"
         stroke="#EAEAEA"
       />
       <path
-        d="M31.2346 72.9364L39.6805 83.4937L48 73.5L55.1646 83.4937L64.5 73.5L75.81 83.4937H96.4554L107 73.5L116.866 83.4937L124.5 73.5L134.462 83.4937L141.5 73.5"
+        d="M30.2345 72.9365L38.6804 83.4938L46.9999 73.5001L54.1644 83.4938L63.4999 73.5001L74.8099 83.4938H95.4553L106 73.5001L115.866 83.4938L123.5 73.5001L133.462 83.4938L140.5 74.5V83.4938H133.462H115.866H95.4553H74.8099H54.1644H38.6804H30.2345V72.9365Z"
+        fill={status === 'done' ? '#FBFF2E' : 'none'}
         stroke="#EAEAEA"
       />
       <rect
-        x="76.3101"
-        y="30.5032"
+        x="75.3099"
+        y="30.5029"
         width="19.6454"
         height="52.4904"
-        fill="#2B2A30"
+        fill={status === 'done' ? '#FBFF2E' : 'none'}
         stroke="#EAEAEA"
       />
-      <path d="M78 30V84M94 30V84" stroke="#EAEAEA" />
+      <path d="M77 30V84M93 30V84" stroke="#EAEAEA" />
       <path
-        d="M80 33.0531H92M80.5637 38.6837H91.9363M80.5637 43.3758H91.9363M80.5637 48.3026H91.9363M80.5637 52.9947H91.9363M80.5637 58.6253H91.9363M80.5637 64.0213H91.9363M80.5637 68.948H91.9363M80.5637 72.7017H91.9363M80.5637 76.69H91.9363M80.5637 80.913H91.9363"
+        d="M79 33.0527H91M79.5637 38.6833H90.9363M79.5637 43.3755H90.9363M79.5637 48.3022H90.9363M79.5637 52.9943H90.9363M79.5637 58.6249H90.9363M79.5637 64.0209H90.9363M79.5637 68.9476H90.9363M79.5637 72.7014H90.9363M79.5637 76.6897H90.9363M79.5637 80.9126H90.9363"
         stroke="#EAEAEA"
       />
       <rect
-        x="83.5"
+        x="82.5"
         y="23.5"
         width="6"
         height="7"
-        fill="#2B2A30"
+        fill={status === 'done' ? '#FBFF2E' : 'none'}
         stroke="#EAEAEA"
       />
       <rect
-        x="93.5"
+        x="92.5"
         y="23.5"
         width="7"
         height="7"
-        fill="#2B2A30"
+        fill={status === 'done' ? '#FBFF2E' : 'none'}
         stroke="#EAEAEA"
       />
       <rect
-        x="73.5"
+        x="72.5"
         y="23.5"
         width="6"
         height="7"
-        fill="#2B2A30"
+        fill={status === 'done' ? '#FBFF2E' : 'none'}
         stroke="#EAEAEA"
       />
       <path
-        d="M14.5 67.5L15 76H18V69.5M14.5 67.5H11V61H13V65H14.5M14.5 67.5V65M14.5 65V58H18V67M18 67H19.5V64H21.5V69.5H18M18 67V69.5M17 61V62.5M16 67V68M16.5 72V73"
+        d="M9.5 65.5L10 74H13V67.5M9.5 65.5H6V59H8V63H9.5M9.5 65.5V63M9.5 63V56H13V65M13 65H14.5V62H16.5V67.5H13M13 65V67.5M12 59V60.5M11 65V66M11.5 70V71"
         stroke="#EAEAEA"
       />
       <path
-        d="M147 111L146.5 102.5H143V96H145V100H146.5V93H150V102H151.5V99H153.5V104.5H150V111H147Z"
-        fill="#2B2A30"
-      />
-      <path
-        d="M146.5 102.5L147 111H150V104.5M146.5 102.5H143V96H145V100H146.5M146.5 102.5V100M146.5 100V93H150V102M150 102H151.5V99H153.5V104.5H150M150 102V104.5M149 96V97.5M148 102V103M148.5 107V108"
-        stroke="#EAEAEA"
-      />
-      <path
-        d="M31.5 85L32 76.5H35.5V70H33.5V74H32V67H28.5V76H27V73H25V78.5H28.5V85H31.5Z"
+        d="M135 99L134.5 90.5H131V84H133V88H134.5V81H138V90H139.5V87H141.5V92.5H138V99H135Z"
         fill="#2B2A30"
       />
       <path
-        d="M32 76.5L31.5 85H28.5V78.5M32 76.5H35.5V70H33.5V74H32M32 76.5V74M32 74V67H28.5V76M28.5 76H27V73H25V78.5H28.5M28.5 76V78.5M29.5 70V71.5M30.5 76V77M30 81V82"
+        d="M134.5 90.5L135 99H138V92.5M134.5 90.5H131V84H133V88H134.5M134.5 90.5V88M134.5 88V81H138V90M138 90H139.5V87H141.5V92.5H138M138 90V92.5M137 84V85.5M136 90V91M136.5 95V96"
         stroke="#EAEAEA"
       />
-      <rect x="133" y="122" width="8" height="1" fill="#EAEAEA" />
-      <rect x="82" y="104" width="8" height="1" fill="#EAEAEA" />
-      <rect x="125" y="116" width="8" height="1" fill="#EAEAEA" />
-      <rect x="74" y="98" width="8" height="1" fill="#EAEAEA" />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 -2.18557e-08 -2.18557e-08 1 100 146)"
-        stroke="#FBFF2E"
-        strokeWidth="1.5"
+      <path
+        d="M32.5 86L33 77.5H36.5V71H34.5V75H33V68H29.5V77H28V74H26V79.5H29.5V86H32.5Z"
+        fill="#2B2A30"
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 -2.18557e-08 -2.18557e-08 1 67 135)"
-        stroke="#FBFF2E"
-        strokeWidth="1.5"
+      <path
+        d="M33 77.5L32.5 86H29.5V79.5M33 77.5H36.5V71H34.5V75H33M33 77.5V75M33 75V68H29.5V77M29.5 77H28V74H26V79.5H29.5M29.5 77V79.5M30.5 71V72.5M31.5 77V78M31 82V83"
+        stroke="#EAEAEA"
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 -2.18557e-08 -2.18557e-08 1 51 107)"
-        stroke="#FBFF2E"
-        strokeWidth="1.5"
+      <rect x="117" y="110" width="8" height="1" fill="#EAEAEA" />
+      <rect x="71" y="97" width="8" height="1" fill="#EAEAEA" />
+      <rect x="109" y="104" width="8" height="1" fill="#EAEAEA" />
+      <rect x="63" y="91" width="8" height="1" fill="#EAEAEA" />
+
+      <lvl1.Marker
+        transform="translate(134 118)"
+        status={levels.lvl1?.status}
+        onClick={() => onLevelClick(lvl1)}
+        focused={targetLevel?.level === lvl1}
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 -2.18557e-08 -2.18557e-08 1 15 93)"
-        stroke="#FBFF2E"
-        strokeWidth="1.5"
+      <lvl2.Marker
+        transform="translate(102 141)"
+        status={levels.lvl2?.status}
+        onClick={() => onLevelClick(lvl2)}
+        focused={targetLevel?.level === lvl2}
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 -2.18557e-08 -2.18557e-08 1 31 47)"
-        stroke="#FBFF2E"
-        strokeWidth="1.5"
+      <lvl3.Marker
+        transform="translate(62 131)"
+        status={levels.lvl3?.status}
+        onClick={() => onLevelClick(lvl3)}
+        focused={targetLevel?.level === lvl3}
+      />
+      <lvl4.Marker
+        transform="translate(46 103)"
+        status={levels.lvl4?.status}
+        onClick={() => onLevelClick(lvl4)}
+        focused={targetLevel?.level === lvl4}
+      />
+      <lvl5.Marker
+        transform="translate(10 90)"
+        status={levels.lvl5?.status}
+        onClick={() => onLevelClick(lvl5)}
+        focused={targetLevel?.level === lvl5}
+      />
+      <lvl6.Marker
+        transform="translate(25 45)"
+        status={levels.lvl6?.status}
+        onClick={() => onLevelClick(lvl6)}
+        focused={targetLevel?.level === lvl6}
       />
     </IslandSVG>
   );

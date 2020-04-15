@@ -1,8 +1,14 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
+import { lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8 } from './levels';
 
-const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
+const CombatIsland: FC<IslandProps> = ({
+  status,
+  levels,
+  onLevelClick,
+  ...svgProps
+}) => {
   return (
     <IslandSVG
       width="235"
@@ -10,6 +16,8 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       viewBox="0 0 235 250"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      status={status}
+      levels={levels}
       {...svgProps}
     >
       <path
@@ -18,21 +26,21 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
       />
       <path
-        d="M234.004 111.937V70.5005L204.763 40.7032H164.149L126.785 65.3791H49.736L1.00005 111.937V167.342L13.068 180.145L23.2793 187.129L49.736 206.218H66.4454L74.5681 200.398L121.679 221.582L136.3 228.566L146.28 221.582H176.217L184.572 212.503L194.087 206.218L208.708 192.25V145.692L234.004 111.937Z"
+        d="M234.004 111.937V70.5004L204.763 40.7031H164.149L126.785 65.379H49.736L1.00005 111.937V167.342L13.068 180.145L23.2793 187.129L49.736 206.218H66.4454L74.5681 200.398L121.679 221.582L136.3 228.566L146.28 221.582H176.217L184.572 212.503L194.087 206.218L208.708 192.25V145.692L234.004 111.937Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
       <path
-        d="M73 53.7837H46V48.8692H50.6098V44.6827H55.2195V41.7704H63.9451V44.6827H68.2256V48.8692H73V53.7837Z"
+        d="M73 53.7838H46V48.8693H50.6098V44.6828H55.2195V41.7705H63.9451V44.6828H68.2256V48.8693H73V53.7838Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
       <path
-        d="M42 103.839V96.8001L52.4366 85.8192L61 95.6739V103.839H42Z"
+        d="M42 103.839V96.8003L52.4366 85.8193L61 95.674V103.839H42Z"
         fill="#2B2A30"
       />
       <path
-        d="M42 103.839V96.8001L52.4366 85.8192M42 103.839L52.9718 95.6739L52.4366 85.8192M42 103.839H61V95.6739L52.4366 85.8192"
+        d="M42 103.839V96.8003L52.4366 85.8193M42 103.839L52.9718 95.674L52.4366 85.8193M42 103.839H61V95.674L52.4366 85.8193"
         stroke="#EAEAEA"
       />
       <path
@@ -84,11 +92,11 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
       />
       <path
-        d="M51.8797 158.118H72.62V149.526L49 103.839H59.7507L81 144.078V166.391H64.1883V218.016L61.4521 221.97H51.8797V158.118Z"
-        fill="#2B2A30"
+        d="M51.8797 158.119H72.62V149.526L49 103.839H59.7507L81 144.078V166.391H64.1883V218.017L61.4521 221.97H51.8797V158.119Z"
+        fill={status === 'done' ? '#FF9330' : 'none'}
       />
       <path
-        d="M61.4521 221.97H51.8797V158.118H72.62V149.526L49 103.839H59.7507L81 144.078V166.391H64.1883M61.4521 221.97V166.391H64.1883M61.4521 221.97L64.1883 218.016V166.391"
+        d="M61.4521 221.97H51.8797V158.119H72.62V149.526L49 103.839H59.7507L81 144.078V166.391H64.1883M61.4521 221.97V166.391H64.1883M61.4521 221.97L64.1883 218.017V166.391"
         stroke="#EAEAEA"
       />
       <rect
@@ -100,30 +108,30 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
       />
       <path
-        d="M212.547 21.9172H204.752H200.075V30.8362H194.878V35.9328H227.878V31.8555H222.421V28.2879H212.547V21.9172Z"
+        d="M212.547 21.9175H204.752H200.075V30.8365H194.878V35.933H227.878V31.8558H222.421V28.2882H212.547V21.9175Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
       <path
-        d="M198.13 11.7372H171.783L159 73.806H186H213L198.13 11.7372Z"
+        d="M198.13 11.7373H171.783L159 73.8061H186H213L198.13 11.7373Z"
         fill="#2B2A30"
       />
       <path
-        d="M186.913 15.6656C186.078 15.6656 182.565 15.6656 180.913 15.6656V27.7127L185.87 34.26L186 73.806M186 73.806H213L198.13 11.7372H171.783L159 73.806H186Z"
+        d="M186.913 15.6657C186.078 15.6657 182.565 15.6657 180.913 15.6657V27.7128L185.87 34.2601L186 73.8061M186 73.8061H213L198.13 11.7373H171.783L159 73.8061H186Z"
         stroke="#EAEAEA"
       />
       <path
-        d="M183.057 8.73376L181 11.8572H187.429V28.5157L192.829 33.4612L194.371 45.955L199 50.6402L200.8 59.7503L196.943 65.9972L185.114 68.6001L183.057 73.8059H202.857L208 64.1752L205.943 52.4622L199 42.5713V37.3655L192.829 25.9128V14.1998L195.143 11.8572L192.829 8.73376H183.057Z"
-        fill="#2B2A30"
+        d="M183.057 8.73389L181 11.8573H187.429V28.5158L192.829 33.4613L194.371 45.9551L199 50.6403L200.8 59.7504L196.943 65.9973L185.114 68.6002L183.057 73.806H202.857L208 64.1753L205.943 52.4623L199 42.5714V37.3656L192.829 25.9129V14.1999L195.143 11.8573L192.829 8.73389H183.057Z"
+        fill={status === 'done' ? '#FF9330' : 'none'}
         stroke="#EAEAEA"
       />
       <path
         d="M177.479 5.73047L175 11.7371H191L186.042 5.73047H177.479Z"
-        fill="#2B2A30"
+        fill={status === 'done' ? '#FF9330' : 'none'}
         stroke="#EAEAEA"
       />
       <path
-        d="M70 226.976H43V222.471H47.6098V218.633H52.2195V215.963H60.9451V218.633H65.2256V222.471H70V226.976Z"
+        d="M70 226.976H43V222.471H47.6098V218.633H52.2195V215.964H60.9451V218.633H65.2256V222.471H70V226.976Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
@@ -150,11 +158,11 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <path
         d="M79 105.598V121.359L94.5 136.375H122L128.5 128.366H150.5L160.5 138.878V236.486H176.5L177 138.878L156.5 116.854H122.164L103.447 97.8325H88.4748L79 105.598Z"
-        fill="#2B2A30"
+        fill={status === 'done' ? '#FF9330' : 'none'}
         stroke="#EAEAEA"
       />
       <path
-        d="M178 37.9767V43.7726H148V41.665H150.655V37.9767H159.681V33.7615H171.363V37.9767H178Z"
+        d="M178 37.9769V43.7728H148V41.6652H150.655V37.9769H159.681V33.7617H171.363V37.9769H178Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
@@ -180,24 +188,24 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
       />
       <path
-        d="M180.133 63.7948H165.592L161 75.8081H186L180.133 63.7948Z"
+        d="M180.133 63.7949H165.592L161 75.8082H186L180.133 63.7949Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
       <path
-        d="M182 91.8259L187.816 80.9464H195.747L201.034 69.8015H211.609L217.425 80.9464H222.184L222.257 81.0824L228 91.8259H219.54H182Z"
+        d="M182 91.8257L187.816 80.9461H195.747L201.034 69.8013H211.609L217.425 80.9461H222.184L222.257 81.0822L228 91.8257H219.54H182Z"
         fill="#2B2A30"
       />
       <path
-        d="M201.034 69.8015L195.747 80.9464H187.816L182 91.8259H219.54M201.034 69.8015H211.609L217.425 80.9464M201.034 69.8015L211.609 86.5188L217.425 80.9464M217.425 80.9464H222.184L222.257 81.0824M222.257 81.0824L228 91.8259H219.54M222.257 81.0824L216.897 86.5188L219.54 91.8259"
+        d="M201.034 69.8013L195.747 80.9461H187.816L182 91.8257H219.54M201.034 69.8013H211.609L217.425 80.9461M201.034 69.8013L211.609 86.5186L217.425 80.9461M217.425 80.9461H222.184L222.257 81.0822M222.257 81.0822L228 91.8257H219.54M222.257 81.0822L216.897 86.5186L219.54 91.8257"
         stroke="#EAEAEA"
       />
       <path
-        d="M77 80.8136V58.734L92.2963 41.7704H106.037V52.0024L119 64.1193V80.8136H111.222H106.037H89.1852H84.5185H77Z"
+        d="M77 80.8138V58.7341L92.2963 41.7705H106.037V52.0025L119 64.1194V80.8138H111.222H106.037H89.1852H84.5185H77Z"
         fill="#2B2A30"
       />
       <path
-        d="M77 58.734V80.8136H84.5185M77 58.734L92.2963 41.7704H106.037M77 58.734L84.5185 66.5427V80.8136M106.037 41.7704V52.0024L119 64.1193M106.037 41.7704L98.2593 49.8483V61.6959L106.037 69.2353M119 64.1193V80.8136H111.222M119 64.1193L111.222 72.7357V80.8136M106.037 69.2353V80.8136M106.037 69.2353L100.852 75.1591H93.0741L89.1852 80.8136M106.037 80.8136H111.222M106.037 80.8136H89.1852M84.5185 80.8136H89.1852"
+        d="M77 58.7341V80.8138H84.5185M77 58.7341L92.2963 41.7705H106.037M77 58.7341L84.5185 66.5428V80.8138M106.037 41.7705V52.0025L119 64.1194M106.037 41.7705L98.2593 49.8484V61.696L106.037 69.2354M119 64.1194V80.8138H111.222M119 64.1194L111.222 72.7359V80.8138M106.037 69.2354V80.8138M106.037 69.2354L100.852 75.1592H93.0741L89.1852 80.8138M106.037 80.8138H111.222M106.037 80.8138H89.1852M84.5185 80.8138H89.1852"
         stroke="#EAEAEA"
       />
       <path
@@ -209,13 +217,13 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
       />
       <path
-        d="M107 180.58V167.532L110.552 161.904H135.925L141 167.532V184.929H110.552L107 180.58Z"
+        d="M107 180.58V167.532L110.552 161.903H135.925L141 167.532V184.929H110.552L107 180.58Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
       <path
         d="M141 172.916L135.418 167.91H107V180.674L110.806 184.929H141V172.916Z"
-        fill="#2B2A30"
+        fill={status === 'done' ? '#FF9330' : 'none'}
         stroke="#EAEAEA"
       />
       <rect
@@ -227,13 +235,13 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
       />
       <path
-        d="M128 57.7882H101V53.2832H105.61V49.4456H110.22V46.776H118.945V49.4456H123.226V53.2832H128V57.7882Z"
+        d="M128 57.7881H101V53.2831H105.61V49.4455H110.22V46.7759H118.945V49.4455H123.226V53.2831H128V57.7881Z"
         fill="#2B2A30"
         stroke="#EAEAEA"
       />
       <rect
-        x="194.039"
-        y="3.51516"
+        x="194.04"
+        y="3.51553"
         width="0.779106"
         height="0.780834"
         fill="#2B2A30"
@@ -242,7 +250,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="201.312"
-        y="7.15457"
+        y="7.15469"
         width="0.779106"
         height="0.780834"
         fill="#2B2A30"
@@ -251,7 +259,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="173.374"
-        y="6.65164"
+        y="6.65176"
         width="0.779106"
         height="0.780834"
         fill="#2B2A30"
@@ -260,7 +268,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="195.078"
-        y="18.5948"
+        y="18.5946"
         width="0.779106"
         height="0.780834"
         fill="#2B2A30"
@@ -278,7 +286,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="171.186"
-        y="151.274"
+        y="151.273"
         width="0.779106"
         height="0.780834"
         fill="#2B2A30"
@@ -312,7 +320,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         strokeWidth="0.5"
       />
       <rect
-        x="77.1767"
+        x="77.1765"
         y="208.471"
         width="0.779106"
         height="0.780834"
@@ -330,8 +338,8 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         strokeWidth="0.779106"
       />
       <rect
-        x="65.5048"
-        y="213.3"
+        x="65.5047"
+        y="213.301"
         width="0.779106"
         height="0.780834"
         fill="#2B2A30"
@@ -339,7 +347,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         strokeWidth="0.779106"
       />
       <rect
-        x="46.7392"
+        x="46.7393"
         y="211.735"
         width="0.779106"
         height="0.780834"
@@ -366,7 +374,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         strokeWidth="0.779106"
       />
       <rect
-        x="76.4511"
+        x="76.4512"
         y="149.114"
         width="0.779106"
         height="0.780834"
@@ -393,7 +401,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         strokeWidth="0.779106"
       />
       <rect
-        x="54.6687"
+        x="54.6686"
         y="149.224"
         width="2.63583"
         height="2.63986"
@@ -454,7 +462,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="112.5"
-        y="89.3225"
+        y="89.3228"
         width="2"
         height="2.00333"
         fill="#2B2A30"
@@ -462,7 +470,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="75.5"
-        y="97.3314"
+        y="97.3315"
         width="2"
         height="2.00333"
         fill="#2B2A30"
@@ -470,7 +478,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="92.25"
-        y="89.0725"
+        y="89.0728"
         width="0.5"
         height="0.501109"
         fill="#2B2A30"
@@ -497,7 +505,7 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
       />
       <rect
         x="183.652"
-        y="57.5929"
+        y="57.5932"
         width="0.779106"
         height="0.780834"
         fill="#2B2A30"
@@ -513,119 +521,83 @@ const CombatIsland: FC<IslandProps> = ({ ...svgProps }) => {
         stroke="#EAEAEA"
         strokeWidth="0.779106"
       />
-      <circle
-        r="3.25"
-        transform="matrix(-1 0 0 1 170.819 92.7192)"
-        stroke="#FF9330"
-        strokeWidth="1.5"
+
+      <line
+        x1="164"
+        y1="98.7136"
+        x2="140"
+        y2="98.7136"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 0 0 1 128.819 99.7192)"
-        stroke="#FF9330"
-        strokeWidth="1.5"
+      <path
+        d="M137 137.214L132.5 108.714"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
       />
-      <circle
-        opacity="0.2"
-        r="7"
-        transform="matrix(-1 0 0 1 218 106)"
-        fill="#FF9330"
+      <path
+        d="M130 148.214L115 151.714"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
       />
-      <circle r="4" transform="matrix(-1 0 0 1 218 106)" fill="#FF9330" />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 0 0 1 136.819 145.719)"
-        stroke="#FF9330"
-        strokeWidth="1.5"
+      <path
+        d="M90 178.214L100 162.714"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 0 0 1 103.819 154.719)"
-        stroke="#FF9330"
-        strokeWidth="1.5"
+      <path d="M76 185.714L35 171.214" stroke="#EAEAEA" strokeDasharray="2 2" />
+      <path
+        d="M33.5 148.214L28 159.214"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 0 0 1 82.8186 185.719)"
-        stroke="#FF9330"
-        strokeWidth="1.5"
+      <path d="M44 134.714L38 140.214" stroke="#EAEAEA" strokeDasharray="2 2" />
+      <path
+        d="M211.001 105.213L182 100.714"
+        stroke="#EAEAEA"
+        strokeDasharray="2 2"
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 0 0 1 23.8188 166.719)"
-        stroke="#FF9330"
-        strokeWidth="1.5"
+
+      <lvl1.Marker
+        transform="translate(216 102)"
+        status={levels.lvl1?.status}
+        onClick={() => onLevelClick(lvl1)}
       />
-      <circle
-        opacity="0.4"
-        r="3.25"
-        transform="matrix(-1 0 0 1 47.8188 129.719)"
-        stroke="#FF9330"
-        strokeWidth="1.5"
+      <lvl2.Marker
+        transform="translate(170 95)"
+        status={levels.lvl2?.status}
+        onClick={() => onLevelClick(lvl2)}
       />
-      <circle cx="206.782" cy="103.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="200.782" cy="104.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="196.782" cy="104.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="192.782" cy="103.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="176.782" cy="96.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="163.782" cy="89.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="134.782" cy="95.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="123.782" cy="105.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="122.782" cy="110.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="122.782" cy="114.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="123.782" cy="117.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="124.782" cy="121.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="127.782" cy="123.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="130.782" cy="126.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="133.782" cy="128.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="137.782" cy="131.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="139.782" cy="134.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="139.782" cy="138.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="131.782" cy="149.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="128.782" cy="152.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="124.782" cy="154.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="119.782" cy="154.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="114.782" cy="153.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="110.782" cy="152.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="98.7819" cy="159.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="96.7819" cy="162.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="95.7819" cy="166.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="95.7819" cy="171.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="95.7819" cy="175.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="94.7819" cy="179.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="89.7819" cy="183.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="71.7819" cy="186.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="66.7819" cy="186.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="61.7819" cy="186.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="52.7819" cy="186.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="56.7819" cy="186.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="48.7819" cy="185.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="44.7819" cy="184.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="40.7819" cy="182.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="36.7819" cy="180.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="32.7819" cy="178.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="29.7819" cy="175.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="27.7819" cy="171.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="23.7819" cy="159.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="23.7819" cy="155.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="25.7819" cy="151.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="39.7819" cy="135.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="42.7819" cy="133.782" r="0.781893" fill="#C4C4C4" />
-      <circle cx="75.7819" cy="186.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="92.7819" cy="182.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="138.782" cy="92.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="142.782" cy="90.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="147.782" cy="88.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="152.782" cy="87.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="158.782" cy="88.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="180.782" cy="98.5011" r="0.781893" fill="#C4C4C4" />
-      <circle cx="184.782" cy="100.501" r="0.781893" fill="#C4C4C4" />
-      <circle cx="188.782" cy="102.501" r="0.781893" fill="#C4C4C4" />
+      <lvl3.Marker
+        transform="translate(127 95)"
+        status={levels.lvl3?.status}
+        onClick={() => onLevelClick(lvl3)}
+      />
+      <lvl4.Marker
+        transform="translate(135 142)"
+        status={levels.lvl4?.status}
+        onClick={() => onLevelClick(lvl4)}
+      />
+      <lvl5.Marker
+        transform="translate(102 152)"
+        status={levels.lvl5?.status}
+        onClick={() => onLevelClick(lvl5)}
+      />
+      <lvl6.Marker
+        transform="translate(81 183)"
+        status={levels.lvl6?.status}
+        onClick={() => onLevelClick(lvl6)}
+      />
+      <lvl7.Marker
+        transform="translate(22 164)"
+        status={levels.lvl7?.status}
+        onClick={() => onLevelClick(lvl7)}
+      />
+      <lvl8.Marker
+        transform="translate(46 126)"
+        status={levels.lvl8?.status}
+        onClick={() => onLevelClick(lvl8)}
+      />
     </IslandSVG>
   );
 };

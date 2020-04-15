@@ -49,7 +49,7 @@ const HalfCircle = props => {
 };
 
 const Marker: FC<MarkerProps> = ({
-  status,
+  status = 'locked',
   className,
   ...groupElementProps
 }) => {

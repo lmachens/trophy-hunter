@@ -1,12 +1,6 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
-
-// import SkillsLevel from '../levels/SkillsLevel';
-// import TeamplayLevel from '../levels/TeamplayLevel';
-// import ObjectivesLevel from '../levels/ObjectivesLevel';
-// import EpicLevel from '../levels/EpicLevel';
-// import SpecialLevel from '../levels/SpecialLevel';
 import {
   combat,
   epic,

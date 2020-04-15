@@ -8,15 +8,15 @@ const sampleUser: User = {
       status: 'open',
       levels: {
         welcome: {
-          status: 'active',
+          status: 'completed',
           trophies: {
             playstyle: {
-              progress: 0
+              progress: 1
             }
           }
         },
         combat: {
-          status: 'locked',
+          status: 'completed',
           trophies: {}
         },
         skills: {
@@ -42,8 +42,13 @@ const sampleUser: User = {
       }
     },
     combatIsland: {
-      status: 'closed',
-      levels: {}
+      status: 'open',
+      levels: {
+        lvl1: {
+          status: 'active',
+          trophies: {}
+        }
+      }
     }
   }
 };
@@ -54,7 +59,7 @@ const UserProvider: FC = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setUser(sampleUser);
-    }, 2000);
+    }, 1000);
   }, []);
 
   const value = user;

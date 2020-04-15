@@ -1,33 +1,35 @@
 import App, { AppContext } from 'next/app';
 import { AppProps } from 'next/app';
-import { ApolloProvider } from '@apollo/react-hooks';
 import { getApolloClient } from '../graphql/client';
-import { AuthProvider } from '../auth/provider';
 import { getAuthToken } from '../auth/authToken';
 import { queryMe } from '../auth/queries';
 import { CacheProvider } from '@emotion/core';
 import { globalStyles } from '../styles/global';
 import { cache } from 'emotion';
-import AppHeader from '../common/AppHeader';
+import { AppHeader } from '../components/headers';
 import { OverwolfWindowProvider } from '../overwolf/OverwolfWindow';
-import Sidebar from '../common/Sidebar';
+import { Sidebar } from '../components/sidebar';
 import styled from '@emotion/styled';
 import Head from 'next/head';
-import Main from '../common/Main';
 import { useState } from 'react';
-import ToolPane from '../common/ToolPane';
-import Settings from '../common/Settings';
-import Collection from '../common/Collection';
+import { ToolPane } from '../components/tools';
+import { Settings } from '../components/settings';
+import Collection from '../components/tools/Collection';
 import LevelPanel from '../components/levels/LevelPanel';
-import Overview from '../common/Overview';
+import Overview from '../components/trophies/Overview';
 import { TargetLevel } from '../components/levels/types';
-import { playstyle } from '../components/trophies/hub';
 import { WelcomeGuide } from '../components/guides';
 import { UserProvider } from '../contexts/user';
 
 const Container = styled.div`
   display: flex;
   height: 100vh;
+`;
+
+const Main = styled.main`
+  flex-grow: 1;
+  display: flex;
+  position: relative;
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {

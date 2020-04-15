@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
 import Profile from './Profile';
-import AvailableTrophies from './AvailableTrophies';
-import { VideoAds } from '../components/ads';
+import AvailableTrophies from '../trophies/AvailableTrophies';
+import { VideoAds } from '../ads';
 
 const Container = styled.aside`
   padding: 48px 20px 20px 20px;

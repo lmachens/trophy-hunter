@@ -4,7 +4,7 @@ import Support from '../icons/Support';
 import Minimize from '../icons/Minimize';
 import Close from '../icons/Close';
 import styled from '@emotion/styled';
-import Link from './Link';
+import Link from '../common/Link';
 import Feedback from '../icons/Feedback';
 
 const Header = styled.header`

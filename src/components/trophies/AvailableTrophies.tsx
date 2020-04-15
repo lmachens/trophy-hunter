@@ -2,9 +2,9 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
-import TrophyListItem from '../components/trophies/TrophyListItem';
-import { useAvailableTrophyNames } from '../contexts/user';
-import allTrophies from '../components/trophies/allTrophies';
+import TrophyListItem from './TrophyListItem';
+import { useAvailableTrophyNames } from '../../contexts/user';
+import allTrophies from './allTrophies';
 
 const List = styled.div`
   flex-grow: 1;

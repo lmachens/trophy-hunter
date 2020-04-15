@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import ChooseALevel from '../../common/ChooseALevel';
-import DetailsToggle from '../../common/DetailsToggle';
+import ChooseALevel from './ChooseALevel';
+import DetailsToggle from './DetailsToggle';
 import { Level } from './types';
 import TrophyListItem from '../trophies/TrophyListItem';
 

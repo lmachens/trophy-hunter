@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Tooltip from '../../common/Tooltip';
+import { Tooltip } from '../tooltip';
 import { TargetLevel } from '../levels/types';
 import { useUser } from '../../contexts/user';
 

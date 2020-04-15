@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import Link from './Link';
-import Tooltip from './Tooltip';
+import Link from '../common/Link';
+import { Tooltip } from '../tooltip';
 import Settings from '../icons/Settings';
-import ToolButton from './ToolButton';
+import ToolButton from '../tools/ToolButton';
 
 const Aside = styled.aside`
   width: 75px;

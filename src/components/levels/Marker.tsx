@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 import { FC } from 'react';
 import { MarkerProps } from './types';
+import { Tooltip } from '../tooltip';
 
 const blink = keyframes`
   from, to {
@@ -52,16 +53,33 @@ const Marker: FC<MarkerProps> = ({
   focused,
   status = 'locked',
   className,
+  transform,
   ...groupElementProps
 }) => {
   return (
-    <Group className={className} {...groupElementProps}>
-      <PseudoCircle cx="4" cy="4" r="7" />
-      {status === 'active' && !focused && <BlinkCircle cx="4" cy="4" r="7" />}
-      {focused && <FocusCircle cx="4" cy="4" r="7" />}
-      {status === 'unlocked' && <HalfCircle />}
-      <Circle focused={focused} status={status} cx="4" cy="4" r="3.25" />
-    </Group>
+    <>
+      <foreignObject transform={transform} width="14" height="14">
+        <Tooltip title="Hello" placement="bottom">
+          <svg width="14" height="14" viewBox="0 0 14 14">
+            <Group className={className} {...groupElementProps}>
+              <PseudoCircle cx="7" cy="7" r="7" />
+              {status === 'active' && !focused && (
+                <BlinkCircle cx="7" cy="7" r="7" />
+              )}
+              {focused && <FocusCircle cx="7" cy="7" r="7" />}
+              {status === 'unlocked' && <HalfCircle />}
+              <Circle
+                focused={focused}
+                status={status}
+                cx="7"
+                cy="7"
+                r="3.25"
+              />
+            </Group>
+          </svg>
+        </Tooltip>
+      </foreignObject>
+    </>
   );
 };
 export default Marker;

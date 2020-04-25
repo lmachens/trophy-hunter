@@ -20,7 +20,7 @@ const sampleUser: User = {
           trophies: {}
         },
         skills: {
-          status: 'locked',
+          status: 'active',
           trophies: {}
         },
         teamplay: {

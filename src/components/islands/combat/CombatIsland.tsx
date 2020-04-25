@@ -560,49 +560,49 @@ const CombatIsland: FC<IslandProps> = ({
       />
 
       <lvl1.Marker
-        transform="translate(216 102)"
+        transform="translate(213 99)"
         status={levels.lvl1?.status}
         onClick={() => onLevelClick(lvl1)}
         focused={targetLevel?.level === lvl1}
       />
       <lvl2.Marker
-        transform="translate(170 95)"
+        transform="translate(167 92)"
         status={levels.lvl2?.status}
         onClick={() => onLevelClick(lvl2)}
         focused={targetLevel?.level === lvl2}
       />
       <lvl3.Marker
-        transform="translate(127 95)"
+        transform="translate(124 92)"
         status={levels.lvl3?.status}
         onClick={() => onLevelClick(lvl3)}
         focused={targetLevel?.level === lvl3}
       />
       <lvl4.Marker
-        transform="translate(135 142)"
+        transform="translate(132 139)"
         status={levels.lvl4?.status}
         onClick={() => onLevelClick(lvl4)}
         focused={targetLevel?.level === lvl4}
       />
       <lvl5.Marker
-        transform="translate(102 152)"
+        transform="translate(99 149)"
         status={levels.lvl5?.status}
         onClick={() => onLevelClick(lvl5)}
         focused={targetLevel?.level === lvl5}
       />
       <lvl6.Marker
-        transform="translate(81 183)"
+        transform="translate(78 180)"
         status={levels.lvl6?.status}
         onClick={() => onLevelClick(lvl6)}
         focused={targetLevel?.level === lvl6}
       />
       <lvl7.Marker
-        transform="translate(22 164)"
+        transform="translate(19 161)"
         status={levels.lvl7?.status}
         onClick={() => onLevelClick(lvl7)}
         focused={targetLevel?.level === lvl7}
       />
       <lvl8.Marker
-        transform="translate(46 126)"
+        transform="translate(43 123)"
         status={levels.lvl8?.status}
         onClick={() => onLevelClick(lvl8)}
         focused={targetLevel?.level === lvl8}

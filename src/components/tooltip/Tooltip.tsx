@@ -7,6 +7,7 @@ import {
   useState,
   useEffect
 } from 'react';
+import ReactDOM from 'react-dom';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
@@ -45,6 +46,7 @@ const Container = styled.div<ContainerProps>`
   background: #3f3e43;
   border: 1px solid #eaeaea;
   padding: 10px;
+  min-width: 100px;
   left: ${props => props.left}px;
   top: ${props => props.top}px;
   pointer-events: none;
@@ -76,6 +78,7 @@ interface TooltipProps {
   offset?: number;
   targetId?: string;
   className?: string;
+  visible?: boolean;
 }
 
 const Tooltip: FC<TooltipProps> = ({
@@ -85,15 +88,19 @@ const Tooltip: FC<TooltipProps> = ({
   placement,
   offset = 10,
   targetId,
-  className
+  className,
+  visible
 }) => {
   const containerNode = useRef<HTMLDivElement>();
+  const bodyChildNode = useRef<HTMLDivElement>();
+
   const [isVisible, setIsVisible] = useState(false);
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
 
   function showTarget(target) {
     const { x, y, width, height } = target.getBoundingClientRect();
+
     const {
       offsetHeight: containerHeight,
       offsetWidth: containerWidth
@@ -145,16 +152,21 @@ const Tooltip: FC<TooltipProps> = ({
     }
   }, [targetId]);
 
-  return (
-    <>
-      {children &&
-        cloneElement(children, {
-          onMouseEnter: handleMouseEnter,
-          onMouseLeave: handleMouseLeave
-        })}
+  useEffect(() => {
+    const tooltip = document.createElement('div');
+    document.body.appendChild(tooltip);
+    bodyChildNode.current = tooltip;
+
+    return () => {
+      document.body.removeChild(tooltip);
+    };
+  }, []);
+
+  useEffect(() => {
+    ReactDOM.render(
       <Container
         ref={containerNode}
-        isVisible={isVisible}
+        isVisible={visible || isVisible}
         left={left}
         top={top}
         placement={placement}
@@ -162,7 +174,18 @@ const Tooltip: FC<TooltipProps> = ({
       >
         <h3>{title}</h3>
         {text && <Text>{text}</Text>}
-      </Container>
+      </Container>,
+      bodyChildNode.current
+    );
+  }, [left, top, visible, isVisible, placement, className, title, text]);
+
+  return (
+    <>
+      {children &&
+        cloneElement(children, {
+          onMouseEnter: handleMouseEnter,
+          onMouseLeave: handleMouseLeave
+        })}
     </>
   );
 };

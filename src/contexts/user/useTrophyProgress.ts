@@ -7,7 +7,6 @@ const useTrophyProgress = (trophy: Trophy) => {
   const progress =
     user?.islands[trophy.island]?.levels[trophy.level]?.trophies[trophy.name]
       ?.progress || 0;
-
   return progress;
 };
 

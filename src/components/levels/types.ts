@@ -4,6 +4,7 @@ import { Trophy } from '../trophies/types';
 export interface MarkerProps extends SVGProps<SVGGElement> {
   status: 'active' | 'unlocked' | 'locked' | 'completed';
   focused: boolean;
+  level: Level;
 }
 
 export interface Level {

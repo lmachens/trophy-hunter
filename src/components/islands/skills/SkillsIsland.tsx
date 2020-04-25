@@ -149,36 +149,42 @@ const SkillsIsland: FC<IslandProps> = ({
         status={levels.lvl1?.status}
         onClick={() => onLevelClick(lvl1)}
         focused={targetLevel?.level === lvl1}
+        level={lvl1}
       />
       <lvl2.Marker
         transform="translate(99 138)"
         status={levels.lvl2?.status}
         onClick={() => onLevelClick(lvl2)}
         focused={targetLevel?.level === lvl2}
+        level={lvl2}
       />
       <lvl3.Marker
         transform="translate(59 128)"
         status={levels.lvl3?.status}
         onClick={() => onLevelClick(lvl3)}
         focused={targetLevel?.level === lvl3}
+        level={lvl3}
       />
       <lvl4.Marker
         transform="translate(43 100)"
         status={levels.lvl4?.status}
         onClick={() => onLevelClick(lvl4)}
         focused={targetLevel?.level === lvl4}
+        level={lvl4}
       />
       <lvl5.Marker
         transform="translate(7 87)"
         status={levels.lvl5?.status}
         onClick={() => onLevelClick(lvl5)}
         focused={targetLevel?.level === lvl5}
+        level={lvl5}
       />
       <lvl6.Marker
         transform="translate(23 42)"
         status={levels.lvl6?.status}
         onClick={() => onLevelClick(lvl6)}
         focused={targetLevel?.level === lvl6}
+        level={lvl6}
       />
     </IslandSVG>
   );

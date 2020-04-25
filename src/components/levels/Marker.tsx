@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
 import { FC } from 'react';
 import { MarkerProps } from './types';
-import { Tooltip } from '../tooltip';
+import MarkerTooltip from './MarkerTooltip';
 
 const blink = keyframes`
   from, to {
@@ -54,12 +54,13 @@ const Marker: FC<MarkerProps> = ({
   status = 'locked',
   className,
   transform,
+  level,
   ...groupElementProps
 }) => {
   return (
     <>
       <foreignObject transform={transform} width="14" height="14">
-        <Tooltip title="Hello" placement="bottom">
+        <MarkerTooltip level={level}>
           <svg width="14" height="14" viewBox="0 0 14 14">
             <Group className={className} {...groupElementProps}>
               <PseudoCircle cx="7" cy="7" r="7" />
@@ -74,10 +75,11 @@ const Marker: FC<MarkerProps> = ({
                 cx="7"
                 cy="7"
                 r="3.25"
+                level={level}
               />
             </Group>
           </svg>
-        </Tooltip>
+        </MarkerTooltip>
       </foreignObject>
     </>
   );

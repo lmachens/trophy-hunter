@@ -71,7 +71,7 @@ const Text = styled.p`
 `;
 
 interface TooltipProps {
-  title: ReactNode;
+  title?: ReactNode;
   text?: ReactNode;
   placement: Placement;
   children?: ReactElement;
@@ -172,7 +172,7 @@ const Tooltip: FC<TooltipProps> = ({
         placement={placement}
         className={className}
       >
-        <h3>{title}</h3>
+        {title && <h3>{title}</h3>}
         {text && <Text>{text}</Text>}
       </Container>,
       bodyChildNode.current

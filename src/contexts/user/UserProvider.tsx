@@ -6,6 +6,7 @@ const sampleUser: User = {
   islands: {
     hubIsland: {
       status: 'open',
+      trophiesCount: 1,
       levels: {
         welcome: {
           status: 'completed',
@@ -43,12 +44,38 @@ const sampleUser: User = {
     },
     combatIsland: {
       status: 'open',
+      trophiesCount: 0,
       levels: {
         lvl1: {
           status: 'active',
           trophies: {}
         }
       }
+    },
+    skillsIsland: {
+      status: 'open',
+      trophiesCount: 10,
+      levels: {}
+    },
+    objectivesIsland: {
+      status: 'open',
+      trophiesCount: 5,
+      levels: {}
+    },
+    teamworkIsland: {
+      status: 'open',
+      trophiesCount: 15,
+      levels: {}
+    },
+    specialIsland: {
+      status: 'open',
+      trophiesCount: 0,
+      levels: {}
+    },
+    epicIsland: {
+      status: 'open',
+      trophiesCount: 0,
+      levels: {}
     }
   }
 };

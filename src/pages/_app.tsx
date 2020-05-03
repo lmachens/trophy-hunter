@@ -14,7 +14,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { ToolPane } from '../components/tools';
 import { Settings } from '../components/settings';
-import Collection from '../components/tools/Collection';
+import Collection from '../components/tools/collection';
 import LevelPanel from '../components/levels/LevelPanel';
 import Overview from '../components/trophies/Overview';
 import { TargetLevel } from '../components/levels/types';

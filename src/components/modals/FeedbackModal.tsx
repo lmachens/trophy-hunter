@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Modal from './Modal';
 import ModalButton from './ModalButton';
 import styled from '@emotion/styled';
@@ -37,6 +37,9 @@ interface FeedbackModalProps {
 }
 
 const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
+  const [discordTag, setDiscordTag] = useState('');
+  const [feedback, setFeedback] = useState('');
+
   const handleSubmit = event => {
     event.preventDefault();
   };
@@ -49,12 +52,18 @@ const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
           build a high quality product for our users. We would love to learn
           more about your opinion. Please let us hear your feedback.
         </p>
-        <input placeholder="#Discord Tag - *this is optional so that we can contact you back : )" />
+        <input
+          placeholder="#Discord Tag - *this is optional so that we can contact you back : )"
+          value={discordTag}
+          onChange={event => setDiscordTag(event.target.value)}
+        />
         <textarea
           placeholder="I would like to let you know that..."
           rows={10}
-        ></textarea>
-        <ModalButton>Submit</ModalButton>
+          value={feedback}
+          onChange={event => setFeedback(event.target.value)}
+        />
+        <ModalButton disabled={feedback.length === 0}>Submit</ModalButton>
       </Form>
     </Modal>
   );

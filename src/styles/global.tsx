@@ -29,6 +29,10 @@ export const globalStyles = (
         background: #888;
       }
 
+      html {
+        font-size: 14px;
+      }
+
       body {
         margin: 0;
         background: #26252b;
@@ -36,7 +40,6 @@ export const globalStyles = (
         font-family: Helvetica, Arial, sans-serif;
         user-select: none;
         font-family: 'Lato', sans-serif;
-        font-size: 14px;
         line-height: 20px;
       }
 
@@ -73,6 +76,7 @@ export const globalStyles = (
 
       button {
         color: inherit;
+        font-family: 'Roboto Mono', monospace;
       }
     `}
   />

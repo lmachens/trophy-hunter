@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Discord from '../icons/Discord';
 import Support from '../icons/Support';
 import Minimize from '../icons/Minimize';
@@ -6,6 +6,7 @@ import Close from '../icons/Close';
 import styled from '@emotion/styled';
 import Link from '../common/Link';
 import Feedback from '../icons/Feedback';
+import FeedbackModal from '../modals/FeedbackModal';
 
 const Header = styled.header`
   display: flex;
@@ -100,35 +101,40 @@ const WriteUsFeedback = styled.div`
 `;
 
 const AppHeader: FC = () => {
+  const [showFeedback, setShowFeedback] = useState(false);
+
   return (
-    <Header>
-      <LogoContainer>
-        <Link href="/">
-          <Logo src="/trophy-hunter-logo.png" />
-        </Link>
-        <Background viewBox="0 0 200 48" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 0H200V30H200L183 48H0V0Z" />
-        </Background>
-      </LogoContainer>
-      <Toolbar>
-        <WriteUsFeedback>
-          <Feedback />
-          Write us a feedback
-        </WriteUsFeedback>
-        <DiscordButton>
-          <Discord />
-        </DiscordButton>
-        <Button>
-          <Support />
-        </Button>
-        <Button>
-          <Minimize />
-        </Button>
-        <ExitButton>
-          <Close />
-        </ExitButton>
-      </Toolbar>
-    </Header>
+    <>
+      <Header>
+        <LogoContainer>
+          <Link href="/">
+            <Logo src="/trophy-hunter-logo.png" />
+          </Link>
+          <Background viewBox="0 0 200 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0H200V30H200L183 48H0V0Z" />
+          </Background>
+        </LogoContainer>
+        <Toolbar>
+          <WriteUsFeedback onClick={() => setShowFeedback(true)}>
+            <Feedback />
+            Write us a feedback
+          </WriteUsFeedback>
+          <DiscordButton>
+            <Discord />
+          </DiscordButton>
+          <Button>
+            <Support />
+          </Button>
+          <Button>
+            <Minimize />
+          </Button>
+          <ExitButton>
+            <Close />
+          </ExitButton>
+        </Toolbar>
+      </Header>
+      {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
+    </>
   );
 };
 

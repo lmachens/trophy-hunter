@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { FC, SVGProps } from 'react';
 
-const Close: FC = () => {
+const Close: FC<SVGProps<SVGSVGElement>> = props => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" {...props}>
       <line
         x1="19.5"
         y1="10.5"

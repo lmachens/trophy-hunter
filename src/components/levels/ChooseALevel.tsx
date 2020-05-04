@@ -14,7 +14,7 @@ const Container = styled.aside`
 const ChooseALevel: FC = () => {
   return (
     <Container>
-      <img src="/select.svg" />
+      <img src={`${process.env.PUBLIC_DIR}/select.svg`} />
       <h3>Choose a level</h3>
       <p>
         to see full trophy description

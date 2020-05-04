@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "build:overwolf": "TARGET=OVERWOLF next build && TARGET=OVERWOLF next export -o overwolf/build",
     "export": "next build && next export",
     "start": "next start"
   },

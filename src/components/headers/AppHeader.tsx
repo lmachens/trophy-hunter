@@ -108,7 +108,7 @@ const AppHeader: FC = () => {
       <Header>
         <LogoContainer>
           <Link href="/">
-            <Logo src="/trophy-hunter-logo.png" />
+            <Logo src={`${process.env.PUBLIC_DIR}/trophy-hunter-logo.png`} />
           </Link>
           <Background viewBox="0 0 200 48" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0H200V30H200L183 48H0V0Z" />
@@ -128,7 +128,7 @@ const AppHeader: FC = () => {
           <Button>
             <Minimize />
           </Button>
-          <ExitButton>
+          <ExitButton onClick={() => overwolf.windows.getMainWindow().close()}>
             <Close />
           </ExitButton>
         </Toolbar>

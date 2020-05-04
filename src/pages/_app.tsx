@@ -7,7 +7,7 @@ import { CacheProvider } from '@emotion/core';
 import { globalStyles } from '../styles/global';
 import { cache } from 'emotion';
 import { AppHeader } from '../components/headers';
-import { OverwolfWindowProvider } from '../overwolf/OverwolfWindow';
+import { OverwolfWindowProvider } from '../components/overwolf/OverwolfWindow';
 import { Sidebar } from '../components/sidebar';
 import styled from '@emotion/styled';
 import Head from 'next/head';

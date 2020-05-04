@@ -53,22 +53,22 @@ const Sidebar: FC<SidebarProps> = ({ activeTool, onToolClick }) => {
     <Aside>
       <Link href="/league-of-legends">
         <SidebarButton active>
-          <img src="/league-of-legends.png" />
+          <img src={`${process.env.PUBLIC_DIR}/league-of-legends.png`} />
         </SidebarButton>
       </Link>
       <Tooltip title="Coming soon! <3" placement="right">
         <SidebarButton comingSoon>
-          <img src="/teamfight-tactics.png" />
+          <img src={`${process.env.PUBLIC_DIR}/teamfight-tactics.png`} />
         </SidebarButton>
       </Tooltip>
       <Tooltip title="Coming soon! <3" placement="right">
         <SidebarButton comingSoon>
-          <img src="/legends-of-runeterra.png" />
+          <img src={`${process.env.PUBLIC_DIR}/legends-of-runeterra.png`} />
         </SidebarButton>
       </Tooltip>
       <Grow />
       <ToolButton
-        icon={<img src="/trophies.png" />}
+        icon={<img src={`${process.env.PUBLIC_DIR}/trophies.png`} />}
         active={activeTool === 'collection'}
         onClick={() => onToolClick('collection')}
       />

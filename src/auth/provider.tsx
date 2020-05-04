@@ -1,6 +1,14 @@
-import { createContext, useContext, useState, FC } from 'react';
+import { createContext, useContext, useState, FC, Dispatch } from 'react';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext<{
+  user: any;
+  setUser: Dispatch<any>;
+}>({
+  user: null,
+  setUser: () => {
+    return null;
+  }
+});
 
 interface AuthProviderProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

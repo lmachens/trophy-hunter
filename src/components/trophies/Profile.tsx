@@ -15,7 +15,7 @@ const Avatar = styled.img`
 const Profile: FC = () => {
   return (
     <Container>
-      <Avatar src="/avatar.png" />
+      <Avatar src={`${process.env.PUBLIC_DIR}/avatar.png`} />
       <div>
         <h4>sirlunchalot619</h4>
         <p>24/217 TH points</p>

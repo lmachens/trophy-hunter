@@ -48,7 +48,7 @@ const islands = [
   }),
   transformIsland({
     name: 'objectivesIsland',
-    top: 275,
+    top: 295,
     left: 530,
     Component: ObjectivesIsland
   }),

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const TeamplayIcon: FC = () => {
+const TeamworkIcon: FC = () => {
   return (
     <svg
       width="60"
@@ -40,4 +40,4 @@ const TeamplayIcon: FC = () => {
   );
 };
 
-export default TeamplayIcon;
+export default TeamworkIcon;

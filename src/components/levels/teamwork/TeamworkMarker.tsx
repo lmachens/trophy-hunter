@@ -1,7 +1,7 @@
 import Marker from '../Marker';
 import styled from '@emotion/styled';
 
-const TeamplayMarker = styled(Marker)`
+const TeamworkMarker = styled(Marker)`
   color: #07ef1e;
 
   &:hover {
@@ -9,4 +9,4 @@ const TeamplayMarker = styled(Marker)`
   }
 `;
 
-export default TeamplayMarker;
+export default TeamworkMarker;

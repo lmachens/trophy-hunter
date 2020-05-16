@@ -7,7 +7,7 @@ import {
   objectives,
   skills,
   special,
-  teamplay,
+  teamwork,
   welcome
 } from './levels';
 
@@ -159,12 +159,12 @@ const HubIsland: FC<IslandProps> = ({
         focused={targetLevel?.level === skills}
         level={skills}
       />
-      <teamplay.Marker
+      <teamwork.Marker
         transform="translate(129 27)"
-        status={levels.teamplay?.status}
-        onClick={() => onLevelClick(teamplay)}
-        focused={targetLevel?.level === teamplay}
-        level={teamplay}
+        status={levels.teamwork?.status}
+        onClick={() => onLevelClick(teamwork)}
+        focused={targetLevel?.level === teamwork}
+        level={teamwork}
       />
       <objectives.Marker
         transform="translate(129 87)"

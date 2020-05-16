@@ -46,7 +46,7 @@ const SkillsIsland: FC<IslandProps> = ({
       <path d="M132 128L114 143" stroke="#EAEAEA" strokeDasharray="2 2" />
       <path
         d="M80.1466 6.5L85.5001 0.734807L90.8534 6.5H80.1466Z"
-        fill={status === 'done' ? '#FBFF2E' : 'none'}
+        fill={status === 'done' ? '#FBFF2E' : '#26252b'}
         stroke="#EAEAEA"
       />
       <path
@@ -79,7 +79,7 @@ const SkillsIsland: FC<IslandProps> = ({
       />
       <path
         d="M30.2345 72.9365L38.6804 83.4938L46.9999 73.5001L54.1644 83.4938L63.4999 73.5001L74.8099 83.4938H95.4553L106 73.5001L115.866 83.4938L123.5 73.5001L133.462 83.4938L140.5 74.5V83.4938H133.462H115.866H95.4553H74.8099H54.1644H38.6804H30.2345V72.9365Z"
-        fill={status === 'done' ? '#FBFF2E' : 'none'}
+        fill={status === 'done' ? '#FBFF2E' : '#26252b'}
         stroke="#EAEAEA"
       />
       <rect
@@ -87,7 +87,7 @@ const SkillsIsland: FC<IslandProps> = ({
         y="30.5029"
         width="19.6454"
         height="52.4904"
-        fill={status === 'done' ? '#FBFF2E' : 'none'}
+        fill={status === 'done' ? '#FBFF2E' : '#26252b'}
         stroke="#EAEAEA"
       />
       <path d="M77 30V84M93 30V84" stroke="#EAEAEA" />
@@ -100,7 +100,7 @@ const SkillsIsland: FC<IslandProps> = ({
         y="23.5"
         width="6"
         height="7"
-        fill={status === 'done' ? '#FBFF2E' : 'none'}
+        fill={status === 'done' ? '#FBFF2E' : '#26252b'}
         stroke="#EAEAEA"
       />
       <rect
@@ -108,7 +108,7 @@ const SkillsIsland: FC<IslandProps> = ({
         y="23.5"
         width="7"
         height="7"
-        fill={status === 'done' ? '#FBFF2E' : 'none'}
+        fill={status === 'done' ? '#FBFF2E' : '#26252b'}
         stroke="#EAEAEA"
       />
       <rect
@@ -116,7 +116,7 @@ const SkillsIsland: FC<IslandProps> = ({
         y="23.5"
         width="6"
         height="7"
-        fill={status === 'done' ? '#FBFF2E' : 'none'}
+        fill={status === 'done' ? '#FBFF2E' : '#26252b'}
         stroke="#EAEAEA"
       />
       <path

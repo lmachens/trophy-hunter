@@ -65,7 +65,7 @@ const Container = styled.div<ContainerProps>`
   }
 `;
 
-const Text = styled.p`
+const Text = styled.div`
   font-family: 'Lato', sans-serif;
   font-size: 14px;
 `;

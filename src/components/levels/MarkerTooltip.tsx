@@ -9,8 +9,13 @@ interface MarkerTooltipProps {
   level: Level;
 }
 
-const Trophies = styled.p`
+const Trophies = styled.div`
   display: flex;
+  margin-top: 6px;
+  > svg {
+    margin-right: 4px;
+    height: 30px;
+  }
 `;
 
 const MarkerTooltip: FC<MarkerTooltipProps> = ({ children, level }) => {
@@ -25,7 +30,15 @@ const MarkerTooltip: FC<MarkerTooltipProps> = ({ children, level }) => {
   });
 
   return (
-    <Tooltip text={<Trophies>{trophies}</Trophies>} placement="bottom">
+    <Tooltip
+      text={
+        <>
+          <h5>{level.title}</h5>
+          <Trophies>{trophies}</Trophies>
+        </>
+      }
+      placement="bottom"
+    >
       {children}
     </Tooltip>
   );

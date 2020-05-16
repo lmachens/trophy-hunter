@@ -70,6 +70,13 @@ export const globalStyles = (
         color: #e8e8e8;
       }
 
+      h5 {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 1rem;
+        font-weight: normal;
+        margin: 0;
+      }
+
       p {
         margin: 0;
       }

@@ -4,7 +4,6 @@ import Support from '../icons/Support';
 import Minimize from '../icons/Minimize';
 import Close from '../icons/Close';
 import styled from '@emotion/styled';
-import Link from '../common/Link';
 import Feedback from '../icons/Feedback';
 import FeedbackModal from '../modals/FeedbackModal';
 
@@ -78,6 +77,7 @@ const DiscordButton = styled(Button)`
     background-color: #7289da;
   }
 `;
+const DiscordButtonLink = DiscordButton.withComponent('a');
 
 const ExitButton = styled(Button)`
   &:hover,
@@ -105,11 +105,18 @@ const AppHeader: FC = () => {
 
   return (
     <>
-      <Header>
+      <Header
+        onMouseDown={() =>
+          overwolf.windows.getCurrentWindow(result => {
+            overwolf.windows.dragMove(result.window.id);
+          })
+        }
+      >
         <LogoContainer>
-          <Link href="/">
-            <Logo src={`${process.env.PUBLIC_DIR}/trophy-hunter-logo.png`} />
-          </Link>
+          <Logo
+            src={`${process.env.PUBLIC_DIR}/trophy-hunter-logo.png`}
+            draggable={false}
+          />
           <Background viewBox="0 0 200 48" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0H200V30H200L183 48H0V0Z" />
           </Background>
@@ -119,13 +126,19 @@ const AppHeader: FC = () => {
             <Feedback />
             Write us a feedback
           </WriteUsFeedback>
-          <DiscordButton>
+          <DiscordButtonLink href="https://discord.gg/dgZAmW" target="_blank">
             <Discord />
-          </DiscordButton>
+          </DiscordButtonLink>
           <Button>
             <Support />
           </Button>
-          <Button>
+          <Button
+            onClick={() =>
+              overwolf.windows.getCurrentWindow(result => {
+                overwolf.windows.minimize(result.window.id);
+              })
+            }
+          >
             <Minimize />
           </Button>
           <ExitButton onClick={() => overwolf.windows.getMainWindow().close()}>

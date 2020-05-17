@@ -6,6 +6,7 @@ const config = {
   serverRuntimeConfig: {
     MONGO_URL: process.env.MONGO_URL,
     JWT_SECRET: process.env.JWT_SECRET,
+    DISCORD_WEBHOOK_URL: process.env.DISCORD_WEBHOOK_URL,
     ENDPOINT: 'http://localhost:3000/api/graphql'
   },
   publicRuntimeConfig: {

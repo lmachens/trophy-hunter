@@ -2,6 +2,9 @@ import { FC, useState } from 'react';
 import Modal from './Modal';
 import ModalButton from './ModalButton';
 import styled from '@emotion/styled';
+import { useMutation } from 'react-query';
+import { postFeedback } from '../../api/feedback';
+import Airplane from '../icons/Airplane';
 
 const Form = styled.form`
   display: flex;
@@ -32,16 +35,38 @@ const Form = styled.form`
   }
 `;
 
+const ActionContainer = styled.div`
+  font-family: 'Roboto Mono', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+
+  svg {
+    margin-left: 10px;
+  }
+`;
+
 interface FeedbackModalProps {
   onClose(): void;
 }
 
 const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
   const [discordTag, setDiscordTag] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [message, setMessage] = useState('');
+  const [mutate, { status }] = useMutation(postFeedback);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
+
+    try {
+      await mutate({
+        discordTag,
+        message
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -56,14 +81,25 @@ const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
           placeholder="#Discord Tag - *this is optional so that we can contact you back : )"
           value={discordTag}
           onChange={event => setDiscordTag(event.target.value)}
+          disabled={status === 'success'}
         />
         <textarea
           placeholder="I would like to let you know that..."
           rows={10}
-          value={feedback}
-          onChange={event => setFeedback(event.target.value)}
+          value={message}
+          onChange={event => setMessage(event.target.value)}
+          disabled={status === 'success'}
         />
-        <ModalButton disabled={feedback.length === 0}>Submit</ModalButton>
+        <ActionContainer>
+          {status !== 'success' && (
+            <ModalButton disabled={message.length === 0}>Submit</ModalButton>
+          )}
+          {status === 'success' && (
+            <>
+              Message sent successfuly <Airplane />
+            </>
+          )}
+        </ActionContainer>
       </Form>
     </Modal>
   );

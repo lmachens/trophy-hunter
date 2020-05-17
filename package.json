@@ -41,7 +41,8 @@
     "next": "^9.3.0",
     "next-cookies": "^2.0.3",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-query": "^1.5.2"
   },
   "devDependencies": {
     "@types/mongodb": "^3.5.2",

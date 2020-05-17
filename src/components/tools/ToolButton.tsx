@@ -25,7 +25,7 @@ const Button = styled.button<ButtonProps>`
   }
 
   border-top: 1px solid #3f3e43;
-  height: 50px;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -1,25 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { sendToDiscord } from '../../api/feedback/server';
+import {
+  applyMiddleware,
+  withError,
+  withMethods,
+  withValidate,
+  check
+} from '../../api/utils/server/middleware';
+import isLength from 'validator/lib/isLength';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  res.setHeader('Content-Type', 'application/json');
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ status: 405, message: 'Method not allowed' });
-  }
-
-  try {
+export default applyMiddleware(
+  async (req: NextApiRequest, res: NextApiResponse) => {
     const { discordTag, message } = req.body;
-    if (!message || message.trim().length === 0) {
-      return res
-        .status(400)
-        .json({ status: 400, message: 'Message is missing' });
-    }
-
     await sendToDiscord({ discordTag, message });
+    res.setHeader('Content-Type', 'application/json');
     res.json({});
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: 500, message: 'Internal server error' });
-  }
-};
+  },
+  withError,
+  withMethods('POST'),
+  withValidate(check('message', isLength, { min: 1 }))
+);

@@ -25,13 +25,17 @@
         "file": "build/index.html",
         "desktop_only": true,
         "native_window": true,
-        "resizable": true,
+        "resizable": false,
         "transparent": true,
         "size": {
           "width": 1335,
           "height": 750
         },
         "min_size": {
+          "width": 1335,
+          "height": 750
+        },
+        "max_size": {
           "width": 1335,
           "height": 750
         }

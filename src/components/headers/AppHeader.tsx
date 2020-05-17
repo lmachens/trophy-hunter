@@ -6,6 +6,7 @@ import Close from '../icons/Close';
 import styled from '@emotion/styled';
 import Feedback from '../icons/Feedback';
 import FeedbackModal from '../modals/FeedbackModal';
+import overwolf from '../../api/overwolf';
 
 const Header = styled.header`
   display: flex;

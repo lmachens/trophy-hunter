@@ -1,4 +1,21 @@
 import { FC } from 'react';
+import { keyframes } from '@emotion/core';
+import styled from '@emotion/styled';
+
+const woosh = keyframes`
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: 40;
+  }
+`;
+
+const WooshLine = styled.line`
+  stroke-dasharray: 10, 5, 5, 5, 10, 5;
+  animation: ${woosh} 1.5s linear infinite;
+`;
 
 const Airplane: FC = () => {
   return (
@@ -22,35 +39,45 @@ const Airplane: FC = () => {
         fill="url(#paint1_linear)"
       />
       <path d="M28.4988 14.5L63.4992 0L28.4988 20.5V14.5Z" fill="#CC3E88" />
-      <rect
-        width="10.0466"
-        height="0.99861"
-        transform="matrix(0.862544 -0.505982 0.515509 0.856884 5.54272 17.0273)"
-        fill="#77777A"
+      <WooshLine
+        x1="0"
+        y1="0"
+        x2="10"
+        y2="0"
+        transform="matrix(0.862544, -0.505982, 0.515509, 0.856884, 5.54272, 17.0273)"
+        stroke="#77777A"
       />
-      <rect
-        width="10.0466"
-        height="0.99861"
-        transform="matrix(0.862544 -0.505982 0.515509 0.856884 25.7014 35.9375)"
-        fill="#77777A"
+      <WooshLine
+        x1="0"
+        y1="0"
+        x2="10"
+        y2="0"
+        transform="matrix(0.862544, -0.505982, 0.515509, 0.856884, 25.7014, 35.9375)"
+        stroke="#77777A"
       />
-      <rect
-        width="10.0466"
-        height="0.99861"
-        transform="matrix(0.862544 -0.505982 0.515509 0.856884 4.53479 24.9893)"
-        fill="#77777A"
+      <WooshLine
+        x1="0"
+        y1="0"
+        x2="10"
+        y2="0"
+        transform="matrix(0.862544, -0.505982, 0.515509, 0.856884, 4.53479, 24.9893)"
+        stroke="#77777A"
       />
-      <rect
-        width="10.0466"
-        height="0.99861"
-        transform="matrix(0.862544 -0.505982 0.515509 0.856884 13.6062 35.9375)"
-        fill="#77777A"
+      <WooshLine
+        x1="0"
+        y1="0"
+        x2="10"
+        y2="0"
+        transform="matrix(0.862544, -0.505982, 0.515509, 0.856884, 13.6062, 35.9375)"
+        stroke="#77777A"
       />
-      <rect
-        width="28.1585"
-        height="0.99861"
-        transform="matrix(0.862544 -0.505982 0.515509 0.856884 0 36.1445)"
-        fill="#77777A"
+      <WooshLine
+        x1="0"
+        y1="0"
+        x2="28"
+        y2="0"
+        transform="matrix(0.862544, -0.505982, 0.515509, 0.856884, 0, 36.1445)"
+        stroke="#77777A"
       />
       <defs>
         <linearGradient

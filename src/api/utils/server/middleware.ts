@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Ajv from 'ajv';
+import { initMongoDatabase } from './db';
 
 type Handler = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 type Middleware = (handler: Handler) => Handler;
@@ -18,6 +19,18 @@ export const applyMiddleware = (
   return combinedHandler;
 };
 
+export const withError = (handler: Handler) => async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    return await handler(req, res);
+  } catch (error) {
+    console.error(error);
+    res.status(500).end('Internal Server Error: ' + error.message);
+  }
+};
+
 const ajv = new Ajv();
 export const withSchema = (schema: string | boolean | object) => (
   handler: Handler
@@ -28,18 +41,6 @@ export const withSchema = (schema: string | boolean | object) => (
     return res.status(422).json(ajv.errors);
   }
   return await handler(req, res);
-};
-
-export const withError = (handler: Handler) => async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
-  try {
-    return await handler(req, res);
-  } catch (error) {
-    console.error(error);
-    res.status(500).end('Internal Server Error');
-  }
 };
 
 type HTTPMethod =
@@ -61,4 +62,13 @@ export const withMethods = (...allowedMethods: HTTPMethod[]) => (
   }
 
   await handler(req, res);
+};
+
+export const withDatabase = (handler: Handler) => async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  await initMongoDatabase();
+
+  return await handler(req, res);
 };

@@ -1,36 +1,58 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUsersCollection, calculateExpireAt } from '../../auth/collection';
-import crypto from 'crypto';
+import {
+  applyMiddleware,
+  withError,
+  withMethods,
+  withSchema,
+  withDatabase
+} from '../../api/utils/server/middleware';
+import { getSummonersCollection } from '../../api/summoners/server/collection';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'POST') {
-    return res.status(404).end();
-  }
+const ONE_YEAR = 12 * 30 * 24 * 60 * 60 * 1000;
+export default applyMiddleware(
+  async (req: NextApiRequest, res: NextApiResponse) => {
+    const { summonerName, region } = req.body;
 
-  const { email } = req.body;
-  const Users = await getUsersCollection();
+    const Summoners = await getSummonersCollection();
 
-  const authToken = jwt.sign({ email }, process.env.JWT_SECRET);
+    const authToken = jwt.sign(
+      { summonerName, region },
+      process.env.JWT_SECRET,
+      { expiresIn: ONE_YEAR / 1000 }
+    );
 
-  const expiresAt = calculateExpireAt();
-  const verifyToken = crypto.randomBytes(32).toString('hex');
-  await Users.updateOne(
-    { email },
-    {
-      $addToSet: {
-        authTokens: {
-          token: authToken,
-          expiresAt,
-          verifyToken
+    const expiresAt = new Date(Date.now() + ONE_YEAR);
+    await Summoners.updateOne(
+      { summonerName, region },
+      {
+        $addToSet: {
+          authTokens: {
+            token: authToken,
+            expiresAt: expiresAt
+          }
         }
+      },
+      {
+        upsert: true
+      }
+    );
+
+    res.json({ authToken });
+  },
+  withError,
+  withMethods('POST'),
+  withSchema({
+    type: 'object',
+    properties: {
+      summonerName: {
+        type: 'string'
+      },
+      region: {
+        type: 'string'
       }
     },
-    {
-      upsert: true
-    }
-  );
-
-  const securityCode = 'Random Stuff';
-  res.json({ securityCode, authToken });
-};
+    required: ['summonerName', 'region']
+  }),
+  withDatabase
+);

@@ -4,10 +4,8 @@ import {
   applyMiddleware,
   withError,
   withMethods,
-  withValidate,
-  check
+  withSchema
 } from '../../api/utils/server/middleware';
-import isLength from 'validator/lib/isLength';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -18,5 +16,16 @@ export default applyMiddleware(
   },
   withError,
   withMethods('POST'),
-  withValidate(check('message', isLength, { min: 1 }))
+  withSchema({
+    type: 'object',
+    properties: {
+      discordTag: {
+        type: 'string'
+      },
+      message: {
+        type: 'string'
+      }
+    },
+    required: ['message']
+  })
 );

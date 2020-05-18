@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import Ajv from 'ajv';
 
 type Handler = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 type Middleware = (handler: Handler) => Handler;
@@ -17,33 +18,14 @@ export const applyMiddleware = (
   return combinedHandler;
 };
 
-export const check = (field, validator, options) => body => {
-  try {
-    if (!validator(body[field], options)) {
-      return {
-        [field]: false
-      };
-    }
-  } catch (error) {
-    return {
-      [field]: error.message
-    };
-  }
-};
+const ajv = new Ajv();
+export const withSchema = (schema: string | boolean | object) => (
+  handler: Handler
+) => async (req: NextApiRequest, res: NextApiResponse) => {
+  const valid = ajv.validate(schema, req.body);
 
-export const withValidate = (...checks) => (handler: Handler) => async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
-  const errors = checks.reduce((errors, check) => {
-    const error = check(req.body);
-    if (!error) {
-      return errors;
-    }
-    return [...errors, error];
-  }, []);
-  if (errors.length > 0) {
-    return res.status(422).json({ errors });
+  if (!valid) {
+    return res.status(422).json(ajv.errors);
   }
   return await handler(req, res);
 };

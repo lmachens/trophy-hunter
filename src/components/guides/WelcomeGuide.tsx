@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Tooltip } from '../tooltip';
 import { TargetLevel } from '../levels/types';
-import { useUser } from '../../contexts/user';
+import { useAccount } from '../../contexts/account';
 
 interface WelcomeGuideProps {
   visibleIslandDetails: boolean;
@@ -12,9 +12,10 @@ const WelcomeGuide: FC<WelcomeGuideProps> = ({
   visibleIslandDetails,
   targetLevel
 }) => {
-  const user = useUser();
+  const account = useAccount();
 
-  const showGuide = user?.islands.hubIsland.levels.welcome.status === 'active';
+  const showGuide =
+    account?.islands.hubIsland.levels.welcome.status === 'active';
   if (!showGuide) {
     return null;
   }

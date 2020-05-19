@@ -1,11 +1,11 @@
-import useUser from './useUser';
+import useAccount from './useAccount';
 
 const useAvailableTrophyNames = () => {
-  const user = useUser();
-  if (!user) {
+  const account = useAccount();
+  if (!account) {
     return [];
   }
-  const availableTrophyNames = Object.values(user.islands)
+  const availableTrophyNames = Object.values(account.islands)
     .filter(island => island.status === 'open')
     .reduce((availableTrophyNames, island) => {
       const availableLevelsTrophyNames = Object.values(island.levels)

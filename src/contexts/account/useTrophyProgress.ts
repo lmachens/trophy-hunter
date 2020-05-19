@@ -1,11 +1,11 @@
-import useUser from './useUser';
+import useAccount from './useAccount';
 import { Trophy } from '../../components/trophies/types';
 
 const useTrophyProgress = (trophy: Trophy) => {
-  const user = useUser();
+  const account = useAccount();
 
   const progress =
-    user?.islands[trophy.island]?.levels[trophy.level]?.trophies[trophy.name]
+    account?.islands[trophy.island]?.levels[trophy.level]?.trophies[trophy.name]
       ?.progress || 0;
   return progress;
 };

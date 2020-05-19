@@ -15,7 +15,7 @@ import LevelPanel from '../components/levels/LevelPanel';
 import Overview from '../components/trophies/Overview';
 import { TargetLevel } from '../components/levels/types';
 import { WelcomeGuide } from '../components/guides';
-import { UserProvider } from '../contexts/user';
+import { AccountProvider } from '../contexts/account';
 
 const Container = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <CacheProvider value={cache}>
         {globalStyles}
-        <UserProvider>
+        <AccountProvider>
           <OverwolfWindowProvider>
             <AppHeader />
             <Container>
@@ -93,7 +93,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Main>
             </Container>
           </OverwolfWindowProvider>
-        </UserProvider>
+        </AccountProvider>
       </CacheProvider>
     </>
   );

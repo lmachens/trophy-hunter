@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 import { Trophy } from './types';
-import { useTrophyProgress } from '../../contexts/user';
+import { useTrophyProgress } from '../../contexts/account';
 
 interface ListItemProps {
   borderless?: boolean;

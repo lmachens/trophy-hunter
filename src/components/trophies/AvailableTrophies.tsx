@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import TrophyListItem from './TrophyListItem';
-import { useAvailableTrophyNames } from '../../contexts/user';
+import { useAvailableTrophyNames } from '../../contexts/account';
 import allTrophies from './allTrophies';
 
 const List = styled.div`

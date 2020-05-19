@@ -13,7 +13,7 @@ import {
 import { transformIsland } from '../components/islands/utils';
 import { Level } from '../components/levels/types';
 import Background from '../components/islands/Background';
-import { useUser } from '../contexts/user';
+import { useAccount } from '../contexts/account';
 
 const islands = [
   transformIsland({
@@ -84,8 +84,8 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
   targetLevel,
   onLevelClick
 }) => {
-  const user = useUser();
-  const userIslands = user?.islands || {};
+  const account = useAccount();
+  const accountIslands = account?.islands || {};
   const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
     <Islands>
@@ -97,7 +97,7 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
         }}
       >
         {islands.map(({ name, top, left, Component: Island }) => {
-          const { status, levels } = userIslands[name] || {
+          const { status, levels } = accountIslands[name] || {
             status: 'closed',
             levels: {}
           };

@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-unfetch';
+
 interface JSONRequestInit extends RequestInit {
   data: unknown;
 }

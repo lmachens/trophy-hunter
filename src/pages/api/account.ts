@@ -11,15 +11,15 @@ import { getAccountsCollection } from '../../api/accounts/server/collection';
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { authToken } = req.cookies;
+    if (!authToken) {
+      return res.status(401).end('Unauthorized');
+    }
     const { summonerName, region } = jwt.verify(
       authToken,
       process.env.JWT_SECRET
     );
-    if (!authToken) {
-      return res.status(401).end('Unauthorized');
-    }
-    const Accounts = await getAccountsCollection();
 
+    const Accounts = await getAccountsCollection();
     const account = await Accounts.findOne({
       summonerName,
       region,
@@ -32,7 +32,8 @@ export default applyMiddleware(
       }
     });
     if (!account) {
-      return res.status(404).end('Not Found');
+      res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;`);
+      return res.status(401).end('Unauthorized');
     }
     res.json(account);
   },

@@ -55,6 +55,7 @@ export default applyMiddleware(
           }
         },
         $setOnInsert: {
+          trophiesCount: 0,
           islands: {
             hubIsland: {
               status: 'open',
@@ -81,7 +82,8 @@ export default applyMiddleware(
 
     res.setHeader(
       'Set-Cookie',
-      `authToken=${authToken};Max-Age=${ONE_YEAR_IN_MILLISECONDS / 1000};`
+      `authToken=${authToken};path=/;Max-Age=${ONE_YEAR_IN_MILLISECONDS /
+        1000};`
     );
     res.json(account.value);
   },

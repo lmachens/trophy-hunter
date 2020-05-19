@@ -12,7 +12,7 @@ const WelcomeGuide: FC<WelcomeGuideProps> = ({
   visibleIslandDetails,
   targetLevel
 }) => {
-  const account = useAccount();
+  const { account } = useAccount();
 
   const showGuide =
     account?.islands.hubIsland.levels.welcome.status === 'active';

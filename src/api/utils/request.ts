@@ -5,13 +5,17 @@ export const requestJSON = async <T>(
   input: RequestInfo,
   init?: JSONRequestInit
 ): Promise<T | string> => {
-  const response = await fetch(input, {
+  const options = {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(init.data),
     ...init
-  });
+  };
+  if (init?.data) {
+    options.body = JSON.stringify(init.data);
+  }
+
+  const response = await fetch(input, options);
 
   if (!response.ok) {
     throw response;

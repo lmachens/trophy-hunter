@@ -84,7 +84,7 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
   targetLevel,
   onLevelClick
 }) => {
-  const account = useAccount();
+  const { account } = useAccount();
   const accountIslands = account?.islands || {};
   const { left, top } = targetLevel || { left: 0, top: 0 };
   return (

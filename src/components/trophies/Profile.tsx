@@ -1,5 +1,8 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
+import { useAccount } from '../../contexts/account';
+import { useMutation, queryCache } from 'react-query';
+import { postLogin } from '../../api/accounts';
 
 const Container = styled.div`
   display: flex;
@@ -13,12 +16,28 @@ const Avatar = styled.img`
 `;
 
 const Profile: FC = () => {
+  const { account, loading } = useAccount();
+  const [login] = useMutation(postLogin, {
+    onSuccess: () => {
+      queryCache.refetchQueries('account');
+    }
+  });
+
   return (
-    <Container>
+    <Container
+      onClick={() => {
+        login({
+          summonerName: 'sirlunchalot619',
+          region: 'EUW'
+        });
+      }}
+    >
       <Avatar src={`${process.env.PUBLIC_DIR}/avatar.png`} />
       <div>
-        <h4>sirlunchalot619</h4>
-        <p>24/217 TH points</p>
+        <h4>
+          {loading ? '. . .' : account?.summonerName || 'Unknown Trophy Hunter'}
+        </h4>
+        <p>{account ? account.trophiesCount : 0}/217 TH points</p>
       </div>
     </Container>
   );

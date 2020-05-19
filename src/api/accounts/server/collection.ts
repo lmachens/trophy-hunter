@@ -16,6 +16,9 @@ export const createAccountsCollection = async () => {
           region: {
             bsonType: 'string'
           },
+          trophiesCount: {
+            bsonType: 'int'
+          },
           authTokens: {
             bsonType: 'array',
             items: {

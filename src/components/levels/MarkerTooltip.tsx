@@ -19,7 +19,7 @@ const Trophies = styled.div`
 `;
 
 const MarkerTooltip: FC<MarkerTooltipProps> = ({ children, level }) => {
-  const account = useAccount();
+  const { account } = useAccount();
 
   const trophies = level.trophies.map(trophy => {
     const progress =

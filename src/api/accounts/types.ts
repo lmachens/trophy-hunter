@@ -6,6 +6,7 @@ export interface Credential {
 export interface Account {
   summonerName: string;
   region: string;
+  trophiesCount: number;
   islands: {
     hubIsland: Island;
     combatIsland: Island;

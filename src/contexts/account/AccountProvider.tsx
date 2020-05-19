@@ -1,20 +1,15 @@
-import { useState, FC, useEffect } from 'react';
+import { FC } from 'react';
 import AccountContext from './AccountContext';
-import { Account, postLogin } from '../../api/accounts';
+import { getAccount } from '../../api/accounts';
+import { useQuery } from 'react-query';
 
 const AccountProvider: FC = ({ children }) => {
-  const [account, setAccount] = useState<Account>(null);
-
-  useEffect(() => {
-    postLogin({ summonerName: 'sirlunchalot619', region: 'EUW' }).then(
-      setAccount
-    );
-  }, []);
-
-  const value = account;
+  const { data: account, status } = useQuery('account', getAccount);
 
   return (
-    <AccountContext.Provider value={value}>{children}</AccountContext.Provider>
+    <AccountContext.Provider value={{ account, loading: status === 'loading' }}>
+      {children}
+    </AccountContext.Provider>
   );
 };
 

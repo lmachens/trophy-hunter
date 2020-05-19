@@ -1,7 +1,7 @@
 import useAccount from './useAccount';
 
 const useAvailableTrophyNames = () => {
-  const account = useAccount();
+  const { account } = useAccount();
   if (!account) {
     return [];
   }

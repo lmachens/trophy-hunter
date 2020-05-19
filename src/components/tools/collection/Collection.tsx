@@ -18,7 +18,7 @@ const Items = styled.div`
 `;
 
 const Collection: FC = () => {
-  const account = useAccount();
+  const { account } = useAccount();
   return (
     <>
       <h2>My Collection</h2>

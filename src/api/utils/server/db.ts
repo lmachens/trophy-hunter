@@ -1,6 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
 import getConfig from 'next/config';
-import { createSummonersCollection } from '../../summoners/server/collection';
+import { createAccountsCollection } from '../../accounts/server/collection';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -14,7 +14,7 @@ export const initMongoDatabase = async () => {
 
     await client.connect();
     mongoDatabase = client.db();
-    await createSummonersCollection();
+    await createAccountsCollection();
   }
 };
 

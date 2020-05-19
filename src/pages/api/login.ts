@@ -7,14 +7,14 @@ import {
   withSchema,
   withDatabase
 } from '../../api/utils/server/middleware';
-import { getSummonersCollection } from '../../api/summoners/server/collection';
+import { getAccountsCollection } from '../../api/accounts/server/collection';
 
 const ONE_YEAR = 12 * 30 * 24 * 60 * 60 * 1000;
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { summonerName, region } = req.body;
 
-    const Summoners = await getSummonersCollection();
+    const Accounts = await getAccountsCollection();
 
     const authToken = jwt.sign(
       { summonerName, region },
@@ -23,7 +23,7 @@ export default applyMiddleware(
     );
 
     const expiresAt = new Date(Date.now() + ONE_YEAR);
-    await Summoners.updateOne(
+    await Accounts.updateOne(
       { summonerName, region },
       {
         $addToSet: {

@@ -1,12 +1,12 @@
 import { getDatabase, getCollection } from '../../utils/server/db';
 
-interface Summoner {
+interface Account {
   summonerName: string;
   region: string;
 }
 
-export const createSummonersCollection = async () => {
-  await getDatabase().createCollection('summoners', {
+export const createAccountsCollection = async () => {
+  await getDatabase().createCollection('accounts', {
     validator: {
       $jsonSchema: {
         bsonType: 'object',
@@ -38,6 +38,6 @@ export const createSummonersCollection = async () => {
   });
 };
 
-export const getSummonersCollection = () => {
-  return getCollection<Summoner>('summoners');
+export const getAccountsCollection = () => {
+  return getCollection<Account>('accounts');
 };

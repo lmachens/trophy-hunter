@@ -22,7 +22,7 @@ export const requestJSON = async <T>(
 
   const fetchInput =
     typeof input === 'string' && input.startsWith('/api')
-      ? publicRuntimeConfig.API_ENDPOINT + input
+      ? `${publicRuntimeConfig.API_ENDPOINT || ''}${input}`
       : input;
 
   const response = await fetch(fetchInput, options);

@@ -57,7 +57,11 @@ type HTTPMethod =
 export const withMethods = (...allowedMethods: HTTPMethod[]) => (
   handler: Handler
 ) => async (req: NextApiRequest, res: NextApiResponse) => {
-  if (!allowedMethods.find(method => method === req.method)) {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Methods', allowedMethods.join(', '));
+    res.end();
+  }
+  if (!allowedMethods.find((method) => method === req.method)) {
     return res.status(405).end('Method not allowed');
   }
 

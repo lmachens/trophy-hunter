@@ -25,7 +25,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run build:overwolf
+    - name: Build Overwolf App      
+      env:
+        API_ENDPOINT: ${{ secrets.API_ENDPOINT }} 
+      run: npm run build:overwolf
     - name: Archive Release
       uses: thedoctor0/zip-release@master
       with:

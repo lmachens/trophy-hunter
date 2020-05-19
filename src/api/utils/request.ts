@@ -1,4 +1,7 @@
 import fetch from 'isomorphic-unfetch';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface JSONRequestInit extends RequestInit {
   data: unknown;
@@ -9,15 +12,20 @@ export const requestJSON = async <T>(
 ): Promise<T | string> => {
   const options = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    ...init
+    ...init,
   };
   if (init?.data) {
     options.body = JSON.stringify(init.data);
   }
 
-  const response = await fetch(input, options);
+  const fetchInput =
+    typeof input === 'string' && input.startsWith('/api')
+      ? publicRuntimeConfig.API_ENDPOINT + input
+      : input;
+
+  const response = await fetch(fetchInput, options);
 
   if (!response.ok) {
     throw response;
@@ -37,7 +45,7 @@ export const postJSON = async <T>(
 ): Promise<T> => {
   return (await requestJSON(input, {
     method: 'POST',
-    data
+    data,
   })) as T;
 };
 

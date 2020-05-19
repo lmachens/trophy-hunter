@@ -7,14 +7,13 @@ const config = {
     MONGO_URL: process.env.MONGO_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     DISCORD_WEBHOOK_URL: process.env.DISCORD_WEBHOOK_URL,
-    ENDPOINT: 'http://localhost:3000/api/graphql'
   },
   publicRuntimeConfig: {
-    ENDPOINT: '/api/graphql'
+    API_ENDPOINT: process.env.API_ENDPOINT,
   },
   env: {
-    PUBLIC_DIR: ''
-  }
+    PUBLIC_DIR: '',
+  },
 };
 
 if (process.env.TARGET === 'OVERWOLF') {
@@ -23,13 +22,13 @@ if (process.env.TARGET === 'OVERWOLF') {
   config.target = 'server';
   config.assetPrefix = '.';
   config.env = {
-    PUBLIC_DIR: '/build'
+    PUBLIC_DIR: '/build',
   };
   config.exportPathMap = () => {
     return {
       '/': { page: '/' },
       '/background': { page: '/background' },
-      '/in-game': { page: '/in-game' }
+      '/in-game': { page: '/in-game' },
     };
   };
 }

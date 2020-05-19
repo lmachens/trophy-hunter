@@ -80,7 +80,7 @@
     },
     "protocol_override_domains": {},
     "externally_connectable": {
-      "matches": []
+      "matches": ["http://*.th.gl"]
     },
     "force_browser": "user",
     "developer": {

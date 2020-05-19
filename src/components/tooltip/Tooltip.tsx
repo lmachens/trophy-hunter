@@ -18,6 +18,7 @@ interface ContainerProps {
   left: number;
   top: number;
   placement: Placement;
+  targetId: string;
 }
 
 const arrows = {
@@ -50,7 +51,7 @@ const Container = styled.div<ContainerProps>`
   left: ${props => props.left}px;
   top: ${props => props.top}px;
   pointer-events: none;
-  z-index: 10;
+  z-index: ${props => (props.targetId ? 9 : 10)};
   font-family: 'Roboto Mono', monospace;
   max-width: 300px;
   transition: opacity 0.15s;
@@ -171,6 +172,7 @@ const Tooltip: FC<TooltipProps> = ({
         top={top}
         placement={placement}
         className={className}
+        targetId={targetId}
       >
         {title && <h3>{title}</h3>}
         {text && <Text>{text}</Text>}

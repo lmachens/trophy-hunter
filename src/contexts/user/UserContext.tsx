@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { User } from './types';
+import { Account } from '../../api/accounts';
 
-const UserContext = createContext<User>(null);
+const UserContext = createContext<Account>(null);
 
 export default UserContext;

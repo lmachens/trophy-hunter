@@ -1,10 +1,10 @@
 interface JSONRequestInit extends RequestInit {
   data: unknown;
 }
-export const requestJSON = async (
+export const requestJSON = async <T>(
   input: RequestInfo,
   init?: JSONRequestInit
-) => {
+): Promise<T | string> => {
   const response = await fetch(input, {
     headers: {
       'Content-Type': 'application/json'
@@ -25,9 +25,16 @@ export const requestJSON = async (
   return await response.json();
 };
 
-export const postJSON = async (input: RequestInfo, data: unknown) => {
-  return await requestJSON(input, {
+export const postJSON = async <T>(
+  input: RequestInfo,
+  data: unknown
+): Promise<T> => {
+  return (await requestJSON(input, {
     method: 'POST',
     data
-  });
+  })) as T;
+};
+
+export const getJSON = async <T>(input: RequestInfo): Promise<T> => {
+  return (await requestJSON(input)) as T;
 };

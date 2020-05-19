@@ -1,92 +1,12 @@
 import { useState, FC, useEffect } from 'react';
 import UserContext from './UserContext';
-import { User } from './types';
-
-const sampleUser: User = {
-  islands: {
-    hubIsland: {
-      status: 'open',
-      trophiesCount: 1,
-      levels: {
-        welcome: {
-          status: 'completed',
-          trophies: {
-            playstyle: {
-              progress: 1
-            }
-          }
-        },
-        combat: {
-          status: 'completed',
-          trophies: {}
-        },
-        skills: {
-          status: 'active',
-          trophies: {}
-        },
-        teamwork: {
-          status: 'locked',
-          trophies: {}
-        },
-        objectives: {
-          status: 'locked',
-          trophies: {}
-        },
-        epic: {
-          status: 'locked',
-          trophies: {}
-        },
-        special: {
-          status: 'locked',
-          trophies: {}
-        }
-      }
-    },
-    combatIsland: {
-      status: 'open',
-      trophiesCount: 0,
-      levels: {
-        lvl1: {
-          status: 'active',
-          trophies: {}
-        }
-      }
-    },
-    skillsIsland: {
-      status: 'open',
-      trophiesCount: 10,
-      levels: {}
-    },
-    objectivesIsland: {
-      status: 'open',
-      trophiesCount: 5,
-      levels: {}
-    },
-    teamworkIsland: {
-      status: 'open',
-      trophiesCount: 15,
-      levels: {}
-    },
-    specialIsland: {
-      status: 'open',
-      trophiesCount: 0,
-      levels: {}
-    },
-    epicIsland: {
-      status: 'open',
-      trophiesCount: 0,
-      levels: {}
-    }
-  }
-};
+import { Account, postLogin } from '../../api/accounts';
 
 const UserProvider: FC = ({ children }) => {
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<Account>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setUser(sampleUser);
-    }, 1000);
+    postLogin({ summonerName: 'sirlunchalot619', region: 'EUW' }).then(setUser);
   }, []);
 
   const value = user;

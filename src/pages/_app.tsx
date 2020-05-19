@@ -1,8 +1,4 @@
-import App, { AppContext } from 'next/app';
 import { AppProps } from 'next/app';
-import { getApolloClient } from '../graphql/client';
-import { getAuthToken } from '../auth/authToken';
-import { queryMe } from '../auth/queries';
 import { CacheProvider } from '@emotion/core';
 import { globalStyles } from '../styles/global';
 import { cache } from 'emotion';
@@ -102,22 +98,5 @@ function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  const apolloClient = getApolloClient(appContext.ctx);
-  appContext.ctx.apolloClient = apolloClient;
-
-  const authToken = getAuthToken(appContext.ctx);
-
-  const appProps = await App.getInitialProps(appContext);
-  appProps.pageProps.authToken = authToken;
-
-  if (authToken) {
-    const me = await queryMe(apolloClient);
-    appProps.pageProps.me = me;
-  }
-
-  return { ...appProps };
-};
 
 export default MyApp;

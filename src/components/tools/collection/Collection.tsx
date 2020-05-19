@@ -27,43 +27,43 @@ const Collection: FC = () => {
           title="Origin"
           Progress={HubProgress}
           trophiesMax={1}
-          trophiesCount={user?.islands.hubIsland.trophiesCount}
+          trophiesCount={user?.islands.hubIsland?.trophiesCount}
         />
         <CollectionItem
           title="Combat"
           Progress={CombatProgress}
           trophiesMax={60}
-          trophiesCount={user?.islands.combatIsland.trophiesCount}
+          trophiesCount={user?.islands.combatIsland?.trophiesCount}
         />
         <CollectionItem
           title="Skills"
           Progress={SkillsProgress}
           trophiesMax={31}
-          trophiesCount={user?.islands.skillsIsland.trophiesCount}
+          trophiesCount={user?.islands.skillsIsland?.trophiesCount}
         />
         <CollectionItem
           title="Teamwork"
           Progress={TeamworkProgress}
           trophiesMax={54}
-          trophiesCount={user?.islands.teamworkIsland.trophiesCount}
+          trophiesCount={user?.islands.teamworkIsland?.trophiesCount}
         />
         <CollectionItem
           title="Objectives"
           Progress={ObjectivesProgress}
           trophiesMax={21}
-          trophiesCount={user?.islands.objectivesIsland.trophiesCount}
+          trophiesCount={user?.islands.objectivesIsland?.trophiesCount}
         />
         <CollectionItem
           title="Epic"
           Progress={EpicProgress}
           trophiesMax={25}
-          trophiesCount={user?.islands.epicIsland.trophiesCount}
+          trophiesCount={user?.islands.epicIsland?.trophiesCount}
         />
         <CollectionItem
           title="Special"
           Progress={SpecialProgress}
           trophiesMax={15}
-          trophiesCount={user?.islands.specialIsland.trophiesCount}
+          trophiesCount={user?.islands.specialIsland?.trophiesCount}
         />
       </Items>
     </>

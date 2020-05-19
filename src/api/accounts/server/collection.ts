@@ -4,7 +4,6 @@ interface Account {
   summonerName: string;
   region: string;
 }
-
 export const createAccountsCollection = async () => {
   await getDatabase().createCollection('accounts', {
     validator: {
@@ -30,6 +29,9 @@ export const createAccountsCollection = async () => {
                 }
               }
             }
+          },
+          islands: {
+            bsonType: 'object'
           }
         },
         required: ['summonerName', 'region']

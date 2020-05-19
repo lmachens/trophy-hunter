@@ -8,37 +8,82 @@ import {
   withDatabase
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
+import { ONE_YEAR_IN_MILLISECONDS } from '../../api/utils/dates';
 
-const ONE_YEAR = 12 * 30 * 24 * 60 * 60 * 1000;
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { summonerName, region } = req.body;
+    const { authToken: oldAuthToken } = req.cookies;
 
     const Accounts = await getAccountsCollection();
+
+    if (oldAuthToken) {
+      const { summonerName, region } = jwt.verify(
+        oldAuthToken,
+        process.env.JWT_SECRET
+      );
+
+      await Accounts.updateOne(
+        { summonerName, region },
+        {
+          $pull: {
+            authTokens: {
+              token: oldAuthToken
+            }
+          }
+        }
+      );
+    }
 
     const authToken = jwt.sign(
       { summonerName, region },
       process.env.JWT_SECRET,
-      { expiresIn: ONE_YEAR / 1000 }
+      { expiresIn: ONE_YEAR_IN_MILLISECONDS / 1000 }
     );
 
-    const expiresAt = new Date(Date.now() + ONE_YEAR);
-    await Accounts.updateOne(
-      { summonerName, region },
+    const expiresAt = new Date(Date.now() + ONE_YEAR_IN_MILLISECONDS);
+    const account = await Accounts.findOneAndUpdate(
+      {
+        summonerName,
+        region
+      },
       {
         $addToSet: {
           authTokens: {
             token: authToken,
             expiresAt: expiresAt
           }
+        },
+        $setOnInsert: {
+          islands: {
+            hubIsland: {
+              status: 'open',
+              trophiesCount: 0,
+              levels: {
+                welcome: {
+                  status: 'active',
+                  trophies: {}
+                }
+              }
+            }
+          }
         }
       },
       {
-        upsert: true
+        upsert: true,
+        returnOriginal: false
       }
     );
 
-    res.json({ authToken });
+    if (!account.ok) {
+      throw account.lastErrorObject;
+    }
+
+    res.setHeader(
+      'Set-Cookie',
+      `authToken=${authToken};Max-Age=${ONE_YEAR_IN_MILLISECONDS / 1000};`
+    );
+    res.json(account.value);
   },
   withError,
   withMethods('POST'),

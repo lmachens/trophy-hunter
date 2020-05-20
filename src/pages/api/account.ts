@@ -4,7 +4,7 @@ import {
   applyMiddleware,
   withError,
   withMethods,
-  withDatabase
+  withDatabase,
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 
@@ -27,12 +27,12 @@ export default applyMiddleware(
       authTokens: {
         $elemMatch: {
           token: authToken,
-          expiresAt: { $gt: new Date() }
-        }
-      }
+          expiresAt: { $gt: new Date() },
+        },
+      },
     });
     if (!account) {
-      res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;`);
+      res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
       return res.status(401).end('Unauthorized');
     }
     res.json(account);

@@ -5,7 +5,7 @@ import {
   withError,
   withMethods,
   withSchema,
-  withDatabase
+  withDatabase,
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import { ONE_YEAR_IN_MILLISECONDS } from '../../api/utils/dates';
@@ -28,9 +28,9 @@ export default applyMiddleware(
         {
           $pull: {
             authTokens: {
-              token: oldAuthToken
-            }
-          }
+              token: oldAuthToken,
+            },
+          },
         }
       );
     }
@@ -45,14 +45,14 @@ export default applyMiddleware(
     const account = await Accounts.findOneAndUpdate(
       {
         summonerName,
-        region
+        region,
       },
       {
         $addToSet: {
           authTokens: {
             token: authToken,
-            expiresAt: expiresAt
-          }
+            expiresAt: expiresAt,
+          },
         },
         $setOnInsert: {
           trophiesCount: 0,
@@ -63,16 +63,16 @@ export default applyMiddleware(
               levels: {
                 welcome: {
                   status: 'active',
-                  trophies: {}
-                }
-              }
-            }
-          }
-        }
+                  trophies: {},
+                },
+              },
+            },
+          },
+        },
       },
       {
         upsert: true,
-        returnOriginal: false
+        returnOriginal: false,
       }
     );
 
@@ -82,8 +82,9 @@ export default applyMiddleware(
 
     res.setHeader(
       'Set-Cookie',
-      `authToken=${authToken};path=/;Max-Age=${ONE_YEAR_IN_MILLISECONDS /
-        1000};`
+      `authToken=${authToken};path=/;Max-Age=${
+        ONE_YEAR_IN_MILLISECONDS / 1000
+      };SameSite=None;Secure;HttpOnly`
     );
     res.json(account.value);
   },
@@ -93,13 +94,13 @@ export default applyMiddleware(
     type: 'object',
     properties: {
       summonerName: {
-        type: 'string'
+        type: 'string',
       },
       region: {
-        type: 'string'
-      }
+        type: 'string',
+      },
     },
-    required: ['summonerName', 'region']
+    required: ['summonerName', 'region'],
   }),
   withDatabase
 );

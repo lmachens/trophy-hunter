@@ -22,7 +22,7 @@
         "is_background_page": true
       },
       "desktop": {
-        "file": "build/index.html",
+        "file": "build/league-of-legends.html",
         "desktop_only": true,
         "native_window": true,
         "resizable": false,

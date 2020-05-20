@@ -7,13 +7,5 @@ export const postLogin = (credential: Credential) => {
 };
 
 export const getAccount = () => {
-  // https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#Examples
-  // Check if `account` cookie exists
-  if (
-    document.cookie
-      .split(';')
-      .some(item => item.trim().startsWith('authToken='))
-  ) {
-    return getJSON<Account>('/api/account');
-  }
+  return getJSON<Account>('/api/account');
 };

@@ -7,6 +7,7 @@ const config = {
     MONGO_URL: process.env.MONGO_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     DISCORD_WEBHOOK_URL: process.env.DISCORD_WEBHOOK_URL,
+    Access_Control_Allow_Origin: process.env.Access_Control_Allow_Origin,
   },
   publicRuntimeConfig: {
     API_ENDPOINT: process.env.API_ENDPOINT,
@@ -26,9 +27,9 @@ if (process.env.TARGET === 'OVERWOLF') {
   };
   config.exportPathMap = () => {
     return {
-      '/': { page: '/' },
       '/background': { page: '/background' },
       '/in-game': { page: '/in-game' },
+      '/league-of-legends': { page: '/league-of-legends' },
     };
   };
 }

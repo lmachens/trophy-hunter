@@ -57,9 +57,20 @@ type HTTPMethod =
 export const withMethods = (...allowedMethods: HTTPMethod[]) => (
   handler: Handler
 ) => async (req: NextApiRequest, res: NextApiResponse) => {
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    process.env.Access_Control_Allow_Origin || '*'
+  );
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
   if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Methods', allowedMethods.join(', '));
-    res.end();
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      ['OPTIONS', ...allowedMethods].join(', ')
+    );
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Max-Age', '86400');
+    return res.end();
   }
   if (!allowedMethods.find((method) => method === req.method)) {
     return res.status(405).end('Method not allowed');

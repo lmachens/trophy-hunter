@@ -10,10 +10,11 @@ export const requestJSON = async <T>(
   input: RequestInfo,
   init?: JSONRequestInit
 ): Promise<T | string> => {
-  const options = {
+  const options: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     ...init,
   };
   if (init?.data) {

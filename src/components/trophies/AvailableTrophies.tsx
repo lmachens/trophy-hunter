@@ -4,7 +4,6 @@ import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import TrophyListItem from './TrophyListItem';
 import { useAvailableTrophies } from '../../contexts/account';
-import allTrophies from './allTrophies';
 
 const List = styled.div`
   flex-grow: 1;

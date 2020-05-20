@@ -53,10 +53,19 @@ export default applyMiddleware(
         },
       }
     );
+    const unlockIslandLevels = level.unlocksLevels.filter(
+      (unlockLevel) => unlockLevel.island !== level.island
+    );
     await Accounts.updateOne(
       { _id: account._id },
       {
         $push: {
+          islands: {
+            $each: unlockIslandLevels.map((level) => ({
+              name: level.island,
+              status: 'open',
+            })),
+          },
           levels: {
             $each: level.unlocksLevels.map((level) => ({
               name: level.name,

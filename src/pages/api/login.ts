@@ -79,13 +79,12 @@ export default applyMiddleware(
     if (!account.ok) {
       throw account.lastErrorObject;
     }
-
     res.setHeader(
       'Set-Cookie',
       `authToken=${authToken};path=/;Max-Age=${
         ONE_YEAR_IN_MILLISECONDS / 1000
-      };SameSite=None;HttpOnly${
-        process.env.NODE_ENV === 'production' ? ';Secure' : ''
+      };HttpOnly${
+        process.env.NODE_ENV === 'production' ? ';SameSite=None;Secure' : ''
       }`
     );
     res.json(account.value);

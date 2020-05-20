@@ -7,12 +7,13 @@ import {
   withDatabase,
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
+import { newAccount } from '../../api/accounts/server';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { authToken } = req.cookies;
     if (!authToken) {
-      return res.status(401).end('Unauthorized');
+      return res.json(newAccount);
     }
     const { summonerName, region } = jwt.verify(
       authToken,

@@ -84,7 +84,9 @@ export default applyMiddleware(
       'Set-Cookie',
       `authToken=${authToken};path=/;Max-Age=${
         ONE_YEAR_IN_MILLISECONDS / 1000
-      };SameSite=None;Secure;HttpOnly`
+      };SameSite=None;HttpOnly${
+        process.env.NODE_ENV === 'production' ? ';Secure' : ''
+      }`
     );
     res.json(account.value);
   },

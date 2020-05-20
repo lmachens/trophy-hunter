@@ -4,14 +4,13 @@ import {
   applyMiddleware,
   withError,
   withMethods,
-  withSchema
+  withSchema,
 } from '../../api/utils/server/middleware';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { discordTag, message } = req.body;
     await sendToDiscord({ discordTag, message });
-    res.setHeader('Content-Type', 'application/json');
     res.json({});
   },
   withError,
@@ -20,12 +19,12 @@ export default applyMiddleware(
     type: 'object',
     properties: {
       discordTag: {
-        type: 'string'
+        type: 'string',
       },
       message: {
-        type: 'string'
-      }
+        type: 'string',
+      },
     },
-    required: ['message']
+    required: ['message'],
   })
 );

@@ -1,15 +1,30 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
-import { lvl1, lvl2, lvl3, lvl4, lvl5 } from './levels';
+import {
+  objectives1,
+  objectives2,
+  objectives3,
+  objectives4,
+  objectives5,
+} from './levels';
+import { useAccount } from '../../../contexts/account';
 
 const ObjectivesIsland: FC<IslandProps> = ({
-  status,
   targetLevel,
-  levels,
   onLevelClick,
   ...svgProps
 }) => {
+  const { account } = useAccount();
+  const status =
+    account?.islands.find(
+      (accountIsland) => accountIsland.name === 'objectives'
+    )?.status || 'closed';
+  const levels =
+    account?.levels.filter(
+      (accountLevel) => accountLevel.island === 'objectives'
+    ) || [];
+
   return (
     <IslandSVG
       width="235"
@@ -18,7 +33,6 @@ const ObjectivesIsland: FC<IslandProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       status={status}
-      levels={levels}
       {...svgProps}
     >
       <path
@@ -303,40 +317,40 @@ const ObjectivesIsland: FC<IslandProps> = ({
         stroke="#EAEAEA"
         strokeDasharray="2 2"
       />
-      <lvl1.Marker
+      <objectives1.Marker
         transform="translate(44 94)"
-        status={levels.lvl1?.status}
-        onClick={() => onLevelClick(lvl1)}
-        focused={targetLevel?.level === lvl1}
-        level={lvl1}
+        status={levels.find((level) => level.name === 'objectives1')?.status}
+        onClick={() => onLevelClick(objectives1)}
+        focused={targetLevel?.level === objectives1}
+        level={objectives1}
       />
-      <lvl2.Marker
+      <objectives2.Marker
         transform="translate(37 138)"
-        status={levels.lvl2?.status}
-        onClick={() => onLevelClick(lvl2)}
-        focused={targetLevel?.level === lvl2}
-        level={lvl2}
+        status={levels.find((level) => level.name === 'objectives2')?.status}
+        onClick={() => onLevelClick(objectives2)}
+        focused={targetLevel?.level === objectives2}
+        level={objectives2}
       />
-      <lvl3.Marker
+      <objectives3.Marker
         transform="translate(50 187)"
-        status={levels.lvl3?.status}
-        onClick={() => onLevelClick(lvl3)}
-        focused={targetLevel?.level === lvl3}
-        level={lvl3}
+        status={levels.find((level) => level.name === 'objectives3')?.status}
+        onClick={() => onLevelClick(objectives3)}
+        focused={targetLevel?.level === objectives3}
+        level={objectives3}
       />
-      <lvl4.Marker
+      <objectives4.Marker
         transform="translate(83 217)"
-        status={levels.lvl4?.status}
-        onClick={() => onLevelClick(lvl4)}
-        focused={targetLevel?.level === lvl4}
-        level={lvl4}
+        status={levels.find((level) => level.name === 'objectives4')?.status}
+        onClick={() => onLevelClick(objectives4)}
+        focused={targetLevel?.level === objectives4}
+        level={objectives4}
       />
-      <lvl5.Marker
+      <objectives5.Marker
         transform="translate(154 210)"
-        status={levels.lvl5?.status}
-        onClick={() => onLevelClick(lvl5)}
-        focused={targetLevel?.level === lvl5}
-        level={lvl5}
+        status={levels.find((level) => level.name === 'objectives5')?.status}
+        onClick={() => onLevelClick(objectives5)}
+        focused={targetLevel?.level === objectives5}
+        level={objectives5}
       />
     </IslandSVG>
   );

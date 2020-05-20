@@ -5,8 +5,9 @@ const useTrophyProgress = (trophy: Trophy) => {
   const { account } = useAccount();
 
   const progress =
-    account?.islands[trophy.island]?.levels[trophy.level]?.trophies[trophy.name]
-      ?.progress || 0;
+    account?.trophies.find(
+      (accountTrophy) => accountTrophy.name === trophy.name
+    )?.progress || 0;
   return progress;
 };
 

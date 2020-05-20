@@ -1,15 +1,32 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
-import { lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8 } from './levels';
+import {
+  combat1,
+  combat2,
+  combat3,
+  combat4,
+  combat5,
+  combat6,
+  combat7,
+  combat8,
+} from './levels';
+import { useAccount } from '../../../contexts/account';
 
 const CombatIsland: FC<IslandProps> = ({
-  status,
   targetLevel,
-  levels,
   onLevelClick,
   ...svgProps
 }) => {
+  const { account } = useAccount();
+  const status =
+    account?.islands.find((accountIsland) => accountIsland.name === 'combat')
+      ?.status || 'closed';
+  const levels =
+    account?.levels.filter(
+      (accountLevel) => accountLevel.island === 'combat'
+    ) || [];
+
   return (
     <IslandSVG
       width="235"
@@ -18,7 +35,6 @@ const CombatIsland: FC<IslandProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       status={status}
-      levels={levels}
       {...svgProps}
     >
       <path
@@ -559,61 +575,61 @@ const CombatIsland: FC<IslandProps> = ({
         strokeDasharray="2 2"
       />
 
-      <lvl1.Marker
+      <combat1.Marker
         transform="translate(213 99)"
-        status={levels.lvl1?.status}
-        onClick={() => onLevelClick(lvl1)}
-        focused={targetLevel?.level === lvl1}
-        level={lvl1}
+        status={levels.find((level) => level.name === 'combat1')?.status}
+        onClick={() => onLevelClick(combat1)}
+        focused={targetLevel?.level === combat1}
+        level={combat1}
       />
-      <lvl2.Marker
+      <combat2.Marker
         transform="translate(167 92)"
-        status={levels.lvl2?.status}
-        onClick={() => onLevelClick(lvl2)}
-        focused={targetLevel?.level === lvl2}
-        level={lvl2}
+        status={levels.find((level) => level.name === 'combat2')?.status}
+        onClick={() => onLevelClick(combat2)}
+        focused={targetLevel?.level === combat2}
+        level={combat2}
       />
-      <lvl3.Marker
+      <combat3.Marker
         transform="translate(124 92)"
-        status={levels.lvl3?.status}
-        onClick={() => onLevelClick(lvl3)}
-        focused={targetLevel?.level === lvl3}
-        level={lvl3}
+        status={levels.find((level) => level.name === 'combat3')?.status}
+        onClick={() => onLevelClick(combat3)}
+        focused={targetLevel?.level === combat3}
+        level={combat3}
       />
-      <lvl4.Marker
+      <combat4.Marker
         transform="translate(132 139)"
-        status={levels.lvl4?.status}
-        onClick={() => onLevelClick(lvl4)}
-        focused={targetLevel?.level === lvl4}
-        level={lvl4}
+        status={levels.find((level) => level.name === 'combat4')?.status}
+        onClick={() => onLevelClick(combat4)}
+        focused={targetLevel?.level === combat4}
+        level={combat4}
       />
-      <lvl5.Marker
+      <combat5.Marker
         transform="translate(99 149)"
-        status={levels.lvl5?.status}
-        onClick={() => onLevelClick(lvl5)}
-        focused={targetLevel?.level === lvl5}
-        level={lvl5}
+        status={levels.find((level) => level.name === 'combat5')?.status}
+        onClick={() => onLevelClick(combat5)}
+        focused={targetLevel?.level === combat5}
+        level={combat5}
       />
-      <lvl6.Marker
+      <combat6.Marker
         transform="translate(78 180)"
-        status={levels.lvl6?.status}
-        onClick={() => onLevelClick(lvl6)}
-        focused={targetLevel?.level === lvl6}
-        level={lvl6}
+        status={levels.find((level) => level.name === 'combat6')?.status}
+        onClick={() => onLevelClick(combat6)}
+        focused={targetLevel?.level === combat6}
+        level={combat6}
       />
-      <lvl7.Marker
+      <combat7.Marker
         transform="translate(19 161)"
-        status={levels.lvl7?.status}
-        onClick={() => onLevelClick(lvl7)}
-        focused={targetLevel?.level === lvl7}
-        level={lvl7}
+        status={levels.find((level) => level.name === 'combat7')?.status}
+        onClick={() => onLevelClick(combat7)}
+        focused={targetLevel?.level === combat7}
+        level={combat7}
       />
-      <lvl8.Marker
+      <combat8.Marker
         transform="translate(43 123)"
-        status={levels.lvl8?.status}
-        onClick={() => onLevelClick(lvl8)}
-        focused={targetLevel?.level === lvl8}
-        level={lvl8}
+        status={levels.find((level) => level.name === 'combat8')?.status}
+        onClick={() => onLevelClick(combat8)}
+        focused={targetLevel?.level === combat8}
+        level={combat8}
       />
     </IslandSVG>
   );

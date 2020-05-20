@@ -10,12 +10,13 @@ interface WelcomeGuideProps {
 
 const WelcomeGuide: FC<WelcomeGuideProps> = ({
   visibleIslandDetails,
-  targetLevel
+  targetLevel,
 }) => {
   const { account } = useAccount();
 
   const showGuide =
-    account?.islands.hubIsland.levels.welcome.status === 'active';
+    account?.levels.find((level) => level.name === 'welcome')?.status ===
+    'active';
   if (!showGuide) {
     return null;
   }

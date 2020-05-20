@@ -5,7 +5,8 @@ import {
   cloneElement,
   useRef,
   useState,
-  useEffect
+  useEffect,
+  useCallback,
 } from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/core';
@@ -38,20 +39,20 @@ const arrows = {
     transform: rotate(90deg);
     top: -10px;
     left: 18px;
-  `
+  `,
 };
 
 const Container = styled.div<ContainerProps>`
-  opacity: ${props => (props.isVisible ? '1' : '0')};
+  opacity: ${(props) => (props.isVisible ? '1' : '0')};
   position: fixed;
   background: #3f3e43;
   border: 1px solid #eaeaea;
   padding: 10px;
   min-width: 100px;
-  left: ${props => props.left}px;
-  top: ${props => props.top}px;
+  left: ${(props) => props.left}px;
+  top: ${(props) => props.top}px;
   pointer-events: none;
-  z-index: ${props => (props.targetId ? 9 : 10)};
+  z-index: ${(props) => (props.targetId ? 9 : 10)};
   font-family: 'Roboto Mono', monospace;
   max-width: 300px;
   transition: opacity 0.15s;
@@ -62,7 +63,7 @@ const Container = styled.div<ContainerProps>`
     display: block;
     border: solid;
     border-color: transparent #eaeaea;
-    ${props => arrows[props.placement]}
+    ${(props) => arrows[props.placement]}
   }
 `;
 
@@ -90,7 +91,7 @@ const Tooltip: FC<TooltipProps> = ({
   offset = 10,
   targetId,
   className,
-  visible
+  visible,
 }) => {
   const containerNode = useRef<HTMLDivElement>();
   const bodyChildNode = useRef<HTMLDivElement>();
@@ -99,37 +100,43 @@ const Tooltip: FC<TooltipProps> = ({
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
 
-  function showTarget(target) {
-    const { x, y, width, height } = target.getBoundingClientRect();
+  const showTarget = useCallback(
+    (target) => {
+      if (!containerNode.current) {
+        return;
+      }
+      const { x, y, width, height } = target.getBoundingClientRect();
 
-    const {
-      offsetHeight: containerHeight,
-      offsetWidth: containerWidth
-    } = containerNode.current;
+      const {
+        offsetHeight: containerHeight,
+        offsetWidth: containerWidth,
+      } = containerNode.current;
 
-    let left;
-    let top;
-    switch (placement) {
-      case 'right':
-        left = x + width + offset;
-        top = y + height / 2 - containerHeight / 2;
-        break;
+      let left;
+      let top;
+      switch (placement) {
+        case 'right':
+          left = x + width + offset;
+          top = y + height / 2 - containerHeight / 2;
+          break;
 
-      case 'bottom':
-        left = x + width / 2 - containerWidth / 2;
-        top = y - offset - containerHeight;
-        break;
+        case 'bottom':
+          left = x + width / 2 - containerWidth / 2;
+          top = y - offset - containerHeight;
+          break;
 
-      case 'top':
-        left = x + width / 2 - containerWidth / 2;
-        top = y + height + offset;
-        break;
-    }
+        case 'top':
+          left = x + width / 2 - containerWidth / 2;
+          top = y + height + offset;
+          break;
+      }
 
-    setLeft(left);
-    setTop(top);
-    setIsVisible(true);
-  }
+      setLeft(left);
+      setTop(top);
+      setIsVisible(true);
+    },
+    [containerNode.current]
+  );
 
   function handleMouseEnter(event) {
     showTarget(event.target);
@@ -186,7 +193,7 @@ const Tooltip: FC<TooltipProps> = ({
       {children &&
         cloneElement(children, {
           onMouseEnter: handleMouseEnter,
-          onMouseLeave: handleMouseLeave
+          onMouseLeave: handleMouseLeave,
         })}
     </>
   );

@@ -20,7 +20,7 @@ const Profile: FC = () => {
   const [login] = useMutation(postLogin, {
     onSuccess: () => {
       queryCache.refetchQueries('account');
-    }
+    },
   });
 
   return (
@@ -28,7 +28,7 @@ const Profile: FC = () => {
       onClick={() => {
         login({
           summonerName: 'sirlunchalot619',
-          region: 'EUW'
+          region: 'EUW',
         });
       }}
     >
@@ -37,7 +37,13 @@ const Profile: FC = () => {
         <h4>
           {loading ? '. . .' : account?.summonerName || 'Unknown Trophy Hunter'}
         </h4>
-        <p>{account ? account.trophiesCount : 0}/217 TH points</p>
+        <p>
+          {account
+            ? account.trophies.filter((trophy) => trophy.status === 'completed')
+                .length
+            : 0}
+          /217 TH points
+        </p>
       </div>
     </Container>
   );

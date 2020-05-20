@@ -13,7 +13,7 @@ export function transformIsland({
   name,
   top,
   left,
-  Component
+  Component,
 }: TransformIslandProps) {
   return {
     name,
@@ -23,11 +23,11 @@ export function transformIsland({
       position: absolute;
       top: ${top}px;
       left: ${left}px;
-    `
+    `,
   };
 }
 
-export interface IslandProps extends UserIsland {
+export interface IslandProps {
   className?: string;
   targetLevel?: TargetLevel;
   onLevelClick?(level: Level): void;
@@ -42,9 +42,4 @@ export interface UserLevels {
       };
     };
   };
-}
-
-export interface UserIsland {
-  status: 'open' | 'done' | 'closed';
-  levels: UserLevels;
 }

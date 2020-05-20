@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
-import { IslandProps } from './utils';
 
-const IslandSVG = styled.svg<IslandProps>`
-  opacity: ${props => (props.status === 'closed' ? 0.4 : 1)};
+interface IslandSVGProps {
+  status: 'open' | 'done' | 'closed';
+}
+
+const IslandSVG = styled.svg<IslandSVGProps>`
+  opacity: ${(props) => (props.status === 'closed' ? 0.4 : 1)};
 `;
 
 export default IslandSVG;

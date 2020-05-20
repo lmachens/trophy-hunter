@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import TrophyListItem from './TrophyListItem';
-import { useAvailableTrophyNames } from '../../contexts/account';
+import { useAvailableTrophies } from '../../contexts/account';
 import allTrophies from './allTrophies';
 
 const List = styled.div`
@@ -32,7 +32,7 @@ const Filter = styled.div`
 `;
 
 const AvailableTrophies: FC = () => {
-  const availableTrophies = useAvailableTrophyNames();
+  const availableTrophies = useAvailableTrophies();
 
   return (
     <>
@@ -46,12 +46,9 @@ const AvailableTrophies: FC = () => {
         </Filter>
       </Header>
       <List>
-        {availableTrophies.map(trophyName => {
-          const trophy = allTrophies[trophyName];
-          return (
-            <TrophyListItem trophy={trophy} key={trophy.name} borderless />
-          );
-        })}
+        {availableTrophies.map((trophy) => (
+          <TrophyListItem trophy={trophy} key={trophy.name} borderless />
+        ))}
       </List>
     </>
   );

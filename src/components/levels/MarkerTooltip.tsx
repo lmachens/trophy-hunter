@@ -21,11 +21,12 @@ const Trophies = styled.div`
 const MarkerTooltip: FC<MarkerTooltipProps> = ({ children, level }) => {
   const { account } = useAccount();
 
-  const trophies = level.trophies.map(trophy => {
+  const trophies = level.trophies.map((trophy) => {
+    const accountTrophy = account?.trophies.find(
+      (accountTrophy) => accountTrophy.name === trophy.name
+    );
     const progress =
-      account?.islands[trophy.island]?.levels[trophy.level]?.trophies[
-        trophy.name
-      ]?.progress || 0;
+      accountTrophy?.status === 'completed' ? 1 : accountTrophy?.progress || 0;
 
     return <trophy.ProgressIcon key={trophy.name} progress={progress} />;
   });

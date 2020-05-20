@@ -6,29 +6,20 @@ export interface Credential {
 export interface Account {
   summonerName: string;
   region: string;
-  trophiesCount: number;
   islands: {
-    hubIsland: Island;
-    combatIsland: Island;
-    skillsIsland: Island;
-    objectivesIsland: Island;
-    teamworkIsland: Island;
-    specialIsland: Island;
-    epicIsland: Island;
-  };
-}
-
-interface Island {
-  status: 'open' | 'closed' | 'done';
-  trophiesCount: number;
+    name: string;
+    status: 'open' | 'closed' | 'done';
+  }[];
   levels: {
-    [levelName: string]: {
-      status: 'active' | 'unlocked' | 'locked' | 'completed';
-      trophies: {
-        [trophyName: string]: {
-          progress: number;
-        };
-      };
-    };
-  };
+    name: string;
+    island: string;
+    status: 'active' | 'unlocked' | 'locked' | 'completed';
+  }[];
+  trophies: {
+    name: string;
+    island: string;
+    level: string;
+    status: 'active' | 'completed';
+    progress: number;
+  }[];
 }

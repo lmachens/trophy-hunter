@@ -27,43 +27,63 @@ const Collection: FC = () => {
           title="Origin"
           Progress={HubProgress}
           trophiesMax={1}
-          trophiesCount={account?.islands.hubIsland?.trophiesCount}
+          trophiesCount={
+            account?.trophies.filter((trophy) => trophy.island === 'hub').length
+          }
         />
         <CollectionItem
           title="Combat"
           Progress={CombatProgress}
           trophiesMax={60}
-          trophiesCount={account?.islands.combatIsland?.trophiesCount}
+          trophiesCount={
+            account?.trophies.filter((trophy) => trophy.island === 'combat')
+              .length
+          }
         />
         <CollectionItem
           title="Skills"
           Progress={SkillsProgress}
           trophiesMax={31}
-          trophiesCount={account?.islands.skillsIsland?.trophiesCount}
+          trophiesCount={
+            account?.trophies.filter((trophy) => trophy.island === 'skills')
+              .length
+          }
         />
         <CollectionItem
           title="Teamwork"
           Progress={TeamworkProgress}
           trophiesMax={54}
-          trophiesCount={account?.islands.teamworkIsland?.trophiesCount}
+          trophiesCount={
+            account?.trophies.filter((trophy) => trophy.island === 'teamwork')
+              .length
+          }
         />
         <CollectionItem
           title="Objectives"
           Progress={ObjectivesProgress}
           trophiesMax={21}
-          trophiesCount={account?.islands.objectivesIsland?.trophiesCount}
+          trophiesCount={
+            account?.trophies.filter((trophy) => trophy.island === 'objectives')
+              .length
+          }
         />
         <CollectionItem
           title="Epic"
           Progress={EpicProgress}
           trophiesMax={25}
-          trophiesCount={account?.islands.epicIsland?.trophiesCount}
+          trophiesCount={
+            account?.trophies.filter((trophy) => trophy.island === 'epic')
+              .length
+          }
         />
         <CollectionItem
           title="Special"
           Progress={SpecialProgress}
           trophiesMax={15}
-          trophiesCount={account?.islands.specialIsland?.trophiesCount}
+          trophiesCount={
+            account?.trophies.filter((trophy) => trophy.island === 'special')
+              .length
+          }
         />
       </Items>
     </>

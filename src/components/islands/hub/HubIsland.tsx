@@ -8,16 +8,23 @@ import {
   skills,
   special,
   teamwork,
-  welcome
+  welcome,
 } from './levels';
+import { useAccount } from '../../../contexts/account';
 
 const HubIsland: FC<IslandProps> = ({
   targetLevel,
-  status,
-  levels,
   onLevelClick,
   ...svgProps
 }) => {
+  const { account } = useAccount();
+  const status =
+    account?.islands.find((accountIsland) => accountIsland.name === 'hub')
+      ?.status || 'closed';
+  const levels =
+    account?.levels.filter((accountLevel) => accountLevel.island === 'hub') ||
+    [];
+
   return (
     <IslandSVG
       width="187"
@@ -25,7 +32,6 @@ const HubIsland: FC<IslandProps> = ({
       viewBox="0 0 187 184"
       fill="#2B2A30"
       status={status}
-      levels={levels}
       data-tooltip-id="hub"
       {...svgProps}
     >
@@ -140,49 +146,49 @@ const HubIsland: FC<IslandProps> = ({
 
       <welcome.Marker
         transform="translate(87 55)"
-        status={levels.welcome?.status}
+        status={levels.find((level) => level.name === 'welcome')?.status}
         onClick={() => onLevelClick(welcome)}
         focused={targetLevel?.level === welcome}
         level={welcome}
       />
       <combat.Marker
         transform="translate(45 27)"
-        status={levels.combat?.status}
+        status={levels.find((level) => level.name === 'combat')?.status}
         onClick={() => onLevelClick(combat)}
         focused={targetLevel?.level === combat}
         level={combat}
       />
       <skills.Marker
         transform="translate(86 10)"
-        status={levels.skills?.status}
+        status={levels.find((level) => level.name === 'skills')?.status}
         onClick={() => onLevelClick(skills)}
         focused={targetLevel?.level === skills}
         level={skills}
       />
       <teamwork.Marker
         transform="translate(129 27)"
-        status={levels.teamwork?.status}
+        status={levels.find((level) => level.name === 'teamwork')?.status}
         onClick={() => onLevelClick(teamwork)}
         focused={targetLevel?.level === teamwork}
         level={teamwork}
       />
       <objectives.Marker
         transform="translate(129 87)"
-        status={levels.objectives?.status}
+        status={levels.find((level) => level.name === 'objectives')?.status}
         onClick={() => onLevelClick(objectives)}
         focused={targetLevel?.level === objectives}
         level={objectives}
       />
       <epic.Marker
         transform="translate(86 102)"
-        status={levels.epic?.status}
+        status={levels.find((level) => level.name === 'epic')?.status}
         onClick={() => onLevelClick(epic)}
         focused={targetLevel?.level === epic}
         level={epic}
       />
       <special.Marker
         transform="translate(45 87)"
-        status={levels.special?.status}
+        status={levels.find((level) => level.name === 'special')?.status}
         onClick={() => onLevelClick(special)}
         focused={targetLevel?.level === special}
         level={special}

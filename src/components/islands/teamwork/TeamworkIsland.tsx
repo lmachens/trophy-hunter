@@ -1,15 +1,32 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
-import { lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8 } from './levels';
+import {
+  teamwork1,
+  teamwork2,
+  teamwork3,
+  teamwork4,
+  teamwork5,
+  teamwork6,
+  teamwork7,
+  teamwork8,
+} from './levels';
+import { useAccount } from '../../../contexts/account';
 
 const TeamWorkIsland: FC<IslandProps> = ({
-  status,
   targetLevel,
-  levels,
   onLevelClick,
   ...svgProps
 }) => {
+  const { account } = useAccount();
+  const status =
+    account?.islands.find((accountIsland) => accountIsland.name === 'teamwork')
+      ?.status || 'closed';
+  const levels =
+    account?.levels.filter(
+      (accountLevel) => accountLevel.island === 'teamwork'
+    ) || [];
+
   return (
     <IslandSVG
       width="240"
@@ -18,7 +35,6 @@ const TeamWorkIsland: FC<IslandProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       status={status}
-      levels={levels}
       {...svgProps}
     >
       <path
@@ -209,61 +225,61 @@ const TeamWorkIsland: FC<IslandProps> = ({
         fill={status === 'done' ? '#07EF1E' : '#26252b'}
         stroke="#EAEAEA"
       />
-      <lvl1.Marker
+      <teamwork1.Marker
         transform="translate(14 110)"
-        status={levels.lvl1?.status}
-        onClick={() => onLevelClick(lvl1)}
-        focused={targetLevel?.level === lvl1}
-        level={lvl1}
+        status={levels.find((level) => level.name === 'teamwork1')?.status}
+        onClick={() => onLevelClick(teamwork1)}
+        focused={targetLevel?.level === teamwork1}
+        level={teamwork1}
       />
-      <lvl2.Marker
+      <teamwork2.Marker
         transform="translate(29 159)"
-        status={levels.lvl2?.status}
-        onClick={() => onLevelClick(lvl2)}
-        focused={targetLevel?.level === lvl2}
-        level={lvl2}
+        status={levels.find((level) => level.name === 'teamwork2')?.status}
+        onClick={() => onLevelClick(teamwork2)}
+        focused={targetLevel?.level === teamwork2}
+        level={teamwork2}
       />
-      <lvl3.Marker
+      <teamwork3.Marker
         transform="translate(38 201)"
-        status={levels.lvl3?.status}
-        onClick={() => onLevelClick(lvl3)}
-        focused={targetLevel?.level === lvl3}
-        level={lvl3}
+        status={levels.find((level) => level.name === 'teamwork3')?.status}
+        onClick={() => onLevelClick(teamwork3)}
+        focused={targetLevel?.level === teamwork3}
+        level={teamwork3}
       />
-      <lvl4.Marker
+      <teamwork4.Marker
         transform="translate(64 232)"
-        status={levels.lvl4?.status}
-        onClick={() => onLevelClick(lvl4)}
-        focused={targetLevel?.level === lvl4}
-        level={lvl4}
+        status={levels.find((level) => level.name === 'teamwork4')?.status}
+        onClick={() => onLevelClick(teamwork4)}
+        focused={targetLevel?.level === teamwork4}
+        level={teamwork4}
       />
-      <lvl5.Marker
+      <teamwork5.Marker
         transform="translate(102 232)"
-        status={levels.lvl5?.status}
-        onClick={() => onLevelClick(lvl5)}
-        focused={targetLevel?.level === lvl5}
-        level={lvl5}
+        status={levels.find((level) => level.name === 'teamwork5')?.status}
+        onClick={() => onLevelClick(teamwork5)}
+        focused={targetLevel?.level === teamwork5}
+        level={teamwork5}
       />
-      <lvl6.Marker
+      <teamwork6.Marker
         transform="translate(134 206)"
-        status={levels.lvl6?.status}
-        onClick={() => onLevelClick(lvl6)}
-        focused={targetLevel?.level === lvl6}
-        level={lvl6}
+        status={levels.find((level) => level.name === 'teamwork6')?.status}
+        onClick={() => onLevelClick(teamwork6)}
+        focused={targetLevel?.level === teamwork6}
+        level={teamwork6}
       />
-      <lvl7.Marker
+      <teamwork7.Marker
         transform="translate(207 172)"
-        status={levels.lvl7?.status}
-        onClick={() => onLevelClick(lvl7)}
-        focused={targetLevel?.level === lvl7}
-        level={lvl7}
+        status={levels.find((level) => level.name === 'teamwork7')?.status}
+        onClick={() => onLevelClick(teamwork7)}
+        focused={targetLevel?.level === teamwork7}
+        level={teamwork7}
       />
-      <lvl8.Marker
+      <teamwork8.Marker
         transform="translate(192 142)"
-        status={levels.lvl8?.status}
-        onClick={() => onLevelClick(lvl8)}
-        focused={targetLevel?.level === lvl8}
-        level={lvl8}
+        status={levels.find((level) => level.name === 'teamwork8')?.status}
+        onClick={() => onLevelClick(teamwork8)}
+        focused={targetLevel?.level === teamwork8}
+        level={teamwork8}
       />
     </IslandSVG>
   );

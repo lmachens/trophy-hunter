@@ -3,17 +3,18 @@ import { Account } from '../types';
 export const newAccount: Account = {
   summonerName: 'Trophy Hunter',
   region: 'global',
-  trophiesCount: 0,
-  islands: {
-    hubIsland: {
+  islands: [
+    {
+      name: 'hub',
       status: 'open',
-      trophiesCount: 0,
-      levels: {
-        welcome: {
-          status: 'active',
-          trophies: {},
-        },
-      },
     },
-  },
+  ],
+  levels: [
+    {
+      name: 'welcome',
+      island: 'hub',
+      status: 'active',
+    },
+  ],
+  trophies: [],
 };

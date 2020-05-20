@@ -1,2 +1,2 @@
-export { default as lvl1 } from './lvl1';
-export { default as lvl2 } from './lvl2';
+export { default as epic1 } from './epic1';
+export { default as epic2 } from './epic2';

@@ -1,15 +1,23 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
-import { lvl1, lvl2, lvl3, lvl4 } from './levels';
+import { special1, special2, special3, special4 } from './levels';
+import { useAccount } from '../../../contexts/account';
 
 const SpecialIsland: FC<IslandProps> = ({
-  status,
   targetLevel,
-  levels,
   onLevelClick,
   ...svgProps
 }) => {
+  const { account } = useAccount();
+  const status =
+    account?.islands.find((accountIsland) => accountIsland.name === 'special')
+      ?.status || 'closed';
+  const levels =
+    account?.levels.filter(
+      (accountLevel) => accountLevel.island === 'special'
+    ) || [];
+
   return (
     <IslandSVG
       width="235"
@@ -18,7 +26,6 @@ const SpecialIsland: FC<IslandProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       status={status}
-      levels={levels}
       {...svgProps}
     >
       <path
@@ -389,33 +396,33 @@ const SpecialIsland: FC<IslandProps> = ({
       <rect x="19" y="145.954" width="8" height="0.998156" fill="#EAEAEA" />
       <rect x="30" y="139.965" width="8" height="0.998156" fill="#EAEAEA" />
       <rect x="13" y="140.963" width="8" height="0.998156" fill="#EAEAEA" />
-      <lvl1.Marker
+      <special1.Marker
         transform="translate(183 80)"
-        status={levels.lvl1?.status}
-        onClick={() => onLevelClick(lvl1)}
-        focused={targetLevel?.level === lvl1}
-        level={lvl1}
+        status={levels.find((level) => level.name === 'special1')?.status}
+        onClick={() => onLevelClick(special1)}
+        focused={targetLevel?.level === special1}
+        level={special1}
       />
-      <lvl2.Marker
+      <special2.Marker
         transform="translate(191 136)"
-        status={levels.lvl2?.status}
-        onClick={() => onLevelClick(lvl2)}
-        focused={targetLevel?.level === lvl2}
-        level={lvl2}
+        status={levels.find((level) => level.name === 'special2')?.status}
+        onClick={() => onLevelClick(special2)}
+        focused={targetLevel?.level === special2}
+        level={special2}
       />
-      <lvl3.Marker
+      <special3.Marker
         transform="translate(145 178)"
-        status={levels.lvl3?.status}
-        onClick={() => onLevelClick(lvl3)}
-        focused={targetLevel?.level === lvl3}
-        level={lvl3}
+        status={levels.find((level) => level.name === 'special3')?.status}
+        onClick={() => onLevelClick(special3)}
+        focused={targetLevel?.level === special3}
+        level={special3}
       />
-      <lvl4.Marker
+      <special4.Marker
         transform="translate(54 165)"
-        status={levels.lvl4?.status}
-        onClick={() => onLevelClick(lvl4)}
-        focused={targetLevel?.level === lvl4}
-        level={lvl4}
+        status={levels.find((level) => level.name === 'special4')?.status}
+        onClick={() => onLevelClick(special4)}
+        focused={targetLevel?.level === special4}
+        level={special4}
       />
       <defs>
         <linearGradient

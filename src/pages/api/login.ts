@@ -55,19 +55,33 @@ export default applyMiddleware(
           },
         },
         $setOnInsert: {
-          trophiesCount: 0,
-          islands: {
-            hubIsland: {
+          islands: [
+            {
+              name: 'hub',
               status: 'open',
-              trophiesCount: 0,
-              levels: {
-                welcome: {
-                  status: 'active',
-                  trophies: {},
-                },
-              },
             },
-          },
+          ],
+          levels: [
+            {
+              name: 'welcome',
+              island: 'hub',
+              status: 'completed',
+            },
+            {
+              name: 'combat',
+              island: 'hub',
+              status: 'open',
+            },
+          ],
+          trophies: [
+            {
+              name: 'playstyle',
+              island: 'hub',
+              level: 'welcome',
+              status: 'completed',
+              progress: 1,
+            },
+          ],
         },
       },
       {

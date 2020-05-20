@@ -1,8 +1,8 @@
-export { default as lvl1 } from './lvl1';
-export { default as lvl2 } from './lvl2';
-export { default as lvl3 } from './lvl3';
-export { default as lvl4 } from './lvl4';
-export { default as lvl5 } from './lvl5';
-export { default as lvl6 } from './lvl6';
-export { default as lvl7 } from './lvl7';
-export { default as lvl8 } from './lvl8';
+export { default as teamwork1 } from './teamwork1';
+export { default as teamwork2 } from './teamwork2';
+export { default as teamwork3 } from './teamwork3';
+export { default as teamwork4 } from './teamwork4';
+export { default as teamwork5 } from './teamwork5';
+export { default as teamwork6 } from './teamwork6';
+export { default as teamwork7 } from './teamwork7';
+export { default as teamwork8 } from './teamwork8';

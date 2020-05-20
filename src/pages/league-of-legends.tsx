@@ -8,56 +8,55 @@ import {
   TeamworkIsland,
   SpecialIsland,
   EpicIsland,
-  ObjectivesIsland
+  ObjectivesIsland,
 } from '../components/islands';
 import { transformIsland } from '../components/islands/utils';
 import { Level } from '../components/levels/types';
 import Background from '../components/islands/Background';
-import { useAccount } from '../contexts/account';
 
 const islands = [
   transformIsland({
     name: 'combatIsland',
     top: 56,
     left: 0,
-    Component: CombatIsland
+    Component: CombatIsland,
   }),
   transformIsland({
     name: 'skillsIsland',
     top: 8,
     left: 285,
-    Component: SkillsIsland
+    Component: SkillsIsland,
   }),
   transformIsland({
     name: 'teamworkIsland',
     top: 20,
     left: 535,
-    Component: TeamworkIsland
+    Component: TeamworkIsland,
   }),
   transformIsland({
     name: 'specialIsland',
     top: 320,
     left: 0,
-    Component: SpecialIsland
+    Component: SpecialIsland,
   }),
   transformIsland({
     name: 'epicIsland',
     top: 460,
     left: 260,
-    Component: EpicIsland
+    Component: EpicIsland,
   }),
   transformIsland({
     name: 'objectivesIsland',
     top: 295,
     left: 530,
-    Component: ObjectivesIsland
+    Component: ObjectivesIsland,
   }),
   transformIsland({
     name: 'hubIsland',
     top: 250,
     left: 275,
-    Component: HubIsland
-  })
+    Component: HubIsland,
+  }),
 ];
 
 const SizeContainer = styled.div`
@@ -82,10 +81,8 @@ interface GamePageProps {
 
 const LeagueOfLegends: NextPage<GamePageProps> = ({
   targetLevel,
-  onLevelClick
+  onLevelClick,
 }) => {
-  const { account } = useAccount();
-  const accountIslands = account?.islands || {};
   const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
     <Islands>
@@ -93,26 +90,18 @@ const LeagueOfLegends: NextPage<GamePageProps> = ({
         style={{
           left: `${-left}px`,
           top: `${-top}px`,
-          marginTop: `${top ? 100 : 30}px`
+          marginTop: `${top ? 100 : 30}px`,
         }}
       >
-        {islands.map(({ name, top, left, Component: Island }) => {
-          const { status, levels } = accountIslands[name] || {
-            status: 'closed',
-            levels: {}
-          };
-          return (
-            <Island
-              key={name}
-              onLevelClick={level =>
-                onLevelClick({ islandName: name, level, top, left })
-              }
-              status={status}
-              levels={levels}
-              targetLevel={targetLevel}
-            />
-          );
-        })}
+        {islands.map(({ name, top, left, Component: Island }) => (
+          <Island
+            key={name}
+            onLevelClick={(level) =>
+              onLevelClick({ islandName: name, level, top, left })
+            }
+            targetLevel={targetLevel}
+          />
+        ))}
         <Background />
       </SizeContainer>
     </Islands>

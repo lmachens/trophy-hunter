@@ -1,15 +1,22 @@
 import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
-import { lvl1, lvl2 } from './levels';
+import { epic1, epic2 } from './levels';
+import { useAccount } from '../../../contexts/account';
 
 const EpicIsland: FC<IslandProps> = ({
-  status,
-  levels,
   targetLevel,
   onLevelClick,
   ...svgProps
 }) => {
+  const { account } = useAccount();
+  const status =
+    account?.islands.find((accountIsland) => accountIsland.name === 'epic')
+      ?.status || 'closed';
+  const levels =
+    account?.levels.filter((accountLevel) => accountLevel.island === 'epic') ||
+    [];
+
   return (
     <IslandSVG
       width="207"
@@ -18,7 +25,6 @@ const EpicIsland: FC<IslandProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       status={status}
-      levels={levels}
       {...svgProps}
     >
       <path
@@ -123,19 +129,19 @@ const EpicIsland: FC<IslandProps> = ({
         d="M104.526 73.5L97 84.1751M104.526 73.5L109.088 80.4274M104.526 73.5L100.535 84.1751M97 84.1751V101.096M97 84.1751H98.7675M97 101.096L101.675 109.5M97 101.096L100.535 91.8975M101.675 109.5L110 100.983M101.675 109.5L105.211 103.027M110 100.983L109.088 80.4274M110 100.983L105.211 103.027M109.088 80.4274L104.526 89.1719M100.535 84.1751L102.36 89.1719M100.535 84.1751H98.7675M102.36 89.1719H104.526M102.36 89.1719L100.535 91.8975M104.526 89.1719L105.211 103.027M100.535 91.8975L98.7675 84.1751"
         stroke="#EAEAEA"
       />
-      <lvl1.Marker
+      <epic1.Marker
         transform="translate(65 45)"
-        status={levels.lvl1?.status}
-        onClick={() => onLevelClick(lvl1)}
-        focused={targetLevel?.level === lvl1}
-        level={lvl1}
+        status={levels.find((level) => level.name === 'epic1')?.status}
+        onClick={() => onLevelClick(epic1)}
+        focused={targetLevel?.level === epic1}
+        level={epic1}
       />
-      <lvl2.Marker
+      <epic2.Marker
         transform="translate(127 123)"
-        status={levels.lvl2?.status}
-        onClick={() => onLevelClick(lvl2)}
-        focused={targetLevel?.level === lvl2}
-        level={lvl2}
+        status={levels.find((level) => level.name === 'epic1')?.status}
+        onClick={() => onLevelClick(epic2)}
+        focused={targetLevel?.level === epic2}
+        level={epic2}
       />
     </IslandSVG>
   );

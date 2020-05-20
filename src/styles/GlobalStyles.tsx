@@ -1,6 +1,6 @@
 import { css, Global } from '@emotion/core';
 
-export const globalStyles = (
+const GlobalStyles = () => (
   <Global
     styles={css`
       *,
@@ -88,3 +88,5 @@ export const globalStyles = (
     `}
   />
 );
+
+export default GlobalStyles;

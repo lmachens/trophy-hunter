@@ -7,8 +7,8 @@ interface AccountContextValue {
 }
 
 const AccountContext = createContext<AccountContextValue>({
-  account: null,
-  loading: true
+  account: undefined,
+  loading: true,
 });
 
 export default AccountContext;

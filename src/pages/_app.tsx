@@ -1,9 +1,7 @@
 import { AppProps } from 'next/app';
 import { CacheProvider } from '@emotion/core';
-import { globalStyles } from '../styles/global';
 import { cache } from 'emotion';
 import { AppHeader } from '../components/headers';
-import { OverwolfWindowProvider } from '../components/overwolf/OverwolfWindow';
 import { Sidebar } from '../components/sidebar';
 import styled from '@emotion/styled';
 import Head from 'next/head';
@@ -16,6 +14,7 @@ import Overview from '../components/trophies/Overview';
 import { TargetLevel } from '../components/levels/types';
 import { WelcomeGuide } from '../components/guides';
 import { AccountProvider } from '../contexts/account';
+import GlobalStyles from '../styles/GlobalStyles';
 
 const Container = styled.div`
   display: flex;
@@ -43,56 +42,54 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <CacheProvider value={cache}>
-        {globalStyles}
+        <GlobalStyles />
         <AccountProvider>
-          <OverwolfWindowProvider>
-            <AppHeader />
-            <Container>
-              <Sidebar
-                activeTool={activeTool}
-                onToolClick={tool => {
-                  setVisibleIslandDetails(null);
-                  setTargetLevel(null);
-                  setActiveTool(activeTool === tool ? null : tool);
+          <AppHeader />
+          <Container>
+            <Sidebar
+              activeTool={activeTool}
+              onToolClick={(tool) => {
+                setVisibleIslandDetails(null);
+                setTargetLevel(null);
+                setActiveTool(activeTool === tool ? null : tool);
+              }}
+            />
+            <Main>
+              <Component
+                {...pageProps}
+                targetLevel={targetLevel}
+                onLevelClick={(targetLevel) => {
+                  setActiveTool(null);
+                  setTargetLevel(targetLevel);
+                  setVisibleIslandDetails(true);
                 }}
               />
-              <Main>
-                <Component
-                  {...pageProps}
-                  targetLevel={targetLevel}
-                  onLevelClick={targetLevel => {
-                    setActiveTool(null);
-                    setTargetLevel(targetLevel);
+              <LevelPanel
+                level={targetLevel?.level}
+                open={visibleIslandDetails}
+                onToggleClick={() => {
+                  setActiveTool(null);
+                  if (visibleIslandDetails) {
+                    setVisibleIslandDetails(false);
+                    setTargetLevel(null);
+                  } else {
                     setVisibleIslandDetails(true);
-                  }}
-                />
-                <LevelPanel
-                  level={targetLevel?.level}
-                  open={visibleIslandDetails}
-                  onToggleClick={() => {
-                    setActiveTool(null);
-                    if (visibleIslandDetails) {
-                      setVisibleIslandDetails(false);
-                      setTargetLevel(null);
-                    } else {
-                      setVisibleIslandDetails(true);
-                    }
-                  }}
-                />
-                <Overview />
-                {activeTool && (
-                  <ToolPane>
-                    {activeTool === 'settings' && <Settings />}
-                    {activeTool === 'collection' && <Collection />}
-                  </ToolPane>
-                )}
-                <WelcomeGuide
-                  visibleIslandDetails={visibleIslandDetails}
-                  targetLevel={targetLevel}
-                />
-              </Main>
-            </Container>
-          </OverwolfWindowProvider>
+                  }
+                }}
+              />
+              <Overview />
+              {activeTool && (
+                <ToolPane>
+                  {activeTool === 'settings' && <Settings />}
+                  {activeTool === 'collection' && <Collection />}
+                </ToolPane>
+              )}
+              <WelcomeGuide
+                visibleIslandDetails={visibleIslandDetails}
+                targetLevel={targetLevel}
+              />
+            </Main>
+          </Container>
         </AccountProvider>
       </CacheProvider>
     </>

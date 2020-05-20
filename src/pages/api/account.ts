@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
   applyMiddleware,
@@ -15,16 +14,9 @@ export default applyMiddleware(
     if (!authToken) {
       return res.json(newAccount);
     }
-    const { summonerName, region } = jwt.verify(
-      authToken,
-      process.env.JWT_SECRET
-    );
 
     const Accounts = await getAccountsCollection();
     const account = await Accounts.findOne({
-      summonerName,
-      region,
-
       authTokens: {
         $elemMatch: {
           token: authToken,

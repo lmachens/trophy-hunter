@@ -9,3 +9,7 @@ export const postLogin = (credential: Credential) => {
 export const getAccount = () => {
   return getJSON<Account>('/api/account');
 };
+
+export const postUnlock = (levelName: string) => {
+  return postJSON<Account>('/api/check', { levelName });
+};

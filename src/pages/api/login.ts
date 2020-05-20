@@ -65,23 +65,10 @@ export default applyMiddleware(
             {
               name: 'welcome',
               island: 'hub',
-              status: 'completed',
-            },
-            {
-              name: 'combat',
-              island: 'hub',
-              status: 'open',
+              status: 'active',
             },
           ],
-          trophies: [
-            {
-              name: 'playstyle',
-              island: 'hub',
-              level: 'welcome',
-              status: 'completed',
-              progress: 1,
-            },
-          ],
+          trophies: [],
         },
       },
       {

@@ -1,9 +1,6 @@
 import { getDatabase, getCollection } from '../../utils/server/db';
+import { Account } from '../types';
 
-interface Account {
-  summonerName: string;
-  region: string;
-}
 export const createAccountsCollection = async () => {
   await getDatabase().createCollection('accounts', {
     validator: {
@@ -11,13 +8,13 @@ export const createAccountsCollection = async () => {
         bsonType: 'object',
         properties: {
           summonerName: {
-            bsonType: 'string'
+            bsonType: 'string',
           },
           region: {
-            bsonType: 'string'
+            bsonType: 'string',
           },
           trophiesCount: {
-            bsonType: 'int'
+            bsonType: 'int',
           },
           authTokens: {
             bsonType: 'array',
@@ -25,21 +22,21 @@ export const createAccountsCollection = async () => {
               bsonType: 'object',
               properties: {
                 token: {
-                  bsonType: 'string'
+                  bsonType: 'string',
                 },
                 expiresAt: {
-                  bsonType: 'date'
-                }
-              }
-            }
+                  bsonType: 'date',
+                },
+              },
+            },
           },
           islands: {
-            bsonType: 'object'
-          }
+            bsonType: 'object',
+          },
         },
-        required: ['summonerName', 'region']
-      }
-    }
+        required: ['summonerName', 'region'],
+      },
+    },
   });
 };
 

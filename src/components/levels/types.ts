@@ -14,6 +14,7 @@ export interface Level {
   Icon: React.FC;
   Marker: FC<MarkerProps>;
   trophies: Trophy[];
+  unlocksLevels?: Level[];
 }
 
 export type TargetLevel = {

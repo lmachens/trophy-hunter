@@ -4,16 +4,17 @@ export interface Credential {
 }
 
 export interface Account {
+  _id?: string;
   summonerName: string;
   region: string;
   islands: {
     name: string;
-    status: 'open' | 'closed' | 'done';
+    status: 'open' | 'done' | 'closed';
   }[];
   levels: {
     name: string;
     island: string;
-    status: 'active' | 'unlocked' | 'locked' | 'completed';
+    status: 'active' | 'unlocked' | 'completed' | 'locked';
   }[];
   trophies: {
     name: string;

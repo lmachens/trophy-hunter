@@ -4,6 +4,8 @@ import ChooseALevel from './ChooseALevel';
 import DetailsToggle from './DetailsToggle';
 import { Level } from './types';
 import TrophyListItem from '../trophies/TrophyListItem';
+import { useMutation, queryCache } from 'react-query';
+import { postUnlock } from '../../api/accounts';
 
 type Open = { open: boolean };
 
@@ -12,7 +14,7 @@ const Container = styled.aside<Open>`
   border-left: 1px solid #eaeaea;
   position: relative;
   background: #2b2a30;
-  width: ${props => (props.open ? '350px' : '0px')};
+  width: ${(props) => (props.open ? '350px' : '0px')};
   transition: 0.15s;
 `;
 
@@ -42,6 +44,12 @@ interface LevelPanelProps {
 }
 
 const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
+  const [unlock] = useMutation(postUnlock, {
+    onSuccess: () => {
+      queryCache.refetchQueries('account');
+    },
+  });
+
   let content;
   if (open && !level) {
     content = <ChooseALevel />;
@@ -49,9 +57,9 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
     content = (
       <>
         <level.Icon />
-        <Title>{level.title}</Title>
+        <Title onClick={() => unlock(level.name)}>{level.title}</Title>
         <List>
-          {level.trophies.map(trophy => (
+          {level.trophies.map((trophy) => (
             <TrophyListItem
               key={trophy.name}
               trophy={trophy}

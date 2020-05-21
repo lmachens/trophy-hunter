@@ -18,7 +18,7 @@ export default applyMiddleware(
     }
 
     const Accounts = await getAccountsCollection();
-    const account = await Accounts.findOne({
+    let account = await Accounts.findOne({
       authTokens: {
         $elemMatch: {
           token: authToken,
@@ -52,10 +52,11 @@ export default applyMiddleware(
         },
       }
     );
+
     const unlockIslandLevels = level.unlocksLevels.filter(
       (unlockLevel) => unlockLevel.island !== level.island
     );
-    await Accounts.updateOne(
+    const updated = await Accounts.findOneAndUpdate(
       { _id: account._id },
       {
         $push: {
@@ -73,8 +74,29 @@ export default applyMiddleware(
             })),
           },
         },
-      }
+      },
+      { returnOriginal: false }
     );
+    account = updated.value;
+
+    const isIslandComplete = !account.levels
+      .filter(
+        (accountLevel) =>
+          accountLevel.island === level.island &&
+          accountLevel.name !== level.name
+      )
+      .find((level) => level.status !== 'completed');
+    if (isIslandComplete) {
+      await Accounts.updateOne(
+        { _id: account._id, 'islands.name': level.island },
+        {
+          $set: {
+            'islands.$.status': 'done',
+          },
+        }
+      );
+    }
+
     res.json({});
   },
   withError,

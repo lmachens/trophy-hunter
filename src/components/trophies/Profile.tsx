@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useAccount } from '../../contexts/account';
 import { useMutation, queryCache } from 'react-query';
 import { postLogin } from '../../api/accounts';
+import DevButton from '../common/DevButton';
 
 const Container = styled.div`
   display: flex;
@@ -24,14 +25,7 @@ const Profile: FC = () => {
   });
 
   return (
-    <Container
-      onClick={() => {
-        login({
-          summonerName: 'sirlunchalot619',
-          region: 'EUW',
-        });
-      }}
-    >
+    <Container>
       <Avatar src={`${process.env.PUBLIC_DIR}/avatar.png`} />
       <div>
         <h4>
@@ -45,6 +39,16 @@ const Profile: FC = () => {
           /217 TH points
         </p>
       </div>
+      <DevButton
+        onClick={() => {
+          login({
+            summonerName: Date.now().toString(),
+            region: 'EUW',
+          });
+        }}
+      >
+        New
+      </DevButton>
     </Container>
   );
 };

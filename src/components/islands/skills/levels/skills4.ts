@@ -1,5 +1,6 @@
 import { Level } from '../../../levels/types';
 import { SkillsIcon, SkillsMarker } from '../../../levels/skills';
+import skills5 from './skills5';
 
 const skills4: Level = {
   island: 'skills',
@@ -10,6 +11,7 @@ const skills4: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [skills5],
 };
 
 export default skills4;

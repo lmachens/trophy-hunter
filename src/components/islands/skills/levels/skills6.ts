@@ -10,6 +10,7 @@ const skills6: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [],
 };
 
 export default skills6;

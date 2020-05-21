@@ -8,6 +8,7 @@ const epic2: Level = {
   Icon: EpicIcon,
   Marker: EpicMarker,
   trophies: [],
+  unlocksLevels: [],
 };
 
 export default epic2;

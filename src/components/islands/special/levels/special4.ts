@@ -10,6 +10,7 @@ const special4: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [],
 };
 
 export default special4;

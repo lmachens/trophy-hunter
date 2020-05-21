@@ -1,5 +1,6 @@
 import { Level } from '../../../levels/types';
 import { TeamworkIcon, TeamworkMarker } from '../../../levels/teamwork';
+import teamwork7 from './teamwork7';
 
 const teamwork6: Level = {
   island: 'teamwork',
@@ -10,6 +11,7 @@ const teamwork6: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [teamwork7],
 };
 
 export default teamwork6;

@@ -1,5 +1,6 @@
 import { Level } from '../../../levels/types';
 import { ObjectivesIcon, ObjectivesMarker } from '../../../levels/objectives';
+import objectives5 from './objectives5';
 
 const objectives4: Level = {
   island: 'objectives',
@@ -10,6 +11,7 @@ const objectives4: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [objectives5],
 };
 
 export default objectives4;

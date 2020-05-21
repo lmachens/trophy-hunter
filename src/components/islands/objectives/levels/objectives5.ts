@@ -10,6 +10,7 @@ const objectives5: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [],
 };
 
 export default objectives5;

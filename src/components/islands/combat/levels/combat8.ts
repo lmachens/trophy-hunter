@@ -10,6 +10,7 @@ const combat8: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [],
 };
 
 export default combat8;

@@ -41,7 +41,6 @@ export default applyMiddleware(
       (accountLevel) => accountLevel.name === level.name
     );
     if (!accountLevel || accountLevel.status !== 'active') {
-      console.log(accountLevel, level);
       return res.status(406).end('Not Acceptable');
     }
 

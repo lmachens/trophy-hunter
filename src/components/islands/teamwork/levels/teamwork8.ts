@@ -10,6 +10,7 @@ const teamwork8: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [],
 };
 
 export default teamwork8;

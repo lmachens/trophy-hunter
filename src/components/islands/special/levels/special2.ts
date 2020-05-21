@@ -1,5 +1,6 @@
 import { Level } from '../../../levels/types';
 import { SpecialIcon, SpecialMarker } from '../../../levels/special';
+import special3 from './special3';
 
 const special2: Level = {
   island: 'special',
@@ -10,6 +11,7 @@ const special2: Level = {
   trophies: [
     /* */
   ],
+  unlocksLevels: [special3],
 };
 
 export default special2;

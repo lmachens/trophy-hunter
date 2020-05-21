@@ -31,7 +31,13 @@ export const createAccountsCollection = async () => {
             },
           },
           islands: {
-            bsonType: 'object',
+            bsonType: 'array',
+          },
+          levels: {
+            bsonType: 'array',
+          },
+          trophies: {
+            bsonType: 'array',
           },
         },
         required: ['summonerName', 'region'],

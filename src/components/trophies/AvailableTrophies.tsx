@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import TrophyListItem from './TrophyListItem';
-import { useAvailableTrophies } from '../../contexts/account';
+import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
 
 const List = styled.div`
   flex-grow: 1;

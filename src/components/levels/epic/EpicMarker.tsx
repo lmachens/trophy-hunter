@@ -1,5 +1,5 @@
-import Marker from '../Marker';
 import styled from '@emotion/styled';
+import Marker from '../Marker';
 
 const EpicMarker = styled(Marker)`
   color: #c956ff;

@@ -15,10 +15,10 @@ const blink = keyframes`
 `;
 
 const Circle = styled.circle<MarkerProps>`
-  opacity: ${props => (props.status === 'locked' ? 0.4 : 1)};
+  opacity: ${(props) => (props.status === 'locked' ? 0.4 : 1)};
   stroke: inherit;
   stroke-width: 1.5px;
-  fill: ${props => (props.status === 'completed' ? 'inherit' : 'none')};
+  fill: ${(props) => (props.status === 'completed' ? 'inherit' : 'none')};
 `;
 
 const Group = styled.g`
@@ -45,7 +45,7 @@ const Path = styled.path`
   fill: inherit;
 `;
 
-const HalfCircle = props => {
+const HalfCircle = (props) => {
   return <Path d="M4.4,7 a1,1 0 0,0 0,-6" {...props} />;
 };
 
@@ -58,30 +58,29 @@ const Marker: FC<MarkerProps> = ({
   ...groupElementProps
 }) => {
   return (
-    <>
-      <foreignObject transform={transform} width="14" height="14">
-        <MarkerTooltip level={level}>
-          <svg width="14" height="14" viewBox="0 0 14 14">
-            <Group className={className} {...groupElementProps}>
-              <PseudoCircle cx="7" cy="7" r="7" />
-              {status === 'active' && !focused && (
-                <BlinkCircle cx="7" cy="7" r="7" />
-              )}
-              {focused && <FocusCircle cx="7" cy="7" r="7" />}
-              {status === 'unlocked' && <HalfCircle />}
-              <Circle
-                focused={focused}
-                status={status}
-                cx="7"
-                cy="7"
-                r="3.25"
-                level={level}
-              />
-            </Group>
-          </svg>
-        </MarkerTooltip>
-      </foreignObject>
-    </>
+    <foreignObject transform={transform} width="14" height="14">
+      <MarkerTooltip level={level}>
+        <svg width="14" height="14" viewBox="0 0 14 14">
+          <Group className={className} {...groupElementProps}>
+            <PseudoCircle cx="7" cy="7" r="7" />
+            {status === 'active' && !focused && (
+              <BlinkCircle cx="7" cy="7" r="7" />
+            )}
+            {focused && <FocusCircle cx="7" cy="7" r="7" />}
+            {status === 'unlocked' && <HalfCircle />}
+            <Circle
+              focused={focused}
+              status={status}
+              cx="7"
+              cy="7"
+              r="3.25"
+              level={level}
+            />
+          </Group>
+        </svg>
+      </MarkerTooltip>
+    </foreignObject>
   );
 };
+
 export default Marker;

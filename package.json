@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lmachens/th.git"
+    "url": "git+https://github.com/lmachens/trophy-hunter.git"
   },
   "author": "Leon Machens",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lmachens/th/issues"
+    "url": "https://github.com/lmachens/trophy-hunter/issues"
   },
-  "homepage": "https://github.com/lmachens/th#readme",
+  "homepage": "https://github.com/lmachens/trophy-hunter#readme",
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",

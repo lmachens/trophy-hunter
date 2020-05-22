@@ -9,9 +9,9 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Islands: FC = ({ children }) => {
+const Islands: FC = ({ children, ...other }) => {
   return (
-    <Container>
+    <Container {...other}>
       <SpecialGradients />
       {children}
     </Container>

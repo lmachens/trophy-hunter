@@ -82,10 +82,11 @@ interface GamePageProps {
 const LeagueOfLegends: NextPage<GamePageProps> = ({
   targetLevel,
   onLevelClick,
+  ...other
 }) => {
   const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
-    <Islands>
+    <Islands {...other}>
       <SizeContainer
         style={{
           left: `${-left}px`,

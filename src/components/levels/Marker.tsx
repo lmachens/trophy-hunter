@@ -55,13 +55,21 @@ const Marker: FC<MarkerProps> = ({
   className,
   transform,
   level,
+  onClick,
   ...groupElementProps
 }) => {
   return (
     <foreignObject transform={transform} width="14" height="14">
       <MarkerTooltip level={level}>
         <svg width="14" height="14" viewBox="0 0 14 14">
-          <Group className={className} {...groupElementProps}>
+          <Group
+            className={className}
+            onClick={(event) => {
+              event.stopPropagation();
+              onClick(event);
+            }}
+            {...groupElementProps}
+          >
             <PseudoCircle cx="7" cy="7" r="7" />
             {status === 'active' && !focused && (
               <BlinkCircle cx="7" cy="7" r="7" />

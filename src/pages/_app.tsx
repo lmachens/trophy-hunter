@@ -63,6 +63,11 @@ function MyApp({ Component, pageProps }: AppProps) {
                   setTargetLevel(targetLevel);
                   setVisibleIslandDetails(true);
                 }}
+                onClick={() => {
+                  setActiveTool(null);
+                  setTargetLevel(null);
+                  setVisibleIslandDetails(false);
+                }}
               />
               <LevelPanel
                 level={targetLevel?.level}

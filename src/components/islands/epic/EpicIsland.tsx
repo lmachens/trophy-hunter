@@ -138,7 +138,7 @@ const EpicIsland: FC<IslandProps> = ({
       />
       <epic2.Marker
         transform="translate(127 123)"
-        status={levels.find((level) => level.name === 'epic1')?.status}
+        status={levels.find((level) => level.name === 'epic2')?.status}
         onClick={() => onLevelClick(epic2)}
         focused={targetLevel?.level === epic2}
         level={epic2}

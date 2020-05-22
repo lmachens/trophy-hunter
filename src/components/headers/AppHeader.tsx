@@ -7,6 +7,8 @@ import styled from '@emotion/styled';
 import Feedback from '../icons/Feedback';
 import FeedbackModal from '../modals/FeedbackModal';
 import overwolf from '../../api/overwolf';
+import Grow from '../common/Grow';
+import AfterMatch from '../matches/AfterMatch';
 
 const Header = styled.header`
   display: flex;
@@ -101,6 +103,10 @@ const WriteUsFeedback = styled.div`
   }
 `;
 
+const AfterMatchIcon = styled(AfterMatch)`
+  margin-left: 10px;
+`;
+
 const AppHeader: FC = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
@@ -108,7 +114,7 @@ const AppHeader: FC = () => {
     <>
       <Header
         onMouseDown={() =>
-          overwolf.windows.getCurrentWindow(result => {
+          overwolf.windows.getCurrentWindow((result) => {
             overwolf.windows.dragMove(result.window.id);
           })
         }
@@ -123,6 +129,8 @@ const AppHeader: FC = () => {
           </Background>
         </LogoContainer>
         <Toolbar>
+          <AfterMatchIcon />
+          <Grow />
           <WriteUsFeedback onClick={() => setShowFeedback(true)}>
             <Feedback />
             Write us a feedback
@@ -135,7 +143,7 @@ const AppHeader: FC = () => {
           </Button>
           <Button
             onClick={() =>
-              overwolf.windows.getCurrentWindow(result => {
+              overwolf.windows.getCurrentWindow((result) => {
                 overwolf.windows.minimize(result.window.id);
               })
             }

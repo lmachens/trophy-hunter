@@ -4,6 +4,7 @@ import Link from '../common/Link';
 import { Tooltip } from '../tooltip';
 import Settings from '../icons/Settings';
 import ToolButton from '../tools/ToolButton';
+import Grow from '../common/Grow';
 
 const Aside = styled.aside`
   width: 75px;
@@ -22,12 +23,12 @@ interface SidebarButtonProps {
 const SidebarButton = styled.button<SidebarButtonProps>`
   height: 75px;
   width: 100%;
-  background: ${props => (props.active ? '#2B2A30' : '#222')};
+  background: ${(props) => (props.active ? '#2B2A30' : '#222')};
   border: none;
   border-bottom: 1px solid #3f3e43;
-  cursor: ${props => (props.comingSoon ? 'inherit' : 'pointer')};
+  cursor: ${(props) => (props.comingSoon ? 'inherit' : 'pointer')};
   transition: 0.15s;
-  opacity: ${props => (props.comingSoon ? 0.4 : 1)};
+  opacity: ${(props) => (props.comingSoon ? 0.4 : 1)};
 
   :focus {
     outline: none;
@@ -35,12 +36,8 @@ const SidebarButton = styled.button<SidebarButtonProps>`
 
   &:hover,
   &:active {
-    background-color: ${props => (props.comingSoon ? 'inherit' : '#818c99')};
+    background-color: ${(props) => (props.comingSoon ? 'inherit' : '#818c99')};
   }
-`;
-
-const Grow = styled.div`
-  flex-grow: 1;
 `;
 
 interface SidebarProps {

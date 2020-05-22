@@ -56,13 +56,13 @@ const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
   const [message, setMessage] = useState('');
   const [mutate, { status }] = useMutation(postFeedback);
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       await mutate({
         discordTag,
-        message
+        message,
       });
     } catch (error) {
       console.error(error);
@@ -70,7 +70,7 @@ const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
   };
 
   return (
-    <Modal onClose={onClose} title="YOUR OPINION MATTERS!">
+    <Modal onClose={onClose} title="Your opinion matters!">
       <Form onSubmit={handleSubmit}>
         <p>
           We are thrilled to see you using Trophy Hunter! we are working hard to
@@ -80,14 +80,14 @@ const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
         <input
           placeholder="#Discord Tag - *this is optional so that we can contact you back : )"
           value={discordTag}
-          onChange={event => setDiscordTag(event.target.value)}
+          onChange={(event) => setDiscordTag(event.target.value)}
           disabled={status === 'success'}
         />
         <textarea
           placeholder="I would like to let you know that..."
           rows={10}
           value={message}
-          onChange={event => setMessage(event.target.value)}
+          onChange={(event) => setMessage(event.target.value)}
           disabled={status === 'success'}
         />
         <ActionContainer>

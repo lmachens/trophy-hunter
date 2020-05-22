@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
-type Placement = 'right' | 'bottom' | 'top';
+type Placement = 'right' | 'bottom' | 'top' | 'topLeft';
 
 interface ContainerProps {
   isVisible: boolean;
@@ -20,6 +20,7 @@ interface ContainerProps {
   top: number;
   placement: Placement;
   targetId: string;
+  pointerEvents?: boolean;
 }
 
 const arrows = {
@@ -38,6 +39,12 @@ const arrows = {
     border-width: 6px 6px 6px 0px;
     transform: rotate(90deg);
     top: -10px;
+    left: calc(50% - 3px);
+  `,
+  topLeft: css`
+    border-width: 6px 6px 6px 0px;
+    transform: rotate(90deg);
+    top: -10px;
     left: 18px;
   `,
 };
@@ -51,8 +58,8 @@ const Container = styled.div<ContainerProps>`
   min-width: 100px;
   left: ${(props) => props.left}px;
   top: ${(props) => props.top}px;
-  pointer-events: none;
-  z-index: ${(props) => (props.targetId ? 9 : 10)};
+  pointer-events: ${(props) => (props.pointerEvents ? 'inherit' : 'none')};
+  z-index: ${(props) => (props.targetId ? 90 : 100)};
   font-family: 'Roboto Mono', monospace;
   max-width: 300px;
   transition: opacity 0.15s;
@@ -81,6 +88,8 @@ interface TooltipProps {
   targetId?: string;
   className?: string;
   visible?: boolean;
+  pointerEvents?: boolean;
+  onClick?(): void;
 }
 
 const Tooltip: FC<TooltipProps> = ({
@@ -92,6 +101,8 @@ const Tooltip: FC<TooltipProps> = ({
   targetId,
   className,
   visible,
+  onClick,
+  pointerEvents,
 }) => {
   const containerNode = useRef<HTMLDivElement>();
   const bodyChildNode = useRef<HTMLDivElement>();
@@ -127,6 +138,11 @@ const Tooltip: FC<TooltipProps> = ({
 
         case 'top':
           left = x + width / 2 - containerWidth / 2;
+          top = y + height + offset;
+          break;
+
+        case 'topLeft':
+          left = x + width / 2 - 22;
           top = y + height + offset;
           break;
       }
@@ -180,6 +196,8 @@ const Tooltip: FC<TooltipProps> = ({
         placement={placement}
         className={className}
         targetId={targetId}
+        pointerEvents={pointerEvents}
+        onClick={onClick}
       >
         {title && <h3>{title}</h3>}
         {text && <Text>{text}</Text>}

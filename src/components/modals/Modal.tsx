@@ -1,19 +1,7 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
 import CloseIcon from '../icons/Close';
-
-const Backdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import Backdrop from '../common/Backdrop';
 
 const Container = styled.div`
   width: 500px;
@@ -23,6 +11,7 @@ const Container = styled.div`
 
 const Title = styled.h3`
   margin: 20px;
+  text-transform: uppercase;
 `;
 
 const Body = styled.div`
@@ -46,7 +35,7 @@ interface ModalProps {
 const Modal: FC<ModalProps> = ({ children, onClose, title }) => {
   return (
     <Backdrop onClick={onClose}>
-      <Container onClick={event => event.stopPropagation()}>
+      <Container onClick={(event) => event.stopPropagation()}>
         <Close onClick={onClose} />
         <Title>{title}</Title>
         <Body>{children}</Body>

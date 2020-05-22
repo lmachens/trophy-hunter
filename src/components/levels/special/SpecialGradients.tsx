@@ -4,10 +4,10 @@ const SpecialGradients = () => {
       <defs>
         <linearGradient
           id="specialColor"
-          x1="-0.166667"
-          y1="-5.32785e-08"
-          x2="9.05113"
-          y2="8.46636"
+          x1="0"
+          y1="0"
+          x2="14"
+          y2="14"
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#EF1ACD" />
@@ -15,10 +15,10 @@ const SpecialGradients = () => {
         </linearGradient>
         <linearGradient
           id="specialColorHover"
-          x1="-0.166667"
-          y1="-5.32785e-08"
-          x2="9.05113"
-          y2="8.46636"
+          x1="0"
+          y1="0"
+          x2="14"
+          y2="14"
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#F543D9" />

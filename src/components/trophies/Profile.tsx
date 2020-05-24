@@ -17,7 +17,7 @@ const Avatar = styled.img`
 `;
 
 const Profile: FC = () => {
-  const { account, loading } = useAccount();
+  const { account } = useAccount();
   const [login] = useMutation(postLogin, {
     onSuccess: () => {
       queryCache.refetchQueries('account');
@@ -28,9 +28,7 @@ const Profile: FC = () => {
     <Container>
       <Avatar src={`${process.env.PUBLIC_DIR}/avatar.png`} />
       <div>
-        <h4>
-          {loading ? '. . .' : account?.summonerName || 'Unknown Trophy Hunter'}
-        </h4>
+        <h4>{account?.summoner.name || 'Unknown Trophy Hunter'}</h4>
         <p>
           {account
             ? account.trophies.filter((trophy) => trophy.status === 'completed')
@@ -42,12 +40,12 @@ const Profile: FC = () => {
       <DevButton
         onClick={() => {
           login({
-            summonerName: Date.now().toString(),
-            region: 'EUW',
+            summonerName: 'sirlunchalot619',
+            platformId: 'EUW1',
           });
         }}
       >
-        New
+        Login
       </DevButton>
     </Container>
   );

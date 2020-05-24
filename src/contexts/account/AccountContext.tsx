@@ -7,7 +7,7 @@ interface AccountContextValue {
 }
 
 const AccountContext = createContext<AccountContextValue>({
-  account: undefined,
+  account: null,
   loading: true,
 });
 

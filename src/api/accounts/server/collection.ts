@@ -7,14 +7,43 @@ export const createAccountsCollection = async () => {
       $jsonSchema: {
         bsonType: 'object',
         properties: {
-          summonerName: {
-            bsonType: 'string',
+          summoner: {
+            bsonType: 'object',
+            properties: {
+              platformId: {
+                bsonType: 'string',
+              },
+              accountId: {
+                bsonType: 'string',
+              },
+              profileIconId: {
+                bsonType: 'int',
+              },
+              revisionDate: {
+                bsonType: 'int',
+              },
+              name: {
+                bsonType: 'string',
+              },
+              id: {
+                bsonType: 'string',
+              },
+              puuid: {
+                bsonType: 'string',
+              },
+              summonerLevel: {
+                bsonType: 'int',
+              },
+            },
           },
-          region: {
-            bsonType: 'string',
+          islands: {
+            bsonType: 'array',
           },
-          trophiesCount: {
-            bsonType: 'int',
+          levels: {
+            bsonType: 'array',
+          },
+          trophies: {
+            bsonType: 'array',
           },
           authTokens: {
             bsonType: 'array',
@@ -30,17 +59,8 @@ export const createAccountsCollection = async () => {
               },
             },
           },
-          islands: {
-            bsonType: 'array',
-          },
-          levels: {
-            bsonType: 'array',
-          },
-          trophies: {
-            bsonType: 'array',
-          },
         },
-        required: ['summonerName', 'region'],
+        required: ['islands', 'levels', 'trophies', 'authTokens'],
       },
     },
   });

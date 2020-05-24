@@ -1,8 +1,16 @@
 import { Account } from '../types';
 
 export const newAccount: Account = {
-  summonerName: 'Trophy Hunter',
-  region: 'global',
+  summoner: {
+    platformId: 'global',
+    accountId: '',
+    profileIconId: 0,
+    revisionDate: 0,
+    name: 'Trophy Hunter',
+    id: '',
+    puuid: '',
+    summonerLevel: 0,
+  },
   islands: [
     {
       name: 'hub',

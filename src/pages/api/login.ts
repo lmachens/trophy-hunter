@@ -9,22 +9,20 @@ import {
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import { ONE_YEAR_IN_MILLISECONDS } from '../../api/utils/dates';
+import { getSummoner } from '../../api/riot/server';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
-    const { summonerName, region } = req.body;
+    const { summonerName, platformId } = req.body;
     const { authToken: oldAuthToken } = req.cookies;
 
     const Accounts = await getAccountsCollection();
 
     if (oldAuthToken) {
-      const { summonerName, region } = jwt.verify(
-        oldAuthToken,
-        process.env.JWT_SECRET
-      );
+      const { accountId } = jwt.verify(oldAuthToken, process.env.JWT_SECRET);
 
       await Accounts.updateOne(
-        { summonerName, region },
+        { 'summoner.accountId': accountId },
         {
           $pull: {
             authTokens: {
@@ -35,19 +33,28 @@ export default applyMiddleware(
       );
     }
 
+    const summoner = await getSummoner({ summonerName, platformId });
+    if (!summoner) {
+      return res.status(404).end('Summoner not found');
+    }
+
     const authToken = jwt.sign(
-      { summonerName, region },
+      { accountId: summoner.accountId },
       process.env.JWT_SECRET,
-      { expiresIn: ONE_YEAR_IN_MILLISECONDS / 1000 }
+      {
+        expiresIn: ONE_YEAR_IN_MILLISECONDS / 1000,
+      }
     );
 
     const expiresAt = new Date(Date.now() + ONE_YEAR_IN_MILLISECONDS);
     const account = await Accounts.findOneAndUpdate(
       {
-        summonerName,
-        region,
+        'summoner.accountId': summoner.accountId,
       },
       {
+        $set: {
+          summoner,
+        },
         $addToSet: {
           authTokens: {
             token: authToken,
@@ -98,11 +105,11 @@ export default applyMiddleware(
       summonerName: {
         type: 'string',
       },
-      region: {
+      platformId: {
         type: 'string',
       },
     },
-    required: ['summonerName', 'region'],
+    required: ['summonerName', 'platformId'],
   }),
   withDatabase
 );

@@ -1,12 +1,13 @@
+import { Summoner } from '../riot/types';
+
 export interface Credential {
   summonerName: string;
-  region: string;
+  platformId: string;
 }
 
 export interface Account {
   _id?: string;
-  summonerName: string;
-  region: string;
+  summoner: Summoner;
   islands: {
     name: string;
     status: 'open' | 'done' | 'closed';

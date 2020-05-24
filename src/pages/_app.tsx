@@ -15,6 +15,7 @@ import { TargetLevel } from '../components/levels/types';
 import { WelcomeGuide } from '../components/guides';
 import { AccountProvider } from '../contexts/account';
 import GlobalStyles from '../styles/GlobalStyles';
+import { OverwolfProvider } from '../contexts/overwolf';
 
 const Container = styled.div`
   display: flex;
@@ -44,57 +45,59 @@ function MyApp({ Component, pageProps }: AppProps) {
       <CacheProvider value={cache}>
         <GlobalStyles />
         <AccountProvider>
-          <AppHeader />
-          <Container>
-            <Sidebar
-              activeTool={activeTool}
-              onToolClick={(tool) => {
-                setVisibleIslandDetails(null);
-                setTargetLevel(null);
-                setActiveTool(activeTool === tool ? null : tool);
-              }}
-            />
-            <Main>
-              <Component
-                {...pageProps}
-                targetLevel={targetLevel}
-                onLevelClick={(targetLevel) => {
-                  setActiveTool(null);
-                  setTargetLevel(targetLevel);
-                  setVisibleIslandDetails(true);
-                }}
-                onClick={() => {
-                  setActiveTool(null);
+          <OverwolfProvider>
+            <AppHeader />
+            <Container>
+              <Sidebar
+                activeTool={activeTool}
+                onToolClick={(tool) => {
+                  setVisibleIslandDetails(null);
                   setTargetLevel(null);
-                  setVisibleIslandDetails(false);
+                  setActiveTool(activeTool === tool ? null : tool);
                 }}
               />
-              <LevelPanel
-                level={targetLevel?.level}
-                open={visibleIslandDetails}
-                onToggleClick={() => {
-                  setActiveTool(null);
-                  if (visibleIslandDetails) {
-                    setVisibleIslandDetails(false);
-                    setTargetLevel(null);
-                  } else {
+              <Main>
+                <Component
+                  {...pageProps}
+                  targetLevel={targetLevel}
+                  onLevelClick={(targetLevel) => {
+                    setActiveTool(null);
+                    setTargetLevel(targetLevel);
                     setVisibleIslandDetails(true);
-                  }
-                }}
-              />
-              <Overview />
-              {activeTool && (
-                <ToolPane>
-                  {activeTool === 'settings' && <Settings />}
-                  {activeTool === 'collection' && <Collection />}
-                </ToolPane>
-              )}
-              <WelcomeGuide
-                visibleIslandDetails={visibleIslandDetails}
-                targetLevel={targetLevel}
-              />
-            </Main>
-          </Container>
+                  }}
+                  onClick={() => {
+                    setActiveTool(null);
+                    setTargetLevel(null);
+                    setVisibleIslandDetails(false);
+                  }}
+                />
+                <LevelPanel
+                  level={targetLevel?.level}
+                  open={visibleIslandDetails}
+                  onToggleClick={() => {
+                    setActiveTool(null);
+                    if (visibleIslandDetails) {
+                      setVisibleIslandDetails(false);
+                      setTargetLevel(null);
+                    } else {
+                      setVisibleIslandDetails(true);
+                    }
+                  }}
+                />
+                <Overview />
+                {activeTool && (
+                  <ToolPane>
+                    {activeTool === 'settings' && <Settings />}
+                    {activeTool === 'collection' && <Collection />}
+                  </ToolPane>
+                )}
+                <WelcomeGuide
+                  visibleIslandDetails={visibleIslandDetails}
+                  targetLevel={targetLevel}
+                />
+              </Main>
+            </Container>
+          </OverwolfProvider>
         </AccountProvider>
       </CacheProvider>
     </>

@@ -4,18 +4,19 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
 interface JSONRequestInit extends RequestInit {
-  data: unknown;
+  data?: unknown;
 }
 export const requestJSON = async <T>(
   input: RequestInfo,
   init?: JSONRequestInit
 ): Promise<T | string> => {
   const options: RequestInit = {
+    ...init,
     headers: {
       'Content-Type': 'application/json',
+      ...(init?.headers || {}),
     },
     credentials: 'include',
-    ...init,
   };
   if (init?.data) {
     options.body = JSON.stringify(init.data);
@@ -42,14 +43,19 @@ export const requestJSON = async <T>(
 
 export const postJSON = async <T>(
   input: RequestInfo,
-  data: unknown
+  data: unknown,
+  init?: RequestInit
 ): Promise<T> => {
   return (await requestJSON(input, {
     method: 'POST',
     data,
+    ...(init || {}),
   })) as T;
 };
 
-export const getJSON = async <T>(input: RequestInfo): Promise<T> => {
-  return (await requestJSON(input)) as T;
+export const getJSON = async <T>(
+  input: RequestInfo,
+  init?: JSONRequestInit
+): Promise<T> => {
+  return (await requestJSON(input, init)) as T;
 };

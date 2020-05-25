@@ -11,8 +11,14 @@ import {
   ObjectivesIsland,
 } from '../components/islands';
 import { transformIsland } from '../components/islands/utils';
-import { Level } from '../components/levels/types';
 import Background from '../components/islands/Background';
+import { useState } from 'react';
+
+import LevelPanel from '../components/levels/LevelPanel';
+import Overview from '../components/trophies/Overview';
+import { TargetLevel } from '../components/levels/types';
+import { WelcomeGuide } from '../components/guides';
+import GameLayout from '../layouts/GameLayout';
 
 const islands = [
   transformIsland({
@@ -67,45 +73,68 @@ const SizeContainer = styled.div`
   margin: 30px;
 `;
 
-type TargetLevel = {
-  islandName: string;
-  level: Level;
-  top: number;
-  left: number;
-};
+const LeagueOfLegends: NextPage = () => {
+  const [activeTool, setActiveTool] = useState(null);
+  const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
+  const [visibleIslandDetails, setVisibleIslandDetails] = useState(false);
 
-interface GamePageProps {
-  targetLevel: TargetLevel;
-  onLevelClick(targetLevel: TargetLevel): void;
-}
-
-const LeagueOfLegends: NextPage<GamePageProps> = ({
-  targetLevel,
-  onLevelClick,
-  ...other
-}) => {
   const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
-    <Islands {...other}>
-      <SizeContainer
-        style={{
-          left: `${-left}px`,
-          top: `${-top}px`,
-          marginTop: `${top ? 100 : 30}px`,
+    <GameLayout
+      activeTool={activeTool}
+      onToolClick={(tool) => {
+        setVisibleIslandDetails(null);
+        setTargetLevel(null);
+        setActiveTool(activeTool === tool ? null : tool);
+      }}
+    >
+      <Islands
+        onClick={() => {
+          setActiveTool(null);
+          setTargetLevel(null);
+          setVisibleIslandDetails(false);
         }}
       >
-        {islands.map(({ name, top, left, Component: Island }) => (
-          <Island
-            key={name}
-            onLevelClick={(level) =>
-              onLevelClick({ islandName: name, level, top, left })
-            }
-            targetLevel={targetLevel}
-          />
-        ))}
-        <Background />
-      </SizeContainer>
-    </Islands>
+        <SizeContainer
+          style={{
+            left: `${-left}px`,
+            top: `${-top}px`,
+            marginTop: `${top ? 100 : 30}px`,
+          }}
+        >
+          {islands.map(({ name, top, left, Component: Island }) => (
+            <Island
+              key={name}
+              onLevelClick={(level) => {
+                setActiveTool(null);
+                setTargetLevel({ islandName: name, level, top, left });
+                setVisibleIslandDetails(true);
+              }}
+              targetLevel={targetLevel}
+            />
+          ))}
+          <Background />
+        </SizeContainer>
+      </Islands>
+      <LevelPanel
+        level={targetLevel?.level}
+        open={visibleIslandDetails}
+        onToggleClick={() => {
+          setActiveTool(null);
+          if (visibleIslandDetails) {
+            setVisibleIslandDetails(false);
+            setTargetLevel(null);
+          } else {
+            setVisibleIslandDetails(true);
+          }
+        }}
+      />
+      <Overview />
+      <WelcomeGuide
+        visibleIslandDetails={visibleIslandDetails}
+        targetLevel={targetLevel}
+      />
+    </GameLayout>
   );
 };
 

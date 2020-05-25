@@ -9,9 +9,13 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Islands: FC = ({ children, ...other }) => {
+interface IslandsProps {
+  onClick(): void;
+}
+
+const Islands: FC<IslandsProps> = ({ children, onClick }) => {
   return (
-    <Container {...other}>
+    <Container onClick={onClick}>
       <SpecialGradients />
       {children}
     </Container>

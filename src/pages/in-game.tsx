@@ -1,7 +1,12 @@
 import { NextPage } from 'next';
+import { InGameHeader } from '../components/headers';
 
 const InGame: NextPage = () => {
-  return <div>In Game</div>;
+  return (
+    <>
+      <InGameHeader /> In Game
+    </>
+  );
 };
 
 export default InGame;

@@ -4,12 +4,7 @@ import IslandFilter from '../icons/IslandFilter';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import TrophyListItem from './TrophyListItem';
 import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
-
-const List = styled.div`
-  flex-grow: 1;
-  overflow: auto;
-  margin-bottom: 20px;
-`;
+import TrophyList from './TrophyList';
 
 const Header = styled.header`
   display: flex;
@@ -44,11 +39,11 @@ const AvailableTrophies: FC = () => {
           <FavoritesFilter />
         </Filter>
       </Header>
-      <List>
+      <TrophyList>
         {availableTrophies.map((trophy) => (
           <TrophyListItem trophy={trophy} key={trophy.name} borderless />
         ))}
-      </List>
+      </TrophyList>
     </>
   );
 };

@@ -6,6 +6,11 @@ import { ToolPane } from '../components/tools';
 import { Settings } from '../components/settings';
 import Collection from '../components/tools/collection';
 
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+`;
+
 const Main = styled.main`
   flex-grow: 1;
   display: flex;
@@ -23,7 +28,7 @@ const GameLayout: FC<GameLayoutProps> = ({
   onToolClick,
 }) => {
   return (
-    <>
+    <Container>
       <AppHeader />
       <Sidebar activeTool={activeTool} onToolClick={onToolClick} />
       <Main>
@@ -35,7 +40,7 @@ const GameLayout: FC<GameLayoutProps> = ({
           </ToolPane>
         )}
       </Main>
-    </>
+    </Container>
   );
 };
 

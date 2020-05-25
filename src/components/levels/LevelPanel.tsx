@@ -8,6 +8,7 @@ import { useMutation, queryCache } from 'react-query';
 import { postUnlock } from '../../api/accounts';
 import DevButton from '../common/DevButton';
 import { useAccount } from '../../contexts/account';
+import TrophyList from '../trophies/TrophyList';
 
 type Open = { open: boolean };
 
@@ -26,13 +27,6 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 15px;
-`;
-
-const List = styled.div`
-  flex-grow: 1;
-  overflow: auto;
-  margin-bottom: 20px;
-  width: 100%;
 `;
 
 const Title = styled.h3`
@@ -74,7 +68,7 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
         >
           Unlock
         </DevButton>
-        <List>
+        <TrophyList>
           {level.trophies.map((trophy) => (
             <TrophyListItem
               key={trophy.name}
@@ -82,7 +76,7 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
               data-tooltip-id={trophy.name}
             />
           ))}
-        </List>
+        </TrophyList>
       </>
     );
   }

@@ -1,21 +1,15 @@
 import { AppProps } from 'next/app';
 import { CacheProvider } from '@emotion/core';
 import { cache } from 'emotion';
-import styled from '@emotion/styled';
 import Head from 'next/head';
 
 import { AccountProvider } from '../contexts/account';
 import GlobalStyles from '../styles/GlobalStyles';
 import { OverwolfProvider } from '../contexts/overwolf';
 
-const Container = styled.div`
-  display: flex;
-  height: 100vh;
-`;
-
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Container>
+    <>
       <Head>
         <title>Trophy Hunter</title>
         <link
@@ -31,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </OverwolfProvider>
         </AccountProvider>
       </CacheProvider>
-    </Container>
+    </>
   );
 }
 

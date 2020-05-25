@@ -10,6 +10,7 @@ import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
 import DevButton from '../common/DevButton';
 import { keyframes } from '@emotion/core';
+import TrophyList from '../trophies/TrophyList';
 
 const sandClockMotion = keyframes`
   from {
@@ -127,12 +128,6 @@ const Message = styled.div`
   font-size: 1.2rem;
 `;
 
-const List = styled.div`
-  flex-grow: 1;
-  overflow: auto;
-  margin-bottom: 20px;
-`;
-
 interface AfterMatchProps {
   className?: string;
 }
@@ -228,11 +223,11 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
           }}
           title="Trophies completed in this match, GG!"
         >
-          <List>
+          <TrophyList>
             {match.trophies.map((trophy) => (
               <TrophyListItem trophy={trophy} key={trophy.name} borderless />
             ))}
-          </List>
+          </TrophyList>
         </Modal>
       )}
     </>

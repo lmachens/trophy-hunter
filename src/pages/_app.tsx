@@ -5,7 +5,6 @@ import Head from 'next/head';
 
 import { AccountProvider } from '../contexts/account';
 import GlobalStyles from '../styles/GlobalStyles';
-import { OverwolfProvider } from '../contexts/overwolf';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,9 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <CacheProvider value={cache}>
         <GlobalStyles />
         <AccountProvider>
-          <OverwolfProvider>
-            <Component {...pageProps} />
-          </OverwolfProvider>
+          <Component {...pageProps} />
         </AccountProvider>
       </CacheProvider>
     </>

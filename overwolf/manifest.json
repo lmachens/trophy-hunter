@@ -15,7 +15,7 @@
   },
   "permissions": ["Hotkeys", "GameInfo"],
   "data": {
-    "start_window": "desktop",
+    "start_window": "background",
     "windows": {
       "background": {
         "file": "build/background.html",
@@ -45,15 +45,23 @@
         "in_game_only": true,
         "focus_game_takeover": "ReleaseOnHidden",
         "focus_game_takeover_release_hotkey": "showhide",
-        "resizable": true,
+        "resizable": false,
         "transparent": true,
         "size": {
-          "width": 1335,
+          "width": 436,
           "height": 750
         },
         "min_size": {
-          "width": 1335,
+          "width": 436,
           "height": 750
+        },
+        "max_size": {
+          "width": 436,
+          "height": 750
+        },
+        "start_position": {
+          "top": 30,
+          "left": 30
         }
       }
     },
@@ -75,7 +83,7 @@
       "showhide": {
         "title": "Show/Hide In-Game Window",
         "action-type": "toggle",
-        "default": "Ctrl+F"
+        "default": "Ctrl+H"
       }
     },
     "protocol_override_domains": {},

@@ -1,19 +1,30 @@
 import { NextPage } from 'next';
 import overwolf from '../api/overwolf';
 import { postLogin } from '../api/accounts';
-import { useMutation, queryCache } from 'react-query';
+import { useMutation } from 'react-query';
 import { useEffect } from 'react';
 
 const LOL_LAUNCHER_ID = 10902;
 const LOL_ID = 5426;
 
-const interestedInLauncherFeatures = [
+const INTERESTED_IN_LAUNCHER_FEATURES = [
   'game_flow',
   'summoner_info',
   'champ_select',
   'lcu_info',
   'lobby_info',
   'end_game',
+];
+
+const SR_DRAFT_PICK = 400;
+const SR_RANKED_SOLO = 420;
+const SR_BLIND_PICK = 430;
+const SR_RANKED_FLEX = 440;
+const SUPPORTED_QUEUE_IDS = [
+  SR_DRAFT_PICK,
+  SR_RANKED_SOLO,
+  SR_BLIND_PICK,
+  SR_RANKED_FLEX,
 ];
 
 const isLauncherRunning = (
@@ -56,7 +67,7 @@ const Background: NextPage = () => {
     const setFeatures = () => {
       overwolf.games.launchers.events.setRequiredFeatures(
         LOL_LAUNCHER_ID,
-        interestedInLauncherFeatures,
+        INTERESTED_IN_LAUNCHER_FEATURES,
         (info) => {
           if (info.error) {
             return setTimeout(setFeatures, 2000);
@@ -99,13 +110,28 @@ const Background: NextPage = () => {
         }
       });
     };
+
     overwolf.extensions.onAppLaunchTriggered.addListener(handleAppLaunch);
+
+    const handleLeagueLaunched = () => {
+      overwolf.games.launchers.events.getInfo(LOL_LAUNCHER_ID, (info) => {
+        if (info.error) {
+          return;
+        }
+        const queueId = parseInt(info.res.lobby_info?.queueId);
+        if (SUPPORTED_QUEUE_IDS.includes(queueId)) {
+          openWindow('in_game');
+        } else {
+          console.log(`QueueId ${queueId} is not supported`);
+        }
+      });
+    };
 
     const handleGameInfoUpdated = (
       res: overwolf.games.GameInfoUpdatedEvent
     ) => {
       if (isLeagueLaunched(res)) {
-        openWindow('in_game');
+        handleLeagueLaunched();
       }
     };
 
@@ -113,7 +139,7 @@ const Background: NextPage = () => {
 
     overwolf.games.getRunningGameInfo((res) => {
       if (isLeagueRunning(res)) {
-        openWindow('in_game');
+        handleLeagueLaunched();
       }
     });
 

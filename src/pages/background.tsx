@@ -10,6 +10,13 @@ import overwolf, {
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
 
+const launchedByEvent = globalThis.location?.search.includes(
+  'source=gamelaunchevent'
+);
+if (!launchedByEvent) {
+  openWindow('desktop');
+}
+
 const INTERESTED_IN_LAUNCHER_FEATURES = [
   'game_flow',
   'summoner_info',
@@ -45,6 +52,8 @@ const handleAppLaunch = () => {
   overwolf.games.getRunningGameInfo((res) => {
     if (isLeagueRunning(res)) {
       openWindow('in_game');
+    } else {
+      openWindow('desktop');
     }
   });
 };

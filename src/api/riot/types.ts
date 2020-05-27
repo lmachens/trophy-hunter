@@ -8,3 +8,8 @@ export interface Summoner {
   puuid: string;
   summonerLevel: number;
 }
+
+export interface Match {
+  gameId: number;
+  queueId: number;
+}

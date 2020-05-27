@@ -10,6 +10,8 @@ export const getAccount = () => {
   return getJSON<Account>('/api/account');
 };
 
-export const postUnlock = (levelName: string) => {
-  return postJSON<Account>('/api/check', { levelName });
+export const postCheck = (matchId: number) => {
+  return postJSON<{
+    trophyNames: string[];
+  }>('/api/check', { matchId });
 };

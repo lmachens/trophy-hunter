@@ -4,13 +4,19 @@ import Backdrop from '../common/Backdrop';
 import SandClock from '../icons/SandClock';
 import Modal from '../modals/Modal';
 import TrophyListItem from '../trophies/TrophyListItem';
-import { Trophy } from '../trophies/types';
-import { firstBlood, flail } from '../trophies/combat';
 import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
 import DevButton from '../common/DevButton';
 import { keyframes } from '@emotion/core';
 import TrophyList from '../trophies/TrophyList';
+import {
+  LEAGUE_LAUNCHER_ID,
+  addLeagueLauncherListener,
+  setLeagueLauncherFeatures,
+} from '../../api/overwolf';
+import { postCheck } from '../../api/accounts';
+import { queryCache, useMutation } from 'react-query';
+import * as trophies from '../trophies';
 
 const sandClockMotion = keyframes`
   from {
@@ -138,11 +144,50 @@ const ButtonContainer = styled.div`
   padding: 15px 10px 10px;
 `;
 
+const INTERESTED_IN_LAUNCHER_FEATURES = ['end_game'];
+
 const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
-  const [loading, setLoading] = useState(false);
-  const [match, setMatch] = useState<{ trophies: Trophy[] }>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [check, { data: match, status, reset }] = useMutation(postCheck, {
+    onSuccess: () => {
+      queryCache.refetchQueries('account');
+    },
+  });
+  const loading = status === 'loading';
+
+  useEffect(() => {
+    const handleOnLaunched = () => {
+      setTimeout(() => {
+        setLeagueLauncherFeatures(INTERESTED_IN_LAUNCHER_FEATURES);
+      }, 1000);
+    };
+
+    addLeagueLauncherListener(handleOnLaunched);
+
+    const handleInfoUpdate = (infoUpdate) => {
+      if (
+        infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
+        infoUpdate.feature !== 'end_game'
+      ) {
+        return;
+      }
+
+      try {
+        const endGameStats = JSON.parse(
+          infoUpdate.info.end_game_lol.lol_end_game_stats
+        );
+        const { gameId } = endGameStats;
+        setShowTooltip(true);
+        setShowModal(true);
+        check(gameId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
+  }, []);
 
   useEffect(() => {
     if (!loading) {
@@ -150,12 +195,9 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     }
 
     const timeoutId = setTimeout(() => {
-      setLoading(false);
       setShowTooltip(true);
-      setMatch({
-        trophies: [firstBlood, flail],
-      });
-    }, 5000);
+      setShowModal(false);
+    }, 3000);
 
     return () => {
       clearTimeout(timeoutId);
@@ -167,9 +209,8 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
       {!match && !loading && (
         <DevButton
           onClick={() => {
-            setLoading(true);
-            setShowTooltip(true);
             setShowModal(true);
+            check(4625869335);
           }}
         >
           Load match
@@ -219,13 +260,17 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
           onClose={() => {
             setShowTooltip(false);
             setShowModal(false);
-            setMatch(null);
+            reset();
           }}
           title="Trophies completed in this match, GG!"
         >
           <TrophyList>
-            {match.trophies.map((trophy) => (
-              <TrophyListItem trophy={trophy} key={trophy.name} borderless />
+            {match.trophyNames.map((trophyName) => (
+              <TrophyListItem
+                trophy={trophies[trophyName]}
+                key={trophyName}
+                borderless
+              />
             ))}
           </TrophyList>
         </Modal>

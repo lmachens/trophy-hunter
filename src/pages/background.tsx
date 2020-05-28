@@ -88,6 +88,26 @@ overwolf.games.getRunningGameInfo((res) => {
   }
 });
 
+const handleInfoUpdate = (infoUpdate) => {
+  if (
+    infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
+    infoUpdate.feature !== 'end_game'
+  ) {
+    return;
+  }
+
+  try {
+    const { gameId } = JSON.parse(
+      infoUpdate.info.end_game_lol.lol_end_game_stats
+    );
+    localStorage.setItem('checkGameId', gameId);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
+
 const Background: NextPage = () => {
   return null;
 };

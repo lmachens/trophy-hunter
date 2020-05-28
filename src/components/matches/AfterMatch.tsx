@@ -9,11 +9,6 @@ import ModalButton from '../modals/ModalButton';
 import DevButton from '../common/DevButton';
 import { keyframes } from '@emotion/core';
 import TrophyList from '../trophies/TrophyList';
-import {
-  LEAGUE_LAUNCHER_ID,
-  addLeagueLauncherListener,
-  setLeagueLauncherFeatures,
-} from '../../api/overwolf';
 import { postCheck } from '../../api/accounts';
 import { queryCache, useMutation } from 'react-query';
 import * as trophies from '../trophies';
@@ -144,49 +139,36 @@ const ButtonContainer = styled.div`
   padding: 15px 10px 10px;
 `;
 
-const INTERESTED_IN_LAUNCHER_FEATURES = ['end_game'];
-
 const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [check, { data: match, status, reset }] = useMutation(postCheck, {
+    onMutate: () => {
+      setShowModal(true);
+    },
     onSuccess: () => {
+      localStorage.removeItem('checkGameId');
       queryCache.refetchQueries('account');
     },
   });
   const loading = status === 'loading';
 
   useEffect(() => {
-    const handleOnLaunched = () => {
-      setTimeout(() => {
-        setLeagueLauncherFeatures(INTERESTED_IN_LAUNCHER_FEATURES);
-      }, 1000);
-    };
-
-    addLeagueLauncherListener(handleOnLaunched);
-
-    const handleInfoUpdate = (infoUpdate) => {
-      if (
-        infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
-        infoUpdate.feature !== 'end_game'
-      ) {
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== 'checkGameId') {
         return;
       }
-
-      try {
-        const endGameStats = JSON.parse(
-          infoUpdate.info.end_game_lol.lol_end_game_stats
-        );
-        const { gameId } = endGameStats;
-        setShowTooltip(true);
-        setShowModal(true);
-        check(gameId);
-      } catch (error) {
-        console.error(error);
-      }
+      check(parseInt(event.newValue));
     };
+    window.addEventListener('storage', handleStorage, false);
 
-    overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
+    const oldCheckGameId = localStorage.getItem('checkGameId');
+    if (oldCheckGameId) {
+      check(parseInt(oldCheckGameId));
+    }
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+    };
   }, []);
 
   useEffect(() => {

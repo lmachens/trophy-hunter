@@ -48,15 +48,15 @@
         "resizable": false,
         "transparent": true,
         "size": {
-          "width": 436,
+          "width": 440,
           "height": 750
         },
         "min_size": {
-          "width": 436,
+          "width": 440,
           "height": 750
         },
         "max_size": {
-          "width": 436,
+          "width": 440,
           "height": 750
         },
         "start_position": {

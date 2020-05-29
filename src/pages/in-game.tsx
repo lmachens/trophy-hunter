@@ -8,6 +8,7 @@ import SpecialProgress from '../components/trophies/special/SpecialProgress';
 import { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
 import { keyframes } from '@emotion/core';
+import overwolf from '../api/overwolf';
 
 const ConnectionStatus = styled.div`
   margin-top: 48px;
@@ -105,7 +106,17 @@ const InGame: NextPage = () => {
               <Appear>GO GET THEM ALL!</Appear>
             </Motivation>
             <div>
-              Hit CTRL+H or <Button>Click here</Button> to minimize
+              Hit CTRL+H or{' '}
+              <Button
+                onClick={() =>
+                  overwolf.windows.getCurrentWindow((result) => {
+                    overwolf.windows.minimize(result.window.id);
+                  })
+                }
+              >
+                Click here
+              </Button>{' '}
+              to minimize
             </div>
           </>
         )}

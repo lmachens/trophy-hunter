@@ -106,7 +106,7 @@ const InGame: NextPage = () => {
               <Appear>GO GET THEM ALL!</Appear>
             </Motivation>
             <div>
-              Hit CTRL+H or{' '}
+              Hit Ctrl+H or{' '}
               <Button
                 onClick={() =>
                   overwolf.windows.getCurrentWindow((result) => {

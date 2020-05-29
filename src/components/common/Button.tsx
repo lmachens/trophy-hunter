@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const DevButton = styled.button`
+const Button = styled.button`
   background: ${(props) =>
     props.disabled
       ? '#77777a'
@@ -17,4 +17,4 @@ const DevButton = styled.button`
   text-transform: uppercase;
 `;
 
-export default DevButton;
+export default Button;

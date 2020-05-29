@@ -6,7 +6,7 @@ import Modal from '../modals/Modal';
 import TrophyListItem from '../trophies/TrophyListItem';
 import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
-import DevButton from '../common/DevButton';
+import Button from '../common/Button';
 import { keyframes } from '@emotion/core';
 import TrophyList from '../trophies/TrophyList';
 import {
@@ -207,14 +207,14 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   return (
     <>
       {!match && !loading && (
-        <DevButton
+        <Button
           onClick={() => {
             setShowModal(true);
             check(4625869335);
           }}
         >
           Load match
-        </DevButton>
+        </Button>
       )}
       {(loading || match) && (
         <AnimatedSandClock

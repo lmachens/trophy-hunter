@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useAccount } from '../../contexts/account';
 import { useMutation, queryCache } from 'react-query';
 import { postLogin } from '../../api/accounts';
-import DevButton from '../common/DevButton';
+import Button from '../common/Button';
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ const Profile: FC = () => {
           /217 TH points
         </p>
       </div>
-      <DevButton
+      <Button
         onClick={() => {
           login({
             summonerName: 'sirlunchalot619',
@@ -46,7 +46,7 @@ const Profile: FC = () => {
         }}
       >
         Login
-      </DevButton>
+      </Button>
     </Container>
   );
 };

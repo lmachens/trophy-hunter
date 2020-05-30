@@ -6,6 +6,7 @@ import ExitButton from './ExitButton';
 import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
 import styled from '@emotion/styled';
+import useHotkey from '../../hooks/useHotkey';
 
 const Hotkey = styled.span`
   margin-right: 10px;
@@ -19,6 +20,8 @@ const Hint = styled.span`
 `;
 
 const InGameHeader = () => {
+  const hotkey = useHotkey();
+
   return (
     <MovableHeader>
       <LogoContainer>
@@ -32,7 +35,8 @@ const InGameHeader = () => {
       </LogoContainer>
       <Toolbar>
         <Hotkey>
-          <Hint>Show/Hide</Hint>Ctrl+H
+          <Hint>Show/Hide</Hint>
+          {hotkey}
         </Hotkey>
         <MinimizeButton />
         <ExitButton />

@@ -80,7 +80,7 @@
       }
     ],
     "hotkeys": {
-      "showhide": {
+      "show_trophy_hunter": {
         "title": "Show/Hide In-Game Window",
         "action-type": "toggle",
         "default": "Ctrl+H"

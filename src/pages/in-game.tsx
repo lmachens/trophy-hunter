@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
 import { keyframes } from '@emotion/core';
 import overwolf from '../api/overwolf';
+import useHotkey from '../hooks/useHotkey';
 
 const ConnectionStatus = styled.div`
   margin-top: 48px;
@@ -67,6 +68,7 @@ const Appear = styled.div`
 `;
 
 const InGame: NextPage = () => {
+  const hotkey = useHotkey();
   const [progress, setProgress] = useState(0);
   const [showConnectionStatus, setShowConnectionStatus] = useState(true);
 
@@ -106,7 +108,7 @@ const InGame: NextPage = () => {
               <Appear>GO GET THEM ALL!</Appear>
             </Motivation>
             <div>
-              Hit Ctrl+H or{' '}
+              Hit {hotkey} or{' '}
               <Button
                 onClick={() =>
                   overwolf.windows.getCurrentWindow((result) => {

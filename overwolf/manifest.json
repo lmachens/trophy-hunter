@@ -63,6 +63,27 @@
           "top": 30,
           "left": 30
         }
+      },
+      "notification": {
+        "file": "build/notification.html",
+        "resizable": false,
+        "transparent": true,
+        "size": {
+          "width": 440,
+          "height": 143
+        },
+        "min_size": {
+          "width": 440,
+          "height": 143
+        },
+        "max_size": {
+          "width": 440,
+          "height": 143
+        },
+        "start_position": {
+          "bottom": 30,
+          "left": 30
+        }
       }
     },
     "game_targeting": {

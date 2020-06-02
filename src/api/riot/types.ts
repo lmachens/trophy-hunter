@@ -203,3 +203,60 @@ export interface ParticipantIdentity {
     profileIcon: number;
   };
 }
+
+export interface MatchTimeline {
+  frames: MatchFrame[];
+  frameInterval: number;
+}
+
+export interface MatchFrame {
+  participantFrames: {
+    [frameNumber: string]: MatchParticipantFrame;
+  };
+  events: MatchEvent[];
+  timestamp: number;
+}
+
+export interface MatchParticipantFrame {
+  participantId: number;
+  minionsKilled: number;
+  teamScore: number;
+  dominionScore: number;
+  totalGold: number;
+  level: number;
+  xp: number;
+  currentGold: number;
+  position: MatchPostion;
+  jungleMinionsKilled: number;
+}
+
+export interface MatchEvent {
+  laneType?: string;
+  skillSlot?: number;
+  ascendedType?: number;
+  creatorId?: number;
+  afterId?: number;
+  eventType?: string;
+  type: string;
+  levelUpType?: string;
+  wardType?: string;
+  participantId?: number;
+  towerType?: string;
+  itemId?: number;
+  beforeId?: number;
+  pointCaptured?: string;
+  monsterType?: string;
+  monsterSubType?: string;
+  teamId?: number;
+  position?: MatchPostion;
+  killerId?: number;
+  timestamp: number;
+  assistingParticipantIds?: number[];
+  buildingType?: string;
+  victimId?: number;
+}
+
+export interface MatchPostion {
+  x: number;
+  y: number;
+}

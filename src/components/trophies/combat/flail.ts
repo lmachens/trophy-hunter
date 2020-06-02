@@ -10,7 +10,7 @@ const flail: Trophy = {
   description:
     'Have the highest damage to champions output per gold. (damage / gold works similar to KDA)',
   ProgressIcon: CombatProgress,
-  checkProgress: (match, account) => {
+  checkProgress: ({ match, account }) => {
     const calculateDamagePerGold = (participant: Participant) => {
       return (
         participant.stats.totalDamageDealtToChampions /

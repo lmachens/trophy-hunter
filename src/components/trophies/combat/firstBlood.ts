@@ -8,7 +8,7 @@ const firstBlood: Trophy = {
   title: 'First Blood',
   description: 'Take first blood.',
   ProgressIcon: CombatProgress,
-  checkProgress: (match, account) => {
+  checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>
         participantIdentity.player.accountId === account.summoner.accountId

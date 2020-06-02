@@ -9,7 +9,7 @@ import {
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
-import { getMatch } from '../../api/riot/server';
+import { getMatch, getTimeline } from '../../api/riot/server';
 import { AccountTrophy } from '../../api/accounts';
 
 export default applyMiddleware(
@@ -35,11 +35,17 @@ export default applyMiddleware(
 
     const { matchId } = req.body;
 
-    const match = await getMatch({
-      platformId: account.summoner.platformId,
-      matchId,
-    });
-    if (!match) {
+    const [match, timeline] = await Promise.all([
+      getMatch({
+        platformId: account.summoner.platformId,
+        matchId,
+      }),
+      getTimeline({
+        platformId: account.summoner.platformId,
+        matchId,
+      }),
+    ]);
+    if (!match || !timeline) {
       return res.status(404).end('Not Found');
     }
 
@@ -66,7 +72,7 @@ export default applyMiddleware(
               accountTrophies,
             };
           }
-          const progress = trophy.checkProgress(match, account);
+          const progress = trophy.checkProgress({ match, timeline, account });
           if (progress === 0) {
             return { levelTrophiesCompleted, accountTrophies };
           }

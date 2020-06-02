@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 import { getJSON } from '../../utils/request';
-import { Summoner, Match } from '../types';
+import { Summoner, Match, MatchTimeline } from '../types';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -22,6 +22,13 @@ export const getSummoner = async ({ platformId, summonerName }) => {
 export const getMatch = async ({ platformId, matchId }) => {
   const match = await requestRiot<Match>(
     `https://${platformId}.api.riotgames.com/lol/match/v4/matches/${matchId}`
+  );
+  return match;
+};
+
+export const getTimeline = async ({ platformId, matchId }) => {
+  const match = await requestRiot<MatchTimeline>(
+    `https://${platformId}.api.riotgames.com/lol/match/v4/timelines/by-match/${matchId}`
   );
   return match;
 };

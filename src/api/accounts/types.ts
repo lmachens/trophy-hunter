@@ -8,20 +8,26 @@ export interface Credential {
 export interface Account {
   _id?: string;
   summoner: Summoner;
-  islands: {
-    name: string;
-    status: 'open' | 'done' | 'closed';
-  }[];
-  levels: {
-    name: string;
-    island: string;
-    status: 'active' | 'unlocked' | 'completed' | 'locked';
-  }[];
-  trophies: {
-    name: string;
-    island: string;
-    level: string;
-    status: 'active' | 'completed';
-    progress: number;
-  }[];
+  islands: AccountIsland[];
+  levels: AccountLevel[];
+  trophies: AccountTrophy[];
+}
+
+export interface AccountIsland {
+  name: string;
+  status: 'open' | 'done' | 'closed';
+}
+
+export interface AccountLevel {
+  name: string;
+  island: string;
+  status: 'active' | 'unlocked' | 'completed' | 'locked';
+}
+
+export interface AccountTrophy {
+  name: string;
+  island: string;
+  level: string;
+  status: 'active' | 'completed';
+  progress: number;
 }

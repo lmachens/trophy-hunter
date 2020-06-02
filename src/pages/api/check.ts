@@ -10,6 +10,7 @@ import { getAccountsCollection } from '../../api/accounts/server/collection';
 import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
 import { getMatch } from '../../api/riot/server';
+import { AccountTrophy } from '../../api/accounts';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -48,21 +49,78 @@ export default applyMiddleware(
     };
     await delay();
 
-    const activeLevels = account.levels
-      .filter((level) => level.status === 'active')
-      .map((accountLevel) => levels[accountLevel.name] as Level);
+    const activeLevels = account.levels.filter(
+      (level) => level.status === 'active'
+    );
 
-    const updateLevels = activeLevels.map(async (level) => {
-      // ToDo: Check if level trophies achieved by match
+    const updateLevels = activeLevels.map(async (accountLevel) => {
+      const level = levels[accountLevel.name] as Level;
+      const { levelTrophiesCompleted, accountTrophies } = level.trophies.reduce(
+        ({ levelTrophiesCompleted, accountTrophies }, trophy) => {
+          const accountTrophy = accountTrophies.find(
+            (accountTrophy) => accountTrophy.name === trophy.name
+          );
+          if (accountTrophy?.status === 'completed') {
+            return {
+              levelTrophiesCompleted: levelTrophiesCompleted + 1,
+              accountTrophies,
+            };
+          }
+          const progress = trophy.checkProgress(match, account);
+          if (progress === 0) {
+            return { levelTrophiesCompleted, accountTrophies };
+          }
+          if (accountTrophy) {
+            accountTrophy.progress = Math.min(
+              1,
+              accountTrophy.progress + progress
+            );
+            if (accountTrophy.progress === 1) {
+              accountTrophy.status = 'completed';
+              return {
+                levelTrophiesCompleted: levelTrophiesCompleted + 1,
+                accountTrophies,
+              };
+            }
+            return { levelTrophiesCompleted, accountTrophies };
+          }
+          const newTrophy: AccountTrophy = {
+            name: trophy.name,
+            island: trophy.island,
+            level: trophy.level,
+            status: progress === 1 ? 'completed' : 'active',
+            progress: progress,
+          };
+
+          return {
+            levelTrophiesCompleted:
+              progress === 1
+                ? levelTrophiesCompleted + 1
+                : levelTrophiesCompleted,
+            accountTrophies: [...accountTrophies, newTrophy],
+          };
+        },
+        { levelTrophiesCompleted: 0, accountTrophies: [...account.trophies] }
+      );
+
+      const isLevelCompleted =
+        levelTrophiesCompleted / level.trophies.length > 0.8;
 
       await Accounts.updateOne(
         { _id: account._id, 'levels.name': level.name },
         {
           $set: {
-            'levels.$.status': 'completed',
+            'levels.$.status': isLevelCompleted
+              ? 'completed'
+              : accountLevel.status,
+            trophies: accountTrophies,
           },
         }
       );
+
+      if (!isLevelCompleted) {
+        return;
+      }
 
       const unlockIslandLevels = level.unlocksLevels.filter(
         (unlockLevel) => unlockLevel.island !== level.island
@@ -97,16 +155,17 @@ export default applyMiddleware(
             accountLevel.name !== level.name
         )
         .find((level) => level.status !== 'completed');
-      if (isIslandComplete) {
-        await Accounts.updateOne(
-          { _id: account._id, 'islands.name': level.island },
-          {
-            $set: {
-              'islands.$.status': 'done',
-            },
-          }
-        );
+      if (!isIslandComplete) {
+        return;
       }
+      await Accounts.updateOne(
+        { _id: account._id, 'islands.name': level.island },
+        {
+          $set: {
+            'islands.$.status': 'done',
+          },
+        }
+      );
     });
     await Promise.all(updateLevels);
 

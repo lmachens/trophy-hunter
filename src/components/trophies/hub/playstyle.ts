@@ -7,7 +7,8 @@ const playstyle: Trophy = {
   level: 'welcome',
   title: 'Playstyle',
   description: "Play one game of Summoner's Rift with the Trophy Hunter app.",
-  ProgressIcon: HubProgress
+  ProgressIcon: HubProgress,
+  checkProgress: () => 1,
 };
 
 export default playstyle;

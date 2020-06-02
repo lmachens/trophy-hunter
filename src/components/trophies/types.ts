@@ -1,4 +1,6 @@
 import { FC, SVGProps } from 'react';
+import { Match } from '../../api/riot/types';
+import { Account } from '../../api/accounts';
 
 export interface Trophy {
   name: string;
@@ -7,6 +9,7 @@ export interface Trophy {
   level: string;
   island: string;
   ProgressIcon: FC<ProgressProps>;
+  checkProgress(match: Match, account: Account): number;
 }
 
 export interface ProgressProps extends SVGProps<SVGSVGElement> {

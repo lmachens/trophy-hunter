@@ -191,7 +191,6 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
       {!match && !loading && (
         <DevButton
           onClick={() => {
-            setShowModal(true);
             check(4625869335);
           }}
         >

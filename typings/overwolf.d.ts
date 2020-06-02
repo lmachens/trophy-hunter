@@ -5,7 +5,7 @@ declare namespace overwolf {
 
   enum ResultStatusTypes {
     Success = 'success',
-    Error = 'error'
+    Error = 'error',
   }
 
   interface Result {
@@ -46,10 +46,10 @@ declare namespace overwolf.io {
   namespace enums {
     const enum eEncoding {
       UTF8 = 'UTF8',
-      UTF8BOM = 'UTF8DOM',
-      Unicode = 'UNICODE',
+      UTF8BOM = 'UTF8BOM',
+      Unicode = 'Unicode',
       UnicodeBOM = 'UnicodeBOM',
-      ASCII = 'ASCII'
+      ASCII = 'ASCII',
     }
   }
 
@@ -201,7 +201,7 @@ declare namespace overwolf.media {
      */
     const enum eMediaType {
       Video = 'Video',
-      Image = 'Image'
+      Image = 'Image',
     }
   }
 
@@ -613,14 +613,14 @@ declare namespace overwolf.media.replays {
   namespace enums {
     const enum ReplayType {
       Video = 'Video',
-      Gif = 'Gif'
+      Gif = 'Gif',
     }
   }
 
   /**
    * Replays settings container.
    */
-  interface ReplaysSettings extends streaming.StreamSettings {
+  interface ReplaySettings extends streaming.StreamSettings {
     /**
      * Auto highlights configuration.
      */
@@ -639,7 +639,7 @@ declare namespace overwolf.media.replays {
      * Array of requested highlights.
      * use ["*"] to register all features.
      */
-    requireHighlights: string;
+    requiredHighlights: string[];
   }
 
   interface TurnOffResult extends Result {
@@ -655,6 +655,10 @@ declare namespace overwolf.media.replays {
     mediaFolder?: string;
     osVersion?: string;
     osBuild?: string;
+  }
+
+  interface GetHighlightsFeaturesResult extends Result {
+    features?: string[];
   }
 
   interface GetStateResult extends Result {
@@ -695,7 +699,7 @@ declare namespace overwolf.media.replays {
     extensions: string[];
   }
 
-  interface onHighlightsCapturedEvent {
+  interface HighlightsCapturedEvent {
     game_id: number;
     match_id: string;
     match_internal_id: string;
@@ -737,7 +741,7 @@ declare namespace overwolf.media.replays {
    * the request.
    */
   function turnOn(
-    settings: ReplaysSettings,
+    settings: ReplaySettings,
     callback: CallbackFunction<TurnOnResult>
   ): void;
 
@@ -886,7 +890,7 @@ declare namespace overwolf.media.replays {
    */
   function getHighlightsFeatures(
     gameId: number,
-    callback: CallbackFunction<Result>
+    callback: CallbackFunction<GetHighlightsFeaturesResult>
   ): void;
 
   /**
@@ -912,7 +916,7 @@ declare namespace overwolf.media.replays {
   /**
    * Fired when a new Replay highlight recorded (when highlightsSetting is enabled).
    */
-  const onHighlightsCapturedEvent: Event<onHighlightsCapturedEvent>;
+  const onHighlightsCaptured: Event<HighlightsCapturedEvent>;
 }
 
 declare namespace overwolf.profile {
@@ -921,7 +925,7 @@ declare namespace overwolf.profile {
     Offline = 'Offline',
     Connecting = 'Connecting',
     Online = 'Online',
-    Disconnecting = 'Disconnecting'
+    Disconnecting = 'Disconnecting',
   }
 
   interface GetCurrentUserResult extends Result {
@@ -964,7 +968,7 @@ declare namespace overwolf.profile.subscriptions {
   const enum eState {
     Active = 0,
     Cancelled = 1,
-    Revoked = 2
+    Revoked = 2,
   }
 
   interface Info {
@@ -1012,7 +1016,7 @@ declare namespace overwolf.profile.subscriptions {
 declare namespace overwolf.windows {
   namespace enums {
     const enum WindowStyle {
-      InputPassThrough = 'InputPassThrough'
+      InputPassThrough = 'InputPassThrough',
     }
 
     const enum WindowDragEdge {
@@ -1024,13 +1028,13 @@ declare namespace overwolf.windows {
       TopLeft = 'TopLeft',
       TopRight = 'TopRight',
       BottomLeft = 'BottomLeft',
-      BottomRight = 'BottomRight'
+      BottomRight = 'BottomRight',
     }
 
     const enum MessagePromptIcon {
       None = 'None',
       QuestionMark = 'QuestionMark',
-      ExclamationMark = 'ExclamationMark'
+      ExclamationMark = 'ExclamationMark',
     }
   }
 
@@ -1126,7 +1130,7 @@ declare namespace overwolf.windows {
     window_state: string;
     window_previous_state: string;
     window_state_ex: string;
-    wondow_previous_state_ex: string;
+    window_previous_state_ex: string;
     app_id: string;
     window_name: string;
   }
@@ -1909,7 +1913,7 @@ declare namespace overwolf.benchmarking {
 declare namespace overwolf.games {
   const enum GameInfoType {
     Game = 0,
-    Launcher = 1
+    Launcher = 1,
   }
 
   interface GameInfo {
@@ -2367,6 +2371,7 @@ declare namespace overwolf.games.events {
 
   interface InfoUpdates2Event {
     info: any;
+    feature: string;
   }
 
   /**
@@ -2543,12 +2548,13 @@ declare namespace overwolf.games.inputTracking {
 
 declare namespace overwolf.web {
   namespace enums {
-    enum HttpRequestMethods {
+    const enum HttpRequestMethods {
       GET = 'GET',
       HEAD = 'HEAD',
       POST = 'POST',
       PUT = 'PUT',
-      DELETE = 'DELETE'
+      DELETE = 'DELETE',
+      PATCH = 'PATCH',
     }
   }
 
@@ -2827,14 +2833,14 @@ declare namespace overwolf.logitech.led {
       ARROW_DOWN = 'ARROW_DOWN',
       ARROW_RIGHT = 'ARROW_RIGHT',
       NUM_ZERO = 'NUM_ZERO',
-      NUM_PERIOD = 'NUM_PERIOD'
+      NUM_PERIOD = 'NUM_PERIOD',
     }
 
     const enum LogitechDeviceLightingType {
       Mono = 'Mono',
       RGB = 'RGB',
       PerkeyRGB = 'PerkeyRGB',
-      All = 'All'
+      All = 'All',
     }
   }
 
@@ -3101,39 +3107,39 @@ declare namespace overwolf.streaming {
     const enum StreamMouseCursor {
       both = 'both',
       gameOnly = 'gameOnly',
-      desktopOnly = 'desktopOnly'
+      desktopOnly = 'desktopOnly',
     }
 
     const enum ObsStreamingMode {
       OBSNoAwareness = 'OBSNoAwareness',
       OBSAwareness = 'OBSAwareness',
-      OBSAwarenessHideFromDeskTop = 'OBSAwarenessHideFromDeskTop'
+      OBSAwarenessHideFromDeskTop = 'OBSAwarenessHideFromDeskTop',
     }
 
     const enum StreamingProvider {
       Unknown = 'Unknown',
       Twitch = 'Twitch',
       VideoRecorder = 'VideoRecorder',
-      RTMP = 'RTMP'
+      RTMP = 'RTMP',
     }
 
     const enum StreamingMode {
       WhenVisible = 'WhenVisible',
       Always = 'Always',
-      Never = 'Never'
+      Never = 'Never',
     }
 
     const enum StreamEncoder {
       INTEL = 'INTEL',
       X264 = 'X264',
       NVIDIA_NVENC = 'NVIDIA_NVENC',
-      AMD_AMF = 'AMD_AMF'
+      AMD_AMF = 'AMD_AMF',
     }
 
     const enum StreamEncoderPreset_Intel {
       LOW = 'LOW',
       MEDIUM = 'MEDIUM',
-      HIGH = 'HIGH'
+      HIGH = 'HIGH',
     }
 
     const enum StreamEncoderPreset_x264 {
@@ -3146,7 +3152,7 @@ declare namespace overwolf.streaming {
       SLOW = 'SLOW',
       SLOWER = 'SLOWER',
       VERYSLOW = 'VERYSLOW',
-      PLACEBO = 'PLACEBO'
+      PLACEBO = 'PLACEBO',
     }
 
     const enum StreamEncoderPreset_AMD_AMF {
@@ -3155,14 +3161,14 @@ declare namespace overwolf.streaming {
       SPEED = 'SPEED',
       QUALITY = 'QUALITY',
       ULTRA_LOW_LATENCY = 'ULTRA_LOW_LATENCY',
-      LOW_LATENCY = 'LOW_LATENCY'
+      LOW_LATENCY = 'LOW_LATENCY',
     }
 
     const enum StreamEncoderRateControl_AMD_AMF {
       RC_CBR = 'RC_CBR',
       RC_CQP = 'RC_CQP',
       RC_VBR = 'RC_VBR',
-      RC_VBR_MINQP = 'RC_VBR_MINQP'
+      RC_VBR_MINQP = 'RC_VBR_MINQP',
     }
 
     const enum StreamEncoderPreset_NVIDIA {
@@ -3175,7 +3181,7 @@ declare namespace overwolf.streaming {
       HIGH_PERFORMANCE_LOW_LATENCY = 'HIGH_PERFORMANCE_LOW_LATENCY',
       HIGH_QUALITY_LOW_LATENCY = 'HIGH_QUALITY_LOW_LATENCY',
       LOSSLESS = 'LOSSLESS',
-      HIGH_PERFORMANCE_LOSSLESS = 'HIGH_PERFORMANCE_LOSSLESS'
+      HIGH_PERFORMANCE_LOSSLESS = 'HIGH_PERFORMANCE_LOSSLESS',
     }
 
     const enum StreamEncoderRateControl_NVIDIA {
@@ -3183,29 +3189,35 @@ declare namespace overwolf.streaming {
       RC_CQP = 'RC_CQP',
       RC_VBR = 'RC_VBR',
       RC_VBR_MINQP = 'RC_VBR_MINQP',
-      RC_2_PASS_QUALITY = 'RC_2_PASS_QUALITY'
+      RC_2_PASS_QUALITY = 'RC_2_PASS_QUALITY',
     }
 
+    const enum eTobiiEffectType {
+      Default = 'Default',
+      Bubble = 'Bubble',
+      Solid = 'Solid',
+      Inverted = 'Inverted',
+    }
     const enum StreamEncoderRateControl_x264 {
       RC_CBR = 'RC_CBR',
       RC_CQP = 'RC_CQP',
       RC_VBR = 'RC_VBR',
       RC_VBR_MINQP = 'RC_VBR_MINQP',
-      RC_2_PASS_QUALITY = 'RC_2_PASS_QUALITY'
+      RC_2_PASS_QUALITY = 'RC_2_PASS_QUALITY',
     }
 
-    const enum indication_position {
-      none = 'none',
-      top_left = 'top_left',
-      top_right = 'top_right',
-      bottom_left = 'bottom_left',
-      bottom_right = 'bottom_right'
+    const enum IndicationPosition {
+      None = 'None',
+      TopLeftCorner = 'TopLeftCorner',
+      TopRightCorner = 'TopRightCorner',
+      BottomLeftCorner = 'BottomLeftCorner',
+      BottomRightCorner = 'BottomRightCorner',
     }
 
-    const enum indication_type {
-      off = 'off',
-      dot = 'dot',
-      dot_time = 'dot_time'
+    const enum IndicationType {
+      NoIndication = 'NoIndication',
+      Dot = 'Dot',
+      DotAndTimer = 'DotAndTimer',
     }
   }
 
@@ -3380,11 +3392,11 @@ declare namespace overwolf.streaming {
     /**
      * Position of the recorder indicator. Available for video capture only.
      */
-    indication_position: enums.indication_position;
+    indication_position: enums.IndicationPosition;
     /**
      * Type of the recorder indicator. Available for video capture only.
      */
-    indication_type: enums.indication_type;
+    indication_type: enums.IndicationType;
   }
 
   /**
@@ -3770,14 +3782,6 @@ declare namespace overwolf.streaming {
   ): void;
 
   /**
-   * Return list of all running recores service (extensions ids).
-   * @param callback
-   */
-  function getRunningRecorders(
-    callback: (result: { extensions: string[] }) => void
-  ): void;
-
-  /**
    * Fired when the stream started streaming a new image source (desktop, game).
    */
   const onStreamingSourceImageChanged: Event<StreamingSourceImageChangedEvent>;
@@ -3931,13 +3935,13 @@ declare namespace overwolf.extensions {
     Skin = 'Skin',
     TSSkin = 'TSSkin',
     GameEventsProvider = 'GameEventsProvider',
-    Unknown = 'Unknown'
+    Unknown = 'Unknown',
   }
 
   const enum ExtensionUpdateState {
     UpToDate = 'UpToDate',
     UpdateAvailable = 'UpdateAvailable',
-    PendingRestart = 'PendingRestart'
+    PendingRestart = 'PendingRestart',
   }
 
   /**
@@ -4680,7 +4684,7 @@ declare namespace overwolf.utils {
     const enum eStorePage {
       LoginPage = 'LoginPage',
       OneAppPage = 'OneAppPage',
-      SubscriptionPage = 'SubscriptionPage'
+      SubscriptionPage = 'SubscriptionPage',
     }
   }
 
@@ -4937,7 +4941,7 @@ declare namespace overwolf.settings {
       Original = 'Original',
       R1080p = 'R1080p',
       R720p = 'R720p',
-      R480p = 'R480p'
+      R480p = 'R480p',
     }
 
     const enum eIndicationPosition {
@@ -4945,7 +4949,7 @@ declare namespace overwolf.settings {
       TopLeftCorner = 0,
       TopRightCorner = 1,
       BottomLeftCorner = 2,
-      BottomRightCorner = 3
+      BottomRightCorner = 3,
     }
   }
 
@@ -4966,7 +4970,14 @@ declare namespace overwolf.settings {
   }
 
   interface FolderResult extends Result {
-    path: string;
+    path: {
+      /** "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" */
+      Type: string;
+      /** the actual filepath */
+      Value: string;
+      /** "Folders_VideoCapturesFolder" */
+      Name: string;
+    };
   }
 
   interface GetAudioCaptureSettingsResult extends Result {
@@ -4997,11 +5008,11 @@ declare namespace overwolf.settings {
   }
 
   /**
-     * Returns the hotkey assigned to a given feature id by calling the callback.
-     * @param featureId The feature id for which to get the set hotkey.
-     * @param callback A function called with the result of the request which
-       contains the hotkey if successful.
-     */
+   * Returns the hotkey assigned to a given feature id by calling the callback.
+   * @param featureId The feature id for which to get the set hotkey.
+   * @param callback A function called with the result of the request which
+     contains the hotkey if successful.
+   */
   function getHotKey(
     featureId: string,
     callback: CallbackFunction<GetHotKeyResult>
@@ -5246,7 +5257,7 @@ declare namespace overwolf.settings.hotkeys {
   /**
    * Returns the hotkey assigned for the current extension in all the games.
    */
-  function get(): CallbackFunction<GetAssignedHotkeyResult>;
+  function get(callback: CallbackFunction<GetAssignedHotkeyResult>): void;
 
   /**
    * Fired only for hotkeys that are set in the manifest as hold.
@@ -5278,7 +5289,7 @@ declare namespace overwolf.social.discord {
   const enum PostPermission {
     None = 0,
     Text,
-    File
+    File,
   }
 
   interface User {
@@ -5543,7 +5554,7 @@ declare namespace overwolf.social.youtube {
   const enum Privacy {
     Public = 'Public',
     Unlisted = 'Unlisted',
-    Private = 'Private'
+    Private = 'Private',
   }
 
   interface ShareParamaeters {

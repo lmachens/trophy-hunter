@@ -19,6 +19,19 @@ const firstBlood: Trophy = {
     );
     return Number(participant.stats.firstBloodKill);
   },
+  checkLive: ({ activeGame, allPlayers, account }) => {
+    if (!allPlayers || activeGame.firstBloodSummonerName) {
+      return 0;
+    }
+
+    const killer = allPlayers.find((player) => player.scores.kills > 0);
+    if (!killer) {
+      return 0;
+    }
+    activeGame.firstBloodSummonerName = killer.summonerName;
+
+    return Number(account.summoner.name === activeGame.firstBloodSummonerName);
+  },
 };
 
 export default firstBlood;

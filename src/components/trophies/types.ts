@@ -14,6 +14,14 @@ export interface Trophy {
     timeline: MatchTimeline;
     account: Account;
   }): number;
+  checkLive?(liveClientData: {
+    activeGame: any;
+    activePlayer: any;
+    allPlayers: any;
+    events: any;
+    gameData: any;
+    account: Account;
+  }): number;
 }
 
 export interface ProgressProps extends SVGProps<SVGSVGElement> {

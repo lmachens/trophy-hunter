@@ -32,17 +32,28 @@ export const isLeagueLauncherRunning = (
 export const isLeagueRunning = (
   gameInfo: overwolf.games.GetRunningGameInfoResult
 ) => {
-  return gameInfo?.isRunning && Math.floor(gameInfo.id / 10) === LOL_ID;
+  return Boolean(
+    gameInfo?.isRunning && Math.floor(gameInfo.id / 10) === LOL_ID
+  );
 };
 
 export const isLeagueLaunched = (
   gameInfoResult: overwolf.games.GameInfoUpdatedEvent
 ) => {
-  return (
+  return Boolean(
     gameInfoResult?.gameInfo?.isRunning &&
-    gameInfoResult.runningChanged &&
-    !gameInfoResult.gameChanged &&
-    Math.floor(gameInfoResult.gameInfo.id / 10) === LOL_ID
+      (gameInfoResult.runningChanged || gameInfoResult.gameChanged) &&
+      Math.floor(gameInfoResult.gameInfo.id / 10) === LOL_ID
+  );
+};
+
+export const isLeagueClosed = (
+  gameInfoResult: overwolf.games.GameInfoUpdatedEvent
+) => {
+  return Boolean(
+    gameInfoResult?.gameInfo?.isRunning === false &&
+      gameInfoResult.runningChanged &&
+      Math.floor(gameInfoResult.gameInfo.id / 10) === LOL_ID
   );
 };
 
@@ -70,6 +81,7 @@ export const SUPPORTED_QUEUE_IDS = [
   SR_RANKED_SOLO,
   SR_BLIND_PICK,
   SR_RANKED_FLEX,
+  -1, // Custom Match (Don't forget to remove it)
 ];
 
 export const addLeagueLauncherListener = (onLaunched) => {
@@ -95,12 +107,35 @@ export const setLeagueLauncherFeatures = (
     interestedInFeatures,
     (info) => {
       if (info.error) {
-        return setTimeout(setLeagueLauncherFeatures, 2000);
+        return setTimeout(
+          () => setLeagueLauncherFeatures(interestedInFeatures, onReady),
+          2000
+        );
       }
 
+      console.log('Successfully set League Launcher features');
       if (onReady) {
         onReady();
       }
     }
   );
+};
+
+export const setLeagueFeatures = (
+  interestedInFeatures: string[],
+  onReady?: () => void
+) => {
+  overwolf.games.events.setRequiredFeatures(interestedInFeatures, (info) => {
+    if (info.error) {
+      return setTimeout(
+        () => setLeagueFeatures(interestedInFeatures, onReady),
+        2000
+      );
+    }
+
+    console.log('Successfully set League features');
+    if (onReady) {
+      onReady();
+    }
+  });
 };

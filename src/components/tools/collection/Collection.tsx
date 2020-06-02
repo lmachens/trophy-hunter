@@ -9,6 +9,13 @@ import ObjectivesProgress from '../../trophies/objectives/ObjectivesProgress';
 import EpicProgress from '../../trophies/epic/EpicProgress';
 import SpecialProgress from '../../trophies/special/SpecialProgress';
 import { useAccount } from '../../../contexts/account';
+import * as combatTrophies from '../../trophies/combat';
+import * as epicTrophies from '../../trophies/epic';
+import * as hubTrophies from '../../trophies/hub';
+import * as objectivesTrophies from '../../trophies/objectives';
+import * as skillsTrophies from '../../trophies/skills';
+import * as specialTrophies from '../../trophies/special';
+import * as teamworkTrophies from '../../trophies/teamwork';
 
 const Items = styled.div`
   display: flex;
@@ -26,7 +33,7 @@ const Collection: FC = () => {
         <CollectionItem
           title="Origin"
           Progress={HubProgress}
-          trophiesMax={1}
+          trophiesMax={Object.keys(hubTrophies).length}
           trophiesCount={
             account?.trophies.filter((trophy) => trophy.island === 'hub').length
           }
@@ -34,7 +41,7 @@ const Collection: FC = () => {
         <CollectionItem
           title="Combat"
           Progress={CombatProgress}
-          trophiesMax={60}
+          trophiesMax={Object.keys(combatTrophies).length}
           trophiesCount={
             account?.trophies.filter((trophy) => trophy.island === 'combat')
               .length
@@ -43,7 +50,7 @@ const Collection: FC = () => {
         <CollectionItem
           title="Skills"
           Progress={SkillsProgress}
-          trophiesMax={31}
+          trophiesMax={Object.keys(skillsTrophies).length}
           trophiesCount={
             account?.trophies.filter((trophy) => trophy.island === 'skills')
               .length
@@ -52,7 +59,7 @@ const Collection: FC = () => {
         <CollectionItem
           title="Teamwork"
           Progress={TeamworkProgress}
-          trophiesMax={54}
+          trophiesMax={Object.keys(teamworkTrophies).length}
           trophiesCount={
             account?.trophies.filter((trophy) => trophy.island === 'teamwork')
               .length
@@ -61,7 +68,7 @@ const Collection: FC = () => {
         <CollectionItem
           title="Objectives"
           Progress={ObjectivesProgress}
-          trophiesMax={21}
+          trophiesMax={Object.keys(objectivesTrophies).length}
           trophiesCount={
             account?.trophies.filter((trophy) => trophy.island === 'objectives')
               .length
@@ -70,7 +77,7 @@ const Collection: FC = () => {
         <CollectionItem
           title="Epic"
           Progress={EpicProgress}
-          trophiesMax={25}
+          trophiesMax={Object.keys(epicTrophies).length}
           trophiesCount={
             account?.trophies.filter((trophy) => trophy.island === 'epic')
               .length
@@ -79,7 +86,7 @@ const Collection: FC = () => {
         <CollectionItem
           title="Special"
           Progress={SpecialProgress}
-          trophiesMax={15}
+          trophiesMax={Object.keys(specialTrophies).length}
           trophiesCount={
             account?.trophies.filter((trophy) => trophy.island === 'special')
               .length

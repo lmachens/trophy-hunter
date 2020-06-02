@@ -55,6 +55,12 @@ export const openWindow = (windowName) => {
   });
 };
 
+export const closeCurrentWindow = () => {
+  overwolf.windows.getCurrentWindow((result) => {
+    overwolf.windows.close(result.window.id);
+  });
+};
+
 export const SR_DRAFT_PICK = 400;
 export const SR_RANKED_SOLO = 420;
 export const SR_BLIND_PICK = 430;

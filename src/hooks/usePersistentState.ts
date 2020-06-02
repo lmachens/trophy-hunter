@@ -1,16 +1,5 @@
 import { useState, useCallback, Dispatch, SetStateAction } from 'react';
-
-const getLocalStorageItem = <T>(key: string, defaultValue: T) => {
-  try {
-    const item = localStorage.getItem(key);
-    if (item === null || item === undefined) {
-      return defaultValue;
-    }
-    return JSON.parse(item);
-  } catch (error) {
-    return defaultValue;
-  }
-};
+import { getLocalStorageItem, setLocalStorageItem } from '../api/utils/storage';
 
 const usePersistentState = <T>(
   key: string,
@@ -22,8 +11,7 @@ const usePersistentState = <T>(
 
   const setPersistentValue = useCallback(
     (value: T) => {
-      const valueJSON = JSON.stringify(value);
-      localStorage.setItem(key, valueJSON);
+      setLocalStorageItem(key, value);
       setValue(value);
     },
     [key]

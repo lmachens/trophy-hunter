@@ -9,6 +9,7 @@ import overwolf, {
   setLeagueLauncherFeatures,
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
+import { setLocalStorageItem } from '../api/utils/storage';
 
 const launchedByEvent = globalThis.location?.search.includes(
   'source=gamelaunchevent'
@@ -107,6 +108,15 @@ const handleInfoUpdate = (infoUpdate) => {
 };
 
 overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
+
+// Notification test
+setTimeout(() => {
+  setLocalStorageItem('notifications', [
+    { title: 'Achievement completed!', trophyName: 'flail' },
+    { title: 'Achievement near completion!', trophyName: 'keyTargets' },
+  ]);
+  openWindow('notification');
+}, 5000);
 
 const Background: NextPage = () => {
   return null;

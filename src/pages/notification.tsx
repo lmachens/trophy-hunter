@@ -1,8 +1,11 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { FC, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TrophyListItem from '../components/trophies/TrophyListItem';
-import { flail } from '../components/trophies';
+import overwolf, { closeCurrentWindow } from '../api/overwolf';
+import { getLocalStorageItem, setLocalStorageItem } from '../api/utils/storage';
+import * as trophies from '../components/trophies';
+import Timer from '../components/common/Timer';
 
 const Header = styled.header`
   background: #1f1f1f;
@@ -17,75 +20,49 @@ const Title = styled.h2`
   margin: 0;
 `;
 
-const SVG = styled.svg`
-  width: 28px;
-  height: 28px;
-  fill: #eaeaea;
-  font-size: 100px;
-  text-anchor: middle;
-  dominant-baseline: central;
-`;
+const Notification: NextPage = () => {
+  const [notification, setNotification] = useState<{
+    title: string;
+    trophyName: string;
+  }>(null);
 
-const ForegroundCircle = styled.circle`
-  fill: transparent;
-  stroke: #eaeaea;
-  transition: stroke-dashoffset 3s linear;
-  stroke-width: 10px;
-  stroke-dasharray: 600;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-`;
-
-const BackgroundCircle = styled.circle`
-  fill: transparent;
-  stroke: #707070;
-  stroke-width: 10px;
-`;
-
-const Timer: FC = () => {
-  const [timeLeft, setTimeLeft] = useState(3);
-  const [running, setRunning] = useState(false);
-
-  useEffect(() => {
-    if (timeLeft <= 0) {
+  const loadNotification = () => {
+    const notifications = getLocalStorageItem('notifications', []);
+    if (
+      !notifications ||
+      notifications.length === 0 ||
+      !Array.isArray(notifications)
+    ) {
+      closeCurrentWindow();
+      setNotification(null);
       return;
     }
+    setNotification(notifications[0]);
+    setLocalStorageItem('notifications', notifications.slice(1));
+  };
 
-    setRunning(true);
+  useEffect(() => {
+    loadNotification();
+  }, []);
 
-    const timeoutId = setTimeout(() => {
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
+  if (!notification) {
+    return null;
+  }
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [timeLeft]);
-
-  return (
-    <SVG viewBox="0 0 200 200">
-      <text dx="100" dy="100">
-        {timeLeft}
-      </text>
-      <BackgroundCircle cx="100" cy="100" r="90" />
-      <ForegroundCircle
-        cx="100"
-        cy="100"
-        r="90"
-        strokeDashoffset={running ? -600 : 0}
-      />
-    </SVG>
-  );
-};
-
-const Notification: NextPage = () => {
+  const trophy = trophies[notification.trophyName];
   return (
     <>
-      <Header>
-        <Title>Achievement near completion!</Title>
-        <Timer />
+      <Header
+        onMouseDown={() =>
+          overwolf.windows.getCurrentWindow((result) => {
+            overwolf.windows.dragMove(result.window.id);
+          })
+        }
+      >
+        <Title>{notification.title}</Title>
+        <Timer onDone={loadNotification} />
       </Header>
-      <TrophyListItem trophy={flail} />
+      <TrophyListItem trophy={trophy} />
     </>
   );
 };

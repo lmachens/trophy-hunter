@@ -21,7 +21,7 @@ const MovableHeader: FC = ({ children }) => {
         })
       }
     >
-      {children}{' '}
+      {children}
     </Header>
   );
 };

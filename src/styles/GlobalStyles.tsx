@@ -85,6 +85,10 @@ const GlobalStyles = () => (
         color: inherit;
         font-family: 'Roboto Mono', monospace;
       }
+
+      a {
+        text-decoration: none;
+      }
     `}
   />
 );

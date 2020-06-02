@@ -11,6 +11,7 @@ const SettingsButton = styled.button`
   width: 80px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: center;
 
   &:hover {
     color: #eaeaea;

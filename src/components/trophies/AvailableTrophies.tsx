@@ -5,6 +5,7 @@ import FavoritesFilter from '../icons/FavoritesFilter';
 import TrophyListItem from './TrophyListItem';
 import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
 import TrophyList from './TrophyList';
+import { Trophy } from './types';
 
 const Header = styled.header`
   display: flex;
@@ -25,7 +26,14 @@ const Filter = styled.div`
   justify-content: center;
 `;
 
-const AvailableTrophies: FC = () => {
+interface AvailableTrophiesProps {
+  trophyProgress?: {
+    trophy: Trophy;
+    progress: number;
+  }[];
+}
+
+const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
   const availableTrophies = useAvailableTrophies();
 
   return (
@@ -41,7 +49,16 @@ const AvailableTrophies: FC = () => {
       </Header>
       <TrophyList>
         {availableTrophies.map((trophy) => (
-          <TrophyListItem trophy={trophy} key={trophy.name} borderless />
+          <TrophyListItem
+            trophy={trophy}
+            key={trophy.name}
+            borderless
+            progress={
+              trophyProgress?.find(
+                (trophyProgress) => trophyProgress.trophy.name === trophy.name
+              )?.progress
+            }
+          />
         ))}
       </TrophyList>
     </>

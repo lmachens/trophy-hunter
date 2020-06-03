@@ -34,10 +34,9 @@ const precision: Trophy = {
     if (!allPlayers || !gameData || trophyData.precision) {
       return 0;
     }
-    if (gameData.gameTime >= 600 && gameData.gameTime < 660) {
+    if (gameData.gameTime < 600 || gameData.gameTime > 660) {
       return 0;
     }
-
     trophyData.precision = true;
 
     const accountPlayer = allPlayers.find(

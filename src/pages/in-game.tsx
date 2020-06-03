@@ -94,6 +94,9 @@ const InGame: NextPage = () => {
   const [trophyData, setTrophyData] = useState<TrophyData>({});
   const [trophies, setTrophies] = useState<Trophy[]>(null);
   const { data: account } = useQuery('account', getAccount);
+  const [trophyProgress, setTrophyProgress] = useState<
+    { trophy: Trophy; progress: number }[]
+  >([]);
 
   useEffect(() => {
     if (account) {
@@ -141,7 +144,7 @@ const InGame: NextPage = () => {
       }
       const events = parseJSON(infoUpdate.info.live_client_data.events) || {};
       if (events?.Events) {
-        setEvents((oldEvents) => [...oldEvents, ...events.Events]);
+        setEvents(events.Events);
       }
     };
 
@@ -196,16 +199,23 @@ const InGame: NextPage = () => {
             account,
           }) || 0,
       }))
-      .filter(({ progress }) => progress >= 0.8);
+      .filter(({ progress }) => progress > 0);
 
     setTrophyData(trophyDataClone);
     if (achievedTrophies.length === 0) {
       return;
     }
+    setTrophyProgress((progress) => [...progress, ...achievedTrophies]);
+    const notificateTrophies = achievedTrophies.filter(
+      ({ progress }) => progress >= 0.8
+    );
+    if (notificateTrophies.length === 0) {
+      return;
+    }
 
     const notifications = getLocalStorageItem('notifications', []).filter(
       (notification) =>
-        !achievedTrophies.find(
+        !notificateTrophies.find(
           (achievedTrophy) =>
             achievedTrophy.trophy.name === notification.trophyName
         )
@@ -213,7 +223,7 @@ const InGame: NextPage = () => {
 
     setLocalStorageItem('notifications', [
       ...notifications,
-      ...achievedTrophies.map(({ trophy, progress }) => ({
+      ...notificateTrophies.map(({ trophy, progress }) => ({
         trophyName: trophy.name,
         progress,
       })),
@@ -254,7 +264,7 @@ const InGame: NextPage = () => {
         )}
       </ConnectionStatus>
       <Grow>
-        <AvailableTrophies />
+        <AvailableTrophies trophyProgress={trophyProgress} />
       </Grow>
       <VideoAds />
       <div>{Math.round(gameData?.gameTime || 0)}s</div>

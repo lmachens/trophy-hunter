@@ -51,7 +51,7 @@ const trophyHunter: Trophy = {
       return [...current, event.VictimName];
     }, []);
 
-    if (championKills.length > (trophyData.trophyHunter || 0)) {
+    if (championKills.length <= (trophyData.trophyHunter || 0)) {
       return 0;
     }
 

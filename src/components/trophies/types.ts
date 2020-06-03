@@ -130,6 +130,12 @@ export interface ActiveGame {
       EventID: number;
       EventName: string;
       EventTime: number;
+      VictimName?: string;
+      Assisters?: string[];
+      KillerName?: string;
+      KillStreak?: number;
+      Acer?: string;
+      AcingTeam?: string;
     }[];
   };
   gameData: {

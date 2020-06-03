@@ -49,16 +49,11 @@ export default applyMiddleware(
       return res.status(404).end('Not Found');
     }
 
-    // Fake delay for testing
-    const delay = () => {
-      return new Promise((res) => setTimeout(res, 5000));
-    };
-    await delay();
-
     const activeLevels = account.levels.filter(
       (level) => level.status === 'active'
     );
 
+    const completedTrophyNames = [];
     const updateLevels = activeLevels.map(async (accountLevel) => {
       const level = levels[accountLevel.name] as Level;
       const { levelTrophiesCompleted, accountTrophies } = level.trophies.reduce(
@@ -74,7 +69,10 @@ export default applyMiddleware(
           }
           const progress = trophy.checkProgress({ match, timeline, account });
           if (progress === 0) {
-            return { levelTrophiesCompleted, accountTrophies };
+            return {
+              levelTrophiesCompleted,
+              accountTrophies,
+            };
           }
           if (accountTrophy) {
             accountTrophy.progress = Math.min(
@@ -83,12 +81,16 @@ export default applyMiddleware(
             );
             if (accountTrophy.progress === 1) {
               accountTrophy.status = 'completed';
+              completedTrophyNames.push(accountTrophy.name);
               return {
                 levelTrophiesCompleted: levelTrophiesCompleted + 1,
                 accountTrophies,
               };
             }
-            return { levelTrophiesCompleted, accountTrophies };
+            return {
+              levelTrophiesCompleted,
+              accountTrophies,
+            };
           }
           const newTrophy: AccountTrophy = {
             name: trophy.name,
@@ -98,15 +100,23 @@ export default applyMiddleware(
             progress: progress,
           };
 
+          if (progress === 1) {
+            completedTrophyNames.push(newTrophy.name);
+
+            return {
+              levelTrophiesCompleted: levelTrophiesCompleted + 1,
+              accountTrophies: [...accountTrophies, newTrophy],
+            };
+          }
           return {
-            levelTrophiesCompleted:
-              progress === 1
-                ? levelTrophiesCompleted + 1
-                : levelTrophiesCompleted,
+            levelTrophiesCompleted: levelTrophiesCompleted,
             accountTrophies: [...accountTrophies, newTrophy],
           };
         },
-        { levelTrophiesCompleted: 0, accountTrophies: [...account.trophies] }
+        {
+          levelTrophiesCompleted: 0,
+          accountTrophies: [...account.trophies],
+        }
       );
 
       const isLevelCompleted =
@@ -175,7 +185,7 @@ export default applyMiddleware(
     });
     await Promise.all(updateLevels);
 
-    res.json({ trophyNames: ['firstBlood', 'flail'] });
+    res.json({ trophyNames: completedTrophyNames });
   },
   withError,
   withMethods('POST'),

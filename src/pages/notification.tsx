@@ -22,8 +22,8 @@ const Title = styled.h2`
 
 const Notification: NextPage = () => {
   const [notification, setNotification] = useState<{
-    title: string;
     trophyName: string;
+    progress: number;
   }>(null);
 
   const loadNotification = () => {
@@ -59,7 +59,11 @@ const Notification: NextPage = () => {
           })
         }
       >
-        <Title>{notification.title}</Title>
+        <Title>
+          {notification.progress === 1
+            ? 'Achievement completed!'
+            : 'Achievment near completion!'}
+        </Title>
         <Timer onDone={loadNotification} />
       </Header>
       <TrophyListItem trophy={trophy} />

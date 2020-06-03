@@ -31,7 +31,7 @@ const precision: Trophy = {
     return Number(creepsDiffAt10 >= 15);
   },
   checkLive: ({ activeGame, account }) => {
-    if (!activeGame.allPlayers || activeGame.trophyData.checkedPrecision) {
+    if (!activeGame.allPlayers || activeGame.trophyData.precision) {
       return 0;
     }
     if (
@@ -41,7 +41,7 @@ const precision: Trophy = {
       return 0;
     }
 
-    activeGame.trophyData.checkedPrecision = true;
+    activeGame.trophyData.precision = true;
 
     const accountPlayer = activeGame.allPlayers.find(
       (player) => player.summonerName === account.summoner.name

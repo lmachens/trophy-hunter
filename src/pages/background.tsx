@@ -181,19 +181,22 @@ const Background: NextPage = () => {
 
     overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
 
-    overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-      if (info.error) {
-        return;
+    overwolf.games.launchers.events.getInfo(
+      LEAGUE_LAUNCHER_ID,
+      async (info) => {
+        if (info.error) {
+          return;
+        }
+        const queueId = parseInt(info.res.lobby_info?.queueId);
+        if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
+          console.log(`QueueId ${queueId} is not supported`);
+          return;
+        }
+        console.log('Fetch account');
+        await fetchAccount();
+        setPlayingSupportedGame(true);
       }
-      const queueId = parseInt(info.res.lobby_info?.queueId);
-      if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-        console.log(`QueueId ${queueId} is not supported`);
-        return;
-      }
-      setPlayingSupportedGame(true);
-      console.log('Fetch account');
-      fetchAccount();
-    });
+    );
 
     return () => {
       overwolf.games.launchers.events.onInfoUpdates.removeListener(
@@ -203,7 +206,6 @@ const Background: NextPage = () => {
   }, [leagueRunning]);
 
   useEffect(() => {
-    console.log('check useEffect', playingSupportedGame, account);
     if (playingSupportedGame === null || !account) {
       return;
     }
@@ -261,12 +263,16 @@ const Background: NextPage = () => {
         activeGame.events.Events.push(...events.Events);
       }
 
-      const achievedTrophies = trophies.filter((trophy) =>
-        trophy.checkLive?.({
-          activeGame,
-          account,
-        })
-      );
+      const achievedTrophies = trophies
+        .map((trophy) => ({
+          trophy,
+          progress:
+            trophy.checkLive?.({
+              activeGame,
+              account,
+            }) || 0,
+        }))
+        .filter(({ progress }) => progress > 0);
 
       if (achievedTrophies.length === 0) {
         return;
@@ -274,9 +280,9 @@ const Background: NextPage = () => {
 
       setLocalStorageItem('notifications', [
         ...getLocalStorageItem('notifications', []),
-        ...achievedTrophies.map((trophy) => ({
-          title: 'Achievement completed!',
+        ...achievedTrophies.map(({ trophy, progress }) => ({
           trophyName: trophy.name,
+          progress,
         })),
       ]);
       openWindow('notification');

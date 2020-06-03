@@ -11,11 +11,12 @@ const ListItem = styled.div<ListItemProps>`
   height: 86px;
   margin-bottom: 4px;
   display: flex;
-  border-top: ${props => (props.borderless ? 'none' : '1px solid #3f3e43')};
+  border-top: ${(props) => (props.borderless ? 'none' : '1px solid #3f3e43')};
 `;
 
 interface TrophyListItemProps extends ListItemProps {
   trophy: Trophy;
+  progress?: number;
 }
 
 const Progress = styled.div`
@@ -27,14 +28,16 @@ const Progress = styled.div`
 const TrophyListItem: FC<TrophyListItemProps> = ({
   trophy,
   borderless,
+  progress,
   ...props
 }) => {
-  const progress = useTrophyProgress(trophy);
+  const trophyProgress =
+    typeof progress !== 'undefined' ? progress : useTrophyProgress(trophy);
 
   return (
     <ListItem borderless={borderless} {...props}>
       <Progress>
-        <trophy.ProgressIcon progress={progress} />
+        <trophy.ProgressIcon progress={trophyProgress} />
       </Progress>
       <div>
         <h3>{trophy.title}</h3>

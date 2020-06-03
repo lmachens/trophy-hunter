@@ -126,7 +126,7 @@ export const setLeagueFeatures = (
   onReady?: () => void
 ) => {
   overwolf.games.events.setRequiredFeatures(interestedInFeatures, (info) => {
-    if (info.error) {
+    if (!info.success) {
       return setTimeout(
         () => setLeagueFeatures(interestedInFeatures, onReady),
         2000

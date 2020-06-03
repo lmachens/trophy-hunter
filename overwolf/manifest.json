@@ -68,6 +68,7 @@
         "file": "build/notification.html",
         "resizable": false,
         "transparent": true,
+        "clickthrough": true,
         "size": {
           "width": 440,
           "height": 143

@@ -30,23 +30,20 @@ const precision: Trophy = {
 
     return Number(creepsDiffAt10 >= 15);
   },
-  checkLive: ({ activeGame, account }) => {
-    if (!activeGame.allPlayers || activeGame.trophyData.precision) {
+  checkLive: ({ allPlayers, trophyData, gameData, account }) => {
+    if (!allPlayers || !gameData || trophyData.precision) {
       return 0;
     }
-    if (
-      activeGame.gameData.gameTime >= 600 &&
-      activeGame.gameData.gameTime < 660
-    ) {
+    if (gameData.gameTime >= 600 && gameData.gameTime < 660) {
       return 0;
     }
 
-    activeGame.trophyData.precision = true;
+    trophyData.precision = true;
 
-    const accountPlayer = activeGame.allPlayers.find(
+    const accountPlayer = allPlayers.find(
       (player) => player.summonerName === account.summoner.name
     );
-    const opponent = activeGame.allPlayers.find(
+    const opponent = allPlayers.find(
       (player) =>
         player.position === accountPlayer.position &&
         player.team !== accountPlayer.team

@@ -35,15 +35,12 @@ const trophyHunter: Trophy = {
 
     return Number(uniqueKillIds.length === 5);
   },
-  checkLive: ({ activeGame, account }) => {
-    if (
-      !activeGame.events.Events.length ||
-      activeGame.trophyData.trophyHunter
-    ) {
+  checkLive: ({ events, trophyData, account }) => {
+    if (!events.length) {
       return 0;
     }
 
-    const championKills = activeGame.events.Events.reduce((current, event) => {
+    const championKills = events.reduce((current, event) => {
       if (
         event.EventName !== 'ChampionKill' ||
         event.KillerName !== account.summoner.name ||
@@ -53,6 +50,12 @@ const trophyHunter: Trophy = {
       }
       return [...current, event.VictimName];
     }, []);
+
+    if (championKills.length > (trophyData.trophyHunter || 0)) {
+      return 0;
+    }
+
+    trophyData.trophyHunter = championKills.length;
 
     return Number(championKills.length / 5);
   },

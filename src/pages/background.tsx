@@ -6,18 +6,13 @@ import overwolf, {
   openWindow,
   SUPPORTED_QUEUE_IDS,
   setLeagueLauncherFeatures,
-  setLeagueFeatures,
   isLeagueLauncherRunning,
   isLeagueClosed,
 } from '../api/overwolf';
-import { postLogin, getAccount } from '../api/accounts';
-import { setLocalStorageItem, getLocalStorageItem } from '../api/utils/storage';
+import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation } from 'react-query';
-import * as levels from '../components/islands/levels';
-import { Level } from '../components/levels/types';
-import { Trophy, ActiveGame } from '../components/trophies/types';
+import { useMutation } from 'react-query';
 
 const INTERESTED_IN_LAUNCHER_FEATURES = [
   'game_flow',
@@ -26,19 +21,12 @@ const INTERESTED_IN_LAUNCHER_FEATURES = [
   'lobby_info',
   'end_game',
 ];
-const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data'];
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);
   const [leagueLauncherRunning, setLeagueLauncherRunning] = useState(null);
   const [playingSupportedGame, setPlayingSupportedGame] = useState(null);
-  const { data: account, refetch: fetchAccount } = useQuery(
-    'account',
-    getAccount,
-    {
-      manual: true,
-    }
-  );
+
   const [login] = useMutation(postLogin);
 
   useEffect(() => {
@@ -181,22 +169,18 @@ const Background: NextPage = () => {
 
     overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
 
-    overwolf.games.launchers.events.getInfo(
-      LEAGUE_LAUNCHER_ID,
-      async (info) => {
-        if (info.error) {
-          return;
-        }
-        const queueId = parseInt(info.res.lobby_info?.queueId);
-        if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-          console.log(`QueueId ${queueId} is not supported`);
-          return;
-        }
-        console.log('Fetch account');
-        await fetchAccount();
-        setPlayingSupportedGame(true);
+    overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
+      if (info.error) {
+        return;
       }
-    );
+      const queueId = parseInt(info.res.lobby_info?.queueId);
+      if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
+        console.log(`QueueId ${queueId} is not supported`);
+        return;
+      }
+      console.log('Fetch account');
+      setPlayingSupportedGame(true);
+    });
 
     return () => {
       overwolf.games.launchers.events.onInfoUpdates.removeListener(
@@ -206,7 +190,7 @@ const Background: NextPage = () => {
   }, [leagueRunning]);
 
   useEffect(() => {
-    if (playingSupportedGame === null || !account) {
+    if (playingSupportedGame === null) {
       return;
     }
 
@@ -216,83 +200,8 @@ const Background: NextPage = () => {
     }
 
     console.log('Playing a supported game');
-
     openWindow('in_game');
-
-    setLeagueFeatures(INTERESTED_IN_LEAGUE_FEATURES);
-
-    const activeGame: ActiveGame = {
-      activePlayer: null,
-      allPlayers: null,
-      events: {
-        Events: [],
-      },
-      gameData: null,
-      trophyData: {},
-    };
-
-    const activeLevels = account.levels.filter(
-      (level) => level.status === 'active'
-    );
-
-    const trophies = activeLevels.reduce<Trophy[]>((trophies, accountLevel) => {
-      const level = levels[accountLevel.name] as Level;
-      return [...trophies, ...level.trophies];
-    }, []);
-
-    console.log(`Can achieve ${trophies.length} trophies`, trophies);
-
-    const handleInfoUpdates2 = (
-      infoUpdate: overwolf.games.events.InfoUpdates2Event
-    ) => {
-      if (infoUpdate.feature !== 'live_client_data') {
-        return;
-      }
-
-      activeGame.activePlayer =
-        parseJSON(infoUpdate.info.live_client_data.active_player) ||
-        activeGame.activePlayer;
-      activeGame.allPlayers =
-        parseJSON(infoUpdate.info.live_client_data.all_players) ||
-        activeGame.allPlayers;
-      activeGame.gameData =
-        parseJSON(infoUpdate.info.live_client_data.game_data) ||
-        activeGame.gameData;
-      const events = parseJSON(infoUpdate.info.live_client_data.events) || {};
-      if (events?.Events) {
-        activeGame.events.Events.push(...events.Events);
-      }
-
-      const achievedTrophies = trophies
-        .map((trophy) => ({
-          trophy,
-          progress:
-            trophy.checkLive?.({
-              activeGame,
-              account,
-            }) || 0,
-        }))
-        .filter(({ progress }) => progress > 0);
-
-      if (achievedTrophies.length === 0) {
-        return;
-      }
-
-      setLocalStorageItem('notifications', [
-        ...getLocalStorageItem('notifications', []),
-        ...achievedTrophies.map(({ trophy, progress }) => ({
-          trophyName: trophy.name,
-          progress,
-        })),
-      ]);
-      openWindow('notification');
-    };
-
-    overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdates2);
-    return () => {
-      overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdates2);
-    };
-  }, [playingSupportedGame, account]);
+  }, [playingSupportedGame]);
 
   return null;
 };

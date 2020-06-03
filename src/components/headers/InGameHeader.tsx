@@ -2,7 +2,6 @@ import Background from './Background';
 import LogoContainer from './LogoContainer';
 import Logo from './Logo';
 import Toolbar from './Toolbar';
-import ExitButton from './ExitButton';
 import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
 import styled from '@emotion/styled';
@@ -39,7 +38,6 @@ const InGameHeader = () => {
           {hotkey}
         </Hotkey>
         <MinimizeButton />
-        <ExitButton />
       </Toolbar>
     </MovableHeader>
   );

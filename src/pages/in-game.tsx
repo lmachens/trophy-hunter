@@ -8,8 +8,22 @@ import SpecialProgress from '../components/trophies/special/SpecialProgress';
 import { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
 import { keyframes } from '@emotion/core';
-import overwolf from '../api/overwolf';
 import useHotkey from '../hooks/useHotkey';
+import {
+  Trophy,
+  ActivePlayer,
+  AllPlayers,
+  Events,
+  GameData,
+  TrophyData,
+} from '../components/trophies/types';
+import * as levels from '../components/islands/levels';
+import { Level } from '../components/levels/types';
+import { useQuery } from 'react-query';
+import { setLocalStorageItem, getLocalStorageItem } from '../api/utils/storage';
+import { getAccount } from '../api/accounts';
+import overwolf, { openWindow, setLeagueFeatures } from '../api/overwolf';
+import { parseJSON } from '../api/utils/json';
 
 const ConnectionStatus = styled.div`
   margin-top: 48px;
@@ -67,29 +81,145 @@ const Appear = styled.div`
   animaton-delay: 1s;
 `;
 
+const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data'];
+
 const InGame: NextPage = () => {
   const hotkey = useHotkey();
   const [progress, setProgress] = useState(0);
   const [showConnectionStatus, setShowConnectionStatus] = useState(true);
+  const [activePlayer, setActivePlayer] = useState<ActivePlayer>(null);
+  const [allPlayers, setAllPlayers] = useState<AllPlayers>(null);
+  const [events, setEvents] = useState<Events>([]);
+  const [gameData, setGameData] = useState<GameData>(null);
+  const [trophyData, setTrophyData] = useState<TrophyData>({});
+  const [trophies, setTrophies] = useState<Trophy[]>(null);
+  const { data: account } = useQuery('account', getAccount);
 
   useEffect(() => {
-    if (progress === 1) {
-      const timeoutId = setTimeout(() => {
-        setShowConnectionStatus(false);
-      }, 2000);
-      return () => {
-        clearTimeout(timeoutId);
-      };
+    if (account) {
+      console.log('Account is ready');
+      setProgress((progress) => progress + 0.5);
     }
+  }, [account, Boolean(gameData)]);
 
+  useEffect(() => {
+    if (progress !== 1) {
+      return;
+    }
     const timeoutId = setTimeout(() => {
-      setProgress(Math.min(1, progress + 0.25));
-    }, 200);
-
+      setShowConnectionStatus(false);
+    }, 2000);
     return () => {
       clearTimeout(timeoutId);
     };
   }, [progress]);
+
+  useEffect(() => {
+    const handleInfoUpdates2 = (
+      infoUpdate: overwolf.games.events.InfoUpdates2Event
+    ) => {
+      if (infoUpdate.feature !== 'live_client_data') {
+        return;
+      }
+
+      const activePlayer = parseJSON(
+        infoUpdate.info.live_client_data.active_player
+      );
+      if (activePlayer) {
+        setActivePlayer(activePlayer);
+      }
+
+      const allPlayers = parseJSON(
+        infoUpdate.info.live_client_data.all_players
+      );
+      if (allPlayers) {
+        setAllPlayers(allPlayers);
+      }
+      const gameData = parseJSON(infoUpdate.info.live_client_data.game_data);
+      if (gameData) {
+        setGameData(gameData);
+      }
+      const events = parseJSON(infoUpdate.info.live_client_data.events) || {};
+      if (events?.Events) {
+        setEvents((oldEvents) => [...oldEvents, ...events.Events]);
+      }
+    };
+
+    overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdates2);
+    setTimeout(
+      () =>
+        setLeagueFeatures(INTERESTED_IN_LEAGUE_FEATURES, () => {
+          setProgress((progress) => progress + 0.5);
+        }),
+      1000
+    );
+
+    return () => {
+      overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdates2);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!account) {
+      return;
+    }
+    const activeLevels = account.levels.filter(
+      (level) => level.status === 'active'
+    );
+
+    const trophies = activeLevels.reduce<Trophy[]>((trophies, accountLevel) => {
+      const level = levels[accountLevel.name] as Level;
+      return [...trophies, ...level.trophies];
+    }, []);
+
+    console.log(`Can achieve ${trophies.length} trophies`, trophies);
+
+    setTrophies(trophies);
+  }, [account]);
+
+  useEffect(() => {
+    if (!trophies || !gameData?.gameTime) {
+      return;
+    }
+
+    const trophyDataClone = { ...trophyData };
+    const achievedTrophies = trophies
+      .map((trophy) => ({
+        trophy,
+        progress:
+          trophy.checkLive?.({
+            activePlayer,
+            allPlayers,
+            gameData,
+            events,
+            trophyData: trophyDataClone,
+            account,
+          }) || 0,
+      }))
+      .filter(({ progress }) => progress >= 0.8);
+
+    setTrophyData(trophyDataClone);
+    if (achievedTrophies.length === 0) {
+      return;
+    }
+
+    const notifications = getLocalStorageItem('notifications', []).filter(
+      (notification) =>
+        !achievedTrophies.find(
+          (achievedTrophy) =>
+            achievedTrophy.trophy.name === notification.trophyName
+        )
+    );
+
+    setLocalStorageItem('notifications', [
+      ...notifications,
+      ...achievedTrophies.map(({ trophy, progress }) => ({
+        trophyName: trophy.name,
+        progress,
+      })),
+    ]);
+    openWindow('notification');
+  }, [gameData?.gameTime]);
 
   return (
     <Container>
@@ -127,6 +257,7 @@ const InGame: NextPage = () => {
         <AvailableTrophies />
       </Grow>
       <VideoAds />
+      <div>{Math.round(gameData?.gameTime || 0)}s</div>
     </Container>
   );
 };

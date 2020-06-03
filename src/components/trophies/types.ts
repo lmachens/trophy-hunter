@@ -14,7 +14,14 @@ export interface Trophy {
     timeline: MatchTimeline;
     account: Account;
   }): number;
-  checkLive?(props: { activeGame: ActiveGame; account: Account }): number;
+  checkLive?(props: {
+    activePlayer: ActivePlayer;
+    allPlayers: AllPlayers;
+    events: Events;
+    gameData: GameData;
+    trophyData: TrophyData;
+    account: Account;
+  }): number;
 }
 
 export interface Ability {
@@ -38,116 +45,120 @@ export interface SummonerSpell {
   rawDisplayName: string;
 }
 
-export interface ActiveGame {
-  activePlayer: {
-    abilities: {
-      E: Ability;
-      Passive: {
-        displayName: string;
-        id: string;
-        rawDescription: string;
-        rawDisplayName: string;
-      };
-      Q: Ability;
-      R: Ability;
-      W: Ability;
+export interface ActivePlayer {
+  abilities: {
+    E: Ability;
+    Passive: {
+      displayName: string;
+      id: string;
+      rawDescription: string;
+      rawDisplayName: string;
     };
-    championStats: {
-      abilityPower: number;
-      armor: number;
-      armorPenetrationFlat: number;
-      armorPenetrationPercent: number;
-      attackDamage: number;
-      attackRange: number;
-      attackSpeed: number;
-      bonusArmorPenetrationPercent: number;
-      bonusMagicPenetrationPercent: number;
-      cooldownReduction: number;
-      critChance: number;
-      critDamage: number;
-      currentHealth: number;
-      healthRegenRate: number;
-      lifeSteal: number;
-      magicLethality: number;
-      magicPenetrationFlat: number;
-      magicPenetrationPercent: number;
-      magicResist: number;
-      maxHealth: number;
-      moveSpeed: number;
-      physicalLethality: number;
-      resourceMax: number;
-      resourceRegenRate: number;
-      resourceType: string;
-      resourceValue: number;
-      spellVamp: number;
-      tenacity: number;
-    };
-    currentGold: number;
-    fullRunes: {
-      generalRunes: Rune[];
-      keystone: Rune;
-      primaryRuneTree: Rune;
-      secondaryRuneTree: Rune;
-      statRunes: {
-        id: number;
-        rawDescription: string;
-      }[];
-    };
-    level: number;
-    summonerName: string;
+    Q: Ability;
+    R: Ability;
+    W: Ability;
   };
-  allPlayers: {
-    championName: string;
-    isBot: boolean;
-    isDead: boolean;
-    items: unknown[];
-    level: number;
-    position: string;
-    rawChampionName: string;
-    respawnTimer: number;
-    runes: {
-      keystone: Rune;
-      primaryRuneTree: Rune;
-      secondaryRuneTree: Rune;
-    };
-    scores: {
-      assists: number;
-      creepScore: number;
-      deaths: number;
-      kills: number;
-      wardScore: number;
-    };
-    skinID: number;
-    summonerName: string;
-    summonerSpells: {
-      summonerSpellOne: SummonerSpell;
-      summonerSpellTwo: SummonerSpell;
-    };
-    team: string;
-  }[];
-  events: {
-    Events: {
-      EventID: number;
-      EventName: string;
-      EventTime: number;
-      VictimName?: string;
-      Assisters?: string[];
-      KillerName?: string;
-      KillStreak?: number;
-      Acer?: string;
-      AcingTeam?: string;
+  championStats: {
+    abilityPower: number;
+    armor: number;
+    armorPenetrationFlat: number;
+    armorPenetrationPercent: number;
+    attackDamage: number;
+    attackRange: number;
+    attackSpeed: number;
+    bonusArmorPenetrationPercent: number;
+    bonusMagicPenetrationPercent: number;
+    cooldownReduction: number;
+    critChance: number;
+    critDamage: number;
+    currentHealth: number;
+    healthRegenRate: number;
+    lifeSteal: number;
+    magicLethality: number;
+    magicPenetrationFlat: number;
+    magicPenetrationPercent: number;
+    magicResist: number;
+    maxHealth: number;
+    moveSpeed: number;
+    physicalLethality: number;
+    resourceMax: number;
+    resourceRegenRate: number;
+    resourceType: string;
+    resourceValue: number;
+    spellVamp: number;
+    tenacity: number;
+  };
+  currentGold: number;
+  fullRunes: {
+    generalRunes: Rune[];
+    keystone: Rune;
+    primaryRuneTree: Rune;
+    secondaryRuneTree: Rune;
+    statRunes: {
+      id: number;
+      rawDescription: string;
     }[];
   };
-  gameData: {
-    gameMode: string;
-    gameTime: number;
-    mapName: string;
-    mapNumber: number;
-    mapTerrain: string;
+  level: number;
+  summonerName: string;
+}
+
+export interface Player {
+  championName: string;
+  isBot: boolean;
+  isDead: boolean;
+  items: unknown[];
+  level: number;
+  position: string;
+  rawChampionName: string;
+  respawnTimer: number;
+  runes: {
+    keystone: Rune;
+    primaryRuneTree: Rune;
+    secondaryRuneTree: Rune;
   };
-  trophyData: {
-    [key: string]: unknown;
+  scores: {
+    assists: number;
+    creepScore: number;
+    deaths: number;
+    kills: number;
+    wardScore: number;
   };
+  skinID: number;
+  summonerName: string;
+  summonerSpells: {
+    summonerSpellOne: SummonerSpell;
+    summonerSpellTwo: SummonerSpell;
+  };
+  team: string;
+}
+
+export type AllPlayers = Player[];
+
+export interface Event {
+  EventID: number;
+  EventName: string;
+  EventTime: number;
+  VictimName?: string;
+  Assisters?: string[];
+  KillerName?: string;
+  KillStreak?: number;
+  Acer?: string;
+  AcingTeam?: string;
+}
+
+export type Events = Event[];
+
+export interface GameData {
+  gameMode: string;
+  gameTime: number;
+  mapName: string;
+  mapNumber: number;
+  mapTerrain: string;
+}
+
+export interface TrophyData {
+  [key: string]: unknown;
 }
 
 export interface ProgressProps extends SVGProps<SVGSVGElement> {

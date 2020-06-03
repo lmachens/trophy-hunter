@@ -1,17 +1,16 @@
 import { Level } from '../../../levels/types';
 import { SkillsIcon, SkillsMarker } from '../../../levels/skills';
 import { skills1 } from '../../skills/levels';
+import { precision } from '../../../trophies';
 
-const skills: Level = {
+const hubSkills: Level = {
   island: 'hub',
-  name: 'skills',
+  name: 'hubSkills',
   title: 'Skills',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [
-    /* */
-  ],
+  trophies: [precision],
   unlocksLevels: [skills1],
 };
 
-export default skills;
+export default hubSkills;

@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
 import {
-  combat,
-  epic,
-  objectives,
-  skills,
-  special,
-  teamwork,
+  hubCombat,
+  hubEpic,
+  hubObjectives,
+  hubSkills,
+  hubSpecial,
+  hubTeamwork,
   welcome,
 } from './levels';
 import { useAccount } from '../../../contexts/account';
@@ -151,47 +151,47 @@ const HubIsland: FC<IslandProps> = ({
         focused={targetLevel?.level === welcome}
         level={welcome}
       />
-      <combat.Marker
+      <hubCombat.Marker
         transform="translate(45 27)"
-        status={levels.find((level) => level.name === 'combat')?.status}
-        onClick={() => onLevelClick(combat)}
-        focused={targetLevel?.level === combat}
-        level={combat}
+        status={levels.find((level) => level.name === 'hubCombat')?.status}
+        onClick={() => onLevelClick(hubCombat)}
+        focused={targetLevel?.level === hubCombat}
+        level={hubCombat}
       />
-      <skills.Marker
+      <hubSkills.Marker
         transform="translate(86 10)"
-        status={levels.find((level) => level.name === 'skills')?.status}
-        onClick={() => onLevelClick(skills)}
-        focused={targetLevel?.level === skills}
-        level={skills}
+        status={levels.find((level) => level.name === 'hubSkills')?.status}
+        onClick={() => onLevelClick(hubSkills)}
+        focused={targetLevel?.level === hubSkills}
+        level={hubSkills}
       />
-      <teamwork.Marker
+      <hubTeamwork.Marker
         transform="translate(129 27)"
-        status={levels.find((level) => level.name === 'teamwork')?.status}
-        onClick={() => onLevelClick(teamwork)}
-        focused={targetLevel?.level === teamwork}
-        level={teamwork}
+        status={levels.find((level) => level.name === 'hubTeamwork')?.status}
+        onClick={() => onLevelClick(hubTeamwork)}
+        focused={targetLevel?.level === hubTeamwork}
+        level={hubTeamwork}
       />
-      <objectives.Marker
+      <hubObjectives.Marker
         transform="translate(129 87)"
-        status={levels.find((level) => level.name === 'objectives')?.status}
-        onClick={() => onLevelClick(objectives)}
-        focused={targetLevel?.level === objectives}
-        level={objectives}
+        status={levels.find((level) => level.name === 'hubObjectives')?.status}
+        onClick={() => onLevelClick(hubObjectives)}
+        focused={targetLevel?.level === hubObjectives}
+        level={hubObjectives}
       />
-      <epic.Marker
+      <hubEpic.Marker
         transform="translate(86 102)"
-        status={levels.find((level) => level.name === 'epic')?.status}
-        onClick={() => onLevelClick(epic)}
-        focused={targetLevel?.level === epic}
-        level={epic}
+        status={levels.find((level) => level.name === 'hubEpic')?.status}
+        onClick={() => onLevelClick(hubEpic)}
+        focused={targetLevel?.level === hubEpic}
+        level={hubEpic}
       />
-      <special.Marker
+      <hubSpecial.Marker
         transform="translate(45 87)"
-        status={levels.find((level) => level.name === 'special')?.status}
-        onClick={() => onLevelClick(special)}
-        focused={targetLevel?.level === special}
-        level={special}
+        status={levels.find((level) => level.name === 'hubSpecial')?.status}
+        onClick={() => onLevelClick(hubSpecial)}
+        focused={targetLevel?.level === hubSpecial}
+        level={hubSpecial}
       />
     </IslandSVG>
   );

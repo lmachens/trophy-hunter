@@ -2,9 +2,9 @@ import { Level } from '../../../levels/types';
 import { TeamworkIcon, TeamworkMarker } from '../../../levels/teamwork';
 import { teamwork1 } from '../../teamwork/levels';
 
-const teamwork: Level = {
+const hubTeamwork: Level = {
   island: 'hub',
-  name: 'teamwork',
+  name: 'hubTeamwork',
   title: 'Teamwork',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
@@ -14,4 +14,4 @@ const teamwork: Level = {
   unlocksLevels: [teamwork1],
 };
 
-export default teamwork;
+export default hubTeamwork;

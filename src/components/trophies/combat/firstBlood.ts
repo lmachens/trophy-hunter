@@ -19,18 +19,25 @@ const firstBlood: Trophy = {
     );
     return Number(participant.stats.firstBloodKill);
   },
-  checkLive: ({ activeGame, allPlayers, account }) => {
-    if (!allPlayers || activeGame.firstBloodSummonerName) {
+  checkLive: ({ activeGame, account }) => {
+    if (
+      !activeGame.allPlayers ||
+      activeGame.trophyData.firstBloodSummonerName
+    ) {
       return 0;
     }
 
-    const killer = allPlayers.find((player) => player.scores.kills > 0);
+    const killer = activeGame.allPlayers.find(
+      (player) => player.scores.kills > 0
+    );
     if (!killer) {
       return 0;
     }
-    activeGame.firstBloodSummonerName = killer.summonerName;
+    activeGame.trophyData.firstBloodSummonerName = killer.summonerName;
 
-    return Number(account.summoner.name === activeGame.firstBloodSummonerName);
+    return Number(
+      account.summoner.name === activeGame.trophyData.firstBloodSummonerName
+    );
   },
 };
 

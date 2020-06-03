@@ -2,9 +2,9 @@ import { Level } from '../../../levels/types';
 import { SpecialIcon, SpecialMarker } from '../../../levels/special';
 import { special1 } from '../../special/levels';
 
-const special: Level = {
+const hubSpecial: Level = {
   island: 'hub',
-  name: 'special',
+  name: 'hubSpecial',
   title: 'Special',
   Icon: SpecialIcon,
   Marker: SpecialMarker,
@@ -14,4 +14,4 @@ const special: Level = {
   unlocksLevels: [special1],
 };
 
-export default special;
+export default hubSpecial;

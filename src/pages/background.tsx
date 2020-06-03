@@ -17,7 +17,7 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from 'react-query';
 import * as levels from '../components/islands/levels';
 import { Level } from '../components/levels/types';
-import { Trophy } from '../components/trophies/types';
+import { Trophy, ActiveGame } from '../components/trophies/types';
 
 const INTERESTED_IN_LAUNCHER_FEATURES = [
   'game_flow',
@@ -219,7 +219,15 @@ const Background: NextPage = () => {
 
     setLeagueFeatures(INTERESTED_IN_LEAGUE_FEATURES);
 
-    const activeGame = {};
+    const activeGame: ActiveGame = {
+      activePlayer: null,
+      allPlayers: null,
+      events: {
+        Events: [],
+      },
+      gameData: null,
+      trophyData: {},
+    };
 
     const activeLevels = account.levels.filter(
       (level) => level.status === 'active'
@@ -239,22 +247,23 @@ const Background: NextPage = () => {
         return;
       }
 
-      const activePlayer = parseJSON(
-        infoUpdate.info.live_client_data.active_player
-      );
-      const allPlayers = parseJSON(
-        infoUpdate.info.live_client_data.all_players
-      );
-      const events = parseJSON(infoUpdate.info.live_client_data.events);
-      const gameData = parseJSON(infoUpdate.info.live_client_data.game_data);
+      activeGame.activePlayer =
+        parseJSON(infoUpdate.info.live_client_data.active_player) ||
+        activeGame.activePlayer;
+      activeGame.allPlayers =
+        parseJSON(infoUpdate.info.live_client_data.all_players) ||
+        activeGame.allPlayers;
+      activeGame.gameData =
+        parseJSON(infoUpdate.info.live_client_data.game_data) ||
+        activeGame.gameData;
+      const events = parseJSON(infoUpdate.info.live_client_data.events) || {};
+      if (events?.Events) {
+        activeGame.events.Events.push(...events.Events);
+      }
 
       const achievedTrophies = trophies.filter((trophy) =>
         trophy.checkLive?.({
           activeGame,
-          activePlayer,
-          allPlayers,
-          events,
-          gameData,
           account,
         })
       );

@@ -1,7 +1,7 @@
-export { default as combat } from './combat';
-export { default as epic } from './epic';
-export { default as skills } from './skills';
-export { default as special } from './special';
-export { default as teamwork } from './teamwork';
-export { default as objectives } from './objectives';
+export { default as hubCombat } from './hubCombat';
+export { default as hubEpic } from './hubEpic';
+export { default as hubSkills } from './hubSkills';
+export { default as hubSpecial } from './hubSpecial';
+export { default as hubTeamwork } from './hubTeamwork';
+export { default as hubObjectives } from './hubObjectives';
 export { default as welcome } from './welcome';

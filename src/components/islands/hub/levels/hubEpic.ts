@@ -2,9 +2,9 @@ import { Level } from '../../../levels/types';
 import { EpicIcon, EpicMarker } from '../../../levels/epic';
 import { epic1 } from '../../epic/levels';
 
-const epic: Level = {
+const hubEpic: Level = {
   island: 'hub',
-  name: 'epic',
+  name: 'hubEpic',
   title: 'Epic',
   Icon: EpicIcon,
   Marker: EpicMarker,
@@ -14,4 +14,4 @@ const epic: Level = {
   unlocksLevels: [epic1],
 };
 
-export default epic;
+export default hubEpic;

@@ -2,9 +2,9 @@ import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import { combat1 } from '../../combat/levels';
 
-const combat: Level = {
+const hubCombat: Level = {
   island: 'hub',
-  name: 'combat',
+  name: 'hubCombat',
   title: 'Combat',
   Icon: CombatIcon,
   Marker: CombatMarker,
@@ -14,4 +14,4 @@ const combat: Level = {
   unlocksLevels: [combat1],
 };
 
-export default combat;
+export default hubCombat;

@@ -21,8 +21,15 @@ const precision: Trophy = {
     const opponent = match.participants.find(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&
-        otherParticipant.timeline.role === participant.timeline.role
+        otherParticipant.timeline.role === participant.timeline.role &&
+        otherParticipant.timeline.lane === participant.timeline.lane
     );
+    if (!opponent) {
+      console.log(
+        `Can not find lane opponent for ${account.summoner.name} as ${participant.timeline.role} ${participant.timeline.lane}`
+      );
+      return 0;
+    }
 
     const creepsDiffAt10 =
       participant.timeline.creepsPerMinDeltas['0-10'] * 10 -
@@ -51,7 +58,7 @@ const precision: Trophy = {
       console.log(
         `Can not find lane opponent for ${accountPlayer.summonerName} as ${accountPlayer.position}`
       );
-      return;
+      return 0;
     }
 
     return Number(

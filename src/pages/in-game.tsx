@@ -85,6 +85,12 @@ const Appear = styled.div`
   animaton-delay: 1s;
 `;
 
+const GrowFlex = styled(Grow)`
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+`;
+
 const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data'];
 
 const InGame: NextPage = () => {
@@ -221,8 +227,16 @@ const InGame: NextPage = () => {
     if (achievedTrophies.length === 0) {
       return;
     }
-    console.log(achievedTrophies);
-    setTrophyProgress((progress) => [...progress, ...achievedTrophies]);
+    setTrophyProgress((progress) => [
+      ...achievedTrophies,
+      ...progress.filter(
+        (progressTrophy) =>
+          !achievedTrophies.find(
+            (achievedTrophy) =>
+              achievedTrophy.trophy.name === progressTrophy.trophy.name
+          )
+      ),
+    ]);
     const notificateTrophies = achievedTrophies.filter(
       ({ progress }) => progress >= 0.8
     );
@@ -280,9 +294,9 @@ const InGame: NextPage = () => {
           </>
         )}
       </ConnectionStatus>
-      <Grow>
+      <GrowFlex>
         <AvailableTrophies trophyProgress={trophyProgress} />
-      </Grow>
+      </GrowFlex>
       <VideoAds />
       <div>{Math.round(gameData?.gameTime || 0)}s</div>
     </Container>

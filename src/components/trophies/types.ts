@@ -158,7 +158,7 @@ export interface GameData {
 }
 
 export interface TrophyData {
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 export interface ProgressProps extends SVGProps<SVGSVGElement> {

@@ -53,11 +53,12 @@ export default applyMiddleware(
       (level) => level.status === 'active'
     );
 
+    const accountTrophies = account.trophies;
     const completedTrophyNames = [];
     const updateLevels = activeLevels.map(async (accountLevel) => {
       const level = levels[accountLevel.name] as Level;
-      const { levelTrophiesCompleted, accountTrophies } = level.trophies.reduce(
-        ({ levelTrophiesCompleted, accountTrophies }, trophy) => {
+      const { levelTrophiesCompleted } = level.trophies.reduce(
+        ({ levelTrophiesCompleted }, trophy) => {
           const accountTrophy = accountTrophies.find(
             (accountTrophy) => accountTrophy.name === trophy.name
           );
@@ -99,41 +100,38 @@ export default applyMiddleware(
             status: progress === 1 ? 'completed' : 'active',
             progress: progress,
           };
-
+          accountTrophies.push(newTrophy);
           if (progress === 1) {
             completedTrophyNames.push(newTrophy.name);
-
             return {
               levelTrophiesCompleted: levelTrophiesCompleted + 1,
-              accountTrophies: [...accountTrophies, newTrophy],
             };
           }
           return {
             levelTrophiesCompleted: levelTrophiesCompleted,
-            accountTrophies: [...accountTrophies, newTrophy],
           };
         },
         {
           levelTrophiesCompleted: 0,
-          accountTrophies: [...account.trophies],
         }
       );
 
       const isLevelCompleted =
         levelTrophiesCompleted / level.trophies.length > 0.8;
 
-      await Accounts.updateOne(
+      let updated = await Accounts.findOneAndUpdate(
         { _id: account._id, 'levels.name': level.name },
         {
           $set: {
             'levels.$.status': isLevelCompleted
               ? 'completed'
               : accountLevel.status,
-            trophies: accountTrophies,
           },
-        }
+        },
+        { returnOriginal: false }
       );
 
+      account = updated.value;
       if (!isLevelCompleted) {
         return;
       }
@@ -141,7 +139,7 @@ export default applyMiddleware(
       const unlockIslandLevels = level.unlocksLevels.filter(
         (unlockLevel) => unlockLevel.island !== level.island
       );
-      const updated = await Accounts.findOneAndUpdate(
+      updated = await Accounts.findOneAndUpdate(
         { _id: account._id },
         {
           $push: {
@@ -184,6 +182,14 @@ export default applyMiddleware(
       );
     });
     await Promise.all(updateLevels);
+    await Accounts.updateOne(
+      { _id: account._id },
+      {
+        $set: {
+          trophies: accountTrophies,
+        },
+      }
+    );
 
     res.json({ trophyNames: completedTrophyNames });
   },

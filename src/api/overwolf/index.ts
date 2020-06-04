@@ -66,6 +66,16 @@ export const openWindow = (windowName) => {
   });
 };
 
+export const toggleCurrentWindow = () => {
+  overwolf.windows.getCurrentWindow((result) => {
+    if (['minimized', 'hidden', 'closed'].includes(result.window.stateEx)) {
+      overwolf.windows.restore(result.window.id);
+    } else {
+      overwolf.windows.minimize(result.window.id);
+    }
+  });
+};
+
 export const closeCurrentWindow = () => {
   overwolf.windows.getCurrentWindow((result) => {
     overwolf.windows.close(result.window.id);

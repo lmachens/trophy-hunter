@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 import { useAccount } from '../../contexts/account';
 import { useMutation, queryCache } from 'react-query';
-import { postLogin } from '../../api/accounts';
+import { postLogin, postReset } from '../../api/accounts';
 import Button from '../common/Button';
 
 const Container = styled.div`
@@ -23,6 +23,11 @@ const Profile: FC = () => {
       queryCache.refetchQueries('account');
     },
   });
+  const [reset] = useMutation(postReset, {
+    onSuccess: () => {
+      queryCache.refetchQueries('account');
+    },
+  });
 
   return (
     <Container>
@@ -37,16 +42,27 @@ const Profile: FC = () => {
           /217 TH points
         </p>
       </div>
-      <Button
-        onClick={() => {
-          login({
-            summonerName: 'sirlunchalot619',
-            platformId: 'EUW1',
-          });
-        }}
-      >
-        Login
-      </Button>
+      {!account && (
+        <Button
+          onClick={() => {
+            login({
+              summonerName: 'sirlunchalot619',
+              platformId: 'EUW1',
+            });
+          }}
+        >
+          Login
+        </Button>
+      )}
+      {account && (
+        <Button
+          onClick={() => {
+            reset();
+          }}
+        >
+          Reset
+        </Button>
+      )}
     </Container>
   );
 };

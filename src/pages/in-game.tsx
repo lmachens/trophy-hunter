@@ -22,7 +22,11 @@ import { Level } from '../components/levels/types';
 import { useQuery } from 'react-query';
 import { setLocalStorageItem, getLocalStorageItem } from '../api/utils/storage';
 import { getAccount } from '../api/accounts';
-import overwolf, { openWindow, setLeagueFeatures } from '../api/overwolf';
+import overwolf, {
+  openWindow,
+  setLeagueFeatures,
+  toggleCurrentWindow,
+} from '../api/overwolf';
 import { parseJSON } from '../api/utils/json';
 
 const ConnectionStatus = styled.div`
@@ -97,6 +101,18 @@ const InGame: NextPage = () => {
   const [trophyProgress, setTrophyProgress] = useState<
     { trophy: Trophy; progress: number }[]
   >([]);
+
+  useEffect(() => {
+    const handleHotkeyPressed = () => {
+      toggleCurrentWindow();
+    };
+
+    overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
+
+    return () => {
+      overwolf.settings.hotkeys.onPressed.removeListener(handleHotkeyPressed);
+    };
+  }, []);
 
   useEffect(() => {
     if (account) {
@@ -205,6 +221,7 @@ const InGame: NextPage = () => {
     if (achievedTrophies.length === 0) {
       return;
     }
+    console.log(achievedTrophies);
     setTrophyProgress((progress) => [...progress, ...achievedTrophies]);
     const notificateTrophies = achievedTrophies.filter(
       ({ progress }) => progress >= 0.8

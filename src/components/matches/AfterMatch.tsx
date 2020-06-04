@@ -155,7 +155,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
 
   useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
-      if (event.key !== 'checkGameId') {
+      if (event.key !== 'checkGameId' || !event.newValue) {
         return;
       }
       check(parseInt(event.newValue));
@@ -191,7 +191,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
       {!match && !loading && (
         <Button
           onClick={() => {
-            check(4625869335);
+            check(4641946327);
           }}
         >
           Load match
@@ -253,6 +253,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
                 borderless
               />
             ))}
+            {match.trophyNames.length === 0 && 'No trophies completed :*('}
           </TrophyList>
         </Modal>
       )}

@@ -5,7 +5,7 @@ const keyTargets: Trophy = {
   island: 'combatIsland',
   name: 'keyTargets',
   level: 'combat1',
-  title: 'keyTargets',
+  title: 'Key Targets',
   description:
     'Achieve three kills on the opponent with the highest amount of gold in the game at that point (gold checked at full minutes).',
   ProgressIcon: CombatProgress,

@@ -31,6 +31,7 @@
     "mongodb": "^3.5.7",
     "next": "^9.4.2",
     "react": "^16.13.1",
+    "react-confetti": "^5.0.1",
     "react-dom": "^16.13.1",
     "react-query": "^1.5.2"
   },

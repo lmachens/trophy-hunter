@@ -1,7 +1,7 @@
 import { Level } from '../../../levels/types';
 import { SkillsIcon, SkillsMarker } from '../../../levels/skills';
 import { skills1 } from '../../skills/levels';
-import { precision } from '../../../trophies';
+import { precision, farmer } from '../../../trophies';
 
 const hubSkills: Level = {
   island: 'hub',
@@ -9,7 +9,7 @@ const hubSkills: Level = {
   title: 'Skills',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [precision],
+  trophies: [farmer, precision],
   unlocksLevels: [skills1],
 };
 

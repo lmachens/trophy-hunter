@@ -6,6 +6,7 @@ import overwolf, { closeCurrentWindow } from '../api/overwolf';
 import { getLocalStorageItem, setLocalStorageItem } from '../api/utils/storage';
 import * as trophies from '../components/trophies';
 import Timer from '../components/common/Timer';
+import { Trophy } from '../components/trophies/types';
 
 const Header = styled.header`
   background: #1f1f1f;
@@ -49,7 +50,7 @@ const Notification: NextPage = () => {
     return null;
   }
 
-  const trophy = trophies[notification.trophyName];
+  const trophy: Trophy = trophies[notification.trophyName];
   return (
     <>
       <Header
@@ -66,7 +67,7 @@ const Notification: NextPage = () => {
         </Title>
         <Timer onDone={loadNotification} />
       </Header>
-      <TrophyListItem trophy={trophy} />
+      <TrophyListItem trophy={trophy} background />
     </>
   );
 };

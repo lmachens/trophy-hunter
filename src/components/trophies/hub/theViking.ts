@@ -5,7 +5,7 @@ const theViking: Trophy = {
   island: 'hubIsland',
   name: 'theViking',
   level: 'hubObjectives',
-  title: 'The Elephant',
+  title: 'The Viking',
   description:
     'Get a solo kill before 10 minutes and take down or assist first tower.',
   ProgressIcon: ObjectivesProgress,

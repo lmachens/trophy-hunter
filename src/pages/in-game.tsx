@@ -107,6 +107,8 @@ const InGame: NextPage = () => {
   const [trophyProgress, setTrophyProgress] = useState<
     { trophy: Trophy; progress: number }[]
   >([]);
+  const [notifiedNear, setNotifiedNear] = useState<string[]>([]);
+  const [notifiedCompleted, setNotifiedCompleted] = useState<string[]>([]);
 
   useEffect(() => {
     const handleHotkeyPressed = () => {
@@ -237,9 +239,36 @@ const InGame: NextPage = () => {
           )
       ),
     ]);
-    const notificateTrophies = achievedTrophies.filter(
-      ({ progress }) => progress >= 0.8
+  }, [gameData?.gameTime]);
+
+  useEffect(() => {
+    const notificateNearTrophies = trophyProgress.filter(
+      ({ progress, trophy }) =>
+        progress >= 0.8 && progress < 1 && !notifiedNear.includes(trophy.name)
     );
+
+    if (notificateNearTrophies.length > 0) {
+      setNotifiedNear((notifiedNear) => [
+        ...notifiedNear,
+        ...notificateNearTrophies.map((trophy) => trophy.trophy.name),
+      ]);
+    }
+
+    const notificateCompleteTrophies = trophyProgress.filter(
+      ({ progress }) =>
+        progress === 1 && !notifiedCompleted.includes(trophy.name)
+    );
+    if (notificateCompleteTrophies.length > 0) {
+      setNotifiedCompleted((notifiedCompleted) => [
+        ...notifiedCompleted,
+        ...notificateCompleteTrophies.map((trophy) => trophy.trophy.name),
+      ]);
+    }
+
+    const notificateTrophies = [
+      ...notificateNearTrophies,
+      ...notificateCompleteTrophies,
+    ];
     if (notificateTrophies.length === 0) {
       return;
     }
@@ -260,7 +289,7 @@ const InGame: NextPage = () => {
       })),
     ]);
     openWindow('notification');
-  }, [gameData?.gameTime]);
+  }, [trophyProgress]);
 
   return (
     <Container>

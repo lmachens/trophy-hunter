@@ -32,8 +32,13 @@ const theElephant: Trophy = {
       trophyData.theElephant = {
         deaths: 0,
         aliveSince: 0,
+        achieved: false,
       } as TheElephantTrophyData;
     }
+    if (trophyData.theElephant.achieved) {
+      return 0;
+    }
+
     const deaths = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -44,18 +49,23 @@ const theElephant: Trophy = {
       trophyData.theElephant = {
         deaths,
         aliveSince: gameData.gameTime,
+        achieved: false,
       } as TheElephantTrophyData;
       return 0;
     }
 
     const aliveFor = gameData.gameTime - trophyData.theElephant.aliveSince;
-
-    return Math.min(1, aliveFor / 1200);
+    const progress = Math.min(1, aliveFor / 1200);
+    if (progress === 1) {
+      trophyData.theElephant.achieved = true;
+    }
+    return progress;
   },
 };
 
 interface TheElephantTrophyData {
   deaths: number;
   aliveSince: number;
+  achieved: boolean;
 }
 export default theElephant;

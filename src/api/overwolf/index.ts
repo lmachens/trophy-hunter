@@ -66,6 +66,15 @@ export const openWindow = (windowName) => {
   });
 };
 
+export const closeWindow = (windowName) => {
+  overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
+    if (result.error) {
+      throw new Error(result.error);
+    }
+    overwolf.windows.close(result.window.id);
+  });
+};
+
 export const toggleCurrentWindow = () => {
   overwolf.windows.getCurrentWindow((result) => {
     if (['minimized', 'hidden', 'closed'].includes(result.window.stateEx)) {

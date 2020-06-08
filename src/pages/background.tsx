@@ -8,6 +8,7 @@ import overwolf, {
   setLeagueLauncherFeatures,
   isLeagueLauncherRunning,
   isLeagueClosed,
+  closeWindow,
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
@@ -162,7 +163,7 @@ const Background: NextPage = () => {
         console.log(`QueueId ${queueId} is not supported`);
         return;
       }
-      console.log('Fetch account');
+      console.log('QueueId is supported');
       setPlayingSupportedGame(true);
     });
 
@@ -175,30 +176,23 @@ const Background: NextPage = () => {
   }, [leagueLauncherRunning]);
 
   useEffect(() => {
-    if (leagueRunning === null) {
-      return;
-    }
-
-    if (leagueRunning === false) {
+    if (leagueRunning) {
+      console.log('League is running');
+    } else if (leagueRunning === false) {
       console.log('League is not running');
-      return;
-    }
-    console.log('League is running');
-  }, [leagueRunning]);
-
-  useEffect(() => {
-    if (playingSupportedGame === null) {
-      return;
+      closeWindow('in_game');
     }
 
-    if (playingSupportedGame === false) {
+    if (playingSupportedGame) {
+      console.log('Playing a supported game');
+    } else if (playingSupportedGame === false) {
       console.log('Not playing a supported game');
-      return;
     }
 
-    console.log('Playing a supported game');
-    openWindow('in_game');
-  }, [playingSupportedGame]);
+    if (leagueRunning && playingSupportedGame) {
+      openWindow('in_game');
+    }
+  }, [leagueRunning, playingSupportedGame]);
 
   return null;
 };

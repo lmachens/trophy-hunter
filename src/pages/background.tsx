@@ -135,22 +135,6 @@ const Background: NextPage = () => {
       });
     }, 1000);
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [leagueLauncherRunning]);
-
-  useEffect(() => {
-    if (leagueRunning === null) {
-      return;
-    }
-
-    if (leagueRunning === false) {
-      console.log('League is not running');
-      return;
-    }
-    console.log('League is running');
-
     const handleInfoUpdate = (infoUpdate) => {
       if (
         infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
@@ -183,10 +167,23 @@ const Background: NextPage = () => {
     });
 
     return () => {
+      clearTimeout(timeoutId);
       overwolf.games.launchers.events.onInfoUpdates.removeListener(
         handleInfoUpdate
       );
     };
+  }, [leagueLauncherRunning]);
+
+  useEffect(() => {
+    if (leagueRunning === null) {
+      return;
+    }
+
+    if (leagueRunning === false) {
+      console.log('League is not running');
+      return;
+    }
+    console.log('League is running');
   }, [leagueRunning]);
 
   useEffect(() => {

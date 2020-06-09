@@ -1,3 +1,4 @@
+export { default as comradeInArms } from './comradeInArms';
 export { default as darkness } from './darkness';
 export { default as farmer } from './farmer';
 export { default as playstyle } from './playstyle';

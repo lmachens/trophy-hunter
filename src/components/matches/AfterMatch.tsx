@@ -149,6 +149,12 @@ const ButtonContainer = styled.div`
   padding: 15px 10px 10px;
 `;
 
+const ListItem = styled(TrophyListItem)`
+  &:hover {
+    background-color: #2b2a30;
+  }
+`;
+
 const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -257,11 +263,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
         >
           <TrophyList>
             {match.trophyNames.map((trophyName) => (
-              <TrophyListItem
-                trophy={trophies[trophyName]}
-                key={trophyName}
-                borderless
-              />
+              <ListItem trophy={trophies[trophyName]} key={trophyName} />
             ))}
             {match.trophyNames.length === 0 && 'No trophies completed :*('}
           </TrophyList>

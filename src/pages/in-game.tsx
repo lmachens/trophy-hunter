@@ -103,7 +103,9 @@ const InGame: NextPage = () => {
   const [gameData, setGameData] = useState<GameData>(null);
   const [trophyData, setTrophyData] = useState<TrophyData>({});
   const [trophies, setTrophies] = useState<Trophy[]>(null);
-  const { data: account } = useQuery('account', getAccount);
+  const { data: account } = useQuery('in-game-account', getAccount, {
+    cacheTime: 0,
+  });
   const [trophyProgress, setTrophyProgress] = useState<
     { trophy: Trophy; progress: number }[]
   >([]);
@@ -127,7 +129,7 @@ const InGame: NextPage = () => {
       console.log('Account is ready');
       setProgress((progress) => progress + 0.5);
     }
-  }, [account, Boolean(gameData)]);
+  }, [account]);
 
   useEffect(() => {
     if (progress !== 1) {

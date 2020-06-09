@@ -4,6 +4,7 @@ import { Trophy } from './types';
 import { useTrophyProgress } from '../../contexts/account';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import Grow from '../common/Grow';
+import ProgressBar from '../common/ProgressBar';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -54,6 +55,9 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
       <Grow>
         <h3>{trophy.title}</h3>
         <p>{trophy.description}</p>
+        {trophy.maxProgress && (
+          <ProgressBar progress={trophyProgress} max={trophy.maxProgress} />
+        )}
       </Grow>
       {borderless && <Favorite />}
     </ListItem>

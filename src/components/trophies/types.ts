@@ -9,6 +9,7 @@ export interface Trophy {
   level: string;
   island: string;
   ProgressIcon: FC<ProgressProps>;
+  maxProgress?: number;
   checkProgress(props: {
     match: Match;
     timeline: MatchTimeline;

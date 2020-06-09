@@ -1,6 +1,7 @@
 export { default as comradeInArms } from './comradeInArms';
 export { default as darkness } from './darkness';
 export { default as farmer } from './farmer';
+export { default as feedThem } from './feedThem';
 export { default as playstyle } from './playstyle';
 export { default as precision } from './precision';
 export { default as siegeRam } from './siegeRam';

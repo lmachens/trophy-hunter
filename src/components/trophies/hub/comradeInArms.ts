@@ -5,7 +5,7 @@ const comradeInArms: Trophy = {
   island: 'hubIsland',
   name: 'comradeInArms',
   level: 'hubTeamwork',
-  title: 'Comrade in arms',
+  title: 'Comrade In Arms',
   description:
     'You and a teammate score three kills with only the two of you involved.',
   ProgressIcon: TeamworkProgress,

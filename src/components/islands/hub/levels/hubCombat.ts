@@ -1,7 +1,7 @@
 import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import { combat1 } from '../../combat/levels';
-import { trophyHunter } from '../../../trophies';
+import { trophyHunter, enrage, kitchenKnife } from '../../../trophies';
 
 const hubCombat: Level = {
   island: 'hub',
@@ -9,7 +9,7 @@ const hubCombat: Level = {
   title: 'Combat',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [trophyHunter],
+  trophies: [enrage, kitchenKnife, trophyHunter],
   unlocksLevels: [combat1],
 };
 

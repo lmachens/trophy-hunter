@@ -12,7 +12,8 @@ import TrophyList from '../trophies/TrophyList';
 import { postCheck } from '../../api/accounts';
 import { queryCache, useMutation } from 'react-query';
 import * as trophies from '../trophies';
-import Confetti from 'react-confetti';
+import Lottie from 'react-lottie';
+import animationData from './confetti.json';
 
 const sandClockMotion = keyframes`
   from {
@@ -90,6 +91,14 @@ const bounce = keyframes`
   60% {
     transform: translate3d(0, -2px, 0);
   }
+`;
+
+const LottieContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
 `;
 
 const AnimatedSandClock = styled(SandClock)<{ loading: boolean }>`
@@ -257,18 +266,20 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
             {match.trophyNames.length === 0 && 'No trophies completed :*('}
           </TrophyList>
           {match.trophyNames.length > 0 && (
-            <Confetti
-              width={window.innerWidth}
-              height={window.innerHeight}
-              style={{ position: 'fixed' }}
-              confettiSource={{
-                w: 100,
-                h: window.innerHeight,
-                x: window.innerWidth / 2,
-                y: window.innerHeight,
-              }}
-              gravity={0.05}
-            />
+            <LottieContainer>
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: animationData,
+                  rendererSettings: {
+                    preserveAspectRatio: 'xMidYMid slice',
+                  },
+                }}
+                height={500}
+                width={666}
+              />
+            </LottieContainer>
           )}
         </Modal>
       )}

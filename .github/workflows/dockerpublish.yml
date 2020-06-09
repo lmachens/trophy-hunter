@@ -2,10 +2,6 @@ name: Docker
 
 on:
   push:
-    # Publish `master` as Docker `latest` image.
-    branches:
-      - master
-
     # Publish `v1.2.3` tags as releases.
     tags:
       - v*
@@ -56,7 +52,7 @@ jobs:
       - name: Push image
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-          
+
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 

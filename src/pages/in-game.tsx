@@ -255,7 +255,7 @@ const InGame: NextPage = () => {
     }
 
     const notificateCompleteTrophies = trophyProgress.filter(
-      ({ progress }) =>
+      ({ progress, trophy }) =>
         progress === 1 && !notifiedCompleted.includes(trophy.name)
     );
     if (notificateCompleteTrophies.length > 0) {

@@ -139,7 +139,8 @@ const Background: NextPage = () => {
     const handleInfoUpdate = (infoUpdate) => {
       if (
         infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
-        infoUpdate.feature !== 'end_game'
+        infoUpdate.feature !== 'end_game' ||
+        !infoUpdate.info.end_game_lol
       ) {
         return;
       }

@@ -10,24 +10,20 @@ interface ListItemProps {
   island?: string;
 }
 const ListItem = styled.div<ListItemProps>`
-  background: #2b2a30;
+  background-color: #2b2a30;
   padding: 10px;
   margin-bottom: 4px;
   display: flex;
   border-top: ${(props) => (props.borderless ? 'none' : '1px solid #3f3e43')};
-  background-image: url(${process.env.PUBLIC_DIR}/notifications/${(props) => props.island}.png);
-  background-position: bottom right;
-  background-repeat: no-repeat;
 
   &:hover {
-    background: #3e3d42;
+    background-color: #3e3d42;
   }
 `;
 
 interface TrophyListItemProps extends ListItemProps {
   trophy: Trophy;
   progress?: number;
-  background?: boolean;
 }
 
 const Progress = styled.div`
@@ -45,18 +41,13 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   trophy,
   borderless,
   progress,
-  background,
   ...props
 }) => {
   const trophyProgress =
     typeof progress !== 'undefined' ? progress : useTrophyProgress(trophy);
 
   return (
-    <ListItem
-      borderless={borderless}
-      island={background ? trophy.island : null}
-      {...props}
-    >
+    <ListItem borderless={borderless} {...props}>
       <Progress>
         <trophy.ProgressIcon progress={trophyProgress} />
       </Progress>

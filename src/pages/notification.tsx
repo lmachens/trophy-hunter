@@ -21,6 +21,13 @@ const Title = styled.h2`
   margin: 0;
 `;
 
+const ListItem = styled(TrophyListItem)`
+  background-image: url(${process.env.PUBLIC_DIR}/notifications/${(props) => props.trophy.island}.png);
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  flex-grow: 1;
+`;
+
 const Notification: NextPage = () => {
   const [notification, setNotification] = useState<{
     trophyName: string;
@@ -67,7 +74,7 @@ const Notification: NextPage = () => {
         </Title>
         <Timer onDone={loadNotification} />
       </Header>
-      <TrophyListItem trophy={trophy} background />
+      <ListItem trophy={trophy} progress={notification.progress} />
     </>
   );
 };

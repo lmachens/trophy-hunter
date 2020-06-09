@@ -28,6 +28,13 @@ const ListItem = styled(TrophyListItem)`
   flex-grow: 1;
 `;
 
+const Container = styled.div`
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+`;
+
 const Notification: NextPage = () => {
   const [notification, setNotification] = useState<{
     trophyName: string;
@@ -59,7 +66,7 @@ const Notification: NextPage = () => {
 
   const trophy: Trophy = trophies[notification.trophyName];
   return (
-    <>
+    <Container>
       <Header
         onMouseDown={() =>
           overwolf.windows.getCurrentWindow((result) => {
@@ -75,7 +82,7 @@ const Notification: NextPage = () => {
         <Timer onDone={loadNotification} />
       </Header>
       <ListItem trophy={trophy} progress={notification.progress} />
-    </>
+    </Container>
   );
 };
 

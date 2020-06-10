@@ -32,3 +32,10 @@ export const getTimeline = async ({ platformId, matchId }) => {
   );
   return match;
 };
+
+export const getRecentVersion = async () => {
+  const versions = await getJSON<string[]>(
+    'https://ddragon.leagueoflegends.com/api/versions.json'
+  );
+  return versions[0];
+};

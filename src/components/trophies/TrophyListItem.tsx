@@ -33,9 +33,20 @@ const Progress = styled.div`
   width: 12px;
 `;
 
+interface FavoriteProps {
+  active: boolean;
+}
+
 const Favorite = styled(FavoritesFilter)`
   flex-shrink: 0;
   cursor: pointer;
+
+  fill: ${(props: FavoriteProps) => (props.active ? '#77777A' : '#1F1F1F')};
+  stroke: #77777a;
+
+  &:hover {
+    fill: #3f3e43;
+  }
 `;
 
 const TrophyListItem: FC<TrophyListItemProps> = ({
@@ -59,7 +70,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <ProgressBar progress={trophyProgress} max={trophy.maxProgress} />
         )}
       </Grow>
-      {borderless && <Favorite />}
+      {borderless && <Favorite active />}
     </ListItem>
   );
 };

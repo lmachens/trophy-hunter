@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import SkillsProgress from '../skills/SkillsProgress';
 
 const farmer: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const farmer: Trophy = {
   level: 'hubSkills',
   title: 'Farmer',
   description: 'Farm more than 200 minions.',
-  ProgressIcon: SkillsProgress,
+  category: 'skills',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

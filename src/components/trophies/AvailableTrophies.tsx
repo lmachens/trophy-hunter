@@ -7,13 +7,8 @@ import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
 import TrophyList from './TrophyList';
 import { Trophy } from './types';
 import { Tooltip } from '../tooltip';
-import CombatProgress from './combat/CombatProgress';
-import EpicProgress from './epic/EpicProgress';
-import ObjectivesProgress from './objectives/ObjectivesProgress';
-import SkillsProgress from './skills/SkillsProgress';
-import SpecialProgress from './special/SpecialProgress';
-import TeamworkProgress from './teamwork/TeamworkProgress';
 import CheckMark from '../icons/CheckMark';
+import { categoriesMap } from './categories';
 
 const Header = styled.header`
   display: flex;
@@ -87,40 +82,8 @@ interface AvailableTrophiesProps {
     trophy: Trophy;
     progress: number;
   }[];
+  onTrophyClick?(trophy: Trophy): void;
 }
-
-const CATEGORIES = {
-  combat: {
-    value: 'combat',
-    label: 'Combat',
-    Icon: CombatProgress,
-  },
-  skills: {
-    value: 'skills',
-    label: 'Skills',
-    Icon: SkillsProgress,
-  },
-  teamwork: {
-    value: 'teamwork',
-    label: 'Teamwork',
-    Icon: TeamworkProgress,
-  },
-  objectives: {
-    value: 'objectives',
-    label: 'Objectives',
-    Icon: ObjectivesProgress,
-  },
-  epic: {
-    value: 'epic',
-    label: 'Epic',
-    Icon: EpicProgress,
-  },
-  special: {
-    value: 'special',
-    label: 'Special',
-    Icon: SpecialProgress,
-  },
-};
 
 const IconContainer = styled.div`
   height: 40px;
@@ -142,11 +105,14 @@ const CheckMarkAbsolute = styled(CheckMark)`
   bottom: 1px;
 `;
 
-const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
+const AvailableTrophies: FC<AvailableTrophiesProps> = ({
+  trophyProgress,
+  onTrophyClick,
+}) => {
   const availableTrophies = useAvailableTrophies();
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [categories, setCategories] = useState<string[]>(
-    Object.keys(CATEGORIES)
+    Object.keys(categoriesMap)
   );
   const [showCategories, setShowCategories] = useState(false);
 
@@ -161,6 +127,9 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
     }
   };
 
+  const trophies = availableTrophies.filter((trophy) =>
+    categories.includes(trophy.category)
+  );
   return (
     <>
       <Header>
@@ -182,7 +151,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
                 onChange={() =>
                   categories.length === 6
                     ? setCategories([])
-                    : setCategories(Object.keys(CATEGORIES))
+                    : setCategories(Object.keys(categoriesMap))
                 }
               />
               <CheckMarkBox>
@@ -190,7 +159,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
               </CheckMarkBox>
               Select all
             </Label>
-            {Object.values(CATEGORIES).map(({ value, label, Icon }) => {
+            {Object.values(categoriesMap).map(({ value, label, Icon }) => {
               const checked = categories.includes(value);
               return (
                 <Label key={value}>
@@ -222,7 +191,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
         </Tooltip>
       </Header>
       <TrophyList>
-        {availableTrophies.map((trophy) => (
+        {trophies.map((trophy) => (
           <TrophyListItem
             trophy={trophy}
             key={trophy.name}
@@ -231,6 +200,13 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
               trophyProgress?.find(
                 (trophyProgress) => trophyProgress.trophy.name === trophy.name
               )?.progress
+            }
+            onClick={
+              onTrophyClick
+                ? () => {
+                    onTrophyClick(trophy);
+                  }
+                : undefined
             }
           />
         ))}

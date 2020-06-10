@@ -37,6 +37,7 @@ export default applyMiddleware(
               name: 'welcome',
               island: 'hub',
               status: 'active',
+              unlockedAt: Date.now(),
             },
           ],
           trophies: [],

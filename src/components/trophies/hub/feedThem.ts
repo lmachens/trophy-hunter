@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import TeamworkProgress from '../teamwork/TeamworkProgress';
 
 const feedThem: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const feedThem: Trophy = {
   level: 'hubTeamwork',
   title: 'Feed Them',
   description: 'Assist each of your teammates for a kill.',
-  ProgressIcon: TeamworkProgress,
+  category: 'teamwork',
   checkProgress: ({ match, timeline, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

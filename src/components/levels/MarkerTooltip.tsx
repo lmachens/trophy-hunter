@@ -3,6 +3,7 @@ import { Tooltip } from '../tooltip';
 import { Level } from './types';
 import styled from '@emotion/styled';
 import { useAccount } from '../../contexts/account';
+import { categoriesMap } from '../trophies/categories';
 
 interface MarkerTooltipProps {
   children: ReactElement;
@@ -27,8 +28,9 @@ const MarkerTooltip: FC<MarkerTooltipProps> = ({ children, level }) => {
     );
     const progress =
       accountTrophy?.status === 'completed' ? 1 : accountTrophy?.progress || 0;
+    const ProgressIcon = categoriesMap[trophy.category].Icon;
 
-    return <trophy.ProgressIcon key={trophy.name} progress={progress} />;
+    return <ProgressIcon key={trophy.name} progress={progress} />;
   });
 
   return (

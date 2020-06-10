@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import EpicProgress from '../epic/EpicProgress';
 
 const darkness: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const darkness: Trophy = {
   level: 'hubEpic',
   title: 'Darkness',
   description: 'Destroy at least twelve enemy wards.',
-  ProgressIcon: EpicProgress,
+  category: 'epic',
   maxProgress: 12,
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(

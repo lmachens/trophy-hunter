@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import CombatProgress from '../combat/CombatProgress';
 
 const enrage: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const enrage: Trophy = {
   level: 'hubCombat',
   title: 'Enrage',
   description: 'Score at least three killing sprees.',
-  ProgressIcon: CombatProgress,
+  category: 'combat',
   maxProgress: 3,
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(

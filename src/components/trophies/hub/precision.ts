@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import SkillsProgress from '../skills/SkillsProgress';
 
 const precision: Trophy = {
   island: 'hubIsland',
@@ -8,7 +7,7 @@ const precision: Trophy = {
   title: 'Precision',
   description:
     'Be 15 cs ahead of your lane opponent at 10 minutes as top, mid or adc.',
-  ProgressIcon: SkillsProgress,
+  category: 'skills',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

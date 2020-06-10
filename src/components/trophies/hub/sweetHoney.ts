@@ -1,6 +1,4 @@
 import { Trophy } from '../types';
-import EpicProgress from '../epic/EpicProgress';
-import trophyHunter from './trophyHunter';
 
 const sweetHoney: Trophy = {
   island: 'hubIsland',
@@ -8,7 +6,7 @@ const sweetHoney: Trophy = {
   level: 'hubEpic',
   title: 'Sweet Honey',
   description: 'Farm at least 180 minions at 20 minutes.',
-  ProgressIcon: EpicProgress,
+  category: 'epic',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

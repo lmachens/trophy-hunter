@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import styled from '@emotion/styled';
 import { Trophy } from './types';
 import { useTrophyProgress } from '../../contexts/account';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import Grow from '../common/Grow';
 import ProgressBar from '../common/ProgressBar';
+import { categoriesMap } from './categories';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -22,7 +23,9 @@ const ListItem = styled.div<ListItemProps>`
   }
 `;
 
-interface TrophyListItemProps extends ListItemProps {
+interface TrophyListItemProps
+  extends ListItemProps,
+    HTMLAttributes<HTMLDivElement> {
   trophy: Trophy;
   progress?: number;
 }
@@ -57,11 +60,11 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
 }) => {
   const trophyProgress =
     typeof progress !== 'undefined' ? progress : useTrophyProgress(trophy);
-
+  const ProgressIcon = categoriesMap[trophy.category].Icon;
   return (
     <ListItem borderless={borderless} {...props}>
       <Progress>
-        <trophy.ProgressIcon progress={trophyProgress} />
+        <ProgressIcon progress={trophyProgress} />
       </Progress>
       <Grow>
         <h3>{trophy.title}</h3>

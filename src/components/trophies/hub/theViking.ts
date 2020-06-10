@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import ObjectivesProgress from '../objectives/ObjectivesProgress';
 
 const theViking: Trophy = {
   island: 'hubIsland',
@@ -8,7 +7,7 @@ const theViking: Trophy = {
   title: 'The Viking',
   description:
     'Get a solo kill before 10 minutes and take down or assist first tower.',
-  ProgressIcon: ObjectivesProgress,
+  category: 'objectives',
   checkProgress: ({ match, timeline, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

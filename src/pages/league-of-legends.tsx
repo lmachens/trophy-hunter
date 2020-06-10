@@ -13,12 +13,14 @@ import {
 import { transformIsland } from '../components/islands/utils';
 import Background from '../components/islands/Background';
 import { useState } from 'react';
-
 import LevelPanel from '../components/levels/LevelPanel';
-import Overview from '../components/trophies/Overview';
 import { TargetLevel } from '../components/levels/types';
 import { WelcomeGuide } from '../components/guides';
 import GameLayout from '../layouts/GameLayout';
+import Profile from '../components/trophies/Profile';
+import AvailableTrophies from '../components/trophies/AvailableTrophies';
+import { VideoAds } from '../components/ads';
+import * as levels from '../components/islands/levels';
 
 const islands = [
   transformIsland({
@@ -71,6 +73,16 @@ const SizeContainer = styled.div`
   height: 720px;
   transition: 0.15s;
   margin: 30px;
+`;
+
+const Overview = styled.aside`
+  padding: 48px 20px 20px 20px;
+  background: #1f1f1f;
+  border-left: 1px solid #77777a;
+  width: 436px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 const LeagueOfLegends: NextPage = () => {
@@ -129,7 +141,26 @@ const LeagueOfLegends: NextPage = () => {
           }
         }}
       />
-      <Overview />
+      <Overview>
+        <Profile />
+        <AvailableTrophies
+          onTrophyClick={(trophy) => {
+            const island = islands.find(
+              (island) => island.name === trophy.island
+            );
+            const level = levels[trophy.level];
+            setActiveTool(null);
+            setTargetLevel({
+              islandName: island.name,
+              level,
+              top: island.top,
+              left: island.left,
+            });
+            setVisibleIslandDetails(true);
+          }}
+        />
+        <VideoAds />
+      </Overview>
       <WelcomeGuide
         visibleIslandDetails={visibleIslandDetails}
         targetLevel={targetLevel}

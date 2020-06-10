@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import CombatProgress from '../combat/CombatProgress';
 
 const kitchenKnife: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const kitchenKnife: Trophy = {
   level: 'hubCombat',
   title: 'Kitchen Knife',
   description: 'Deal more than 30000 total damage to champions.',
-  ProgressIcon: CombatProgress,
+  category: 'combat',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

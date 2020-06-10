@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import TeamworkProgress from '../teamwork/TeamworkProgress';
 
 const theElephant: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const theElephant: Trophy = {
   level: 'hubTeamwork',
   title: 'The Elephant',
   description: 'Do not die for more than 20 minutes.',
-  ProgressIcon: TeamworkProgress,
+  category: 'teamwork',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

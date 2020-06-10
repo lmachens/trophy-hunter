@@ -2,6 +2,7 @@ import useAccount from './useAccount';
 import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
 import { useMemo } from 'react';
+import { Trophy } from '../../components/trophies/types';
 
 const useAvailableTrophies = () => {
   const { account } = useAccount();
@@ -13,7 +14,7 @@ const useAvailableTrophies = () => {
     return account.levels
       .filter((level) => level.status === 'active')
       .sort((a, b) => b.unlockedAt - a.unlockedAt)
-      .reduce((availableTrophies, activeLevel) => {
+      .reduce<Trophy[]>((availableTrophies, activeLevel) => {
         const level: Level = levels[activeLevel.name];
         if (!level) {
           return availableTrophies;

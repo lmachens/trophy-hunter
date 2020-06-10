@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import CombatProgress from './CombatProgress';
 
 const keyTargets: Trophy = {
   island: 'combatIsland',
@@ -8,7 +7,7 @@ const keyTargets: Trophy = {
   title: 'Key Targets',
   description:
     'Achieve three kills on the opponent with the highest amount of gold in the game at that point (gold checked at full minutes).',
-  ProgressIcon: CombatProgress,
+  category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

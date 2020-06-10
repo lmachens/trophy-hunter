@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import SkillsProgress from '../skills/SkillsProgress';
 
 const careful: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const careful: Trophy = {
   level: 'hubSkills',
   title: 'Careful',
   description: 'Have the least number of deaths.',
-  ProgressIcon: SkillsProgress,
+  category: 'skills',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

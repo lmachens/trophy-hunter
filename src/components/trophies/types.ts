@@ -1,6 +1,15 @@
-import { FC, SVGProps } from 'react';
+import { SVGProps } from 'react';
 import { Match, MatchTimeline } from '../../api/riot/types';
 import { Account } from '../../api/accounts';
+
+export type Category =
+  | 'welcome'
+  | 'combat'
+  | 'skills'
+  | 'teamwork'
+  | 'objectives'
+  | 'epic'
+  | 'special';
 
 export interface Trophy {
   name: string;
@@ -8,7 +17,7 @@ export interface Trophy {
   description: string;
   level: string;
   island: string;
-  ProgressIcon: FC<ProgressProps>;
+  category: Category;
   maxProgress?: number;
   checkProgress(props: {
     match: Match;

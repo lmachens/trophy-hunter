@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import CombatProgress from './CombatProgress';
 import { Participant } from '../../../api/riot/types';
 
 const flail: Trophy = {
@@ -9,7 +8,7 @@ const flail: Trophy = {
   title: 'Flail',
   description:
     'Have the highest damage to champions output per gold. (damage / gold works similar to KDA)',
-  ProgressIcon: CombatProgress,
+  category: 'combat',
   checkProgress: ({ match, account }) => {
     const calculateDamagePerGold = (participant: Participant) => {
       return (

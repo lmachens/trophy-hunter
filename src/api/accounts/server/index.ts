@@ -22,6 +22,7 @@ export const newAccount: Account = {
       name: 'welcome',
       island: 'hub',
       status: 'active',
+      unlockedAt: Date.now(),
     },
   ],
   trophies: [],

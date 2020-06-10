@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import CombatProgress from './CombatProgress';
 
 const firstBlood: Trophy = {
   island: 'combatIsland',
@@ -7,7 +6,7 @@ const firstBlood: Trophy = {
   level: 'combat1',
   title: 'First Blood',
   description: 'Take first blood.',
-  ProgressIcon: CombatProgress,
+  category: 'combat',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

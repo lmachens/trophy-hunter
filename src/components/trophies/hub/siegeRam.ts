@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import ObjectivesProgress from '../objectives/ObjectivesProgress';
 
 const siegeRam: Trophy = {
   island: 'hubIsland',
@@ -7,7 +6,7 @@ const siegeRam: Trophy = {
   level: 'hubObjectives',
   title: 'Siege Ram',
   description: 'Have most damage dealt to turrets of your team.',
-  ProgressIcon: ObjectivesProgress,
+  category: 'objectives',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(
       (participantIdentity) =>

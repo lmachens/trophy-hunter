@@ -59,6 +59,12 @@ export const createAccountsCollection = async () => {
               },
             },
           },
+          games: {
+            bsonType: 'int',
+          },
+          lastGameIds: {
+            bsonType: 'array',
+          },
         },
         required: ['islands', 'levels', 'trophies', 'authTokens'],
       },

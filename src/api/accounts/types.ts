@@ -11,6 +11,8 @@ export interface Account {
   islands: AccountIsland[];
   levels: AccountLevel[];
   trophies: AccountTrophy[];
+  games: number;
+  lastGameIds: number[];
 }
 
 export interface AccountIsland {

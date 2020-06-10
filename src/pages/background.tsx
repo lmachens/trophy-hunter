@@ -137,19 +137,31 @@ const Background: NextPage = () => {
     }, 1000);
 
     const handleInfoUpdate = (infoUpdate) => {
-      if (
-        infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
-        infoUpdate.feature !== 'end_game' ||
-        !infoUpdate.info.end_game_lol
-      ) {
+      if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
         return;
       }
-
-      const endGameStats = parseJSON(
-        infoUpdate.info.end_game_lol.lol_end_game_stats
-      );
-      if (endGameStats) {
-        localStorage.setItem('checkGameId', endGameStats.gameId);
+      if (infoUpdate.feature === 'end_game' && infoUpdate.info.end_game_lol) {
+        const endGameStats = parseJSON(
+          infoUpdate.info.end_game_lol.lol_end_game_stats
+        );
+        if (
+          endGameStats &&
+          localStorage.getItem('checkGameId') !== endGameStats.gameId.toString()
+        ) {
+          console.log(`Check game ${endGameStats.gameId}`);
+          localStorage.setItem('checkGameId', endGameStats.gameId);
+        }
+      }
+      if (infoUpdate.feature === 'lobby_info' && infoUpdate.info.lobby_info) {
+        const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
+        if (isNaN(queueId) || !SUPPORTED_QUEUE_IDS.includes(queueId)) {
+          console.log(
+            `QueueId ${infoUpdate.info.lobby_info?.queueId} is not supported`
+          );
+        } else {
+          console.log('QueueId is supported');
+          setPlayingSupportedGame(true);
+        }
       }
     };
 
@@ -160,12 +172,12 @@ const Background: NextPage = () => {
         return;
       }
       const queueId = parseInt(info.res.lobby_info?.queueId);
-      if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-        console.log(`QueueId ${queueId} is not supported`);
-        return;
+      if (isNaN(queueId) || !SUPPORTED_QUEUE_IDS.includes(queueId)) {
+        console.log(`QueueId ${info.res.lobby_info?.queueId} is not supported`);
+      } else {
+        console.log('QueueId is supported');
+        setPlayingSupportedGame(true);
       }
-      console.log('QueueId is supported');
-      setPlayingSupportedGame(true);
     });
 
     return () => {
@@ -182,6 +194,7 @@ const Background: NextPage = () => {
     } else if (leagueRunning === false) {
       console.log('League is not running');
       closeWindow('in_game');
+      return;
     }
 
     if (playingSupportedGame) {

@@ -188,6 +188,10 @@ export default applyMiddleware(
       {
         $set: {
           trophies: accountTrophies,
+          games: account.games + 1,
+        },
+        $push: {
+          lastGameIds: matchId,
         },
       }
     );

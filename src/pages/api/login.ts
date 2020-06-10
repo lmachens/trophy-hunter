@@ -77,6 +77,8 @@ export default applyMiddleware(
             },
           ],
           trophies: [],
+          games: 0,
+          lastGameIds: [],
         },
       },
       {

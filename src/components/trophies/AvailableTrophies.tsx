@@ -6,6 +6,7 @@ import TrophyListItem from './TrophyListItem';
 import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
 import TrophyList from './TrophyList';
 import { Trophy } from './types';
+import { Tooltip } from '../tooltip';
 
 const Header = styled.header`
   display: flex;
@@ -40,12 +41,16 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({ trophyProgress }) => {
     <>
       <Header>
         <Title>Available Trophies</Title>
-        <Filter>
-          <IslandFilter />
-        </Filter>
-        <Filter>
-          <FavoritesFilter />
-        </Filter>
+        <Tooltip title="Categories" placement="bottomRight">
+          <Filter>
+            <IslandFilter />
+          </Filter>
+        </Tooltip>
+        <Tooltip title="Favorites" placement="bottomRight">
+          <Filter>
+            <FavoritesFilter />
+          </Filter>
+        </Tooltip>
       </Header>
       <TrophyList>
         {availableTrophies.map((trophy) => (

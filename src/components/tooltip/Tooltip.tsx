@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
-type Placement = 'right' | 'bottom' | 'top' | 'topLeft';
+type Placement = 'right' | 'bottom' | 'bottomRight' | 'top' | 'topLeft';
 
 interface ContainerProps {
   isVisible: boolean;
@@ -34,6 +34,12 @@ const arrows = {
     transform: rotate(-90deg);
     top: calc(100% - 3px);
     left: calc(50% - 3px);
+  `,
+  bottomRight: css`
+    border-width: 6px 6px 6px 0px;
+    transform: rotate(-90deg);
+    top: calc(100% - 3px);
+    left: calc(100% - 18px);
   `,
   top: css`
     border-width: 6px 6px 6px 0px;
@@ -74,9 +80,12 @@ const Container = styled.div<ContainerProps>`
   }
 `;
 
+const Title = styled.div`
+  font-size: 1.14rem;
+`;
+
 const Text = styled.div`
   font-family: 'Lato', sans-serif;
-  font-size: 14px;
 `;
 
 interface TooltipProps {
@@ -133,6 +142,11 @@ const Tooltip: FC<TooltipProps> = ({
 
         case 'bottom':
           left = x + width / 2 - containerWidth / 2;
+          top = y - offset - containerHeight;
+          break;
+
+        case 'bottomRight':
+          left = x + width / 2 - containerWidth + 16;
           top = y - offset - containerHeight;
           break;
 
@@ -199,7 +213,7 @@ const Tooltip: FC<TooltipProps> = ({
         pointerEvents={pointerEvents}
         onClick={onClick}
       >
-        {title && <h3>{title}</h3>}
+        {title && <Title>{title}</Title>}
         {text && <Text>{text}</Text>}
       </Container>,
       bodyChildNode.current

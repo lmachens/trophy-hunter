@@ -53,6 +53,10 @@ const Categories = styled.div`
   background: #3f3e43;
   width: 124px;
   z-index: 9;
+
+  label:not(:first-child) {
+    border-top: 1px solid #77777a;
+  }
 `;
 
 const Backdrop = styled.div`

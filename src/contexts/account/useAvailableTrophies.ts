@@ -12,6 +12,7 @@ const useAvailableTrophies = () => {
     }
     return account.levels
       .filter((level) => level.status === 'active')
+      .sort((a, b) => b.unlockedAt - a.unlockedAt)
       .reduce((availableTrophies, activeLevel) => {
         const level: Level = levels[activeLevel.name];
         if (!level) {

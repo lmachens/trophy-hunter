@@ -32,7 +32,6 @@ export default applyMiddleware(
       res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
       return res.status(401).end('Unauthorized');
     }
-
     const { matchId } = req.body;
 
     const [match, timeline] = await Promise.all([
@@ -49,6 +48,7 @@ export default applyMiddleware(
       return res.status(404).end('Not Found');
     }
 
+    const now = Date.now();
     const activeLevels = account.levels.filter(
       (level) => level.status === 'active'
     );
@@ -154,6 +154,7 @@ export default applyMiddleware(
                 name: level.name,
                 island: level.island,
                 status: 'active',
+                unlockedAt: now,
               })),
             },
           },

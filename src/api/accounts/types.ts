@@ -15,13 +15,14 @@ export interface Account {
 
 export interface AccountIsland {
   name: string;
-  status: 'open' | 'done' | 'closed';
+  status: 'open' | 'done';
 }
 
 export interface AccountLevel {
   name: string;
   island: string;
-  status: 'active' | 'unlocked' | 'completed' | 'locked';
+  status: 'active' | 'unlocked' | 'completed';
+  unlockedAt: number;
 }
 
 export interface AccountTrophy {

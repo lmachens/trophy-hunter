@@ -9,6 +9,8 @@ import { Trophy } from './types';
 import { Tooltip } from '../tooltip';
 import CheckMark from '../icons/CheckMark';
 import { categoriesMap } from './categories';
+import { toggleArrayElement } from '../../api/utils/arrays';
+import { useAccount } from '../../contexts/account';
 
 const Header = styled.header`
   display: flex;
@@ -109,6 +111,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({
   trophyProgress,
   onTrophyClick,
 }) => {
+  const { account } = useAccount();
   const availableTrophies = useAvailableTrophies();
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [categories, setCategories] = useState<string[]>(
@@ -117,18 +120,14 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({
   const [showCategories, setShowCategories] = useState(false);
 
   const handleCategoryChange = (category) => () => {
-    const checked = categories.indexOf(category);
-    if (checked === -1) {
-      setCategories([...categories, category]);
-    } else {
-      const categoriesClone = [...categories];
-      categoriesClone.splice(checked, 1);
-      setCategories(categoriesClone);
-    }
+    const newCategories = toggleArrayElement(categories, category);
+    setCategories(newCategories);
   };
 
-  const trophies = availableTrophies.filter((trophy) =>
-    categories.includes(trophy.category)
+  const trophies = availableTrophies.filter(
+    (trophy) =>
+      categories.includes(trophy.category) &&
+      (!onlyFavorites || account.favoriteTrophyNames.includes(trophy.name))
   );
   return (
     <>

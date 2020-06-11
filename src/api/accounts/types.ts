@@ -13,6 +13,7 @@ export interface Account {
   trophies: AccountTrophy[];
   games: number;
   lastGameIds: number[];
+  favoriteTrophyNames: string[];
 }
 
 export interface AccountIsland {

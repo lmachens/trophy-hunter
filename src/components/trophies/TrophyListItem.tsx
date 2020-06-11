@@ -1,11 +1,14 @@
 import { FC, HTMLAttributes } from 'react';
 import styled from '@emotion/styled';
 import { Trophy } from './types';
-import { useTrophyProgress } from '../../contexts/account';
+import { useTrophyProgress, useAccount } from '../../contexts/account';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import Grow from '../common/Grow';
 import ProgressBar from '../common/ProgressBar';
 import { categoriesMap } from './categories';
+import { queryCache, useMutation } from 'react-query';
+import { patchAccount } from '../../api/accounts';
+import { toggleArrayElement } from '../../api/utils/arrays';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -46,10 +49,6 @@ const Favorite = styled(FavoritesFilter)`
 
   fill: ${(props: FavoriteProps) => (props.active ? '#77777A' : '#1F1F1F')};
   stroke: #77777a;
-
-  &:hover {
-    fill: #3f3e43;
-  }
 `;
 
 const TrophyListItem: FC<TrophyListItemProps> = ({
@@ -58,9 +57,16 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   progress,
   ...props
 }) => {
+  const { account } = useAccount();
+  const [patch] = useMutation(patchAccount, {
+    onSuccess: () => {
+      queryCache.refetchQueries('account');
+    },
+  });
   const trophyProgress =
     typeof progress !== 'undefined' ? progress : useTrophyProgress(trophy);
   const ProgressIcon = categoriesMap[trophy.category].Icon;
+
   return (
     <ListItem borderless={borderless} {...props}>
       <Progress>
@@ -73,7 +79,18 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <ProgressBar progress={trophyProgress} max={trophy.maxProgress} />
         )}
       </Grow>
-      {borderless && <Favorite active />}
+      <Favorite
+        active={account.favoriteTrophyNames.includes(trophy.name)}
+        onClick={(event) => {
+          event.stopPropagation();
+          patch({
+            favoriteTrophyNames: toggleArrayElement(
+              account.favoriteTrophyNames,
+              trophy.name
+            ),
+          });
+        }}
+      />
     </ListItem>
   );
 };

@@ -28,4 +28,5 @@ export const newAccount: Account = {
   trophies: [],
   games: 0,
   lastGameIds: [],
+  favoriteTrophyNames: [],
 };

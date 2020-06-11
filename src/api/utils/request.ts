@@ -53,6 +53,18 @@ export const postJSON = async <T>(
   })) as T;
 };
 
+export const patchJSON = async <T>(
+  input: RequestInfo,
+  data: unknown,
+  init?: RequestInit
+): Promise<T> => {
+  return (await requestJSON(input, {
+    method: 'PATCH',
+    data,
+    ...(init || {}),
+  })) as T;
+};
+
 export const getJSON = async <T>(
   input: RequestInfo,
   init?: JSONRequestInit

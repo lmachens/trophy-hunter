@@ -65,6 +65,9 @@ export const createAccountsCollection = async () => {
           lastGameIds: {
             bsonType: 'array',
           },
+          favoriteTrophyNames: {
+            bsonType: 'array',
+          },
         },
         required: ['islands', 'levels', 'trophies', 'authTokens'],
       },

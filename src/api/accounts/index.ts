@@ -1,5 +1,5 @@
 import { Account, Credential } from './types';
-import { postJSON, getJSON } from '../utils/request';
+import { postJSON, getJSON, patchJSON } from '../utils/request';
 export * from './types';
 
 export const postLogin = (credential: Credential) => {
@@ -18,4 +18,8 @@ export const postCheck = (matchId: number) => {
   return postJSON<{
     trophyNames: string[];
   }>('/api/check', { matchId });
+};
+
+export const patchAccount = (patch) => {
+  return patchJSON<Account>('/api/account', patch);
 };

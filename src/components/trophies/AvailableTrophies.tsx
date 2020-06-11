@@ -136,7 +136,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({
         <Title>Available Trophies</Title>
         <Tooltip title="Categories" placement="bottomRight">
           <Filter
-            active={categories.length < 6}
+            active={categories.length < 7}
             onClick={() => setShowCategories(!showCategories)}
           >
             <IslandFilter />
@@ -147,15 +147,15 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({
             <Label>
               <Checkbox
                 type="checkbox"
-                checked={categories.length === 6}
+                checked={categories.length === 7}
                 onChange={() =>
-                  categories.length === 6
+                  categories.length === 7
                     ? setCategories([])
                     : setCategories(Object.keys(categoriesMap))
                 }
               />
               <CheckMarkBox>
-                {categories.length === 6 && <CheckMarkAbsolute />}
+                {categories.length === 7 && <CheckMarkAbsolute />}
               </CheckMarkBox>
               Select all
             </Label>

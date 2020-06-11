@@ -79,18 +79,20 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <ProgressBar progress={trophyProgress} max={trophy.maxProgress} />
         )}
       </Grow>
-      <Favorite
-        active={account.favoriteTrophyNames.includes(trophy.name)}
-        onClick={(event) => {
-          event.stopPropagation();
-          patch({
-            favoriteTrophyNames: toggleArrayElement(
-              account.favoriteTrophyNames,
-              trophy.name
-            ),
-          });
-        }}
-      />
+      {account && (
+        <Favorite
+          active={account.favoriteTrophyNames.includes(trophy.name)}
+          onClick={(event) => {
+            event.stopPropagation();
+            patch({
+              favoriteTrophyNames: toggleArrayElement(
+                account.favoriteTrophyNames,
+                trophy.name
+              ),
+            });
+          }}
+        />
+      )}
     </ListItem>
   );
 };

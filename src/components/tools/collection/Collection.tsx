@@ -16,6 +16,7 @@ import * as objectivesTrophies from '../../trophies/objectives';
 import * as skillsTrophies from '../../trophies/skills';
 import * as specialTrophies from '../../trophies/special';
 import * as teamworkTrophies from '../../trophies/teamwork';
+import * as trophies from '../../trophies';
 
 const Items = styled.div`
   display: flex;
@@ -26,6 +27,10 @@ const Items = styled.div`
 
 const Collection: FC = () => {
   const { account } = useAccount();
+  const completedTrophies =
+    account?.trophies.filter((accountTrophy) => accountTrophy.progress === 1) ||
+    [];
+
   return (
     <>
       <h2>My Collection</h2>
@@ -35,7 +40,11 @@ const Collection: FC = () => {
           Progress={HubProgress}
           trophiesMax={Object.keys(hubTrophies).length}
           trophiesCount={
-            account?.trophies.filter((trophy) => trophy.island === 'hub').length
+            completedTrophies.filter(
+              (accountTrophy) =>
+                accountTrophy.progress === 1 &&
+                trophies[accountTrophy.name].category === 'welcome'
+            ).length
           }
         />
         <CollectionItem
@@ -43,8 +52,10 @@ const Collection: FC = () => {
           Progress={CombatProgress}
           trophiesMax={Object.keys(combatTrophies).length}
           trophiesCount={
-            account?.trophies.filter((trophy) => trophy.island === 'combat')
-              .length
+            completedTrophies.filter(
+              (accountTrophy) =>
+                trophies[accountTrophy.name].category === 'combat'
+            ).length
           }
         />
         <CollectionItem
@@ -52,8 +63,10 @@ const Collection: FC = () => {
           Progress={SkillsProgress}
           trophiesMax={Object.keys(skillsTrophies).length}
           trophiesCount={
-            account?.trophies.filter((trophy) => trophy.island === 'skills')
-              .length
+            completedTrophies.filter(
+              (accountTrophy) =>
+                trophies[accountTrophy.name].category === 'skills'
+            ).length
           }
         />
         <CollectionItem
@@ -61,8 +74,10 @@ const Collection: FC = () => {
           Progress={TeamworkProgress}
           trophiesMax={Object.keys(teamworkTrophies).length}
           trophiesCount={
-            account?.trophies.filter((trophy) => trophy.island === 'teamwork')
-              .length
+            completedTrophies.filter(
+              (accountTrophy) =>
+                trophies[accountTrophy.name].category === 'teamwork'
+            ).length
           }
         />
         <CollectionItem
@@ -70,8 +85,10 @@ const Collection: FC = () => {
           Progress={ObjectivesProgress}
           trophiesMax={Object.keys(objectivesTrophies).length}
           trophiesCount={
-            account?.trophies.filter((trophy) => trophy.island === 'objectives')
-              .length
+            completedTrophies.filter(
+              (accountTrophy) =>
+                trophies[accountTrophy.name].category === 'objectives'
+            ).length
           }
         />
         <CollectionItem
@@ -79,8 +96,10 @@ const Collection: FC = () => {
           Progress={EpicProgress}
           trophiesMax={Object.keys(epicTrophies).length}
           trophiesCount={
-            account?.trophies.filter((trophy) => trophy.island === 'epic')
-              .length
+            completedTrophies.filter(
+              (accountTrophy) =>
+                trophies[accountTrophy.name].category === 'epic'
+            ).length
           }
         />
         <CollectionItem
@@ -88,8 +107,10 @@ const Collection: FC = () => {
           Progress={SpecialProgress}
           trophiesMax={Object.keys(specialTrophies).length}
           trophiesCount={
-            account?.trophies.filter((trophy) => trophy.island === 'special')
-              .length
+            completedTrophies.filter(
+              (accountTrophy) =>
+                trophies[accountTrophy.name].category === 'special'
+            ).length
           }
         />
       </Items>

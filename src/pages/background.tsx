@@ -155,6 +155,7 @@ const Background: NextPage = () => {
       if (infoUpdate.feature === 'lobby_info' && infoUpdate.info.lobby_info) {
         const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
         if (isNaN(queueId) || !SUPPORTED_QUEUE_IDS.includes(queueId)) {
+          setPlayingSupportedGame(false);
           console.log(
             `QueueId ${infoUpdate.info.lobby_info?.queueId} is not supported`
           );
@@ -174,6 +175,7 @@ const Background: NextPage = () => {
       const queueId = parseInt(info.res.lobby_info?.queueId);
       if (isNaN(queueId) || !SUPPORTED_QUEUE_IDS.includes(queueId)) {
         console.log(`QueueId ${info.res.lobby_info?.queueId} is not supported`);
+        setPlayingSupportedGame(false);
       } else {
         console.log('QueueId is supported');
         setPlayingSupportedGame(true);

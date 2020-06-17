@@ -1,3 +1,4 @@
+export { default as burningComet } from './burningComet';
 export { default as doubleKill } from './doubleKill';
 export { default as enrage } from './enrage';
 export { default as firstBlood } from './firstBlood';

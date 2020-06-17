@@ -1,5 +1,6 @@
 export { default as burningComet } from './burningComet';
 export { default as david } from './david';
+export { default as deadlyVenom } from './deadlyVenom';
 export { default as doubleKill } from './doubleKill';
 export { default as enrage } from './enrage';
 export { default as firstBlood } from './firstBlood';

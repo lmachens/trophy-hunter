@@ -33,8 +33,6 @@ const sweetHoney: Trophy = {
       return 0;
     }
 
-    trophyData.precision = true;
-
     const accountPlayer = allPlayers.find(
       (player) => player.summonerName === account.summoner.name
     );

@@ -1,7 +1,12 @@
 import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import combat3 from './combat3';
-import { burningComet, david, deadlyVenom } from '../../../trophies';
+import {
+  burningComet,
+  david,
+  deadlyVenom,
+  deathMarks,
+} from '../../../trophies';
 
 const combat2: Level = {
   island: 'combat',
@@ -9,7 +14,7 @@ const combat2: Level = {
   title: 'Combat island Lvl. 2',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [burningComet, david, deadlyVenom],
+  trophies: [burningComet, david, deadlyVenom, deathMarks],
   unlocksLevels: [combat3],
 };
 

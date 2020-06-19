@@ -6,7 +6,7 @@ const deadlyVenom: Trophy = {
   level: 'combat2',
   title: 'Deadly Venom',
   description:
-    'Deal at least 25% more damage to champions than the next player. (from 50%: Tuors Axe)',
+    'Deal at least 25% more damage to champions than the next player.',
   category: 'combat',
   checkProgress: ({ match, account }) => {
     const participantIdentity = match.participantIdentities.find(

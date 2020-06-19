@@ -3,6 +3,7 @@ export { default as david } from './david';
 export { default as deadlyVenom } from './deadlyVenom';
 export { default as deathMarks } from './deathMarks';
 export { default as doubleKill } from './doubleKill';
+export { default as duelist } from './duelist';
 export { default as enrage } from './enrage';
 export { default as firstBlood } from './firstBlood';
 export { default as flail } from './flail';

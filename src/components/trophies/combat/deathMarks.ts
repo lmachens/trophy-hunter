@@ -3,7 +3,7 @@ import { MatchEvent } from '../../../api/riot/types';
 
 const THIRTY_SECONDS = 30000;
 const deathMarks: Trophy = {
-  island: 'hubIsland',
+  island: 'combatIsland',
   name: 'deathMarks',
   level: 'combat2',
   title: 'deathMarks',

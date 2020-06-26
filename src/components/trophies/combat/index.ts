@@ -1,3 +1,4 @@
+export { default as bombardment } from './bombardment';
 export { default as burningComet } from './burningComet';
 export { default as david } from './david';
 export { default as deadlyVenom } from './deadlyVenom';

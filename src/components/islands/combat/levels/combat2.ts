@@ -9,6 +9,7 @@ import {
   duelist,
   smartness,
   spinningBlades,
+  bombardment,
 } from '../../../trophies';
 
 const combat2: Level = {
@@ -18,6 +19,7 @@ const combat2: Level = {
   Icon: CombatIcon,
   Marker: CombatMarker,
   trophies: [
+    bombardment,
     burningComet,
     david,
     deadlyVenom,

@@ -8,6 +8,7 @@ import {
   deathMarks,
   duelist,
   smartness,
+  spinningBlades,
 } from '../../../trophies';
 
 const combat2: Level = {
@@ -16,7 +17,15 @@ const combat2: Level = {
   title: 'Combat island Lvl. 2',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [burningComet, david, deadlyVenom, deathMarks, duelist, smartness],
+  trophies: [
+    burningComet,
+    david,
+    deadlyVenom,
+    deathMarks,
+    duelist,
+    smartness,
+    spinningBlades,
+  ],
   unlocksLevels: [combat3],
 };
 

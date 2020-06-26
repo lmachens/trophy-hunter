@@ -25,12 +25,12 @@ const Profile: FC = () => {
 
   const [login] = useMutation(postLogin, {
     onSuccess: () => {
-      queryCache.refetchQueries('account');
+      queryCache.invalidateQueries('account');
     },
   });
   const [reset] = useMutation(postReset, {
     onSuccess: () => {
-      queryCache.refetchQueries('account');
+      queryCache.invalidateQueries('account');
     },
   });
 

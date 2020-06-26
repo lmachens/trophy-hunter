@@ -164,7 +164,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     },
     onSuccess: () => {
       localStorage.removeItem('checkGameId');
-      queryCache.refetchQueries('account');
+      queryCache.invalidateQueries('account');
     },
   });
   const loading = status === 'loading';

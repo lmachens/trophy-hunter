@@ -62,7 +62,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   const { account } = useAccount();
   const [patch] = useMutation(patchAccount, {
     onSuccess: () => {
-      queryCache.refetchQueries('account');
+      queryCache.invalidateQueries('account');
     },
   });
   const trophyProgress =

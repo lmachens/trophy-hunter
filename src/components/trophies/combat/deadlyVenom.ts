@@ -17,7 +17,6 @@ const deadlyVenom: Trophy = {
       (participant) =>
         participant.participantId === participantIdentity.participantId
     );
-    participant.stats.totalDamageDealtToChampions;
     const highDamageParticipant = match.participants.find(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&

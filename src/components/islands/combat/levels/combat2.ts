@@ -10,6 +10,7 @@ import {
   smartness,
   spinningBlades,
   bombardment,
+  sheepHunter,
 } from '../../../trophies';
 
 const combat2: Level = {
@@ -25,6 +26,7 @@ const combat2: Level = {
     deadlyVenom,
     deathMarks,
     duelist,
+    sheepHunter,
     smartness,
     spinningBlades,
   ],

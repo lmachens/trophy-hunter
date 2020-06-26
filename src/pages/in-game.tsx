@@ -22,11 +22,7 @@ import { Level } from '../components/levels/types';
 import { useQuery } from 'react-query';
 import { setLocalStorageItem, getLocalStorageItem } from '../api/utils/storage';
 import { getAccount } from '../api/accounts';
-import overwolf, {
-  openWindow,
-  setLeagueFeatures,
-  toggleCurrentWindow,
-} from '../api/overwolf';
+import overwolf, { openWindow, setLeagueFeatures } from '../api/overwolf';
 import { parseJSON } from '../api/utils/json';
 import usePersistentState from '../hooks/usePersistentState';
 
@@ -119,18 +115,6 @@ const InGame: NextPage = () => {
   const [showTrophyCompleted] = usePersistentState('trophyCompleted', false);
 
   useEffect(() => {
-    const handleHotkeyPressed = () => {
-      toggleCurrentWindow();
-    };
-
-    overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
-
-    return () => {
-      overwolf.settings.hotkeys.onPressed.removeListener(handleHotkeyPressed);
-    };
-  }, []);
-
-  useEffect(() => {
     if (account) {
       console.log('Account is ready');
       setProgress((progress) => progress + 0.5);
@@ -204,7 +188,16 @@ const InGame: NextPage = () => {
 
     const trophies = activeLevels.reduce<Trophy[]>((trophies, accountLevel) => {
       const level = levels[accountLevel.name] as Level;
-      return [...trophies, ...level.trophies];
+      return [
+        ...trophies,
+        ...level.trophies.filter((trophy) => {
+          const accountTrophy = account.trophies.find(
+            (accountTrophy) => accountTrophy.name === trophy.name
+          );
+
+          return accountTrophy?.status !== 'completed';
+        }),
+      ];
     }, []);
 
     console.log(`Can achieve ${trophies.length} trophies`, trophies);

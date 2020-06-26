@@ -9,6 +9,7 @@ import overwolf, {
   isLeagueLauncherRunning,
   isLeagueClosed,
   closeWindow,
+  toggleWindow,
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
@@ -31,6 +32,18 @@ const Background: NextPage = () => {
   const [autoLaunch] = usePersistentState('autoLaunch', true);
 
   const [login] = useMutation(postLogin);
+
+  useEffect(() => {
+    const handleHotkeyPressed = () => {
+      toggleWindow('in_game');
+    };
+
+    overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
+
+    return () => {
+      overwolf.settings.hotkeys.onPressed.removeListener(handleHotkeyPressed);
+    };
+  }, []);
 
   useEffect(() => {
     const launchedByEvent = globalThis.location?.search.includes(

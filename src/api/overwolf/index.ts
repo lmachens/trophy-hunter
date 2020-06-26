@@ -1,7 +1,7 @@
 // Creates magic proxy to avoid crashes non-overwolf environments
 
 if (typeof overwolf === 'undefined') {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   globalThis.overwolf = new Proxy(
     () => {
@@ -66,7 +66,7 @@ export const openWindow = (windowName) => {
   });
 };
 
-export const closeWindow = (windowName) => {
+export const closeWindow = (windowName: string) => {
   overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
     if (result.error) {
       throw new Error(result.error);
@@ -75,9 +75,12 @@ export const closeWindow = (windowName) => {
   });
 };
 
-export const toggleCurrentWindow = () => {
-  overwolf.windows.getCurrentWindow((result) => {
-    if (['minimized', 'hidden', 'closed'].includes(result.window.stateEx)) {
+export const toggleWindow = (windowName: string) => {
+  overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
+    if (
+      !result.success ||
+      ['minimized', 'hidden', 'closed'].includes(result.window.stateEx)
+    ) {
       overwolf.windows.restore(result.window.id);
     } else {
       overwolf.windows.minimize(result.window.id);

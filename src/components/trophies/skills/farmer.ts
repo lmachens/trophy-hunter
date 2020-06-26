@@ -16,13 +16,7 @@ const farmer: Trophy = {
       (participant) =>
         participant.participantId === participantIdentity.participantId
     );
-
-    return Number(
-      participant.stats.neutralMinionsKilled +
-        participant.stats.neutralMinionsKilledEnemyJungle +
-        participant.stats.neutralMinionsKilledTeamJungle >=
-        200
-    );
+    return Number(participant.stats.totalMinionsKilled >= 200);
   },
   checkLive: ({ allPlayers, trophyData, account }) => {
     if (trophyData.farmer || !allPlayers) {

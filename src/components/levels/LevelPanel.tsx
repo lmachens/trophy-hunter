@@ -23,6 +23,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 15px;
+  max-height: 100%;
 `;
 
 const Title = styled.h3`

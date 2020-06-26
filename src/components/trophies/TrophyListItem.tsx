@@ -43,7 +43,9 @@ interface FavoriteProps {
   active: boolean;
 }
 
-const Favorite = styled(FavoritesFilter)`
+const Favorite = styled((props) => (
+  <FavoritesFilter {...props} active={undefined} />
+))`
   flex-shrink: 0;
   cursor: pointer;
 

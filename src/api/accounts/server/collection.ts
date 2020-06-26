@@ -20,7 +20,7 @@ export const createAccountsCollection = async () => {
                 bsonType: 'int',
               },
               revisionDate: {
-                bsonType: 'int',
+                bsonType: 'decimal',
               },
               name: {
                 bsonType: 'string',

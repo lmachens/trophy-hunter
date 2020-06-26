@@ -1,4 +1,10 @@
-import { useState, useCallback, Dispatch, SetStateAction } from 'react';
+import {
+  useState,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from 'react';
 import { getLocalStorageItem, setLocalStorageItem } from '../api/utils/storage';
 
 const usePersistentState = <T>(
@@ -16,6 +22,20 @@ const usePersistentState = <T>(
     },
     [key]
   );
+
+  useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== key || !event.newValue) {
+        return;
+      }
+      setValue(getLocalStorageItem<T>(key, defaultValue));
+    };
+    window.addEventListener('storage', handleStorage, false);
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+    };
+  }, [key]);
 
   return [value, setPersistentValue];
 };

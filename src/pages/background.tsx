@@ -14,6 +14,7 @@ import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
 import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
+import usePersistentState from '../hooks/usePersistentState';
 
 const INTERESTED_IN_LAUNCHER_FEATURES = [
   'game_flow',
@@ -27,6 +28,7 @@ const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);
   const [leagueLauncherRunning, setLeagueLauncherRunning] = useState(null);
   const [playingSupportedGame, setPlayingSupportedGame] = useState(null);
+  const [autoLaunch] = usePersistentState('autoLaunch', true);
 
   const [login] = useMutation(postLogin);
 
@@ -115,8 +117,10 @@ const Background: NextPage = () => {
       return;
     }
     console.log(`League launcher is running`);
+    if (autoLaunch) {
+      openWindow('desktop');
+    }
 
-    openWindow('desktop');
     const timeoutId = setTimeout(() => {
       setLeagueLauncherFeatures(INTERESTED_IN_LAUNCHER_FEATURES, () => {
         overwolf.games.launchers.events.getInfo(
@@ -188,7 +192,7 @@ const Background: NextPage = () => {
         handleInfoUpdate
       );
     };
-  }, [leagueLauncherRunning]);
+  }, [leagueLauncherRunning, autoLaunch]);
 
   useEffect(() => {
     if (leagueRunning) {
@@ -205,10 +209,10 @@ const Background: NextPage = () => {
       console.log('Not playing a supported game');
     }
 
-    if (leagueRunning && playingSupportedGame) {
+    if (leagueRunning && playingSupportedGame && autoLaunch) {
       openWindow('in_game');
     }
-  }, [leagueRunning, playingSupportedGame]);
+  }, [leagueRunning, playingSupportedGame, autoLaunch]);
 
   return null;
 };

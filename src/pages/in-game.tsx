@@ -28,6 +28,7 @@ import overwolf, {
   toggleCurrentWindow,
 } from '../api/overwolf';
 import { parseJSON } from '../api/utils/json';
+import usePersistentState from '../hooks/usePersistentState';
 
 const ConnectionStatus = styled.div`
   margin-top: 48px;
@@ -111,6 +112,11 @@ const InGame: NextPage = () => {
   >([]);
   const [notifiedNear, setNotifiedNear] = useState<string[]>([]);
   const [notifiedCompleted, setNotifiedCompleted] = useState<string[]>([]);
+  const [showTrophyNearCompletion] = usePersistentState(
+    'trophyNearCompletion',
+    true
+  );
+  const [showTrophyCompleted] = usePersistentState('trophyCompleted', false);
 
   useEffect(() => {
     const handleHotkeyPressed = () => {
@@ -244,10 +250,14 @@ const InGame: NextPage = () => {
   }, [gameData?.gameTime]);
 
   useEffect(() => {
-    const notificateNearTrophies = trophyProgress.filter(
-      ({ progress, trophy }) =>
-        progress >= 0.8 && progress < 1 && !notifiedNear.includes(trophy.name)
-    );
+    const notificateNearTrophies = showTrophyNearCompletion
+      ? trophyProgress.filter(
+          ({ progress, trophy }) =>
+            progress >= 0.8 &&
+            progress < 1 &&
+            !notifiedNear.includes(trophy.name)
+        )
+      : [];
 
     if (notificateNearTrophies.length > 0) {
       setNotifiedNear((notifiedNear) => [
@@ -256,10 +266,12 @@ const InGame: NextPage = () => {
       ]);
     }
 
-    const notificateCompleteTrophies = trophyProgress.filter(
-      ({ progress, trophy }) =>
-        progress === 1 && !notifiedCompleted.includes(trophy.name)
-    );
+    const notificateCompleteTrophies = showTrophyCompleted
+      ? trophyProgress.filter(
+          ({ progress, trophy }) =>
+            progress === 1 && !notifiedCompleted.includes(trophy.name)
+        )
+      : [];
     if (notificateCompleteTrophies.length > 0) {
       setNotifiedCompleted((notifiedCompleted) => [
         ...notifiedCompleted,

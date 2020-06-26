@@ -4,7 +4,7 @@ export const newAccount: Account = {
   summoner: {
     platformId: 'global',
     accountId: '',
-    profileIconId: 0,
+    profileIconId: null,
     revisionDate: 0,
     name: 'Trophy Hunter',
     id: '',

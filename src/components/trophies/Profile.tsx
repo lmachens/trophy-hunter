@@ -38,7 +38,7 @@ const Profile: FC = () => {
     <Container>
       <Avatar
         src={
-          version && account
+          version && account && account.summoner.profileIconId !== null
             ? `https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/profileicon/${account.summoner.profileIconId}.png`
             : `${process.env.PUBLIC_DIR}/unknown.png`
         }

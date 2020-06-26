@@ -6,7 +6,7 @@ const deathMarks: Trophy = {
   island: 'combatIsland',
   name: 'deathMarks',
   level: 'combat2',
-  title: 'deathMarks',
+  title: 'Death Marks',
   description:
     "Perform seven kills and don't die in the 30 seconds afer each kill.",
   category: 'combat',

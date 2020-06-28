@@ -58,10 +58,8 @@ type HTTPMethod =
 export const withMethods = (...allowedMethods: HTTPMethod[]) => (
   handler: Handler
 ) => async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.headers.origin.startsWith('https://content.overwolf.com')) {
+  if (req.headers.origin?.startsWith('https://content.overwolf.com')) {
     res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  } else {
-    res.setHeader('Access-Control-Allow-Origin', '*');
   }
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 

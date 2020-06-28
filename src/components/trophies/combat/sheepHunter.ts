@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { MatchEvent } from '../../../api/riot/types';
+import { calcLevel } from '../../../api/riot/helpers';
 
 const sheepHunter: Trophy = {
   island: 'combatIsland',
@@ -14,17 +14,6 @@ const sheepHunter: Trophy = {
         participantIdentity.player.accountId === account.summoner.accountId
     );
 
-    const allLevelUps = timeline.frames.reduce<MatchEvent[]>(
-      (levelUps, frame) => [
-        ...levelUps,
-        ...frame.events.filter(
-          (event) =>
-            event.type === 'SKILL_LEVEL_UP' && event.levelUpType === 'NORMAL'
-        ),
-      ],
-      []
-    );
-
     const sheepKills = timeline.frames.reduce((sheepKills, frame) => {
       const frameSheepKills = frame.events.filter((event) => {
         if (
@@ -33,16 +22,16 @@ const sheepHunter: Trophy = {
         ) {
           return false;
         }
-        const killerLevel = allLevelUps.filter(
-          (levelUp) =>
-            levelUp.participantId === event.killerId &&
-            levelUp.timestamp < event.timestamp
-        ).length;
-        const victimLevel = allLevelUps.filter(
-          (levelUp) =>
-            levelUp.participantId === event.victimId &&
-            levelUp.timestamp < event.timestamp
-        ).length;
+        const killerLevel = calcLevel(
+          timeline,
+          event.killerId,
+          event.timestamp
+        );
+        const victimLevel = calcLevel(
+          timeline,
+          event.victimId,
+          event.timestamp
+        );
         const levelDiff = killerLevel - victimLevel;
 
         return levelDiff >= 2;

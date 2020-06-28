@@ -19,9 +19,6 @@ export const createAccountsCollection = async () => {
               profileIconId: {
                 bsonType: 'int',
               },
-              revisionDate: {
-                bsonType: 'decimal',
-              },
               name: {
                 bsonType: 'string',
               },

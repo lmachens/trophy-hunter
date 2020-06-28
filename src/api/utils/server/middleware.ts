@@ -32,6 +32,7 @@ export const withError = (handler: Handler) => async (
 };
 
 const ajv = new Ajv();
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const withSchema = (schema: string | boolean | object) => (
   handler: Handler
 ) => async (req: NextApiRequest, res: NextApiResponse) => {
@@ -57,10 +58,11 @@ type HTTPMethod =
 export const withMethods = (...allowedMethods: HTTPMethod[]) => (
   handler: Handler
 ) => async (req: NextApiRequest, res: NextApiResponse) => {
-  res.setHeader(
-    'Access-Control-Allow-Origin',
-    process.env.Access_Control_Allow_Origin || '*'
-  );
+  if (req.headers.origin.startsWith('https://content.overwolf.com')) {
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === 'OPTIONS') {

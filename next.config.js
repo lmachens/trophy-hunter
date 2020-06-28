@@ -7,7 +7,6 @@ const config = {
     MONGO_URL: process.env.MONGO_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     DISCORD_WEBHOOK_URL: process.env.DISCORD_WEBHOOK_URL,
-    Access_Control_Allow_Origin: process.env.Access_Control_Allow_Origin,
     RIOT_API_KEY: process.env.RIOT_API_KEY,
   },
   publicRuntimeConfig: {

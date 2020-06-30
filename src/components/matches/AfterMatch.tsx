@@ -15,6 +15,7 @@ import * as trophies from '../trophies';
 import Lottie from 'react-lottie';
 import animationData from './confetti.json';
 import { bounce } from '../../styles/animations';
+import Squid from '../icons/Squid';
 
 const sandClockMotion = keyframes`
   from {
@@ -142,6 +143,11 @@ const ListItem = styled(TrophyListItem)`
   }
 `;
 
+const NoTropiesContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -246,13 +252,21 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
             setShowModal(false);
             reset();
           }}
-          title="Trophies completed in this match, GG!"
+          title={
+            match.trophyNames.length === 0
+              ? 'No trophies completed this match'
+              : 'Trophies completed in this match, GG!'
+          }
         >
           <TrophyList>
             {match.trophyNames.map((trophyName) => (
               <ListItem trophy={trophies[trophyName]} key={trophyName} />
             ))}
-            {match.trophyNames.length === 0 && 'No trophies completed :*('}
+            {match.trophyNames.length === 0 && (
+              <NoTropiesContainer>
+                <Squid />
+              </NoTropiesContainer>
+            )}
           </TrophyList>
           {match.trophyNames.length > 0 && (
             <LottieContainer>

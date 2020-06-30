@@ -16,6 +16,7 @@ export { default as revenge } from './revenge';
 export { default as sheepHunter } from './sheepHunter';
 export { default as skullHunter } from './skullHunter';
 export { default as smartness } from './smartness';
+export { default as soulHarvest } from './soulHarvest';
 export { default as spinningBlades } from './spinningBlades';
 export { default as superiorPosition } from './superiorPosition';
 export { default as trophyHunter } from './trophyHunter';

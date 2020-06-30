@@ -9,6 +9,8 @@ import { categoriesMap } from './categories';
 import { queryCache, useMutation } from 'react-query';
 import { patchAccount } from '../../api/accounts';
 import { toggleArrayElement } from '../../api/utils/arrays';
+import Flag from '../icons/Flag';
+import { Tooltip } from '../tooltip';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -81,6 +83,14 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <ProgressBar progress={trophyProgress} max={trophy.maxProgress} />
         )}
       </Grow>
+      {!trophy.checkLive && (
+        <Tooltip
+          text="This trophy can not be checked in-game"
+          placement="bottomRight"
+        >
+          <Flag />
+        </Tooltip>
+      )}
       {account && (
         <Favorite
           active={account.favoriteTrophyNames.includes(trophy.name)}

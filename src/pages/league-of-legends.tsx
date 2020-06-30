@@ -89,6 +89,11 @@ const SizeContainer = styled.div`
   margin: 30px;
 `;
 
+const Side = styled.div`
+  position: relative;
+  width: 440px;
+`;
+
 const Overview = styled.aside`
   padding: 48px 20px 20px 20px;
   background: #1f1f1f;
@@ -97,6 +102,10 @@ const Overview = styled.aside`
   z-index: 1;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
 `;
 
 const LeagueOfLegends: NextPage = () => {
@@ -147,39 +156,41 @@ const LeagueOfLegends: NextPage = () => {
           <Background />
         </SizeContainer>
       </Islands>
-      <LevelPanel
-        level={targetLevel?.level}
-        open={visibleIslandDetails}
-        onToggleClick={() => {
-          setActiveTool(null);
-          if (visibleIslandDetails) {
-            setVisibleIslandDetails(false);
-            setTargetLevel(null);
-          } else {
-            setVisibleIslandDetails(true);
-          }
-        }}
-      />
-      <Overview>
-        <Profile />
-        <AvailableTrophies
-          onTrophyClick={(trophy) => {
-            const island = islands.find(
-              (island) => island.name === trophy.island
-            );
-            const level = levels[trophy.level];
+      <Side>
+        <Overview>
+          <Profile />
+          <AvailableTrophies
+            onTrophyClick={(trophy) => {
+              const island = islands.find(
+                (island) => island.name === trophy.island
+              );
+              const level = levels[trophy.level];
+              setActiveTool(null);
+              setTargetLevel({
+                islandName: island.name,
+                level,
+                top: island.top,
+                left: island.left,
+              });
+              setVisibleIslandDetails(true);
+            }}
+          />
+          <VideoAds />
+        </Overview>
+        <LevelPanel
+          level={targetLevel?.level}
+          open={visibleIslandDetails}
+          onToggleClick={() => {
             setActiveTool(null);
-            setTargetLevel({
-              islandName: island.name,
-              level,
-              top: island.top,
-              left: island.left,
-            });
-            setVisibleIslandDetails(true);
+            if (visibleIslandDetails) {
+              setVisibleIslandDetails(false);
+              setTargetLevel(null);
+            } else {
+              setVisibleIslandDetails(true);
+            }
           }}
         />
-        <VideoAds />
-      </Overview>
+      </Side>
       <WelcomeGuide
         visibleIslandDetails={visibleIslandDetails}
         targetLevel={targetLevel}

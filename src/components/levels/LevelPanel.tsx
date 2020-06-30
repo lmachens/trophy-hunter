@@ -11,10 +11,13 @@ type Open = { open: boolean };
 const Container = styled.aside<Open>`
   padding: 48px 0px 20px 0px;
   border-left: 1px solid #eaeaea;
-  position: relative;
+  position: absolute;
   background: #2b2a30;
-  width: ${(props) => (props.open ? '350px' : '0px')};
+  width: 350px;
   transition: 0.4s;
+  left: ${(props) => (props.open ? '-350px' : '0px')};
+  height: 100%;
+  top: 0;
 `;
 
 const Content = styled.div`

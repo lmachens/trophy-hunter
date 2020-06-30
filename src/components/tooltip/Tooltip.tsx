@@ -67,7 +67,7 @@ const Container = styled.div<ContainerProps>`
   pointer-events: ${(props) => (props.pointerEvents ? 'inherit' : 'none')};
   z-index: ${(props) => (props.targetId ? 90 : 100)};
   font-family: 'Roboto Mono', monospace;
-  max-width: 300px;
+  max-width: 320px;
   transition: opacity 0.15s;
 
   ::after {

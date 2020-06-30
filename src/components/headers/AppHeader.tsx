@@ -15,13 +15,7 @@ import ExitButton from './ExitButton';
 import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
 
-const DiscordButton = styled(HeaderButton)`
-  &:hover,
-  &:active {
-    background-color: #7289da;
-  }
-`;
-const DiscordButtonLink = DiscordButton.withComponent('a');
+const DiscordButtonLink = HeaderButton.withComponent('a');
 
 const WriteUsFeedback = styled.div`
   font-family: 'Roboto Mono', monospace;
@@ -32,9 +26,14 @@ const WriteUsFeedback = styled.div`
   align-items: center;
   cursor: pointer;
   margin-right: 10px;
+  background-color: none;
 
   &:hover {
-    background-color: #958fb2;
+    background: linear-gradient(158.54deg, #ef1acd -1.09%, #efb31a 109.64%);
+  }
+
+  &:hover > svg {
+    fill: #ffffff;
   }
 `;
 

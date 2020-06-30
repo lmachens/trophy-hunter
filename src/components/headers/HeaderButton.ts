@@ -22,7 +22,7 @@ const HeaderButton = styled.button`
   &:hover,
   &:active {
     color: #fff;
-    background-color: #958fb2;
+    background-color: #59595c;
   }
 `;
 

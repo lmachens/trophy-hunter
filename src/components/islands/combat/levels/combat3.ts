@@ -1,7 +1,13 @@
 import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import combat4 from './combat4';
-import { dwarfKing, overload, revenge, soulHarvest } from '../../../trophies';
+import {
+  dwarfKing,
+  overload,
+  revenge,
+  soulHarvest,
+  towerdive,
+} from '../../../trophies';
 
 const combat3: Level = {
   island: 'combat',
@@ -9,7 +15,7 @@ const combat3: Level = {
   title: 'Combat island Lvl. 3',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [dwarfKing, overload, revenge, soulHarvest],
+  trophies: [dwarfKing, overload, revenge, soulHarvest, towerdive],
   unlocksLevels: [combat4],
 };
 

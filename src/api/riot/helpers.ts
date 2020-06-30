@@ -1,4 +1,4 @@
-import { MatchTimeline } from './types';
+import { MatchTimeline, MatchPostion } from './types';
 
 const THIRTY_SECONDS = 30 * 1000;
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
@@ -53,4 +53,49 @@ export const calcLevel = (
     0
   );
   return level;
+};
+
+export const TURRET_POSITIONS_BY_TEAM = {
+  100: [
+    [10504, 1029],
+    [981, 10441],
+    [6919, 1483],
+    [4281, 1253],
+    [5846, 6396],
+    [5048, 4812],
+    [3651, 3696],
+    [2177, 1807],
+    [1748, 2270],
+    [1512, 6699],
+    [1169, 4287],
+  ],
+  200: [
+    [13866, 4505],
+    [8955, 8510],
+    [9767, 10113],
+    [11134, 11207],
+    [4318, 13875],
+    [7943, 13411],
+    [10481, 13650],
+    [12611, 13084],
+    [13052, 12612],
+    [13327, 8226],
+    [13624, 10572],
+  ],
+};
+export const TURRET_RANGE = 500;
+
+export const isInEnemyTurretRange = (
+  position: MatchPostion,
+  teamId: number
+): boolean => {
+  const turretPositions = TURRET_POSITIONS_BY_TEAM[teamId];
+
+  return turretPositions.some(
+    (turretPosition) =>
+      Math.sqrt(
+        Math.pow(position.x - turretPosition[0], 2) +
+          Math.pow(position.y - turretPosition[1], 2)
+      ) <= TURRET_RANGE
+  );
 };

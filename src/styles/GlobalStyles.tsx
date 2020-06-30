@@ -11,17 +11,19 @@ const GlobalStyles = () => (
 
       /* width */
       ::-webkit-scrollbar {
-        width: 10px;
+        width: 5px;
       }
 
       /* Track */
       ::-webkit-scrollbar-track {
-        background: #646468;
+        background: none;
+        border-right: 1px solid #77777a;
       }
 
       /* Handle */
       ::-webkit-scrollbar-thumb {
-        background: #77777a;
+        background: #2b2a30;
+        border: 1px solid #77777a;
       }
 
       /* Handle on hover */

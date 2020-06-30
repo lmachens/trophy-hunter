@@ -6,7 +6,6 @@ import Modal from '../modals/Modal';
 import TrophyListItem from '../trophies/TrophyListItem';
 import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
-import Button from '../common/Button';
 import { keyframes } from '@emotion/core';
 import TrophyList from '../trophies/TrophyList';
 import { postCheck } from '../../api/accounts';
@@ -197,15 +196,6 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
 
   return (
     <>
-      {!match && !loading && (
-        <Button
-          onClick={() => {
-            check(4642134839);
-          }}
-        >
-          Load match
-        </Button>
-      )}
       {(loading || match) && (
         <AnimatedSandClock
           className={className}

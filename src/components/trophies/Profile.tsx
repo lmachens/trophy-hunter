@@ -1,9 +1,7 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 import { useAccount } from '../../contexts/account';
-import { useMutation, queryCache, useQuery } from 'react-query';
-import { postLogin, postReset } from '../../api/accounts';
-import Button from '../common/Button';
+import { useQuery } from 'react-query';
 import { getRecentVersion } from '../../api/riot';
 import * as trophies from './index';
 
@@ -22,17 +20,6 @@ const Avatar = styled.img`
 const Profile: FC = () => {
   const { account } = useAccount();
   const { data: version } = useQuery('version', getRecentVersion);
-
-  const [login] = useMutation(postLogin, {
-    onSuccess: () => {
-      queryCache.invalidateQueries('account');
-    },
-  });
-  const [reset] = useMutation(postReset, {
-    onSuccess: () => {
-      queryCache.invalidateQueries('account');
-    },
-  });
 
   return (
     <Container>
@@ -53,27 +40,6 @@ const Profile: FC = () => {
           /{Object.keys(trophies).length} Trophies
         </p>
       </div>
-      {!account && (
-        <Button
-          onClick={() => {
-            login({
-              summonerName: 'sirlunchalot619',
-              platformId: 'EUW1',
-            });
-          }}
-        >
-          Login
-        </Button>
-      )}
-      {account && (
-        <Button
-          onClick={() => {
-            reset();
-          }}
-        >
-          Reset
-        </Button>
-      )}
     </Container>
   );
 };

@@ -347,7 +347,6 @@ const InGame: NextPage = () => {
         <AvailableTrophies trophyProgress={trophyProgress} />
       </GrowFlex>
       <VideoAds />
-      <div>{Math.round(gameData?.gameTime || 0)}s</div>
     </Container>
   );
 };

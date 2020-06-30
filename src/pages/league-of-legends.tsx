@@ -79,7 +79,7 @@ const Overview = styled.aside`
   padding: 48px 20px 20px 20px;
   background: #1f1f1f;
   border-left: 1px solid #77777a;
-  width: 436px;
+  width: 440px;
   z-index: 1;
   display: flex;
   flex-direction: column;

@@ -59,9 +59,9 @@ const Marker: FC<MarkerProps> = ({
   ...groupElementProps
 }) => {
   return (
-    <foreignObject transform={transform} width="14" height="14">
+    <foreignObject transform={transform} width="15" height="15">
       <MarkerTooltip level={level}>
-        <svg width="14" height="14" viewBox="0 0 14 14">
+        <svg width="15" height="15" viewBox="0 0 15 15">
           <Group
             className={className}
             onClick={(event) => {

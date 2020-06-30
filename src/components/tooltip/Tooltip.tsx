@@ -183,7 +183,7 @@ const Tooltip: FC<TooltipProps> = ({
         if (element) {
           showTarget(element);
         }
-      }, 200);
+      }, 400);
       return () => {
         clearTimeout(timeoutId);
       };

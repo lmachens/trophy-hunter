@@ -14,7 +14,7 @@ const Container = styled.aside<Open>`
   position: relative;
   background: #2b2a30;
   width: ${(props) => (props.open ? '350px' : '0px')};
-  transition: 0.15s;
+  transition: 0.4s;
 `;
 
 const Content = styled.div`

@@ -9,7 +9,7 @@ import TrophyList from '../trophies/TrophyList';
 type Open = { open: boolean };
 
 const Container = styled.aside<Open>`
-  padding: 48px 15px 20px 15px;
+  padding: 48px 0px 20px 0px;
   border-left: 1px solid #eaeaea;
   position: relative;
   background: #2b2a30;
@@ -22,6 +22,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   max-height: 100%;
+  margin: 0px 15px;
 `;
 
 const Title = styled.h3`

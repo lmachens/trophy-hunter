@@ -27,8 +27,7 @@ import { parseJSON } from '../api/utils/json';
 import usePersistentState from '../hooks/usePersistentState';
 
 const ConnectionStatus = styled.div`
-  margin-top: 48px;
-  height: 100px;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +35,7 @@ const ConnectionStatus = styled.div`
 `;
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 48px 20px 20px 20px;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -93,7 +92,7 @@ const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data'];
 const InGame: NextPage = () => {
   const hotkey = useHotkey();
   const [progress, setProgress] = useState(0);
-  const [showConnectionStatus, setShowConnectionStatus] = useState(true);
+  const [connectionStatus, setConnectionStatus] = useState('connecting');
   const [activePlayer, setActivePlayer] = useState<ActivePlayer>(null);
   const [allPlayers, setAllPlayers] = useState<AllPlayers>(null);
   const [events, setEvents] = useState<Events>([]);
@@ -126,12 +125,24 @@ const InGame: NextPage = () => {
       return;
     }
     const timeoutId = setTimeout(() => {
-      setShowConnectionStatus(false);
+      setConnectionStatus('connected');
     }, 2000);
     return () => {
       clearTimeout(timeoutId);
     };
   }, [progress]);
+
+  useEffect(() => {
+    if (connectionStatus !== 'connected') {
+      return;
+    }
+    const timeoutId = setTimeout(() => {
+      setConnectionStatus('done');
+    }, 2000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [connectionStatus]);
 
   useEffect(() => {
     const handleInfoUpdates2 = (
@@ -301,35 +312,37 @@ const InGame: NextPage = () => {
   return (
     <Container>
       <InGameHeader />
-      <ConnectionStatus>
-        {showConnectionStatus ? (
-          <>
-            <ConnectionProgress progress={progress} />
-            <Status progress={progress}>
-              {progress < 1 ? 'Connecting to match' : 'Connected'}
-            </Status>
-          </>
-        ) : (
-          <>
-            <Motivation>
-              <Appear>GO GET THEM ALL!</Appear>
-            </Motivation>
-            <div>
-              Hit {hotkey} or{' '}
-              <Button
-                onClick={() =>
-                  overwolf.windows.getCurrentWindow((result) => {
-                    overwolf.windows.minimize(result.window.id);
-                  })
-                }
-              >
-                Click here
-              </Button>{' '}
-              to minimize
-            </div>
-          </>
-        )}
-      </ConnectionStatus>
+      {connectionStatus !== 'done' && (
+        <ConnectionStatus>
+          {connectionStatus === 'connecting' ? (
+            <>
+              <ConnectionProgress progress={progress} />
+              <Status progress={progress}>
+                {progress < 1 ? 'Connecting to match' : 'Connected'}
+              </Status>
+            </>
+          ) : (
+            <>
+              <Motivation>
+                <Appear>GO GET THEM ALL!</Appear>
+              </Motivation>
+              <div>
+                Hit {hotkey} or{' '}
+                <Button
+                  onClick={() =>
+                    overwolf.windows.getCurrentWindow((result) => {
+                      overwolf.windows.minimize(result.window.id);
+                    })
+                  }
+                >
+                  Click here
+                </Button>{' '}
+                to minimize
+              </div>
+            </>
+          )}
+        </ConnectionStatus>
+      )}
       <GrowFlex>
         <AvailableTrophies trophyProgress={trophyProgress} />
       </GrowFlex>

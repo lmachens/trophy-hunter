@@ -28,42 +28,56 @@ const islands = [
     top: 56,
     left: 0,
     Component: CombatIsland,
+    centerTop: 0,
+    centerLeft: 0,
   }),
   transformIsland({
     name: 'skillsIsland',
     top: 8,
     left: 285,
     Component: SkillsIsland,
+    centerTop: 0,
+    centerLeft: 140,
   }),
   transformIsland({
     name: 'teamworkIsland',
     top: 20,
     left: 535,
     Component: TeamworkIsland,
+    centerTop: 0,
+    centerLeft: 350,
   }),
   transformIsland({
     name: 'specialIsland',
     top: 320,
     left: 0,
     Component: SpecialIsland,
+    centerTop: 0,
+    centerLeft: 0,
   }),
   transformIsland({
     name: 'epicIsland',
     top: 460,
     left: 260,
     Component: EpicIsland,
+    centerTop: 0,
+    centerLeft: 140,
   }),
   transformIsland({
     name: 'objectivesIsland',
     top: 295,
     left: 530,
     Component: ObjectivesIsland,
+    centerTop: 0,
+    centerLeft: 350,
   }),
   transformIsland({
     name: 'hubIsland',
     top: 250,
     left: 275,
     Component: HubIsland,
+    centerTop: 0,
+    centerLeft: 140,
   }),
 ];
 
@@ -114,12 +128,17 @@ const LeagueOfLegends: NextPage = () => {
             marginTop: `${top ? 100 : 30}px`,
           }}
         >
-          {islands.map(({ name, top, left, Component: Island }) => (
+          {islands.map(({ name, centerTop, centerLeft, Component: Island }) => (
             <Island
               key={name}
               onLevelClick={(level) => {
                 setActiveTool(null);
-                setTargetLevel({ islandName: name, level, top, left });
+                setTargetLevel({
+                  islandName: name,
+                  level,
+                  top: centerTop,
+                  left: centerLeft,
+                });
                 setVisibleIslandDetails(true);
               }}
               targetLevel={targetLevel}

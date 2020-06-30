@@ -6,6 +6,8 @@ interface TransformIslandProps {
   name: string;
   top: number;
   left: number;
+  centerTop: number;
+  centerLeft: number;
   Component: ComponentType<IslandProps>;
 }
 
@@ -14,6 +16,8 @@ export function transformIsland({
   top,
   left,
   Component,
+  centerTop,
+  centerLeft,
 }: TransformIslandProps) {
   return {
     name,
@@ -24,6 +28,8 @@ export function transformIsland({
       top: ${top}px;
       left: ${left}px;
     `,
+    centerTop,
+    centerLeft,
   };
 }
 

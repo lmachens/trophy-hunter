@@ -7,6 +7,7 @@ import {
   revenge,
   soulHarvest,
   towerdive,
+  trinityForce,
 } from '../../../trophies';
 
 const combat3: Level = {
@@ -15,7 +16,14 @@ const combat3: Level = {
   title: 'Combat island Lvl. 3',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [dwarfKing, overload, revenge, soulHarvest, towerdive],
+  trophies: [
+    dwarfKing,
+    overload,
+    revenge,
+    soulHarvest,
+    towerdive,
+    trinityForce,
+  ],
   unlocksLevels: [combat4],
 };
 

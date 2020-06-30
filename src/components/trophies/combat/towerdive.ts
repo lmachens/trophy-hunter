@@ -8,7 +8,7 @@ const towerdive: Trophy = {
   level: 'combat3',
   title: 'Towerdive',
   description:
-    'Kill an opponent underneath his turret before the first turret falls without dying in the next 10 seconds ',
+    'Kill an opponent underneath his turret before the first turret falls without dying in the next 10 seconds.',
   category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
     const participantIdentity = match.participantIdentities.find(

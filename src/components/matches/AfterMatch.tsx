@@ -14,6 +14,7 @@ import { queryCache, useMutation } from 'react-query';
 import * as trophies from '../trophies';
 import Lottie from 'react-lottie';
 import animationData from './confetti.json';
+import { bounce } from '../../styles/animations';
 
 const sandClockMotion = keyframes`
   from {
@@ -76,20 +77,6 @@ const sandMotion3 = keyframes`
 
   to {
     opacity: 0;
-  }
-`;
-
-const bounce = keyframes`
-  0%, 20%, 50%, 80%, 100% {
-    transform: translate3d(0,0,0);
-  }
-
-  40% {
-    transform: translate3d(0, -4px, 0);
-  }
-
-  60% {
-    transform: translate3d(0, -2px, 0);
   }
 `;
 

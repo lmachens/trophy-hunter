@@ -18,6 +18,7 @@ export { default as overload } from './overload';
 export { default as revenge } from './revenge';
 export { default as sheepHunter } from './sheepHunter';
 export { default as shockwave } from './shockwave';
+export { default as silverBullets } from './silverBullets';
 export { default as skullHunter } from './skullHunter';
 export { default as smartness } from './smartness';
 export { default as soulHarvest } from './soulHarvest';

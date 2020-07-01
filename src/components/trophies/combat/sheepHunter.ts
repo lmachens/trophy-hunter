@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { calcLevel } from '../../../api/riot/helpers';
+import { calcLevel, getParticipantIdentity } from '../../../api/riot/helpers';
 
 const sheepHunter: Trophy = {
   island: 'combatIsland',
@@ -9,10 +9,7 @@ const sheepHunter: Trophy = {
   description: 'Kill five opponents who are at least two levels below you.',
   category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
 
     const sheepKills = timeline.frames.reduce((sheepKills, frame) => {
       const frameSheepKills = frame.events.filter((event) => {

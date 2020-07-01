@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const theViking: Trophy = {
   island: 'hubIsland',
@@ -9,10 +10,8 @@ const theViking: Trophy = {
     'Get a solo kill before 10 minutes and take down or assist first tower.',
   category: 'objectives',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
+
     const participant = match.participants.find(
       (participant) =>
         participant.participantId === participantIdentity.participantId

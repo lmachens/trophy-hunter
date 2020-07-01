@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const david: Trophy = {
   island: 'combatIsland',
@@ -8,10 +9,7 @@ const david: Trophy = {
   description: 'Kill an opponent who is at least two levels above you.',
   category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
 
     const davidKill = timeline.frames.find((frame) => {
       const participantFrames = Object.values(frame.participantFrames);

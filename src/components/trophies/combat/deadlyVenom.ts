@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const deadlyVenom: Trophy = {
   island: 'combatIsland',
@@ -9,10 +10,8 @@ const deadlyVenom: Trophy = {
     'Deal at least 25% more damage to champions than the next player.',
   category: 'combat',
   checkProgress: ({ match, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
+
     const participant = match.participants.find(
       (participant) =>
         participant.participantId === participantIdentity.participantId

@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const bombardment: Trophy = {
   island: 'combatIsland',
@@ -8,10 +9,8 @@ const bombardment: Trophy = {
   description: 'Deal more than 1000 damage to champions per minute.',
   category: 'combat',
   checkProgress: ({ match, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
+
     const participant = match.participants.find(
       (participant) =>
         participant.participantId === participantIdentity.participantId

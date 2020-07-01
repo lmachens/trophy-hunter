@@ -1,4 +1,10 @@
-import { MatchTimeline, MatchPostion } from './types';
+import {
+  MatchTimeline,
+  MatchPostion,
+  Match,
+  ParticipantIdentity,
+} from './types';
+import { Account } from '../accounts';
 
 const THIRTY_SECONDS = 30 * 1000;
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
@@ -97,5 +103,15 @@ export const isInEnemyTurretRange = (
         Math.pow(position.x - turretPosition[0], 2) +
           Math.pow(position.y - turretPosition[1], 2)
       ) <= TURRET_RANGE
+  );
+};
+
+export const getParticipantIdentity = (
+  match: Match,
+  account: Account
+): ParticipantIdentity => {
+  return match.participantIdentities.find(
+    (participantIdentity) =>
+      participantIdentity.player.accountId === account.summoner.accountId
   );
 };

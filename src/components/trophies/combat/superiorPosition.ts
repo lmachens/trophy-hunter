@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const superiorPosition: Trophy = {
   island: 'combatIsland',
@@ -9,10 +10,8 @@ const superiorPosition: Trophy = {
     'Have more than 1.34 times more damage dealt to champions than damage taken.',
   category: 'combat',
   checkProgress: ({ match, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
+
     const participant = match.participants.find(
       (participant) =>
         participant.participantId === participantIdentity.participantId

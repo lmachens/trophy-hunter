@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import { MatchEvent } from '../../../api/riot/types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const THIRTY_SECONDS = 30000;
 const deathMarks: Trophy = {
@@ -12,10 +13,7 @@ const deathMarks: Trophy = {
   category: 'combat',
   maxProgress: 7,
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
 
     const kills = timeline.frames.reduce<MatchEvent[]>(
       (events, frame) => [

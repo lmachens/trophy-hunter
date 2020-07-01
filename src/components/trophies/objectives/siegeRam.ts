@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const siegeRam: Trophy = {
   island: 'hubIsland',
@@ -8,10 +9,8 @@ const siegeRam: Trophy = {
   description: 'Have most damage dealt to turrets of your team.',
   category: 'objectives',
   checkProgress: ({ match, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
+
     const participant = match.participants.find(
       (participant) =>
         participant.participantId === participantIdentity.participantId

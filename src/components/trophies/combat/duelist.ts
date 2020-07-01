@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const duelist: Trophy = {
   island: 'combatIsland',
@@ -8,10 +9,7 @@ const duelist: Trophy = {
   description: 'Achieve three solo kills.',
   category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
 
     const soloKills = timeline.frames.reduce(
       (soloKills, frame) =>

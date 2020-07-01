@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import { Participant } from '../../../api/riot/types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const flail: Trophy = {
   island: 'combatIsland',
@@ -27,10 +28,7 @@ const flail: Trophy = {
     );
     const mostDamagePerGoldParticipant = sortedParticipants[0];
 
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
 
     return Number(
       mostDamagePerGoldParticipant.participantId ===

@@ -1,5 +1,8 @@
 import { Trophy } from '../types';
-import { isInEnemyTurretRange } from '../../../api/riot/helpers';
+import {
+  isInEnemyTurretRange,
+  getParticipantIdentity,
+} from '../../../api/riot/helpers';
 import { MatchEvent } from '../../../api/riot/types';
 
 const towerdive: Trophy = {
@@ -11,10 +14,8 @@ const towerdive: Trophy = {
     'Kill an opponent underneath his turret before the first turret falls without dying in the next 10 seconds.',
   category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
+
     const participant = match.participants.find(
       (participant) =>
         participant.participantId === participantIdentity.participantId

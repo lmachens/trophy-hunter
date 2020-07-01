@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const trinityForce: Trophy = {
   island: 'combatIsland',
@@ -9,10 +10,7 @@ const trinityForce: Trophy = {
     'Use your powerspike. Kill an opponent in the three minutes after you finish Trinity Force.',
   category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = match.participantIdentities.find(
-      (participantIdentity) =>
-        participantIdentity.player.accountId === account.summoner.accountId
-    );
+    const participantIdentity = getParticipantIdentity(match, account);
 
     const trinityForceBuy = timeline.frames.find((frame) =>
       frame.events.find(

@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theElephant: Trophy = {
   island: 'hubIsland',
@@ -9,12 +9,7 @@ const theElephant: Trophy = {
   description: 'Do not die for more than 20 minutes.',
   category: 'teamwork',
   checkProgress: ({ match, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
-    const participant = match.participants.find(
-      (participant) =>
-        participant.participantId === participantIdentity.participantId
-    );
+    const participant = getParticipantByAccount(match, account);
 
     return Number(
       participant.stats.longestTimeSpentLiving >= 1200 ||

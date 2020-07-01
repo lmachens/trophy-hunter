@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const firstBlood: Trophy = {
   island: 'combatIsland',
@@ -9,12 +9,7 @@ const firstBlood: Trophy = {
   description: 'Take first blood.',
   category: 'combat',
   checkProgress: ({ match, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
-    const participant = match.participants.find(
-      (participant) =>
-        participant.participantId === participantIdentity.participantId
-    );
+    const participant = getParticipantByAccount(match, account);
     return Number(participant.stats.firstBloodKill);
   },
   checkLive: ({ allPlayers, trophyData, account }) => {

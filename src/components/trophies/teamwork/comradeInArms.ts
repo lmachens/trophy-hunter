@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const comradeInArms: Trophy = {
   island: 'hubIsland',
@@ -10,12 +10,7 @@ const comradeInArms: Trophy = {
     'You and a teammate score three kills with only the two of you involved.',
   category: 'teamwork',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
-    const participant = match.participants.find(
-      (participant) =>
-        participant.participantId === participantIdentity.participantId
-    );
+    const participant = getParticipantByAccount(match, account);
     const allEvents = timeline.frames.reduce(
       (events, frame) => [...events, ...frame.events],
       []

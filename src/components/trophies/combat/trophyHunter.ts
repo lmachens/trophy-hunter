@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const trophyHunter: Trophy = {
   island: 'hubIsland',
@@ -9,12 +9,7 @@ const trophyHunter: Trophy = {
   description: 'Kill each unique enemy champion at least once.',
   category: 'combat',
   checkProgress: ({ match, timeline, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
-    const participant = match.participants.find(
-      (participant) =>
-        participant.participantId === participantIdentity.participantId
-    );
+    const participant = getParticipantByAccount(match, account);
 
     const uniqueKillIds = timeline.frames.reduce((current, frame) => {
       const participantKills = frame.events.filter(

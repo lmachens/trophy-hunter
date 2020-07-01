@@ -3,6 +3,7 @@ import {
   MatchPostion,
   Match,
   ParticipantIdentity,
+  Participant,
 } from './types';
 import { Account } from '../accounts';
 
@@ -114,4 +115,22 @@ export const getParticipantIdentity = (
     (participantIdentity) =>
       participantIdentity.player.accountId === account.summoner.accountId
   );
+};
+
+export const getParticipant = (
+  match: Match,
+  participantIdentity: ParticipantIdentity
+): Participant => {
+  return match.participants.find(
+    (participant) =>
+      participant.participantId === participantIdentity.participantId
+  );
+};
+
+export const getParticipantByAccount = (
+  match: Match,
+  account: Account
+): Participant => {
+  const participantIdentity = getParticipantIdentity(match, account);
+  return getParticipant(match, participantIdentity);
 };

@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const farmer: Trophy = {
   island: 'hubIsland',
@@ -9,12 +9,7 @@ const farmer: Trophy = {
   description: 'Farm more than 200 minions.',
   category: 'skills',
   checkProgress: ({ match, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
-    const participant = match.participants.find(
-      (participant) =>
-        participant.participantId === participantIdentity.participantId
-    );
+    const participant = getParticipantByAccount(match, account);
     return Number(participant.stats.totalMinionsKilled >= 200);
   },
   checkLive: ({ allPlayers, trophyData, account }) => {

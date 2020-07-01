@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const enrage: Trophy = {
   island: 'hubIsland',
@@ -10,12 +10,7 @@ const enrage: Trophy = {
   category: 'combat',
   maxProgress: 3,
   checkProgress: ({ match, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
-    const participant = match.participants.find(
-      (participant) =>
-        participant.participantId === participantIdentity.participantId
-    );
+    const participant = getParticipantByAccount(match, account);
 
     const existingTrophy = account.trophies.find(
       (trophy) => trophy.name === 'enrage'

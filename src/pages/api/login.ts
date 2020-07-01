@@ -8,7 +8,7 @@ import {
   withDatabase,
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
-import { ONE_YEAR_IN_MILLISECONDS } from '../../api/utils/dates';
+import { ONE_YEAR } from '../../api/utils/dates';
 import { getSummoner } from '../../api/riot/server';
 
 export default applyMiddleware(
@@ -42,11 +42,11 @@ export default applyMiddleware(
       { accountId: summoner.accountId },
       process.env.JWT_SECRET,
       {
-        expiresIn: ONE_YEAR_IN_MILLISECONDS / 1000,
+        expiresIn: ONE_YEAR / 1000,
       }
     );
 
-    const expiresAt = new Date(Date.now() + ONE_YEAR_IN_MILLISECONDS);
+    const expiresAt = new Date(Date.now() + ONE_YEAR);
     const account = await Accounts.findOneAndUpdate(
       {
         'summoner.accountId': summoner.accountId,
@@ -93,9 +93,7 @@ export default applyMiddleware(
     }
     res.setHeader(
       'Set-Cookie',
-      `authToken=${authToken};path=/;Max-Age=${
-        ONE_YEAR_IN_MILLISECONDS / 1000
-      };HttpOnly${
+      `authToken=${authToken};path=/;Max-Age=${ONE_YEAR / 1000};HttpOnly${
         process.env.NODE_ENV === 'production' ? ';SameSite=None;Secure' : ''
       }`
     );

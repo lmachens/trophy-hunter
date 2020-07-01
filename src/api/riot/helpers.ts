@@ -7,11 +7,12 @@ import {
   MatchEvents,
 } from './types';
 import { Account } from '../accounts';
-
-const THIRTY_SECONDS = 30 * 1000;
-const FIFTEEN_MINUTES = 15 * 60 * 1000;
-const THIRTY_MINUTES = 30 * 60 * 1000;
-const FOURTY_FIVE_MINUTES = 45 * 60 * 1000;
+import {
+  FIFTEEN_MINUTES,
+  THIRTY_MINUTES,
+  THIRTY_SECONDS,
+  FOURTY_FIVE_MINUTES,
+} from '../utils/dates';
 
 export const eventTimeToTimestamp = (eventTime: number): number => {
   return eventTime * 1000;
@@ -100,6 +101,12 @@ export const TURRET_POSITIONS_BY_TEAM = {
   ],
 };
 export const TURRET_RANGE = 500;
+export const BUFF_POSITIONS = [
+  [7700, 3800],
+  [3600, 8000],
+  [7100, 11000],
+  [11100, 6900],
+];
 
 export const isInEnemyTurretRange = (
   position: MatchPostion,

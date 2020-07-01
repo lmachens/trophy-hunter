@@ -1,6 +1,7 @@
 import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import combat5 from './combat5';
+import { blitzkrieg } from '../../../trophies';
 
 const combat4: Level = {
   island: 'combat',
@@ -8,9 +9,7 @@ const combat4: Level = {
   title: 'Combat island Lvl. 4',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [
-    /* */
-  ],
+  trophies: [blitzkrieg],
   unlocksLevels: [combat5],
 };
 

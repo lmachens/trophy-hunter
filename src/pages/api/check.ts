@@ -69,7 +69,7 @@ export default applyMiddleware(
             };
           }
           const progress = trophy.checkProgress({ match, timeline, account });
-          if (progress < 1 && trophy.maxProgress) {
+          if (progress < 1 && !trophy.maxProgress) {
             return {
               levelTrophiesCompleted,
               accountTrophies,

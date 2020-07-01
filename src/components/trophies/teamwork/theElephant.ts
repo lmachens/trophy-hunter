@@ -11,10 +11,11 @@ const theElephant: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    return Number(
-      participant.stats.longestTimeSpentLiving >= 1200 ||
-        !participant.stats.longestTimeSpentLiving
-    );
+    if (!participant.stats.longestTimeSpentLiving) {
+      return 1;
+    }
+
+    return participant.stats.longestTimeSpentLiving / 1200;
   },
   checkLive: ({ events, trophyData, gameData, account }) => {
     if (!events.length) {

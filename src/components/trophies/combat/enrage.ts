@@ -19,7 +19,7 @@ const enrage: Trophy = {
     const progress =
       participant.stats.killingSprees +
       (existingTrophy ? existingTrophy.progress : 0);
-    return Math.min(1, progress / 3);
+    return progress / 3;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (trophyData.enrage || events.length === 0) {

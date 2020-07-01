@@ -36,7 +36,7 @@ const dwarfKing: Trophy = {
       return dwarfKingKills + frameDwarfKingKills;
     }, 0);
 
-    return Number(dwarfKingKills >= 5);
+    return dwarfKingKills / 5;
   },
 };
 

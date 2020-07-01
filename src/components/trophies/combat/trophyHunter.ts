@@ -21,12 +21,12 @@ const trophyHunter: Trophy = {
         return current;
       }
       const newKillIds = participantKills.filter(
-        (kill) => !current.includes(kill.victimId)
+        (kill) =>
+          !current.find((uniqueKill) => uniqueKill.victimId === kill.victimId)
       );
       return [...current, ...newKillIds];
     }, []);
-
-    return Number(uniqueKillIds.length === 5);
+    return uniqueKillIds.length / 5;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (!events.length) {

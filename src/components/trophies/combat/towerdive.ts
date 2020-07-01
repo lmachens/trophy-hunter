@@ -49,7 +49,7 @@ const towerdive: Trophy = {
       { deaths: [], kills: [], firstTurrentDeath: null }
     );
 
-    const hasUnderTurretKill = !!kills.find((kill) => {
+    const underTurretKills = kills.filter((kill) => {
       const preFirstTurretDeath = kill.timestamp <= firstTurrentDeath.timestamp;
       const isUnderTurret = isInEnemyTurretRange(
         kill.position,
@@ -64,9 +64,9 @@ const towerdive: Trophy = {
       return (
         isUnderTurret && preFirstTurretDeath && notDiedInThe10SecsBeforeOrAfter
       );
-    });
+    }).length;
 
-    return Number(hasUnderTurretKill);
+    return underTurretKills;
   },
 };
 

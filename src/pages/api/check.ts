@@ -53,7 +53,7 @@ export default applyMiddleware(
       (level) => level.status === 'active'
     );
 
-    const accountTrophies = account.trophies;
+    const accountTrophies = [...account.trophies];
     const completedTrophyNames = [];
     const updateLevels = activeLevels.map(async (accountLevel) => {
       const level = levels[accountLevel.name] as Level;
@@ -69,7 +69,7 @@ export default applyMiddleware(
             };
           }
           const progress = trophy.checkProgress({ match, timeline, account });
-          if (progress === 0) {
+          if (progress < 1 && trophy.maxProgress) {
             return {
               levelTrophiesCompleted,
               accountTrophies,
@@ -80,7 +80,7 @@ export default applyMiddleware(
               1,
               accountTrophy.progress + progress
             );
-            if (accountTrophy.progress === 1) {
+            if (accountTrophy.progress >= 1) {
               accountTrophy.status = 'completed';
               completedTrophyNames.push(accountTrophy.name);
               return {
@@ -97,11 +97,11 @@ export default applyMiddleware(
             name: trophy.name,
             island: trophy.island,
             level: trophy.level,
-            status: progress === 1 ? 'completed' : 'active',
-            progress: progress,
+            status: progress >= 1 ? 'completed' : 'active',
+            progress: Math.min(1, progress),
           };
           accountTrophies.push(newTrophy);
-          if (progress === 1) {
+          if (progress >= 1) {
             completedTrophyNames.push(newTrophy.name);
             return {
               levelTrophiesCompleted: levelTrophiesCompleted + 1,

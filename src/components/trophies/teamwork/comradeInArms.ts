@@ -39,7 +39,7 @@ const comradeInArms: Trophy = {
       {}
     );
 
-    return Number(Math.max(...Object.values(duoKills)) >= 3);
+    return Math.max(...Object.values(duoKills)) / 3;
   },
   checkLive: ({ events, account, trophyData }) => {
     if (!events.length || trophyData.comradeInArms) {

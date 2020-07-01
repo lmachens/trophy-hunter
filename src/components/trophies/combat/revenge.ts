@@ -62,7 +62,7 @@ const revenge: Trophy = {
         }).length > 0
     ).length;
 
-    return Number(revengeKills >= 1);
+    return revengeKills;
   },
   checkLive: ({ activePlayer, trophyData, events, account }) => {
     if (!events.length || !activePlayer || trophyData.revenge) {

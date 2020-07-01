@@ -13,7 +13,7 @@ const adventurer: Trophy = {
       (trophy) => trophy.name === 'adventurer'
     );
     const progress = 1 + (existingTrophy ? existingTrophy.progress : 0);
-    return Math.min(1, progress / 30);
+    return progress / 30;
   },
 };
 

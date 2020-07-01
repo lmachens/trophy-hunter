@@ -13,7 +13,7 @@ const master: Trophy = {
       (trophy) => trophy.name === 'master'
     );
     const progress = 1 + (existingTrophy ? existingTrophy.progress : 0);
-    return Math.min(1, progress / 200);
+    return progress / 200;
   },
 };
 

@@ -28,7 +28,7 @@ const precision: Trophy = {
       participant.timeline.creepsPerMinDeltas['0-10'] * 10 -
       opponent.timeline.creepsPerMinDeltas['0-10'] * 10;
 
-    return Number(creepsDiffAt10 >= 15);
+    return creepsDiffAt10 / 15;
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {
     if (!allPlayers || !gameData || trophyData.precision) {

@@ -31,7 +31,7 @@ const feedThem: Trophy = {
       {}
     );
 
-    return Number(Object.keys(assists).length === 4);
+    return Object.keys(assists).length / 4;
   },
   checkLive: ({ events, account, trophyData }) => {
     if (!events.length || trophyData.feedThem) {

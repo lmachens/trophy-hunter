@@ -13,7 +13,7 @@ const ancient: Trophy = {
       (trophy) => trophy.name === 'ancient'
     );
     const progress = 1 + (existingTrophy ? existingTrophy.progress : 0);
-    return Math.min(1, progress / 500);
+    return progress / 500;
   },
 };
 

@@ -11,7 +11,7 @@ const doubleKill: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    return Number(participant.stats.doubleKills >= 1);
+    return participant.stats.doubleKills;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (!events.length || trophyData.doubleKill) {

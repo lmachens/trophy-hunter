@@ -111,12 +111,12 @@ export interface Participant {
     sightWardsBoughtInGame: number;
     wardsPlaced: number;
     wardsKilled: number;
-    firstBloodKill: true;
-    firstBloodAssist: false;
-    firstTowerKill: false;
-    firstTowerAssist: false;
-    firstInhibitorKill: false;
-    firstInhibitorAssist: false;
+    firstBloodKill: boolean;
+    firstBloodAssist: boolean;
+    firstTowerKill: boolean;
+    firstTowerAssist: boolean;
+    firstInhibitorKill: boolean;
+    firstInhibitorAssist: boolean;
     combatPlayerScore: number;
     objectivePlayerScore: number;
     totalPlayerScore: number;

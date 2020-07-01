@@ -37,7 +37,7 @@ const sheepHunter: Trophy = {
       return sheepKills + frameSheepKills;
     }, 0);
 
-    return Number(sheepKills >= 5);
+    return sheepKills / 5;
   },
 };
 

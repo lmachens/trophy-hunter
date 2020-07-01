@@ -42,7 +42,7 @@ const deathMarks: Trophy = {
     const progress =
       (existingTrophy ? existingTrophy.progress : 0) + deathMarks.length;
 
-    return Math.min(1, progress / 7);
+    return progress / 7;
   },
 };
 

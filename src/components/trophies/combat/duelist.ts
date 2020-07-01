@@ -22,7 +22,7 @@ const duelist: Trophy = {
         ).length,
       0
     );
-    return Math.min(1, soloKills / 3);
+    return soloKills / 3;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (trophyData.duelist || events.length === 0) {

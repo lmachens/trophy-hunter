@@ -24,7 +24,7 @@ const trinityForce: Trophy = {
       return 0;
     }
 
-    const hasTrinityForceKill = !!timeline.frames.find((frame) =>
+    const trinityForceKills = timeline.frames.filter((frame) =>
       frame.events.find(
         (event) =>
           event.type === 'CHAMPION_KILL' &&
@@ -32,9 +32,9 @@ const trinityForce: Trophy = {
           event.timestamp > trinityForceBuy.timestamp &&
           trinityForceBuy.timestamp <= event.timestamp + 180000
       )
-    );
+    ).length;
 
-    return Number(hasTrinityForceKill);
+    return trinityForceKills;
   },
   checkLive: ({ allPlayers, events, gameData, trophyData, account }) => {
     if (

@@ -18,7 +18,7 @@ const spinningBlades: Trophy = {
       (existingTrophy ? existingTrophy.progress : 0) +
       (participant.stats.perk0 === 8005 ? participant.stats.perk0Var1 : 0);
 
-    return Math.min(1, progress / 2500);
+    return progress / 2500;
   },
 };
 

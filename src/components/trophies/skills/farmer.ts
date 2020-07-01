@@ -10,7 +10,7 @@ const farmer: Trophy = {
   category: 'skills',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    return Number(participant.stats.totalMinionsKilled >= 200);
+    return participant.stats.totalMinionsKilled / 200;
   },
   checkLive: ({ allPlayers, trophyData, account }) => {
     if (trophyData.farmer || !allPlayers) {

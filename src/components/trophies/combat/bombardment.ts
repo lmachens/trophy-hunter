@@ -11,10 +11,10 @@ const bombardment: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    return Number(
+    return (
       (60 * participant.stats.totalDamageDealtToChampions) /
-        match.gameDuration >
-        1000
+      match.gameDuration /
+      1000
     );
   },
 };

@@ -11,10 +11,10 @@ const sweetHoney: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    return Number(
-      participant.timeline.creepsPerMinDeltas['0-10'] +
-        participant.timeline.creepsPerMinDeltas['10-20'] >=
-        18
+    return (
+      (participant.timeline.creepsPerMinDeltas['0-10'] +
+        participant.timeline.creepsPerMinDeltas['10-20']) /
+      18
     );
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {

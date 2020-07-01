@@ -21,10 +21,9 @@ const siegeRam: Trophy = {
       )
     );
 
-    return Number(
-      participant.stats.damageDealtToTurrets >= maxDamageDealtToTurrets &&
-        participant.stats.damageDealtToTurrets > 0
-    );
+    return participant.stats.damageDealtToTurrets > 0
+      ? participant.stats.damageDealtToTurrets / maxDamageDealtToTurrets
+      : 0;
   },
 };
 

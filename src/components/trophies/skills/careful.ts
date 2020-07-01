@@ -10,13 +10,13 @@ const careful: Trophy = {
   category: 'skills',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const lessDeaths = match.participants.find(
+    const lessDeathsParticipants = match.participants.filter(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&
         otherParticipant.stats.deaths < participant.stats.deaths
-    );
+    ).length;
 
-    return Number(!lessDeaths);
+    return (9 - lessDeathsParticipants) / 9;
   },
 };
 

@@ -15,7 +15,7 @@ const superiorPosition: Trophy = {
     const damageDealtToTakenRatio =
       participant.stats.totalDamageDealtToChampions /
       Math.max(1, participant.stats.totalDamageTaken);
-    return Number(damageDealtToTakenRatio >= 1.34);
+    return damageDealtToTakenRatio / 1.34;
   },
 };
 

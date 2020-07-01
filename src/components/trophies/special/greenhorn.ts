@@ -13,7 +13,7 @@ const greenhorn: Trophy = {
       (trophy) => trophy.name === 'greenhorn'
     );
     const progress = 1 + (existingTrophy ? existingTrophy.progress : 0);
-    return Math.min(1, progress / 10);
+    return progress / 10;
   },
 };
 

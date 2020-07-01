@@ -38,10 +38,13 @@ export default applyMiddleware(
       ...newAccount,
       summoner: summoner,
     };
-    const checkedTrophies = Object.values(trophies).map((trophy) => ({
-      name: trophy.name,
-      progress: trophy.checkProgress({ match, timeline, account }),
-    }));
+    const checkedTrophies = Object.values(trophies).reduce(
+      (current, trophy) => ({
+        ...current,
+        [trophy.name]: trophy.checkProgress({ match, timeline, account }),
+      }),
+      {}
+    );
 
     res.json(checkedTrophies);
   },

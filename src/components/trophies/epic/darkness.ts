@@ -18,7 +18,7 @@ const darkness: Trophy = {
     const progress =
       participant.stats.wardsKilled +
       (existingTrophy ? existingTrophy.progress : 0);
-    return Math.min(1, progress / 12);
+    return progress / 12;
   },
 };
 

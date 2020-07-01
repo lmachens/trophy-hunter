@@ -11,7 +11,7 @@ const david: Trophy = {
   checkProgress: ({ match, timeline, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const davidKill = !!timeline.frames.find((frame) => {
+    const davidKills = timeline.frames.filter((frame) => {
       const participantFrames = Object.values(frame.participantFrames);
       const player = participantFrames.find(
         (participantFrame) =>
@@ -31,8 +31,8 @@ const david: Trophy = {
         );
         return victim.level >= player.level + 2;
       });
-    });
-    return Number(davidKill);
+    }).length;
+    return davidKills;
   },
 };
 

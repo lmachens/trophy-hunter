@@ -12,19 +12,23 @@ const theViking: Trophy = {
   checkProgress: ({ match, timeline, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const hasSoloKills = timeline.frames.find((frame) =>
-      frame.events.filter(
-        (event) =>
-          event.type === 'CHAMPION_KILL' &&
-          event.killerId === participant.participantId &&
-          event.assistingParticipantIds.length === 0
+    const soloKillProgress = Number(
+      !!timeline.frames.find((frame) =>
+        frame.events.filter(
+          (event) =>
+            event.type === 'CHAMPION_KILL' &&
+            event.killerId === participant.participantId &&
+            event.assistingParticipantIds.length === 0 &&
+            event.timestamp <= 600000
+        )
       )
     );
 
-    const firstTowerParticipation =
-      participant.stats.firstTowerKill || participant.stats.firstTowerAssist;
+    const firstTowerParticipationProgress = Number(
+      participant.stats.firstTowerKill || participant.stats.firstTowerAssist
+    );
 
-    return Number(hasSoloKills && firstTowerParticipation);
+    return (soloKillProgress + firstTowerParticipationProgress) / 2;
   },
   checkLive: ({ events, gameData, account, trophyData }) => {
     if (!events.length || gameData.gameTime >= 600 || trophyData.theViking) {

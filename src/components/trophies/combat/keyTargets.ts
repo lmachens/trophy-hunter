@@ -41,7 +41,7 @@ const keyTargets: Trophy = {
       0
     );
 
-    return Number(keyTargetKills >= 3);
+    return keyTargetKills / 3;
   },
 };
 

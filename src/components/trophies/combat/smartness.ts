@@ -11,11 +11,11 @@ const smartness: Trophy = {
   category: 'combat',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const hasKillingSpree = participant.stats.killingSprees >= 1;
-    const hasTenAssists = participant.stats.assists >= 10;
-    const hasLessThanFiveDeaths = participant.stats.deaths <= 5;
+    const hasKillingSpree = Number(participant.stats.killingSprees >= 1);
+    const hasTenAssists = Number(participant.stats.assists >= 10);
+    const hasLessThanFiveDeaths = Number(participant.stats.deaths <= 5);
 
-    return Number(hasKillingSpree && hasTenAssists && hasLessThanFiveDeaths);
+    return (hasKillingSpree + hasTenAssists + hasLessThanFiveDeaths) / 3;
   },
 };
 

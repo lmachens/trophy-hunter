@@ -13,7 +13,7 @@ const experienced: Trophy = {
       (trophy) => trophy.name === 'experienced'
     );
     const progress = 1 + (existingTrophy ? existingTrophy.progress : 0);
-    return Math.min(1, progress / 50);
+    return progress / 50;
   },
 };
 

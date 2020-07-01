@@ -11,7 +11,7 @@ const kitchenKnife: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    return Number(participant.stats.totalDamageDealtToChampions >= 30000);
+    return participant.stats.totalDamageDealtToChampions / 30000;
   },
 };
 

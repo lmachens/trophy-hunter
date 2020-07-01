@@ -13,17 +13,10 @@ const deathMarks: Trophy = {
     "Perform seven kills and don't die in the 30 seconds afer each kill.",
   category: 'combat',
   maxProgress: 7,
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const kills = timeline.frames.reduce<MatchEvent[]>(
-      (events, frame) => [
-        ...events,
-        ...frame.events.filter((event) => event.type === 'CHAMPION_KILL'),
-      ],
-      []
-    );
-
+    const kills = events.filter((event) => event.type === 'CHAMPION_KILL');
     const deathMarks = kills.filter((kill) => {
       if (kill.killerId !== participantIdentity.participantId) {
         return false;

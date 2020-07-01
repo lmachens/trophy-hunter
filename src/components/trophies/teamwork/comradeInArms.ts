@@ -9,13 +9,10 @@ const comradeInArms: Trophy = {
   description:
     'You and a teammate score three kills with only the two of you involved.',
   category: 'teamwork',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const allEvents = timeline.frames.reduce(
-      (events, frame) => [...events, ...frame.events],
-      []
-    );
-    const duoKills = allEvents.reduce<{ [teammateId: number]: number }>(
+
+    const duoKills = events.reduce<{ [teammateId: number]: number }>(
       (duoKills, event) => {
         if (
           event.type !== 'CHAMPION_KILL' ||

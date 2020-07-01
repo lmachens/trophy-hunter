@@ -9,20 +9,18 @@ const theViking: Trophy = {
   description:
     'Get a solo kill before 10 minutes and take down or assist first tower.',
   category: 'objectives',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const soloKillProgress = Number(
-      !!timeline.frames.find((frame) =>
-        frame.events.filter(
-          (event) =>
-            event.type === 'CHAMPION_KILL' &&
-            event.killerId === participant.participantId &&
-            event.assistingParticipantIds.length === 0 &&
-            event.timestamp <= 600000
-        )
-      )
+    const hasSoloKillBefore10 = events.some(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.killerId === participant.participantId &&
+        event.assistingParticipantIds.length === 0 &&
+        event.timestamp <= 600000
     );
+
+    const soloKillProgress = Number(hasSoloKillBefore10);
 
     const firstTowerParticipationProgress = Number(
       participant.stats.firstTowerKill || participant.stats.firstTowerAssist

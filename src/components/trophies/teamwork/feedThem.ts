@@ -8,13 +8,9 @@ const feedThem: Trophy = {
   title: 'Feed Them',
   description: 'Assist each of your teammates for a kill.',
   category: 'teamwork',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const allEvents = timeline.frames.reduce(
-      (events, frame) => [...events, ...frame.events],
-      []
-    );
-    const assists = allEvents.reduce<{ [teammateId: number]: number }>(
+    const assists = events.reduce<{ [teammateId: number]: number }>(
       (assists, event) => {
         if (
           event.type !== 'CHAMPION_KILL' ||

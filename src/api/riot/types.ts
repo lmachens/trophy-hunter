@@ -209,11 +209,16 @@ export interface MatchTimeline {
   frameInterval: number;
 }
 
+export interface MatchTimeline {
+  frames: MatchFrame[];
+  frameInterval: number;
+}
+
 export interface MatchFrame {
   participantFrames: {
     [frameNumber: string]: MatchParticipantFrame;
   };
-  events: MatchEvent[];
+  events: MatchEvents;
   timestamp: number;
 }
 
@@ -230,6 +235,7 @@ export interface MatchParticipantFrame {
   jungleMinionsKilled: number;
 }
 
+export type MatchEvents = MatchEvent[];
 export interface MatchEvent {
   laneType?: string;
   skillSlot?: number;

@@ -1,5 +1,5 @@
 import { SVGProps } from 'react';
-import { Match, MatchTimeline } from '../../api/riot/types';
+import { Match, MatchTimeline, MatchEvent } from '../../api/riot/types';
 import { Account } from '../../api/accounts';
 
 export type Category =
@@ -23,6 +23,7 @@ export interface Trophy {
     match: Match;
     timeline: MatchTimeline;
     account: Account;
+    events: MatchEvent[];
   }): number;
   checkLive?(props: {
     activePlayer: ActivePlayer;

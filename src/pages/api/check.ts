@@ -11,6 +11,7 @@ import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
 import { getMatch, getTimeline } from '../../api/riot/server';
 import { AccountTrophy } from '../../api/accounts';
+import { getAllEvents } from '../../api/riot/helpers';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -47,6 +48,7 @@ export default applyMiddleware(
     if (!match || !timeline) {
       return res.status(404).end('Not Found');
     }
+    const events = getAllEvents(timeline);
 
     const now = Date.now();
     const activeLevels = account.levels.filter(
@@ -68,7 +70,12 @@ export default applyMiddleware(
               accountTrophies,
             };
           }
-          const progress = trophy.checkProgress({ match, timeline, account });
+          const progress = trophy.checkProgress({
+            match,
+            timeline,
+            account,
+            events,
+          });
           if (progress < 1 && !trophy.maxProgress) {
             return {
               levelTrophiesCompleted,

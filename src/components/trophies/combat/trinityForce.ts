@@ -9,29 +9,25 @@ const trinityForce: Trophy = {
   description:
     'Use your powerspike. Kill an opponent in the three minutes after you finish Trinity Force.',
   category: 'combat',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const trinityForceBuy = timeline.frames.find((frame) =>
-      frame.events.find(
-        (event) =>
-          event.participantId === participantIdentity.participantId &&
-          event.type === 'ITEM_PURCHASED' &&
-          event.itemId === 3078
-      )
+    const trinityForceBuy = events.find(
+      (event) =>
+        event.participantId === participantIdentity.participantId &&
+        event.type === 'ITEM_PURCHASED' &&
+        event.itemId === 3078
     );
     if (!trinityForceBuy) {
       return 0;
     }
 
-    const trinityForceKills = timeline.frames.filter((frame) =>
-      frame.events.find(
-        (event) =>
-          event.type === 'CHAMPION_KILL' &&
-          event.killerId === participantIdentity.participantId &&
-          event.timestamp > trinityForceBuy.timestamp &&
-          trinityForceBuy.timestamp <= event.timestamp + 180000
-      )
+    const trinityForceKills = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.killerId === participantIdentity.participantId &&
+        event.timestamp > trinityForceBuy.timestamp &&
+        trinityForceBuy.timestamp <= event.timestamp + 180000
     ).length;
 
     return trinityForceKills;

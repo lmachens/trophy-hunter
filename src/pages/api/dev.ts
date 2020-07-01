@@ -10,6 +10,7 @@ import { getMatch, getTimeline, getSummoner } from '../../api/riot/server';
 import * as trophies from '../../components/trophies';
 import { newAccount } from '../../api/accounts/server';
 import { Account } from '../../api/accounts';
+import { getAllEvents } from '../../api/riot/helpers';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -33,6 +34,7 @@ export default applyMiddleware(
     if (!match || !timeline) {
       return res.status(404).end('Not Found');
     }
+    const events = getAllEvents(timeline);
 
     const account: Account = {
       ...newAccount,
@@ -41,7 +43,12 @@ export default applyMiddleware(
     const checkedTrophies = Object.values(trophies).reduce(
       (current, trophy) => ({
         ...current,
-        [trophy.name]: trophy.checkProgress({ match, timeline, account }),
+        [trophy.name]: trophy.checkProgress({
+          match,
+          timeline,
+          account,
+          events,
+        }),
       }),
       {}
     );

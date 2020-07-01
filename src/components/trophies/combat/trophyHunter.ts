@@ -8,25 +8,20 @@ const trophyHunter: Trophy = {
   title: 'Trophy Hunter',
   description: 'Kill each unique enemy champion at least once.',
   category: 'combat',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const uniqueKillIds = timeline.frames.reduce((current, frame) => {
-      const participantKills = frame.events.filter(
+    const victimIds = events
+      .filter(
         (event) =>
           event.type === 'CHAMPION_KILL' &&
           event.killerId === participant.participantId
-      );
-      if (participantKills.length === 0) {
-        return current;
-      }
-      const newKillIds = participantKills.filter(
-        (kill) =>
-          !current.find((uniqueKill) => uniqueKill.victimId === kill.victimId)
-      );
-      return [...current, ...newKillIds];
-    }, []);
-    return uniqueKillIds.length / 5;
+      )
+      .map((event) => event.victimId);
+    const uniqueVictimIds = victimIds.filter(
+      (victimId, index, current) => current.indexOf(victimId) === index
+    );
+    return uniqueVictimIds.length / 5;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (!events.length) {

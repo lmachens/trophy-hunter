@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantIdentity, calcLevel } from '../../../api/riot/helpers';
 
 const david: Trophy = {
   island: 'combatIsland',
@@ -8,29 +8,20 @@ const david: Trophy = {
   title: 'David',
   description: 'Kill an opponent who is at least two levels above you.',
   category: 'combat',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const davidKills = timeline.frames.filter((frame) => {
-      const participantFrames = Object.values(frame.participantFrames);
-      const player = participantFrames.find(
-        (participantFrame) =>
-          participantFrame.participantId === participantIdentity.participantId
-      );
+    const davidKills = events.filter((event) => {
+      if (
+        event.type !== 'CHAMPION_KILL' ||
+        event.killerId !== participantIdentity.participantId
+      ) {
+        return false;
+      }
+      const killerLevel = calcLevel(events, event.killerId, event.timestamp);
+      const victimLevel = calcLevel(events, event.victimId, event.timestamp);
 
-      return frame.events.find((event) => {
-        if (
-          event.type !== 'CHAMPION_KILL' ||
-          event.killerId !== player.participantId
-        ) {
-          return false;
-        }
-        const victim = participantFrames.find(
-          (participantFrame) =>
-            participantFrame.participantId === event.victimId
-        );
-        return victim.level >= player.level + 2;
-      });
+      return victimLevel >= killerLevel + 2;
     }).length;
     return davidKills;
   },

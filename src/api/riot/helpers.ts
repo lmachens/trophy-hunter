@@ -4,7 +4,7 @@ import {
   Match,
   ParticipantIdentity,
   Participant,
-  MatchEvent,
+  MatchEvents,
 } from './types';
 import { Account } from '../accounts';
 
@@ -43,30 +43,31 @@ export const calcDeathTime = (level: number, timestamp: number): number => {
   return deathTime;
 };
 
-export const getLevelUps = (
-  timeline: MatchTimeline,
-  participantId: number
-): MatchEvent[] => {
+export const getAllEvents = (timeline: MatchTimeline): MatchEvents => {
   return timeline.frames.reduce(
-    (current, frame) => [
-      ...current,
-      ...frame.events.filter(
-        (event) =>
-          event.type === 'SKILL_LEVEL_UP' &&
-          event.levelUpType === 'NORMAL' &&
-          event.participantId === participantId
-      ),
-    ],
+    (current, frame) => [...current, ...frame.events],
     []
   );
 };
 
+export const getLevelUps = (
+  events: MatchEvents,
+  participantId: number
+): MatchEvents => {
+  return events.filter(
+    (event) =>
+      event.type === 'SKILL_LEVEL_UP' &&
+      event.levelUpType === 'NORMAL' &&
+      event.participantId === participantId
+  );
+};
+
 export const calcLevel = (
-  timeline: MatchTimeline,
+  events: MatchEvents,
   participantId: number,
   timestamp: number
 ): number => {
-  const levelUps = getLevelUps(timeline, participantId);
+  const levelUps = getLevelUps(events, participantId);
   return levelUps.filter((levelUp) => levelUp.timestamp <= timestamp).length;
 };
 

@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { MatchEvent } from '../../../api/riot/types';
 import {
   calcDeathTime,
   calcLevel,
@@ -14,39 +13,25 @@ const revenge: Trophy = {
   title: 'REVENGE!!!',
   description: 'Kill your killer in the 30 seconds after you have respawned.',
   category: 'combat',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const killsAndDeaths = timeline.frames.reduce<{
-      kills: MatchEvent[];
-      deaths: MatchEvent[];
-    }>(
-      (current, frame) => ({
-        kills: [
-          ...current.kills,
-          ...frame.events.filter(
-            (event) =>
-              event.type === 'CHAMPION_KILL' &&
-              event.killerId === participantIdentity.participantId
-          ),
-        ],
-        deaths: [
-          ...current.deaths,
-          ...frame.events.filter(
-            (event) =>
-              event.type === 'CHAMPION_KILL' &&
-              event.victimId === participantIdentity.participantId
-          ),
-        ],
-      }),
-      { kills: [], deaths: [] }
+    const kills = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.killerId === participantIdentity.participantId
+    );
+    const deaths = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.victimId === participantIdentity.participantId
     );
 
-    const revengeKills = killsAndDeaths.kills.filter(
+    const revengeKills = kills.filter(
       (kill) =>
-        killsAndDeaths.deaths.filter((death) => {
+        deaths.filter((death) => {
           const level = calcLevel(
-            timeline,
+            events,
             participantIdentity.participantId,
             death.timestamp
           );

@@ -11,7 +11,7 @@ const vengeance: Trophy = {
     'Revenge three of your teammates deaths (kill their killer in ten seconds after their death).',
   category: 'combat',
   maxProgress: 3,
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
     const teammateIds = match.participants
       .filter(
@@ -21,28 +21,15 @@ const vengeance: Trophy = {
       )
       .map((teammate) => teammate.participantId);
 
-    const teammateDeaths = timeline.frames.reduce(
-      (current, frame) => [
-        ...current,
-        ...frame.events.filter(
-          (event) =>
-            event.type === 'CHAMPION_KILL' &&
-            teammateIds.includes(event.victimId)
-        ),
-      ],
-      []
+    const teammateDeaths = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' && teammateIds.includes(event.victimId)
     );
 
-    const kills = timeline.frames.reduce(
-      (current, frame) => [
-        ...current,
-        ...frame.events.filter(
-          (event) =>
-            event.type === 'CHAMPION_KILL' &&
-            event.killerId === participant.participantId
-        ),
-      ],
-      []
+    const kills = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.killerId === participant.participantId
     );
 
     const vengeanceKills = teammateDeaths.filter((teammateDeath) =>

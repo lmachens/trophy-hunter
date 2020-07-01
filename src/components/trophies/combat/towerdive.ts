@@ -13,40 +13,23 @@ const towerdive: Trophy = {
   description:
     'Kill an opponent underneath his turret before the first turret falls without dying in the next 10 seconds.',
   category: 'combat',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const { deaths, kills, firstTurrentDeath } = timeline.frames.reduce<{
-      deaths: MatchEvent[];
-      kills: MatchEvent[];
-      firstTurrentDeath: MatchEvent;
-    }>(
-      (current, frame) => ({
-        deaths: [
-          ...current.deaths,
-          ...frame.events.filter(
-            (event) =>
-              event.type === 'CHAMPION_KILL' &&
-              event.victimId === participant.participantId
-          ),
-        ],
-        kills: [
-          ...current.kills,
-          ...frame.events.filter(
-            (event) =>
-              event.type === 'CHAMPION_KILL' &&
-              event.killerId === participant.participantId
-          ),
-        ],
-        firstTurrentDeath:
-          current.firstTurrentDeath ||
-          frame.events.find(
-            (event) =>
-              event.type === 'BUILDING_KILL' &&
-              event.buildingType === 'TOWER_BUILDING'
-          ),
-      }),
-      { deaths: [], kills: [], firstTurrentDeath: null }
+    const deaths = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.victimId === participant.participantId
+    );
+    const kills = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.killerId === participant.participantId
+    );
+    const firstTurrentDeath = events.find(
+      (event) =>
+        event.type === 'BUILDING_KILL' &&
+        event.buildingType === 'TOWER_BUILDING'
     );
 
     const underTurretKills = kills.filter((kill) => {

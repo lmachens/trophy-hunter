@@ -8,20 +8,15 @@ const duelist: Trophy = {
   title: 'Duelist',
   description: 'Achieve three solo kills.',
   category: 'combat',
-  checkProgress: ({ match, timeline, account }) => {
+  checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const soloKills = timeline.frames.reduce(
-      (soloKills, frame) =>
-        soloKills +
-        frame.events.filter(
-          (event) =>
-            event.type === 'CHAMPION_KILL' &&
-            event.killerId === participantIdentity.participantId &&
-            event.assistingParticipantIds.length === 0
-        ).length,
-      0
-    );
+    const soloKills = events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.killerId === participantIdentity.participantId &&
+        event.assistingParticipantIds.length === 0
+    ).length;
     return soloKills / 3;
   },
   checkLive: ({ events, trophyData, account }) => {

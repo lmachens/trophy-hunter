@@ -26,11 +26,17 @@ export const getMatch = async ({ platformId, matchId }) => {
   return match;
 };
 
-export const getTimeline = async ({ platformId, matchId }) => {
-  const match = await requestRiot<MatchTimeline>(
+export const getTimeline = async ({
+  platformId,
+  matchId,
+}: {
+  platformId: string;
+  matchId: number;
+}): Promise<MatchTimeline> => {
+  const timeline = await requestRiot<MatchTimeline>(
     `https://${platformId}.api.riotgames.com/lol/match/v4/timelines/by-match/${matchId}`
   );
-  return match;
+  return timeline;
 };
 
 export const getRecentVersion = async () => {

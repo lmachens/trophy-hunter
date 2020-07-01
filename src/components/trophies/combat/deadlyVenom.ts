@@ -11,7 +11,7 @@ const deadlyVenom: Trophy = {
   category: 'combat',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const highDamageParticipant = match.participants.find(
+    const highDamageParticipant = !!match.participants.find(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&
         otherParticipant.stats.totalDamageDealtToChampions * 1.25 >=

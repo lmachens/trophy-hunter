@@ -11,7 +11,7 @@ const david: Trophy = {
   checkProgress: ({ match, timeline, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const davidKill = timeline.frames.find((frame) => {
+    const davidKill = !!timeline.frames.find((frame) => {
       const participantFrames = Object.values(frame.participantFrames);
       const player = participantFrames.find(
         (participantFrame) =>

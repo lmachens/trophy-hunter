@@ -23,4 +23,5 @@ export { default as superiorPosition } from './superiorPosition';
 export { default as towerdive } from './towerdive';
 export { default as trinityForce } from './trinityForce';
 export { default as trophyHunter } from './trophyHunter';
+export { default as uncounterable } from './uncounterable';
 export { default as vengeance } from './vengeance';

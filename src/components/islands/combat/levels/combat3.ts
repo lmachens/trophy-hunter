@@ -9,6 +9,7 @@ import {
   towerdive,
   trinityForce,
   vengeance,
+  clothArmor,
 } from '../../../trophies';
 
 const combat3: Level = {
@@ -25,6 +26,7 @@ const combat3: Level = {
     towerdive,
     trinityForce,
     vengeance,
+    clothArmor,
   ],
   unlocksLevels: [combat4],
 };

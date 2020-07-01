@@ -44,8 +44,7 @@ const trinityForce: Trophy = {
     const player = allPlayers.find(
       (player) => player.summonerName === account.summoner.name
     );
-    console.log('Where is trinity force?', player.items);
-    const hasTrinityForce = player.items.find((item) => item);
+    const hasTrinityForce = player.items.find((item) => item.itemID === 3078);
     if (!hasTrinityForce) {
       return 0;
     }

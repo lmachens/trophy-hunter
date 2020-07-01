@@ -114,11 +114,23 @@ export interface ActivePlayer {
   summonerName: string;
 }
 
+export interface Item {
+  canUse: boolean;
+  consumable: boolean;
+  count: number;
+  displayName: string;
+  itemID: number;
+  price: number;
+  rawDescription: string;
+  rawDisplayName: string;
+  slot: number;
+}
+
 export interface Player {
   championName: string;
   isBot: boolean;
   isDead: boolean;
-  items: unknown[];
+  items: Item[];
   level: number;
   position: string;
   rawChampionName: string;

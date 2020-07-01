@@ -16,6 +16,7 @@ import { parseJSON } from '../api/utils/json';
 import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
+import Head from 'next/head';
 
 const INTERESTED_IN_LAUNCHER_FEATURES = [
   'game_flow',
@@ -226,7 +227,11 @@ const Background: NextPage = () => {
     }
   }, [leagueRunning, playingSupportedGame, autoLaunch]);
 
-  return null;
+  return (
+    <Head>
+      <title>Trophy Hunter - Background</title>
+    </Head>
+  );
 };
 
 export default Background;

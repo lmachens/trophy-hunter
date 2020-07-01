@@ -25,6 +25,7 @@ import { getAccount } from '../api/accounts';
 import overwolf, { openWindow, setLeagueFeatures } from '../api/overwolf';
 import { parseJSON } from '../api/utils/json';
 import usePersistentState from '../hooks/usePersistentState';
+import Head from 'next/head';
 
 const ConnectionStatus = styled.div`
   min-height: 100px;
@@ -312,44 +313,49 @@ const InGame: NextPage = () => {
   }, [trophyProgress]);
 
   return (
-    <Container>
-      <InGameHeader />
-      {connectionStatus !== 'done' && (
-        <ConnectionStatus>
-          {connectionStatus === 'connecting' ? (
-            <>
-              <ConnectionProgress progress={progress} />
-              <Status progress={progress}>
-                {progress < 1 ? 'Connecting to match' : 'Connected'}
-              </Status>
-            </>
-          ) : (
-            <>
-              <Motivation>
-                <Appear>GO GET THEM ALL!</Appear>
-              </Motivation>
-              <div>
-                Hit {hotkey} or{' '}
-                <Button
-                  onClick={() =>
-                    overwolf.windows.getCurrentWindow((result) => {
-                      overwolf.windows.minimize(result.window.id);
-                    })
-                  }
-                >
-                  Click here
-                </Button>{' '}
-                to minimize
-              </div>
-            </>
-          )}
-        </ConnectionStatus>
-      )}
-      <GrowFlex>
-        <AvailableTrophies trophyProgress={trophyProgress} />
-      </GrowFlex>
-      <VideoAds />
-    </Container>
+    <>
+      <Head>
+        <title>Trophy Hunter - In-Game</title>
+      </Head>
+      <Container>
+        <InGameHeader />
+        {connectionStatus !== 'done' && (
+          <ConnectionStatus>
+            {connectionStatus === 'connecting' ? (
+              <>
+                <ConnectionProgress progress={progress} />
+                <Status progress={progress}>
+                  {progress < 1 ? 'Connecting to match' : 'Connected'}
+                </Status>
+              </>
+            ) : (
+              <>
+                <Motivation>
+                  <Appear>GO GET THEM ALL!</Appear>
+                </Motivation>
+                <div>
+                  Hit {hotkey} or{' '}
+                  <Button
+                    onClick={() =>
+                      overwolf.windows.getCurrentWindow((result) => {
+                        overwolf.windows.minimize(result.window.id);
+                      })
+                    }
+                  >
+                    Click here
+                  </Button>{' '}
+                  to minimize
+                </div>
+              </>
+            )}
+          </ConnectionStatus>
+        )}
+        <GrowFlex>
+          <AvailableTrophies trophyProgress={trophyProgress} />
+        </GrowFlex>
+        <VideoAds />
+      </Container>
+    </>
   );
 };
 

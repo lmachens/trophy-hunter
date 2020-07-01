@@ -1,6 +1,5 @@
 import { Trophy } from '../types';
-import { MatchEvent } from '../../../api/riot/types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getParticipantIdentity, getAllKills } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const THIRTY_SECONDS = 30000;
@@ -16,7 +15,7 @@ const deathMarks: Trophy = {
   checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const kills = events.filter((event) => event.type === 'CHAMPION_KILL');
+    const kills = getAllKills(events);
     const deathMarks = kills.filter((kill) => {
       if (kill.killerId !== participantIdentity.participantId) {
         return false;

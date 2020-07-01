@@ -2,6 +2,8 @@ import { Trophy } from '../types';
 import {
   isInEnemyTurretRange,
   getParticipantByAccount,
+  getParticipantDeaths,
+  getParticipantKills,
 } from '../../../api/riot/helpers';
 import { MatchEvent } from '../../../api/riot/types';
 
@@ -16,16 +18,8 @@ const towerdive: Trophy = {
   checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const deaths = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.victimId === participant.participantId
-    );
-    const kills = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.killerId === participant.participantId
-    );
+    const deaths = getParticipantDeaths(events, participant.participantId);
+    const kills = getParticipantKills(events, participant.participantId);
     const firstTurrentDeath = events.find(
       (event) =>
         event.type === 'BUILDING_KILL' &&

@@ -1,5 +1,8 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
+import {
+  getParticipantByAccount,
+  getParticipantKills,
+} from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const vengeance: Trophy = {
@@ -26,11 +29,7 @@ const vengeance: Trophy = {
         event.type === 'CHAMPION_KILL' && teammateIds.includes(event.victimId)
     );
 
-    const kills = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.killerId === participant.participantId
-    );
+    const kills = getParticipantKills(events, participant.participantId);
 
     const vengeanceKills = teammateDeaths.filter((teammateDeath) =>
       kills.find((kill) => {

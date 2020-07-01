@@ -4,6 +4,8 @@ import {
   calcLevel,
   eventTimeToTimestamp,
   getParticipantIdentity,
+  getParticipantKills,
+  getParticipantDeaths,
 } from '../../../api/riot/helpers';
 
 const revenge: Trophy = {
@@ -16,15 +18,13 @@ const revenge: Trophy = {
   checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
 
-    const kills = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.killerId === participantIdentity.participantId
+    const kills = getParticipantKills(
+      events,
+      participantIdentity.participantId
     );
-    const deaths = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.victimId === participantIdentity.participantId
+    const deaths = getParticipantDeaths(
+      events,
+      participantIdentity.participantId
     );
 
     const revengeKills = kills.filter(

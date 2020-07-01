@@ -150,3 +150,34 @@ export const getParticipantByAccount = (
   const participantIdentity = getParticipantIdentity(match, account);
   return getParticipant(match, participantIdentity);
 };
+
+export const getAllEventsByType = (
+  events: MatchEvents,
+  type: string
+): MatchEvents => {
+  return events.filter((event) => event.type === type);
+};
+
+export const getAllKills = (events: MatchEvents): MatchEvents => {
+  return getAllEventsByType(events, 'CHAMPION_KILL');
+};
+
+export const getParticipantKills = (
+  events: MatchEvents,
+  participantId: number
+): MatchEvents => {
+  return events.filter(
+    (event) =>
+      event.type === 'CHAMPION_KILL' && event.killerId === participantId
+  );
+};
+
+export const getParticipantDeaths = (
+  events: MatchEvents,
+  participantId: number
+): MatchEvents => {
+  return events.filter(
+    (event) =>
+      event.type === 'CHAMPION_KILL' && event.victimId === participantId
+  );
+};

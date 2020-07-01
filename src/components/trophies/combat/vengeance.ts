@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const vengeance: Trophy = {
   island: 'hubIsland',
@@ -53,13 +54,8 @@ const vengeance: Trophy = {
       })
     ).length;
 
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'vengeance'
-    );
-    const progress =
-      (existingTrophy ? existingTrophy.progress : 0) + vengeanceKills / 3;
-
-    return progress;
+    const trophyProgress = getTrophyProgress(account, 'vengeance');
+    return vengeanceKills / 3 + trophyProgress;
   },
   checkLive: ({ events, allPlayers, account }) => {
     if (!events.length) {
@@ -98,13 +94,8 @@ const vengeance: Trophy = {
       })
     ).length;
 
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'vengeance'
-    );
-    const progress =
-      (existingTrophy ? existingTrophy.progress : 0) + vengeanceKills / 3;
-
-    return progress;
+    const trophyProgress = getTrophyProgress(account, 'vengeance');
+    return vengeanceKills / 3 + trophyProgress;
   },
 };
 

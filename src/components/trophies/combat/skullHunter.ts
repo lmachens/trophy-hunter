@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const skullHunter: Trophy = {
   island: 'combatIsland',
@@ -11,14 +12,10 @@ const skullHunter: Trophy = {
   maxProgress: 20,
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'skullHunter'
-    );
-    const killsAssists =
-      participant.stats.assists +
-      participant.stats.kills +
-      (existingTrophy ? existingTrophy.progress : 0);
-    return killsAssists / 20;
+    const trophyProgress = getTrophyProgress(account, 'skullHunter');
+
+    const killsAssists = participant.stats.assists + participant.stats.kills;
+    return killsAssists / 20 + trophyProgress;
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {
     if (
@@ -33,15 +30,11 @@ const skullHunter: Trophy = {
     const accountPlayer = allPlayers.find(
       (player) => player.summonerName === account.summoner.name
     );
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'skullHunter'
-    );
+    const trophyProgress = getTrophyProgress(account, 'skullHunter');
 
     const killsAssists =
-      accountPlayer.scores.assists +
-      accountPlayer.scores.kills +
-      (existingTrophy ? existingTrophy.progress : 0);
-    const process = Math.min(1, killsAssists / 20);
+      accountPlayer.scores.assists + accountPlayer.scores.kills;
+    const process = Math.min(1, killsAssists / 20 + trophyProgress);
     if (process === 1) {
       trophyData.skullHunter = true;
     }

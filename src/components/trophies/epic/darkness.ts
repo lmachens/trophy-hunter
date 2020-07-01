@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const darkness: Trophy = {
   island: 'hubIsland',
@@ -12,13 +13,8 @@ const darkness: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'darkness'
-    );
-    const progress =
-      participant.stats.wardsKilled +
-      (existingTrophy ? existingTrophy.progress : 0);
-    return progress / 12;
+    const trophyProgress = getTrophyProgress(account, 'darkness');
+    return participant.stats.wardsKilled / 12 + trophyProgress;
   },
 };
 

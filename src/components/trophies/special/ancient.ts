@@ -1,4 +1,5 @@
 import { Trophy } from '../types';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const ancient: Trophy = {
   island: 'specialIsland',
@@ -9,11 +10,8 @@ const ancient: Trophy = {
   category: 'special',
   maxProgress: 500,
   checkProgress: ({ account }) => {
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'ancient'
-    );
-    const progress = 1 + (existingTrophy ? existingTrophy.progress : 0);
-    return progress / 500;
+    const trophyProgress = getTrophyProgress(account, 'ancient');
+    return 1 / 500 + trophyProgress;
   },
 };
 

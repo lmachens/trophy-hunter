@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const enrage: Trophy = {
   island: 'hubIsland',
@@ -12,14 +13,9 @@ const enrage: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'enrage'
-    );
+    const trophyProgress = getTrophyProgress(account, 'enrage');
 
-    const progress =
-      participant.stats.killingSprees +
-      (existingTrophy ? existingTrophy.progress : 0);
-    return progress / 3;
+    return participant.stats.killingSprees / 3 + trophyProgress;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (trophyData.enrage || events.length === 0) {
@@ -32,14 +28,9 @@ const enrage: Trophy = {
         event.KillerName === account.summoner.name &&
         event.KillStreak === 3
     );
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'enrage'
-    );
+    const trophyProgress = getTrophyProgress(account, 'enrage');
 
-    const progress = Math.min(
-      1,
-      multiKills.length / 3 + (existingTrophy ? existingTrophy.progress : 0)
-    );
+    const progress = Math.min(1, multiKills.length / 3 + trophyProgress);
     if (progress === 1) {
       trophyData.enrage = true;
     }

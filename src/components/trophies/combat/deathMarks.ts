@@ -1,6 +1,7 @@
 import { Trophy } from '../types';
 import { MatchEvent } from '../../../api/riot/types';
 import { getParticipantIdentity } from '../../../api/riot/helpers';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const THIRTY_SECONDS = 30000;
 const deathMarks: Trophy = {
@@ -36,13 +37,9 @@ const deathMarks: Trophy = {
       );
       return deathInsideCooldown;
     });
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'deathMarks'
-    );
-    const progress =
-      (existingTrophy ? existingTrophy.progress : 0) + deathMarks.length;
 
-    return progress / 7;
+    const trophyProgress = getTrophyProgress(account, 'deathMarks');
+    return deathMarks.length / 7 + trophyProgress;
   },
 };
 

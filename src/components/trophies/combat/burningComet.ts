@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const burningComet: Trophy = {
   island: 'combatIsland',
@@ -11,14 +12,11 @@ const burningComet: Trophy = {
   maxProgress: 2500,
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const existingTrophy = account.trophies.find(
-      (trophy) => trophy.name === 'burningComet'
-    );
-    const progress =
-      (existingTrophy ? existingTrophy.progress : 0) +
-      (participant.stats.perk0 === 8229 ? participant.stats.perk0Var1 : 0);
+    const trophyProgress = getTrophyProgress(account, 'burningComet');
+    const damage =
+      participant.stats.perk0 === 8229 ? participant.stats.perk0Var1 : 0;
 
-    return progress / 2500;
+    return damage / 2500 + trophyProgress;
   },
 };
 

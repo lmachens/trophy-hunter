@@ -84,7 +84,6 @@ const Background: NextPage = () => {
         setLeagueRunning(true);
       } else if (isLeagueClosed(res)) {
         setLeagueRunning(false);
-        setPlayingSupportedGame(false);
       }
     };
     overwolf.games.onGameInfoUpdated.addListener(handleGameInfoUpdated);

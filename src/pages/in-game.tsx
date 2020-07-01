@@ -225,7 +225,8 @@ const InGame: NextPage = () => {
     const achievedTrophies = trophies
       .map((trophy) => ({
         trophy,
-        progress:
+        progress: Math.min(
+          1,
           trophy.checkLive?.({
             activePlayer,
             allPlayers,
@@ -233,7 +234,8 @@ const InGame: NextPage = () => {
             events,
             trophyData: trophyDataClone,
             account,
-          }) || 0,
+          }) || 0
+        ),
       }))
       .filter(({ progress }) => progress > 0);
 

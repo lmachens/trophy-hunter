@@ -8,6 +8,7 @@ import {
   soulHarvest,
   towerdive,
   trinityForce,
+  vengeance,
 } from '../../../trophies';
 
 const combat3: Level = {
@@ -23,6 +24,7 @@ const combat3: Level = {
     soulHarvest,
     towerdive,
     trinityForce,
+    vengeance,
   ],
   unlocksLevels: [combat4],
 };

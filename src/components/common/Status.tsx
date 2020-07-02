@@ -33,6 +33,12 @@ const Status: FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      setTimedout(false);
+    }
+  }, [data]);
+
   if (!isError && !timedout && (!data || data.length === 0)) {
     return null;
   }

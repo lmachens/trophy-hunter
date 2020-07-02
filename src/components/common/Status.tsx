@@ -5,9 +5,9 @@ import Alert from '../icons/Alert';
 import { Tooltip } from '../tooltip';
 
 const Status: FC = () => {
-  const { data: status } = useQuery('status', getStatus);
+  const { data, isLoading } = useQuery('status', getStatus);
 
-  if (!status || status.length === 0) {
+  if (isLoading || !data || data.length === 0) {
     return null;
   }
 

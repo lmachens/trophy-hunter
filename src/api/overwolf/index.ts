@@ -96,9 +96,15 @@ export const toggleWindow = (windowName: string) => {
   });
 };
 
-export const closeCurrentWindow = () => {
+export const closeCurrentWindow = (): void => {
   overwolf.windows.getCurrentWindow((result) => {
     overwolf.windows.close(result.window.id);
+  });
+};
+
+export const restoreCurrentWindow = (): void => {
+  overwolf.windows.getCurrentWindow((result) => {
+    overwolf.windows.restore(result.window.id);
   });
 };
 

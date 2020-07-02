@@ -15,6 +15,7 @@ import Lottie from 'react-lottie';
 import animationData from './confetti.json';
 import { bounce } from '../../styles/animations';
 import Squid from '../icons/Squid';
+import { restoreCurrentWindow } from '../../api/overwolf';
 
 const sandClockMotion = keyframes`
   from {
@@ -181,6 +182,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
 
   useEffect(() => {
     if (!loading) {
+      restoreCurrentWindow();
       return;
     }
 

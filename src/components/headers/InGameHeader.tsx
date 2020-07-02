@@ -6,6 +6,9 @@ import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
 import styled from '@emotion/styled';
 import useHotkey from '../../hooks/useHotkey';
+import { FC } from 'react';
+import Status from '../common/Status';
+import Grow from '../common/Grow';
 
 const Hotkey = styled.span`
   margin-right: 10px;
@@ -18,7 +21,7 @@ const Hint = styled.span`
   margin-right: 4px;
 `;
 
-const InGameHeader = () => {
+const InGameHeader: FC = () => {
   const hotkey = useHotkey();
 
   return (
@@ -33,6 +36,8 @@ const InGameHeader = () => {
         </Background>
       </LogoContainer>
       <Toolbar>
+        <Status />
+        <Grow />
         <Hotkey>
           <Hint>Show/Hide</Hint>
           {hotkey}

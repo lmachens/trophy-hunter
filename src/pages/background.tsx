@@ -10,6 +10,7 @@ import overwolf, {
   isLeagueClosed,
   closeWindow,
   toggleWindow,
+  INTERESTED_IN_LAUNCHER_FEATURES,
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
@@ -17,14 +18,6 @@ import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
-
-const INTERESTED_IN_LAUNCHER_FEATURES = [
-  'game_flow',
-  'summoner_info',
-  'lcu_info',
-  'lobby_info',
-  'end_game',
-];
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);

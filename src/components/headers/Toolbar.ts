@@ -8,6 +8,7 @@ const Toolbar = styled.div`
   justify-content: flex-end;
   align-items: center;
   overflow: hidden;
+  padding-left: 10px;
 `;
 
 export default Toolbar;

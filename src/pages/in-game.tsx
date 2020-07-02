@@ -22,7 +22,11 @@ import { Level } from '../components/levels/types';
 import { useQuery } from 'react-query';
 import { setLocalStorageItem, getLocalStorageItem } from '../api/utils/storage';
 import { getAccount } from '../api/accounts';
-import overwolf, { openWindow, setLeagueFeatures } from '../api/overwolf';
+import overwolf, {
+  openWindow,
+  setLeagueFeatures,
+  INTERESTED_IN_LEAGUE_FEATURES,
+} from '../api/overwolf';
 import { parseJSON } from '../api/utils/json';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
@@ -87,8 +91,6 @@ const GrowFlex = styled(Grow)`
   display: flex;
   flex-direction: column;
 `;
-
-const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data'];
 
 const InGame: NextPage = () => {
   const hotkey = useHotkey();

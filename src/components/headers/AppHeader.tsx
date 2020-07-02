@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import Discord from '../icons/Discord';
 import Support from '../icons/Support';
 import styled from '@emotion/styled';
@@ -14,6 +14,7 @@ import HeaderButton from './HeaderButton';
 import ExitButton from './ExitButton';
 import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
+import Status from '../common/Status';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -37,11 +38,7 @@ const WriteUsFeedback = styled.div`
   }
 `;
 
-const AfterMatchIcon = styled(AfterMatch)`
-  margin-left: 10px;
-`;
-
-const AppHeader = () => {
+const AppHeader: FC = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   return (
@@ -57,7 +54,8 @@ const AppHeader = () => {
           </Background>
         </LogoContainer>
         <Toolbar>
-          <AfterMatchIcon />
+          <Status />
+          <AfterMatch />
           <Grow />
           <WriteUsFeedback onClick={() => setShowFeedback(true)}>
             <Feedback />

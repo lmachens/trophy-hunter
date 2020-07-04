@@ -1,4 +1,5 @@
 export { default as blitzkrieg } from './blitzkrieg';
+export { default as bloodThirst } from './bloodThirst';
 export { default as bombardment } from './bombardment';
 export { default as burningComet } from './burningComet';
 export { default as clothArmor } from './clothArmor';

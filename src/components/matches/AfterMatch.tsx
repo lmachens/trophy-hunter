@@ -156,7 +156,6 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
       setShowModal(true);
     },
     onSuccess: () => {
-      localStorage.removeItem('checkGameId');
       queryCache.invalidateQueries('account');
     },
   });
@@ -170,11 +169,6 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
       check(parseInt(event.newValue));
     };
     window.addEventListener('storage', handleStorage, false);
-
-    const oldCheckGameId = localStorage.getItem('checkGameId');
-    if (oldCheckGameId) {
-      check(parseInt(oldCheckGameId));
-    }
     return () => {
       window.removeEventListener('storage', handleStorage);
     };

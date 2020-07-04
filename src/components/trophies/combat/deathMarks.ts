@@ -31,7 +31,7 @@ const deathMarks: Trophy = {
     });
 
     const trophyProgress = getTrophyProgress(account, 'deathMarks');
-    return deathMarks.length / 7 + trophyProgress;
+    return deathMarks.length / 7 + trophyProgress * 7;
   },
 };
 

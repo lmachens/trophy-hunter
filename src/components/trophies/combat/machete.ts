@@ -15,7 +15,8 @@ const machete: Trophy = {
 
     const trophyProgress = getTrophyProgress(account, 'machete');
     return (
-      participant.stats.totalDamageDealtToChampions / 50000 + trophyProgress
+      participant.stats.totalDamageDealtToChampions / 50000 +
+      trophyProgress * 50000
     );
   },
 };

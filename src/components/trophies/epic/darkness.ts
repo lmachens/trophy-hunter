@@ -14,7 +14,7 @@ const darkness: Trophy = {
     const participant = getParticipantByAccount(match, account);
 
     const trophyProgress = getTrophyProgress(account, 'darkness');
-    return participant.stats.wardsKilled / 12 + trophyProgress;
+    return participant.stats.wardsKilled / 12 + trophyProgress * 12;
   },
 };
 

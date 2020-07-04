@@ -17,7 +17,7 @@ const soulHarvest: Trophy = {
     const damage =
       participant.stats.perk0 === 8128 ? participant.stats.perk0Var1 : 0;
 
-    return damage / 2000 + trophyProgress;
+    return damage / 2000 + trophyProgress * 2000;
   },
 };
 

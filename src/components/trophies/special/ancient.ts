@@ -11,7 +11,7 @@ const ancient: Trophy = {
   maxProgress: 500,
   checkProgress: ({ account }) => {
     const trophyProgress = getTrophyProgress(account, 'ancient');
-    return 1 / 500 + trophyProgress;
+    return 1 / 500 + trophyProgress * 500;
   },
 };
 

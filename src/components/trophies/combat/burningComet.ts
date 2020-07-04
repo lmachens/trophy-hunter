@@ -16,7 +16,7 @@ const burningComet: Trophy = {
     const damage =
       participant.stats.perk0 === 8229 ? participant.stats.perk0Var1 : 0;
 
-    return damage / 2500 + trophyProgress;
+    return damage / 2500 + trophyProgress * 2500;
   },
 };
 

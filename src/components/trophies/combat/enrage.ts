@@ -15,7 +15,7 @@ const enrage: Trophy = {
 
     const trophyProgress = getTrophyProgress(account, 'enrage');
 
-    return participant.stats.killingSprees / 3 + trophyProgress;
+    return participant.stats.killingSprees / 3 + trophyProgress * 3;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (trophyData.enrage || events.length === 0) {
@@ -30,7 +30,7 @@ const enrage: Trophy = {
     );
     const trophyProgress = getTrophyProgress(account, 'enrage');
 
-    const progress = Math.min(1, multiKills.length / 3 + trophyProgress);
+    const progress = Math.min(1, multiKills.length / 3 + trophyProgress * 3);
     if (progress === 1) {
       trophyData.enrage = true;
     }

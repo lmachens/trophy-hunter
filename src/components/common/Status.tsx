@@ -34,10 +34,10 @@ const Status: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (data) {
+    if (!isFetching && data) {
       setTimedout(false);
     }
-  }, [data]);
+  }, [isFetching, data]);
 
   if (!isError && !timedout && (!data || data.length === 0)) {
     return null;

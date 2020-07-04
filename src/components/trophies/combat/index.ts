@@ -31,3 +31,4 @@ export { default as trophyHunter } from './trophyHunter';
 export { default as uncounterable } from './uncounterable';
 export { default as unleashThePower } from './unleashThePower';
 export { default as vengeance } from './vengeance';
+export { default as wizard } from './wizard';

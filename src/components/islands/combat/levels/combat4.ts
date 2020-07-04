@@ -8,6 +8,7 @@ import {
   silverBullets,
   snowball,
   unleashThePower,
+  wizard,
 } from '../../../trophies';
 
 const combat4: Level = {
@@ -23,6 +24,7 @@ const combat4: Level = {
     silverBullets,
     snowball,
     unleashThePower,
+    wizard,
   ],
   unlocksLevels: [combat5],
 };

@@ -1,7 +1,13 @@
 import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import combat6 from './combat6';
-import { bloodThirst, livingArtillery, machete, sai } from '../../../trophies';
+import {
+  bloodThirst,
+  livingArtillery,
+  machete,
+  sai,
+  theFinalHour,
+} from '../../../trophies';
 
 const combat5: Level = {
   island: 'combat',
@@ -9,7 +15,7 @@ const combat5: Level = {
   title: 'Combat island Lvl. 5',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [bloodThirst, livingArtillery, machete, sai],
+  trophies: [bloodThirst, livingArtillery, machete, sai, theFinalHour],
   unlocksLevels: [combat6],
 };
 

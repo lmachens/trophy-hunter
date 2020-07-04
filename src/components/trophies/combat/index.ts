@@ -10,6 +10,7 @@ export { default as doubleKill } from './doubleKill';
 export { default as duelist } from './duelist';
 export { default as dwarfKing } from './dwarfKing';
 export { default as enrage } from './enrage';
+export { default as explosive } from './explosive';
 export { default as firstBlood } from './firstBlood';
 export { default as flail } from './flail';
 export { default as keyTargets } from './keyTargets';

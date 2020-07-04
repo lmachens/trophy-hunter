@@ -9,6 +9,7 @@ import {
   snowball,
   unleashThePower,
   wizard,
+  explosive,
 } from '../../../trophies';
 
 const combat4: Level = {
@@ -25,6 +26,7 @@ const combat4: Level = {
     snowball,
     unleashThePower,
     wizard,
+    explosive,
   ],
   unlocksLevels: [combat5],
 };

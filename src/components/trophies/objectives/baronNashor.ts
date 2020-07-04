@@ -26,12 +26,19 @@ const baronNashor: Trophy = {
     ).length;
     return baronKills / 2;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, allPlayers, account }) => {
+    const accountPlayer = allPlayers.find(
+      (player) => player.summonerName === account.summoner.name
+    );
+
+    const teamNames = allPlayers
+      .filter((player) => player.team === accountPlayer.team)
+      .map((player) => player.summonerName);
+
     const baronKills = events.filter(
       (event) =>
-        event.EventName === 'BaronKill' &&
-        (event.KillerName !== account.summoner.name ||
-          event.Assisters.includes(account.summoner.name))
+        event.EventName === '"BaronKill"' &&
+        teamNames.includes(event.KillerName)
     ).length;
 
     return baronKills / 2;

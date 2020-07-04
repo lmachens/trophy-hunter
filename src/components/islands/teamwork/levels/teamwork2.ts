@@ -1,7 +1,7 @@
 import { Level } from '../../../levels/types';
 import { TeamworkIcon, TeamworkMarker } from '../../../levels/teamwork';
 import teamwork3 from './teamwork3';
-import { battery } from '../../../trophies';
+import { battery, bloodBrothers } from '../../../trophies';
 
 const teamwork2: Level = {
   island: 'teamwork',
@@ -9,7 +9,7 @@ const teamwork2: Level = {
   title: 'Teamwork island Lvl. 2',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [battery],
+  trophies: [battery, bloodBrothers],
   unlocksLevels: [teamwork3],
 };
 

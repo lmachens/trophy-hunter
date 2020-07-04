@@ -6,8 +6,7 @@ const battery: Trophy = {
   name: 'battery',
   level: 'teamwork2',
   title: 'battery',
-  description:
-    'Heal/Regenerate 20% more damage and take 20% more damage than the next player.',
+  description: 'Heal/Regenerate most damage and take most damage.',
   category: 'teamwork',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);

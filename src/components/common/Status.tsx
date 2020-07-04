@@ -1,16 +1,15 @@
 import { FC, useState, useEffect } from 'react';
-import { useQuery, queryCache } from 'react-query';
+import { useMutation } from 'react-query';
 import { getStatus } from '../../api/status';
 import Alert from '../icons/Alert';
 import { Tooltip } from '../tooltip';
 
 const Status: FC = () => {
-  const { data, isFetching, isError } = useQuery('status', getStatus, {
-    cacheTime: 0,
-  });
+  const [mutate, { data, isLoading, isError }] = useMutation(getStatus);
   const [timedout, setTimedout] = useState(false);
+
   useEffect(() => {
-    if (!isFetching || isError) {
+    if (!isLoading || isError) {
       return;
     }
 
@@ -21,12 +20,14 @@ const Status: FC = () => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [isFetching, isError]);
+  }, [isLoading, isError]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      queryCache.invalidateQueries('status');
+      mutate();
     }, 60000);
+
+    mutate();
 
     return () => {
       clearInterval(interval);
@@ -34,10 +35,10 @@ const Status: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!isFetching && data) {
+    if (!isLoading && data) {
       setTimedout(false);
     }
-  }, [isFetching, data]);
+  }, [isLoading, data]);
 
   if (!isError && !timedout && (!data || data.length === 0)) {
     return null;

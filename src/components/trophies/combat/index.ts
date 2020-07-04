@@ -1,3 +1,4 @@
+export { default as assassinsCreed } from './assassinsCreed';
 export { default as blitzkrieg } from './blitzkrieg';
 export { default as bloodThirst } from './bloodThirst';
 export { default as bombardment } from './bombardment';

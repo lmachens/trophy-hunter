@@ -1,12 +1,12 @@
 import { Trophy } from '../types';
 import { getParticipantIdentity } from '../../../api/riot/helpers';
 
-const duelist: Trophy = {
+const assassinsCreed: Trophy = {
   island: 'combatIsland',
-  name: 'duelist',
-  level: 'combat2',
-  title: 'Duelist',
-  description: 'Achieve three solo kills.',
+  name: 'assassinsCreed',
+  level: 'combat6',
+  title: 'Assassins Creed',
+  description: 'Achieve seven solo kills.',
   category: 'combat',
   checkProgress: ({ match, events, account }) => {
     const participantIdentity = getParticipantIdentity(match, account);
@@ -17,7 +17,7 @@ const duelist: Trophy = {
         event.killerId === participantIdentity.participantId &&
         event.assistingParticipantIds.length === 0
     ).length;
-    return soloKills / 3;
+    return soloKills / 7;
   },
   checkLive: ({ events, account }) => {
     const soloKills = events.filter(
@@ -26,8 +26,8 @@ const duelist: Trophy = {
         event.KillerName === account.summoner.name &&
         event.Assisters.length === 0
     ).length;
-    return soloKills / 3;
+    return soloKills / 7;
   },
 };
 
-export default duelist;
+export default assassinsCreed;

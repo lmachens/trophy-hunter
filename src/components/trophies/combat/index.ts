@@ -32,6 +32,7 @@ export { default as soulHarvest } from './soulHarvest';
 export { default as spinningBlades } from './spinningBlades';
 export { default as superiorPosition } from './superiorPosition';
 export { default as superiorBrain } from './superiorBrain';
+export { default as superiorEquipment } from './superiorEquipment';
 export { default as theFinalHour } from './theFinalHour';
 export { default as theZombie } from './theZombie';
 export { default as towerdive } from './towerdive';

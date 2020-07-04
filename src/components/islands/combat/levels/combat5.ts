@@ -7,6 +7,7 @@ import {
   machete,
   sai,
   theFinalHour,
+  theZombie,
 } from '../../../trophies';
 
 const combat5: Level = {
@@ -15,7 +16,14 @@ const combat5: Level = {
   title: 'Combat island Lvl. 5',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [bloodThirst, livingArtillery, machete, sai, theFinalHour],
+  trophies: [
+    bloodThirst,
+    livingArtillery,
+    machete,
+    sai,
+    theFinalHour,
+    theZombie,
+  ],
   unlocksLevels: [combat6],
 };
 

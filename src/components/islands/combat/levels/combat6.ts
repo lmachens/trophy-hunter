@@ -7,6 +7,7 @@ import {
   darkinBlade,
   deadlyShadow,
   grimReaper,
+  wolfPack,
 } from '../../../trophies';
 
 const combat6: Level = {
@@ -21,6 +22,7 @@ const combat6: Level = {
     darkinBlade,
     deadlyShadow,
     grimReaper,
+    wolfPack,
   ],
   unlocksLevels: [combat7],
 };

@@ -11,6 +11,7 @@ import {
   wizard,
   explosive,
   fullHouse,
+  tripleKill,
 } from '../../../trophies';
 
 const combat4: Level = {
@@ -29,6 +30,7 @@ const combat4: Level = {
     wizard,
     explosive,
     fullHouse,
+    tripleKill,
   ],
   unlocksLevels: [combat5],
 };

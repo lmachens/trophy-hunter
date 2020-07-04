@@ -17,7 +17,7 @@ const spinningBlades: Trophy = {
     const damage =
       participant.stats.perk0 === 8005 ? participant.stats.perk0Var1 : 0;
 
-    return damage / 2500 + trophyProgress * 2500;
+    return (damage + trophyProgress * 2500) / 2500;
   },
 };
 

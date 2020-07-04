@@ -15,7 +15,7 @@ const skullHunter: Trophy = {
     const trophyProgress = getTrophyProgress(account, 'skullHunter');
 
     const killsAssists = participant.stats.assists + participant.stats.kills;
-    return killsAssists / 20 + trophyProgress * 20;
+    return (killsAssists + trophyProgress * 20) / 20;
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {
     if (
@@ -34,7 +34,7 @@ const skullHunter: Trophy = {
 
     const killsAssists =
       accountPlayer.scores.assists + accountPlayer.scores.kills;
-    const process = Math.min(1, killsAssists / 20 + trophyProgress * 20);
+    const process = Math.min(1, (killsAssists + trophyProgress * 20) / 20);
     if (process === 1) {
       trophyData.skullHunter = true;
     }

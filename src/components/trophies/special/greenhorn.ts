@@ -11,7 +11,7 @@ const greenhorn: Trophy = {
   maxProgress: 10,
   checkProgress: ({ account }) => {
     const trophyProgress = getTrophyProgress(account, 'greenhorn');
-    return 1 / 10 + trophyProgress * 10;
+    return (1 + trophyProgress * 10) / 10;
   },
 };
 

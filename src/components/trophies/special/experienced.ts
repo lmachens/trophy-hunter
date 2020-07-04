@@ -11,7 +11,7 @@ const experienced: Trophy = {
   maxProgress: 50,
   checkProgress: ({ account }) => {
     const trophyProgress = getTrophyProgress(account, 'experienced');
-    return 1 / 50 + trophyProgress * 50;
+    return (1 + trophyProgress * 50) / 50;
   },
 };
 

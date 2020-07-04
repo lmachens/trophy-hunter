@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const battery: Trophy = {
-  island: 'combatIsland',
+  island: 'teamworkIsland',
   name: 'battery',
   level: 'teamwork2',
   title: 'battery',
@@ -11,14 +11,11 @@ const battery: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const others = match.participants.filter(
-      (other) => other.participantId !== participant.participantId
-    );
     const maxTotalHeal = Math.max(
-      ...others.map((other) => other.stats.totalHeal)
+      ...match.participants.map((other) => other.stats.totalHeal)
     );
     const maxTotalDamageTaken = Math.max(
-      ...others.map((other) => other.stats.totalDamageTaken)
+      ...match.participants.map((other) => other.stats.totalDamageTaken)
     );
 
     return Number(

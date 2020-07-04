@@ -6,7 +6,7 @@ import {
 import { zip } from '../../../api/utils/arrays';
 
 const annihilation: Trophy = {
-  island: 'combatIsland',
+  island: 'teamworkIsland',
   name: 'annihilation',
   level: 'teamwork6',
   title: 'Annihilation',

@@ -9,6 +9,7 @@ import {
   theFinalHour,
   theZombie,
   tuorsAxe,
+  superiorBrain,
 } from '../../../trophies';
 
 const combat5: Level = {
@@ -25,6 +26,7 @@ const combat5: Level = {
     theFinalHour,
     theZombie,
     tuorsAxe,
+    superiorBrain,
   ],
   unlocksLevels: [combat6],
 };

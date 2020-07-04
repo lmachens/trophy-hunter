@@ -8,6 +8,7 @@ export { default as cursedGrounds } from './cursedGrounds';
 export { default as curtainCall } from './curtainCall';
 export { default as darkinBlade } from './darkinBlade';
 export { default as david } from './david';
+export { default as deadlyShadow } from './deadlyShadow';
 export { default as deadlyVenom } from './deadlyVenom';
 export { default as deathMarks } from './deathMarks';
 export { default as doubleKill } from './doubleKill';

@@ -1,7 +1,12 @@
 import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import combat7 from './combat7';
-import { assassinsCreed, curtainCall, darkinBlade } from '../../../trophies';
+import {
+  assassinsCreed,
+  curtainCall,
+  darkinBlade,
+  deadlyShadow,
+} from '../../../trophies';
 
 const combat6: Level = {
   island: 'combat',
@@ -9,7 +14,7 @@ const combat6: Level = {
   title: 'Combat island Lvl. 6',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [assassinsCreed, curtainCall, darkinBlade],
+  trophies: [assassinsCreed, curtainCall, darkinBlade, deadlyShadow],
   unlocksLevels: [combat7],
 };
 

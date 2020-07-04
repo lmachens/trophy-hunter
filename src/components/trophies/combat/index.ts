@@ -17,6 +17,7 @@ export { default as flail } from './flail';
 export { default as fullHouse } from './fullHouse';
 export { default as keyTargets } from './keyTargets';
 export { default as kitchenKnife } from './kitchenKnife';
+export { default as livingArtillery } from './livingArtillery';
 export { default as overload } from './overload';
 export { default as revenge } from './revenge';
 export { default as sheepHunter } from './sheepHunter';

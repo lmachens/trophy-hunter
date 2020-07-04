@@ -15,6 +15,7 @@ import { getAllEvents } from '../../api/riot/helpers';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
+    console.log('Check', req.cookies.authToken, req.body.matchId);
     const { authToken } = req.cookies;
     if (!authToken) {
       return res.status(401).end('Unauthorized');

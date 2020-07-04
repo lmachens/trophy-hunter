@@ -44,7 +44,7 @@ const trophyHunter: Trophy = {
     }
 
     trophyData.trophyHunter = championKills.length;
-    return Number(championKills.length / 5);
+    return championKills.length / 5;
   },
 };
 

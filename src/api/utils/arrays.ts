@@ -8,3 +8,7 @@ export const toggleArrayElement = (array, element) => {
   arrayClone.splice(elementIndex, 1);
   return arrayClone;
 };
+
+export const zip = (a: any[], b: any[]): any[] => {
+  return a.map((element, index) => [element, b[index]]);
+};

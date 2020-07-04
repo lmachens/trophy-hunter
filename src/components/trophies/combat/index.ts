@@ -21,6 +21,7 @@ export { default as livingArtillery } from './livingArtillery';
 export { default as machete } from './machete';
 export { default as overload } from './overload';
 export { default as revenge } from './revenge';
+export { default as sai } from './sai';
 export { default as sheepHunter } from './sheepHunter';
 export { default as shockwave } from './shockwave';
 export { default as silverBullets } from './silverBullets';

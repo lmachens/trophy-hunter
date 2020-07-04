@@ -6,6 +6,7 @@ import {
   curtainCall,
   darkinBlade,
   deadlyShadow,
+  grimReaper,
 } from '../../../trophies';
 
 const combat6: Level = {
@@ -14,7 +15,13 @@ const combat6: Level = {
   title: 'Combat island Lvl. 6',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [assassinsCreed, curtainCall, darkinBlade, deadlyShadow],
+  trophies: [
+    assassinsCreed,
+    curtainCall,
+    darkinBlade,
+    deadlyShadow,
+    grimReaper,
+  ],
   unlocksLevels: [combat7],
 };
 

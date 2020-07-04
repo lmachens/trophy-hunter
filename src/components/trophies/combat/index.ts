@@ -5,6 +5,7 @@ export { default as bombardment } from './bombardment';
 export { default as burningComet } from './burningComet';
 export { default as clothArmor } from './clothArmor';
 export { default as cursedGrounds } from './cursedGrounds';
+export { default as curtainCall } from './curtainCall';
 export { default as david } from './david';
 export { default as deadlyVenom } from './deadlyVenom';
 export { default as deathMarks } from './deathMarks';

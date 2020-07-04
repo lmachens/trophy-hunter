@@ -7,6 +7,7 @@ import {
   shockwave,
   silverBullets,
   snowball,
+  unleashThePower,
 } from '../../../trophies';
 
 const combat4: Level = {
@@ -15,7 +16,14 @@ const combat4: Level = {
   title: 'Combat island Lvl. 4',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [blitzkrieg, cursedGrounds, shockwave, silverBullets, snowball],
+  trophies: [
+    blitzkrieg,
+    cursedGrounds,
+    shockwave,
+    silverBullets,
+    snowball,
+    unleashThePower,
+  ],
   unlocksLevels: [combat5],
 };
 

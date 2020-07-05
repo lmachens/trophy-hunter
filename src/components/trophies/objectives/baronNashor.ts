@@ -37,8 +37,7 @@ const baronNashor: Trophy = {
 
     const baronKills = events.filter(
       (event) =>
-        event.EventName === '"BaronKill"' &&
-        teamNames.includes(event.KillerName)
+        event.EventName === 'BaronKill' && teamNames.includes(event.KillerName)
     ).length;
 
     return baronKills / 2;

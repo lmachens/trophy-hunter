@@ -11,7 +11,7 @@ const master: Trophy = {
   maxProgress: 200,
   checkProgress: ({ account }) => {
     const trophyProgress = getTrophyProgress(account, 'master');
-    return (1 + trophyProgress * 200) / 200;
+    return 1 / 200 + trophyProgress;
   },
 };
 

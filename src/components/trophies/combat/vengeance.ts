@@ -41,7 +41,7 @@ const vengeance: Trophy = {
     ).length;
 
     const trophyProgress = getTrophyProgress(account, 'vengeance');
-    return (vengeanceKills + trophyProgress * 3) / 3;
+    return vengeanceKills / 3 + trophyProgress;
   },
   checkLive: ({ events, allPlayers, account }) => {
     if (!events.length) {
@@ -81,7 +81,7 @@ const vengeance: Trophy = {
     ).length;
 
     const trophyProgress = getTrophyProgress(account, 'vengeance');
-    return (vengeanceKills + trophyProgress * 3) / 3;
+    return vengeanceKills / 3 + trophyProgress;
   },
 };
 

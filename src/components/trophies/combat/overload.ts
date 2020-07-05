@@ -17,7 +17,7 @@ const overload: Trophy = {
     const damage =
       participant.stats.perk0 === 8112 ? participant.stats.perk0Var1 : 0;
 
-    return (damage + trophyProgress * 2500) / 2500;
+    return damage / 2500 + trophyProgress;
   },
 };
 

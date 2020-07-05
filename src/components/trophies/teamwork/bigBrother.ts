@@ -19,7 +19,7 @@ const bigBrother: Trophy = {
       participant.stats.visionScore >= maxVisionScore;
 
     const trophyProgress = getTrophyProgress(account, 'bigBrother');
-    return (Number(hasHighestVisionScore) + trophyProgress * 3) / 3;
+    return Number(hasHighestVisionScore) / 3 + trophyProgress;
   },
 };
 

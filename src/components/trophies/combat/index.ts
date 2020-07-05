@@ -30,6 +30,7 @@ export { default as sai } from './sai';
 export { default as sheepHunter } from './sheepHunter';
 export { default as shockwave } from './shockwave';
 export { default as silverBullets } from './silverBullets';
+export { default as sinisterBlades } from './sinisterBlades';
 export { default as skullHunter } from './skullHunter';
 export { default as smartness } from './smartness';
 export { default as snowball } from './snowball';

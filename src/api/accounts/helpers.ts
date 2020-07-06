@@ -1,4 +1,5 @@
 import { Account, AccountTrophy } from './types';
+import { Participant } from '../riot/types';
 
 export const getTrophy = (
   account: Account,
@@ -13,4 +14,28 @@ export const getTrophyProgress = (
 ): number => {
   const trophy = getTrophy(account, trophyName);
   return trophy ? trophy.progress : 0;
+};
+
+export const findPerk = (
+  participant: Participant,
+  perkId: number
+): {
+  var1: number;
+  var2: number;
+  var3: number;
+} => {
+  for (let i = 0; i < 6; i++) {
+    if (participant.stats[`perk${i}`] === perkId) {
+      return {
+        var1: participant.stats[`perk${i}Var1`],
+        var2: participant.stats[`perk${i}Var2`],
+        var3: participant.stats[`perk${i}Var3`],
+      };
+    }
+  }
+  return {
+    var1: 0,
+    var2: 0,
+    var3: 0,
+  };
 };

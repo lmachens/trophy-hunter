@@ -6,6 +6,7 @@ import {
   bloodBrothers,
   chaliceOfRecovery,
   controller,
+  dracula,
 } from '../../../trophies';
 
 const teamwork2: Level = {
@@ -14,7 +15,7 @@ const teamwork2: Level = {
   title: 'Teamwork island Lvl. 2',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [battery, bloodBrothers, chaliceOfRecovery, controller],
+  trophies: [battery, bloodBrothers, chaliceOfRecovery, controller, dracula],
   unlocksLevels: [teamwork3],
 };
 

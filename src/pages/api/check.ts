@@ -84,11 +84,7 @@ export default applyMiddleware(
             };
           }
           if (accountTrophy) {
-            accountTrophy.progress = Math.min(
-              1,
-              accountTrophy.progress + progress
-            );
-            if (accountTrophy.progress >= 1) {
+            if (progress >= 1) {
               accountTrophy.status = 'completed';
               completedTrophyNames.push(accountTrophy.name);
               return {

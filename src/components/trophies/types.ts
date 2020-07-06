@@ -168,6 +168,10 @@ export interface Event {
   KillStreak?: number;
   Acer?: string;
   AcingTeam?: string;
+  DragonType?: string;
+  Stolen?: boolean;
+  InhibKilled?: string;
+  TurretKilled?: string;
 }
 
 export type Events = Event[];

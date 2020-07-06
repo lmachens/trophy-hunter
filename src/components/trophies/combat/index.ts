@@ -7,6 +7,7 @@ export { default as clothArmor } from './clothArmor';
 export { default as curse } from './curse';
 export { default as cursedGrounds } from './cursedGrounds';
 export { default as curtainCall } from './curtainCall';
+export { default as darkBinding } from './darkBinding';
 export { default as darkinBlade } from './darkinBlade';
 export { default as david } from './david';
 export { default as deadlyShadow } from './deadlyShadow';

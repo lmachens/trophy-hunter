@@ -13,6 +13,7 @@ export { default as david } from './david';
 export { default as deadlyShadow } from './deadlyShadow';
 export { default as deadlyVenom } from './deadlyVenom';
 export { default as deathMarks } from './deathMarks';
+export { default as dominus } from './dominus';
 export { default as doubleKill } from './doubleKill';
 export { default as duelist } from './duelist';
 export { default as dwarfKing } from './dwarfKing';

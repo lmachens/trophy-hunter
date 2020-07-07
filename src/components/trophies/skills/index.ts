@@ -8,4 +8,5 @@ export { default as dominatingDamage } from './dominatingDamage';
 export { default as farmer } from './farmer';
 export { default as flameBreath } from './flameBreath';
 export { default as flameHorizon } from './flameHorizon';
+export { default as glutton } from './glutton';
 export { default as precision } from './precision';

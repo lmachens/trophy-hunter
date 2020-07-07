@@ -10,8 +10,7 @@ const annihilation: Trophy = {
   name: 'annihilation',
   level: 'teamwork6',
   title: 'Annihilation',
-  description:
-    'Be involved in 5 kills in 15 seconds. (: Achieve this twice in 1 game.)',
+  description: 'Be involved in 5 kills in 15 seconds.',
   category: 'teamwork',
   checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);

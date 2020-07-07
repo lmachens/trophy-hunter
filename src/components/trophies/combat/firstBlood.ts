@@ -12,18 +12,15 @@ const firstBlood: Trophy = {
     const participant = getParticipantByAccount(match, account);
     return Number(participant.stats.firstBloodKill);
   },
-  checkLive: ({ allPlayers, trophyData, account }) => {
-    if (!allPlayers || trophyData.firstBlood) {
-      return 0;
-    }
+  checkLive: ({ events, account }) => {
+    const firstKill = events.find(
+      (event) => event.EventName === 'ChampionKill'
+    );
 
-    const killer = allPlayers.find((player) => player.scores.kills > 0);
-    if (!killer) {
-      return 0;
-    }
-    trophyData.firstBlood = killer.summonerName;
+    const firstBloodKill =
+      firstKill && firstKill.KillerName === account.summoner.name;
 
-    return Number(account.summoner.name === trophyData.firstBlood);
+    return Number(firstBloodKill);
   },
 };
 

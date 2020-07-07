@@ -1,7 +1,7 @@
 import { Level } from '../../../levels/types';
 import { CombatIcon, CombatMarker } from '../../../levels/combat';
 import combat8 from './combat8';
-import { curse, darkBinding, dominus } from '../../../trophies';
+import { curse, darkBinding, dominus, theWanderer } from '../../../trophies';
 
 const combat7: Level = {
   island: 'combat',
@@ -9,7 +9,7 @@ const combat7: Level = {
   title: 'Combat island Lvl. 7',
   Icon: CombatIcon,
   Marker: CombatMarker,
-  trophies: [curse, darkBinding, dominus],
+  trophies: [curse, darkBinding, dominus, theWanderer],
   unlocksLevels: [combat8],
 };
 

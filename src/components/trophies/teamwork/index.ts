@@ -6,5 +6,6 @@ export { default as chaliceOfRecovery } from './chaliceOfRecovery';
 export { default as comradeInArms } from './comradeInArms';
 export { default as controller } from './controller';
 export { default as dracula } from './dracula';
+export { default as dusk } from './dusk';
 export { default as feedThem } from './feedThem';
 export { default as theElephant } from './theElephant';

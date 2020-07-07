@@ -1,7 +1,12 @@
 import { Level } from '../../../levels/types';
 import { SkillsIcon, SkillsMarker } from '../../../levels/skills';
 import skills4 from './skills4';
-import { billGates, dominatingDamage, flameHorizon } from '../../../trophies';
+import {
+  billGates,
+  dominatingDamage,
+  flameHorizon,
+  godlike,
+} from '../../../trophies';
 
 const skills3: Level = {
   island: 'skills',
@@ -9,7 +14,7 @@ const skills3: Level = {
   title: 'Skills island Lvl. 3',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [billGates, dominatingDamage, flameHorizon],
+  trophies: [billGates, dominatingDamage, flameHorizon, godlike],
   unlocksLevels: [skills4],
 };
 

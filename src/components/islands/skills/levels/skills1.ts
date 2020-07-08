@@ -6,6 +6,7 @@ import {
   damageDealer,
   hextechLord,
   killerInstinct,
+  disruptor,
 } from '../../../trophies';
 
 const skills1: Level = {
@@ -14,7 +15,7 @@ const skills1: Level = {
   title: 'Skills island Lvl. 1',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [dominating, damageDealer, hextechLord, killerInstinct],
+  trophies: [dominating, damageDealer, hextechLord, killerInstinct, disruptor],
   unlocksLevels: [skills2],
 };
 

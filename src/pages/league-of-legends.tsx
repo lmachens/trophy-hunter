@@ -175,7 +175,7 @@ const LeagueOfLegends: NextPage = () => {
               setVisibleIslandDetails(true);
             }}
           />
-          <VideoAds />
+          <VideoAds showIngame={false} />
         </Overview>
         <LevelPanel
           level={targetLevel?.level}

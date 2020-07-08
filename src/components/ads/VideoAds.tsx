@@ -1,6 +1,10 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import overwolf from '../../api/overwolf';
+import overwolf, {
+  isLeagueLaunched,
+  isLeagueClosed,
+  isLeagueRunning,
+} from '../../api/overwolf';
 import { OwAd } from '../../../typings/owAds';
 
 const Container = styled.div`
@@ -17,7 +21,11 @@ const Container = styled.div`
   background-position: center;
 `;
 
-const VideoAds: FC = () => {
+interface VideoAdsProps {
+  showIngame: boolean;
+}
+
+const VideoAds: FC<VideoAdsProps> = ({ showIngame }) => {
   const containerRef = useRef(null);
   const [owAd, setOwAd] = useState<OwAd>(null);
 
@@ -37,7 +45,6 @@ const VideoAds: FC = () => {
           'ow_internal_rendered',
           handleInternalRendered
         );
-        console.log(`Ads ready`);
 
         setOwAd(owAd);
       };
@@ -64,26 +71,64 @@ const VideoAds: FC = () => {
     const handleWindowStateChanged = (
       state: overwolf.windows.WindowStateChangedEvent
     ): void => {
-      if (state) {
-        // when state changes to minimized, call removeAd()
-        if (state.window_state === 'minimized') {
-          owAd.removeAd();
+      overwolf.windows.getCurrentWindow((res) => {
+        if (state && state.window_id === res.window.id) {
+          // when state changes to minimized, call removeAd()
+          if (state.window_state === 'minimized') {
+            owAd.removeAd();
+          }
+          // when state changes from minimized to normal, call refreshAd()
+          else if (
+            state.window_previous_state === 'minimized' &&
+            state.window_state === 'normal'
+          ) {
+            if (showIngame) {
+              owAd.refreshAd(null);
+            } else {
+              overwolf.games.getRunningGameInfo((res) => {
+                if (!isLeagueRunning(res)) {
+                  owAd.refreshAd(null);
+                }
+              });
+            }
+          }
         }
-        // when state changes from minimized to normal, call refreshAd()
-        else if (
-          state.window_previous_state === 'minimized' &&
-          state.window_state === 'normal'
-        ) {
-          owAd.refreshAd(null);
-        }
-      }
+      });
     };
     overwolf.windows.onStateChanged.addListener(handleWindowStateChanged);
 
     return () => {
       overwolf.windows.onStateChanged.removeListener(handleWindowStateChanged);
     };
-  }, [owAd]);
+  }, [showIngame, owAd]);
+
+  useEffect(() => {
+    if (showIngame || !owAd) {
+      return;
+    }
+
+    const handleGameInfoUpdated = (
+      res: overwolf.games.GameInfoUpdatedEvent
+    ) => {
+      if (isLeagueLaunched(res)) {
+        owAd.removeAd();
+      } else if (isLeagueClosed(res)) {
+        owAd.refreshAd(null);
+      }
+    };
+
+    overwolf.games.onGameInfoUpdated.addListener(handleGameInfoUpdated);
+
+    overwolf.games.getRunningGameInfo((res) => {
+      if (isLeagueRunning(res)) {
+        owAd.removeAd();
+      }
+    });
+
+    return () => {
+      overwolf.games.onGameInfoUpdated.removeListener(handleGameInfoUpdated);
+    };
+  }, [showIngame, owAd]);
 
   return <Container ref={containerRef} />;
 };

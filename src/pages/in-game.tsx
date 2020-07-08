@@ -355,7 +355,7 @@ const InGame: NextPage = () => {
         <GrowFlex>
           <AvailableTrophies trophyProgress={trophyProgress} />
         </GrowFlex>
-        <VideoAds />
+        <VideoAds showIngame={true} />
       </Container>
     </>
   );

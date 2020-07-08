@@ -19,4 +19,5 @@ export { default as lastResort } from './lastResort';
 export { default as lifeAndDeath } from './lifeAndDeath';
 export { default as lightBringer } from './lightBringer';
 export { default as mercenary } from './mercenary';
+export { default as ninjas } from './ninjas';
 export { default as theElephant } from './theElephant';

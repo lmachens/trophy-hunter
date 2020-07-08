@@ -220,7 +220,7 @@ const InGame: NextPage = () => {
   }, [account]);
 
   useEffect(() => {
-    if (!trophies || !gameData?.gameTime) {
+    if (!trophies || !gameData?.gameTime || !activePlayer || !allPlayers) {
       return;
     }
 

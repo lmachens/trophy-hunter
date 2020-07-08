@@ -6,5 +6,6 @@ export { default as dragonSlayer } from './dragonSlayer';
 export { default as earlyBird } from './earlyBird';
 export { default as energized } from './energized';
 export { default as explosiveCharge } from './explosiveCharge';
+export { default as neutralizer } from './neutralizer';
 export { default as siegeRam } from './siegeRam';
 export { default as theViking } from './theViking';

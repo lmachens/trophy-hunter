@@ -14,4 +14,5 @@ export { default as goliath } from './goliath';
 export { default as hardHitter } from './hardHitter';
 export { default as hextechLord } from './hextechLord';
 export { default as intruder } from './intruder';
+export { default as killerInstinct } from './killerInstinct';
 export { default as precision } from './precision';

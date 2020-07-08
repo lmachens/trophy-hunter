@@ -8,6 +8,7 @@ import {
   godlike,
   hardHitter,
   intruder,
+  landlord,
 } from '../../../trophies';
 
 const skills3: Level = {
@@ -23,6 +24,7 @@ const skills3: Level = {
     godlike,
     hardHitter,
     intruder,
+    landlord,
   ],
   unlocksLevels: [skills4],
 };

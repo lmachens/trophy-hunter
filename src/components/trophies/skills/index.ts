@@ -20,4 +20,5 @@ export { default as landlord } from './landlord';
 export { default as leagueOfDraven } from './leagueOfDraven';
 export { default as legendary } from './legendary';
 export { default as lunatic } from './lunatic';
+export { default as maniac } from './maniac';
 export { default as precision } from './precision';

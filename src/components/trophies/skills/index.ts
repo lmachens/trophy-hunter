@@ -11,4 +11,5 @@ export { default as flameHorizon } from './flameHorizon';
 export { default as glutton } from './glutton';
 export { default as godlike } from './godlike';
 export { default as goliath } from './goliath';
+export { default as hardHitter } from './hardHitter';
 export { default as precision } from './precision';

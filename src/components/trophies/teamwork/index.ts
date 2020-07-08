@@ -14,4 +14,5 @@ export { default as healer } from './healer';
 export { default as highSociety } from './highSociety';
 export { default as immortal } from './immortal';
 export { default as invade } from './invade';
+export { default as jungleOfTraps } from './jungleOfTraps';
 export { default as theElephant } from './theElephant';

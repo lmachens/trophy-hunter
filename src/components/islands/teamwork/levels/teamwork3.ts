@@ -6,6 +6,7 @@ import {
   greyEminence,
   highSociety,
   lifeAndDeath,
+  lightBringer,
 } from '../../../trophies';
 
 const teamwork3: Level = {
@@ -14,7 +15,7 @@ const teamwork3: Level = {
   title: 'Teamwork island Lvl. 3',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [dusk, greyEminence, highSociety, lifeAndDeath],
+  trophies: [dusk, greyEminence, highSociety, lifeAndDeath, lightBringer],
   unlocksLevels: [teamwork4],
 };
 

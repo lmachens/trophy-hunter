@@ -38,7 +38,7 @@ const smartness: Trophy = {
         event.Assisters.includes(account.summoner.name)
     ).length;
 
-    return (Math.min(1, killingSprees) + Math.min(1, assists / 10)) / 2;
+    return (Math.min(1, killingSprees) + Math.min(1, assists / 10)) / 2.1;
   },
 };
 

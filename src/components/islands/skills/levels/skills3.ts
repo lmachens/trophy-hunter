@@ -7,6 +7,7 @@ import {
   flameHorizon,
   godlike,
   hardHitter,
+  intruder,
 } from '../../../trophies';
 
 const skills3: Level = {
@@ -15,7 +16,14 @@ const skills3: Level = {
   title: 'Skills island Lvl. 3',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [billGates, dominatingDamage, flameHorizon, godlike, hardHitter],
+  trophies: [
+    billGates,
+    dominatingDamage,
+    flameHorizon,
+    godlike,
+    hardHitter,
+    intruder,
+  ],
   unlocksLevels: [skills4],
 };
 

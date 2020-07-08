@@ -16,4 +16,5 @@ export { default as immortal } from './immortal';
 export { default as invade } from './invade';
 export { default as jungleOfTraps } from './jungleOfTraps';
 export { default as lastResort } from './lastResort';
+export { default as lifeAndDeath } from './lifeAndDeath';
 export { default as theElephant } from './theElephant';

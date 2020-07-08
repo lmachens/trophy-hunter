@@ -1,7 +1,12 @@
 import { Level } from '../../../levels/types';
 import { TeamworkIcon, TeamworkMarker } from '../../../levels/teamwork';
 import teamwork7 from './teamwork7';
-import { annihilation, bigBrother, guardianAngel } from '../../../trophies';
+import {
+  annihilation,
+  bigBrother,
+  guardianAngel,
+  invade,
+} from '../../../trophies';
 
 const teamwork6: Level = {
   island: 'teamwork',
@@ -9,7 +14,7 @@ const teamwork6: Level = {
   title: 'Teamwork island Lvl. 6',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [annihilation, bigBrother, guardianAngel],
+  trophies: [annihilation, bigBrother, guardianAngel, invade],
   unlocksLevels: [teamwork7],
 };
 

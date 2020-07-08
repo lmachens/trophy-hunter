@@ -15,7 +15,7 @@ const Status: FC = () => {
 
     const timeout = setTimeout(() => {
       setTimedout(true);
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(timeout);

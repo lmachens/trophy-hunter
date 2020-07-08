@@ -17,4 +17,5 @@ export { default as hextechLord } from './hextechLord';
 export { default as intruder } from './intruder';
 export { default as killerInstinct } from './killerInstinct';
 export { default as landlord } from './landlord';
+export { default as leagueOfDraven } from './leagueOfDraven';
 export { default as precision } from './precision';

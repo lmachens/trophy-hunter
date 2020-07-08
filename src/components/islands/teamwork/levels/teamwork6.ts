@@ -6,6 +6,7 @@ import {
   bigBrother,
   guardianAngel,
   invade,
+  lastResort,
 } from '../../../trophies';
 
 const teamwork6: Level = {
@@ -14,7 +15,7 @@ const teamwork6: Level = {
   title: 'Teamwork island Lvl. 6',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [annihilation, bigBrother, guardianAngel, invade],
+  trophies: [annihilation, bigBrother, guardianAngel, invade, lastResort],
   unlocksLevels: [teamwork7],
 };
 

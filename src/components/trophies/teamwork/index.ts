@@ -12,4 +12,5 @@ export { default as greyEminence } from './greyEminence';
 export { default as guardianAngel } from './guardianAngel';
 export { default as healer } from './healer';
 export { default as highSociety } from './highSociety';
+export { default as immortal } from './immortal';
 export { default as theElephant } from './theElephant';

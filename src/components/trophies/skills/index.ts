@@ -23,4 +23,5 @@ export { default as lunatic } from './lunatic';
 export { default as maniac } from './maniac';
 export { default as myJungle } from './myJungle';
 export { default as noxianKnight } from './noxianKnight';
+export { default as overfed } from './overfed';
 export { default as precision } from './precision';

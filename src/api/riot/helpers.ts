@@ -194,6 +194,17 @@ export const getParticipantDeaths = (
   );
 };
 
+export const getParticipantAssists = (
+  events: MatchEvents,
+  participantId: number
+): MatchEvents => {
+  return events.filter(
+    (event) =>
+      event.type === 'CHAMPION_KILL' &&
+      event.assistingParticipantIds.includes(participantId)
+  );
+};
+
 export const getLaneOpponent = (
   participants: Participant[],
   participant: Participant
@@ -231,4 +242,25 @@ export const getLaneOpponent = (
       ? laneOpponents[0]
       : laneOpponents[1];
   }
+};
+
+export const getTeammates = (
+  match: Match,
+  participant: Participant
+): Participant[] => {
+  return match.participants.filter(
+    (matchParticipant) =>
+      matchParticipant.teamId === participant.teamId &&
+      matchParticipant.participantId !== participant.participantId
+  );
+};
+
+export const getOtherParticipants = (
+  match: Match,
+  participant: Participant
+): Participant[] => {
+  return match.participants.filter(
+    (matchParticipant) =>
+      matchParticipant.participantId !== participant.participantId
+  );
 };

@@ -1,5 +1,8 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
+import {
+  getParticipantByAccount,
+  getTeammates,
+} from '../../../api/riot/helpers';
 
 const livingArtillery: Trophy = {
   island: 'combatIsland',
@@ -10,12 +13,8 @@ const livingArtillery: Trophy = {
   category: 'combat',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
+    const teammates = getTeammates(match, participant);
 
-    const teammates = match.participants.filter(
-      (matchParticipant) =>
-        matchParticipant.teamId === participant.teamId &&
-        matchParticipant.participantId !== participant.teamId
-    );
     const teammatesDamage = teammates.reduce(
       (current, teammate) =>
         current + teammate.stats.totalDamageDealtToChampions,

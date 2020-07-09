@@ -1,5 +1,8 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
+import {
+  getParticipantByAccount,
+  getTeammates,
+} from '../../../api/riot/helpers';
 
 const noxianShield: Trophy = {
   island: 'teamworkIsland',
@@ -11,11 +14,7 @@ const noxianShield: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const teammates = match.participants.filter(
-      (matchParticipant) =>
-        matchParticipant.teamId === participant.teamId &&
-        matchParticipant.participantId !== participant.teamId
-    );
+    const teammates = getTeammates(match, participant);
     const minTeamDeaths = Math.min(
       ...teammates.map((participant) => participant.stats.deaths)
     );

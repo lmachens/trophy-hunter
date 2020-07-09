@@ -2,6 +2,7 @@ import { Trophy } from '../types';
 import {
   getParticipantByAccount,
   getParticipantKills,
+  getTeammates,
 } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
@@ -16,13 +17,9 @@ const vengeance: Trophy = {
   maxProgress: 3,
   checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
-    const teammateIds = match.participants
-      .filter(
-        (matchParticipant) =>
-          matchParticipant.teamId === participant.teamId &&
-          matchParticipant.participantId !== participant.teamId
-      )
-      .map((teammate) => teammate.participantId);
+    const teammateIds = getTeammates(match, participant).map(
+      (teammate) => teammate.participantId
+    );
 
     const teammateDeaths = events.filter(
       (event) =>

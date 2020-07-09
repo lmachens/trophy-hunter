@@ -22,4 +22,5 @@ export { default as mercenary } from './mercenary';
 export { default as ninjas } from './ninjas';
 export { default as noxianArmy } from './noxianArmy';
 export { default as noxianShield } from './noxianShield';
+export { default as nurturing } from './nurturing';
 export { default as theElephant } from './theElephant';

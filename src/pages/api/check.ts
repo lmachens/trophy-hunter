@@ -36,6 +36,10 @@ export default applyMiddleware(
     }
     const { matchId } = req.body;
 
+    if (account.lastGameIds.includes(matchId)) {
+      return res.status(401).end('Unauthorized');
+    }
+
     const [match, timeline] = await Promise.all([
       getMatch({
         platformId: account.summoner.platformId,

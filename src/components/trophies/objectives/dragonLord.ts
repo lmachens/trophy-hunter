@@ -6,7 +6,7 @@ const dragonLord: Trophy = {
   name: 'dragonLord',
   level: 'objectives2',
   title: 'Dragon Lord',
-  description: 'Kill five elemental dragons (team achievement).',
+  description: 'Kill five dragons (team achievement).',
   category: 'objectives',
   checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);

@@ -37,9 +37,7 @@ export const isLeagueLauncherRunning = (
   );
 };
 
-export const isLeagueRunning = (
-  gameInfo: overwolf.games.GetRunningGameInfoResult
-) => {
+export const isLeagueRunning = (gameInfo: overwolf.games.RunningGameInfo) => {
   return Boolean(
     gameInfo?.isRunning && Math.floor(gameInfo.id / 10) === LOL_ID
   );

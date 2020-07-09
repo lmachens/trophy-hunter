@@ -91,7 +91,7 @@ const Background: NextPage = () => {
         const leagueIsRunning = isLeagueRunning(res);
         setLeagueRunning(leagueIsRunning);
 
-        if (leagueIsRunning) {
+        if (leagueIsRunning && res.isInFocus) {
           openWindow('in_game');
         } else {
           openWindow('desktop');

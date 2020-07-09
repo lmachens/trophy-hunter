@@ -103,13 +103,22 @@ const VideoAds: FC<VideoAdsProps> = ({ showIngame }) => {
   }, [showIngame, owAd]);
 
   useEffect(() => {
-    if (showIngame || !owAd) {
+    if (!owAd) {
       return;
     }
 
     const handleGameInfoUpdated = (
       res: overwolf.games.GameInfoUpdatedEvent
     ) => {
+      if (
+        showIngame &&
+        isLeagueRunning(res.gameInfo) &&
+        !res.gameInfo?.isInFocus
+      ) {
+        owAd.removeAd();
+        return;
+      }
+
       if (isLeagueLaunched(res)) {
         owAd.removeAd();
       } else if (isLeagueClosed(res)) {
@@ -120,7 +129,7 @@ const VideoAds: FC<VideoAdsProps> = ({ showIngame }) => {
     overwolf.games.onGameInfoUpdated.addListener(handleGameInfoUpdated);
 
     overwolf.games.getRunningGameInfo((res) => {
-      if (isLeagueRunning(res)) {
+      if (!showIngame && isLeagueRunning(res)) {
         owAd.removeAd();
       }
     });

@@ -9,6 +9,7 @@ import {
   lightBringer,
   mercenary,
   noxianArmy,
+  noxianShield,
 } from '../../../trophies';
 
 const teamwork3: Level = {
@@ -25,6 +26,7 @@ const teamwork3: Level = {
     lightBringer,
     mercenary,
     noxianArmy,
+    noxianShield,
   ],
   unlocksLevels: [teamwork4],
 };

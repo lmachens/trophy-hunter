@@ -6,6 +6,7 @@ import {
   mafiaBoss,
   pentaKill,
   pesticide,
+  phoenixStance,
 } from '../../../trophies';
 
 const epic1: Level = {
@@ -14,7 +15,7 @@ const epic1: Level = {
   title: 'Epic island Lvl. 1',
   Icon: EpicIcon,
   Marker: EpicMarker,
-  trophies: [firstBloodKing, mafiaBoss, pentaKill, pesticide],
+  trophies: [firstBloodKing, mafiaBoss, pentaKill, pesticide, phoenixStance],
   unlocksLevels: [epic2],
 };
 

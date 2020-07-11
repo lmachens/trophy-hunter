@@ -7,6 +7,7 @@ import {
   jungleOfTraps,
   nurturing,
   omnipresent,
+  pentaAssist,
 } from '../../../trophies';
 
 const teamwork7: Level = {
@@ -15,7 +16,14 @@ const teamwork7: Level = {
   title: 'Teamwork island Lvl. 7',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [healer, immortal, jungleOfTraps, nurturing, omnipresent],
+  trophies: [
+    healer,
+    immortal,
+    jungleOfTraps,
+    nurturing,
+    omnipresent,
+    pentaAssist,
+  ],
   unlocksLevels: [teamwork8],
 };
 

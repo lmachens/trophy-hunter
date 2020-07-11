@@ -9,6 +9,8 @@ export const toggleArrayElement = (array, element) => {
   return arrayClone;
 };
 
-export const zip = (a: any[], b: any[]): any[] => {
-  return a.map((element, index) => [element, b[index]]);
+export const zip = <T>(first: T[], ...others: T[][]): T[][] => {
+  return first.map((element, index) => {
+    return [element, ...others.map((array) => array[index])];
+  });
 };

@@ -31,4 +31,5 @@ export { default as preserver } from './preserver';
 export { default as quackery } from './quackery';
 export { default as quadraAssist } from './quadraAssist';
 export { default as radar } from './radar';
+export { default as rejuvenation } from './rejuvenation';
 export { default as theElephant } from './theElephant';

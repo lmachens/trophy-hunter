@@ -26,4 +26,5 @@ export { default as nurturing } from './nurturing';
 export { default as octopus } from './octopus';
 export { default as omnipresent } from './omnipresent';
 export { default as pentaAssist } from './pentaAssist';
+export { default as plague } from './plague';
 export { default as theElephant } from './theElephant';

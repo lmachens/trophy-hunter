@@ -8,6 +8,7 @@ import {
   invade,
   lastResort,
   ninjas,
+  plague,
 } from '../../../trophies';
 
 const teamwork6: Level = {
@@ -23,6 +24,7 @@ const teamwork6: Level = {
     invade,
     lastResort,
     ninjas,
+    plague,
   ],
   unlocksLevels: [teamwork7],
 };

@@ -30,4 +30,5 @@ export { default as plague } from './plague';
 export { default as preserver } from './preserver';
 export { default as quackery } from './quackery';
 export { default as quadraAssist } from './quadraAssist';
+export { default as radar } from './radar';
 export { default as theElephant } from './theElephant';

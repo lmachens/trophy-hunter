@@ -2,9 +2,9 @@ import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const precision: Trophy = {
-  island: 'hubIsland',
+  island: 'skillsIsland',
   name: 'precision',
-  level: 'hubSkills',
+  level: 'skills2',
   title: 'Precision',
   description:
     'Be 15 cs ahead of your lane opponent at 10 minutes as top, mid or adc.',

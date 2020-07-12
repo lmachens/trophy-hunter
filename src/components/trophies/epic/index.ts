@@ -5,4 +5,5 @@ export { default as pentaKill } from './pentaKill';
 export { default as pesticide } from './pesticide';
 export { default as phoenixStance } from './phoenixStance';
 export { default as purifyer } from './purifyer';
+export { default as rageblade } from './rageblade';
 export { default as sweetHoney } from './sweetHoney';

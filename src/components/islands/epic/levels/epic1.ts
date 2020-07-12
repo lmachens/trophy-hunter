@@ -8,6 +8,7 @@ import {
   pesticide,
   phoenixStance,
   purifyer,
+  rageblade,
 } from '../../../trophies';
 
 const epic1: Level = {
@@ -23,6 +24,7 @@ const epic1: Level = {
     pesticide,
     phoenixStance,
     purifyer,
+    rageblade,
   ],
   unlocksLevels: [epic2],
 };

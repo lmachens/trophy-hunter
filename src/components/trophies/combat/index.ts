@@ -49,6 +49,7 @@ export { default as towerdive } from './towerdive';
 export { default as trinityForce } from './trinityForce';
 export { default as tripleKill } from './tripleKill';
 export { default as trophyHunter } from './trophyHunter';
+export { default as trophyHunterKing } from './trophyHunterKing';
 export { default as tuorsAxe } from './tuorsAxe';
 export { default as uncounterable } from './uncounterable';
 export { default as unleashThePower } from './unleashThePower';

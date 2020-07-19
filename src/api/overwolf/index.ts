@@ -115,7 +115,6 @@ export const SUPPORTED_QUEUE_IDS = [
   SR_RANKED_SOLO,
   SR_BLIND_PICK,
   SR_RANKED_FLEX,
-  -1, // Custom Match (Don't forget to remove it)
 ];
 
 export const addLeagueLauncherListener = (onLaunched) => {

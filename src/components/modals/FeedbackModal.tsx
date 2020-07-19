@@ -92,7 +92,11 @@ const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
         />
         <ActionContainer>
           {status !== 'success' && (
-            <ModalButton disabled={message.length === 0}>Submit</ModalButton>
+            <ModalButton
+              disabled={status === 'loading' || message.length === 0}
+            >
+              Submit
+            </ModalButton>
           )}
           {status === 'success' && (
             <>

@@ -22,6 +22,7 @@ export { default as explosive } from './explosive';
 export { default as firstBlood } from './firstBlood';
 export { default as flail } from './flail';
 export { default as fullHouse } from './fullHouse';
+export { default as gloriousEvolution } from './gloriousEvolution';
 export { default as grimReaper } from './grimReaper';
 export { default as keyTargets } from './keyTargets';
 export { default as kitchenKnife } from './kitchenKnife';

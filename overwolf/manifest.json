@@ -10,7 +10,7 @@
     "dock_button_title": "Trophy Hunter",
     "icon": "icons/iconMouseOver.png",
     "icon_gray": "icons/iconMouseNormal.png",
-    "launcher_icon": "icons/taskbarIcon.png",
+    "launcher_icon": "icons/icon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
   "permissions": ["Hotkeys", "GameInfo"],

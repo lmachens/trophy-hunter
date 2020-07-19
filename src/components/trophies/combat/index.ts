@@ -36,6 +36,7 @@ export { default as silverBullets } from './silverBullets';
 export { default as sinisterBlades } from './sinisterBlades';
 export { default as skullHunter } from './skullHunter';
 export { default as smartness } from './smartness';
+export { default as sniper } from './sniper';
 export { default as snowball } from './snowball';
 export { default as soulHarvest } from './soulHarvest';
 export { default as spinningBlades } from './spinningBlades';

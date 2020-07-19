@@ -10,6 +10,7 @@ import {
   purifyer,
   rageblade,
   revenantOfTheKaiser,
+  sandsOfTime,
 } from '../../../trophies';
 
 const epic1: Level = {
@@ -27,6 +28,7 @@ const epic1: Level = {
     purifyer,
     rageblade,
     revenantOfTheKaiser,
+    sandsOfTime,
   ],
   unlocksLevels: [epic2],
 };

@@ -7,4 +7,5 @@ export { default as phoenixStance } from './phoenixStance';
 export { default as purifyer } from './purifyer';
 export { default as rageblade } from './rageblade';
 export { default as revenantOfTheKaiser } from './revenantOfTheKaiser';
+export { default as sandsOfTime } from './sandsOfTime';
 export { default as sweetHoney } from './sweetHoney';

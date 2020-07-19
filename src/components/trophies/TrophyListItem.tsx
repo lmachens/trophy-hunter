@@ -91,7 +91,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <Flag />
         </Tooltip>
       )}
-      {account && (
+      {account && trophyProgress < 1 && (
         <Favorite
           active={account.favoriteTrophyNames.includes(trophy.name)}
           onClick={(event) => {

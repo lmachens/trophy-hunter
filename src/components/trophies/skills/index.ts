@@ -25,3 +25,4 @@ export { default as myJungle } from './myJungle';
 export { default as noxianKnight } from './noxianKnight';
 export { default as overfed } from './overfed';
 export { default as precision } from './precision';
+export { default as rivalry } from './rivalry';

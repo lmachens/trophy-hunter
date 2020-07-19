@@ -270,3 +270,28 @@ export const getOtherParticipants = (
       matchParticipant.participantId !== participant.participantId
   );
 };
+
+export const calcTotalGoldFrames = (
+  timeline: MatchTimeline,
+  teamId: number
+) => {
+  const teamThreshold = 5;
+  return timeline.frames.map(({ participantFrames }) => {
+    let result = 0;
+    let from;
+    let to;
+    if (teamId === 100) {
+      from = 1;
+      to = teamThreshold + 1;
+    } else {
+      from = teamThreshold + 1;
+      to = teamThreshold * 2 + 1;
+    }
+    for (let i = from; i < to; i++) {
+      if (participantFrames[i]) {
+        result += participantFrames[i].totalGold;
+      }
+    }
+    return result;
+  });
+};

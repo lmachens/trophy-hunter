@@ -5,13 +5,14 @@ import {
 } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
-const chaliceOfRecovery: Trophy = {
-  island: 'teamworkIsland',
-  name: 'chaliceOfRecovery',
-  level: 'teamwork2',
-  title: 'Chalice Of Recovery',
-  description: 'Win a match where your team was 5000 gold behind.',
-  category: 'teamwork',
+const rivalry: Trophy = {
+  island: 'skillsIsland',
+  name: 'rivalry',
+  level: 'skills2',
+  title: 'Rivalry',
+  description:
+    'Win a game where the gold difference in the first 15 minutes was always less than 2000.',
+  category: 'skills',
   checkProgress: ({ match, timeline, account }) => {
     const participant = getParticipantByAccount(match, account);
 
@@ -27,10 +28,12 @@ const chaliceOfRecovery: Trophy = {
       (frame) => frame[0] - frame[1]
     );
 
-    const teamMaxGoldDown = Math.min(...teamGoldDiffFrames);
+    const isRivalry = teamGoldDiffFrames
+      .slice(0, 15)
+      .every((diff) => Math.abs(diff) < 2000);
 
-    return Number(teamMaxGoldDown > 5000 && team.win === 'Win');
+    return Number(isRivalry && participant.stats.win);
   },
 };
 
-export default chaliceOfRecovery;
+export default rivalry;

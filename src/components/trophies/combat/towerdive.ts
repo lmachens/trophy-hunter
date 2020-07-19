@@ -5,7 +5,6 @@ import {
   getParticipantDeaths,
   getParticipantKills,
 } from '../../../api/riot/helpers';
-import { MatchEvent } from '../../../api/riot/types';
 
 const towerdive: Trophy = {
   island: 'combatIsland',

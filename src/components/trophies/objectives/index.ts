@@ -13,4 +13,5 @@ export { default as siegeMaster } from './siegeMaster';
 export { default as siegeRam } from './siegeRam';
 export { default as sigurd } from './sigurd';
 export { default as skullMedal } from './skullMedal';
+export { default as stomp } from './stomp';
 export { default as theViking } from './theViking';

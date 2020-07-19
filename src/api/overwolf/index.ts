@@ -172,3 +172,20 @@ export const setLeagueFeatures = (
     }
   });
 };
+
+export const getHotkey = (name: string) => {
+  return new Promise((resolve, reject) => {
+    overwolf.settings.hotkeys.get((result) => {
+      if (!result.success) {
+        return reject('unknown');
+      }
+      const hotkey = result.games[LOL_ID]?.find(
+        (hotkey) => hotkey.name === name
+      );
+      if (!hotkey) {
+        return reject('unknown');
+      }
+      return resolve(hotkey.binding);
+    });
+  });
+};

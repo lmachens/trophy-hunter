@@ -5225,6 +5225,7 @@ declare namespace overwolf.settings.hotkeys {
   interface IHotkey {
     name: string;
     title: string;
+    binding: string;
     virtualKeycode: number;
     modifierKeys: number;
     extensionuid: string;

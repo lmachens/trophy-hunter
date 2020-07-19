@@ -38,7 +38,10 @@
         "max_size": {
           "width": 1335,
           "height": 750
-        }
+        },
+        "block_top_window_navigation": true,
+        "popup_blocker": true,
+        "mute": true
       },
       "in_game": {
         "file": "build/in-game.html",
@@ -62,7 +65,10 @@
         "start_position": {
           "top": 30,
           "left": 30
-        }
+        },
+        "block_top_window_navigation": true,
+        "popup_blocker": true,
+        "mute": true
       },
       "notification": {
         "file": "build/notification.html",
@@ -84,7 +90,10 @@
         "start_position": {
           "top": 600,
           "left": 30
-        }
+        },
+        "block_top_window_navigation": true,
+        "popup_blocker": true,
+        "mute": true
       }
     },
     "game_targeting": {

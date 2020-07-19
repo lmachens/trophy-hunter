@@ -8,6 +8,7 @@ import {
   noxianKnight,
   precision,
   rivalry,
+  unstoppable,
 } from '../../../trophies';
 
 const skills2: Level = {
@@ -16,7 +17,15 @@ const skills2: Level = {
   title: 'Skills island Lvl. 2',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [goliath, maniac, myJungle, noxianKnight, precision, rivalry],
+  trophies: [
+    goliath,
+    maniac,
+    myJungle,
+    noxianKnight,
+    precision,
+    rivalry,
+    unstoppable,
+  ],
   unlocksLevels: [skills3],
 };
 

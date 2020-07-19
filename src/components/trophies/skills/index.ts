@@ -26,3 +26,4 @@ export { default as noxianKnight } from './noxianKnight';
 export { default as overfed } from './overfed';
 export { default as precision } from './precision';
 export { default as rivalry } from './rivalry';
+export { default as unstoppable } from './unstoppable';

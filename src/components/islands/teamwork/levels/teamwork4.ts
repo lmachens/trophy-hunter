@@ -1,7 +1,13 @@
 import { Level } from '../../../levels/types';
 import { TeamworkIcon, TeamworkMarker } from '../../../levels/teamwork';
 import teamwork5 from './teamwork5';
-import { quackery, quadraAssist, radar, rejuvenation } from '../../../trophies';
+import {
+  quackery,
+  quadraAssist,
+  radar,
+  rejuvenation,
+  sasquatch,
+} from '../../../trophies';
 
 const teamwork4: Level = {
   island: 'teamwork',
@@ -9,7 +15,7 @@ const teamwork4: Level = {
   title: 'Teamwork island Lvl. 4',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [quackery, quadraAssist, radar, rejuvenation],
+  trophies: [quackery, quadraAssist, radar, rejuvenation, sasquatch],
   unlocksLevels: [teamwork5],
 };
 

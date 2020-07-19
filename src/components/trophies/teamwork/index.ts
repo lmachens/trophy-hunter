@@ -34,4 +34,5 @@ export { default as radar } from './radar';
 export { default as rejuvenation } from './rejuvenation';
 export { default as rockSolid } from './rockSolid';
 export { default as rockSurfing } from './rockSurfing';
+export { default as sasquatch } from './sasquatch';
 export { default as theElephant } from './theElephant';

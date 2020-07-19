@@ -11,4 +11,5 @@ export { default as noxianWarfare } from './noxianWarfare';
 export { default as pyromania } from './pyromania';
 export { default as siegeMaster } from './siegeMaster';
 export { default as siegeRam } from './siegeRam';
+export { default as sigurd } from './sigurd';
 export { default as theViking } from './theViking';

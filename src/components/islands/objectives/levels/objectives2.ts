@@ -1,7 +1,12 @@
 import { Level } from '../../../levels/types';
 import { ObjectivesIcon, ObjectivesMarker } from '../../../levels/objectives';
 import objectives3 from './objectives3';
-import { earlyBird, explosiveCharge, dragonLord } from '../../../trophies';
+import {
+  earlyBird,
+  explosiveCharge,
+  dragonLord,
+  skullMedal,
+} from '../../../trophies';
 
 const objectives2: Level = {
   island: 'objectives',
@@ -9,7 +14,7 @@ const objectives2: Level = {
   title: 'Objectives island Lvl. 2',
   Icon: ObjectivesIcon,
   Marker: ObjectivesMarker,
-  trophies: [earlyBird, explosiveCharge, dragonLord],
+  trophies: [earlyBird, explosiveCharge, dragonLord, skullMedal],
   unlocksLevels: [objectives3],
 };
 

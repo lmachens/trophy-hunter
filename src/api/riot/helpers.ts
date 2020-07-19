@@ -255,6 +255,15 @@ export const getTeammates = (
   );
 };
 
+export const getOpponents = (
+  match: Match,
+  participant: Participant
+): Participant[] => {
+  return match.participants.filter(
+    (matchParticipant) => matchParticipant.teamId !== participant.teamId
+  );
+};
+
 export const getTeam = (match: Match, teamId: number): Participant[] => {
   return match.participants.filter(
     (matchParticipant) => matchParticipant.teamId === teamId

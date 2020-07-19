@@ -132,7 +132,7 @@ const Background: NextPage = () => {
         overwolf.games.launchers.events.getInfo(
           LEAGUE_LAUNCHER_ID,
           (response) => {
-            if (response?.res.summoner_info) {
+            if (response?.res?.summoner_info) {
               const {
                 platform_id: platformId,
                 display_name: summonerName,
@@ -162,7 +162,7 @@ const Background: NextPage = () => {
           localStorage.setItem('checkGameId', endGameStats.gameId);
         }
       }
-      if (infoUpdate.feature === 'lobby_info' && infoUpdate.info.lobby_info) {
+      if (infoUpdate.feature === 'lobby_info' && infoUpdate.info?.lobby_info) {
         const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
         if (isNaN(queueId) || !SUPPORTED_QUEUE_IDS.includes(queueId)) {
           setPlayingSupportedGame(false);

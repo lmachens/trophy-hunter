@@ -19,7 +19,9 @@ const dominus: Trophy = {
       return 0;
     }
     const laneOpponent = getLaneOpponent(match.participants, participant);
-
+    if (!laneOpponent) {
+      return 0;
+    }
     const csLaneDiffAt10 =
       participant.timeline.creepsPerMinDeltas['0-10'] * 10 -
       laneOpponent.timeline.creepsPerMinDeltas['0-10'] * 10;

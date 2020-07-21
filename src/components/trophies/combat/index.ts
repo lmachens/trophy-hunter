@@ -30,6 +30,7 @@ export { default as kitchenKnife } from './kitchenKnife';
 export { default as livingArtillery } from './livingArtillery';
 export { default as machete } from './machete';
 export { default as overload } from './overload';
+export { default as quadraKill } from './quadraKill';
 export { default as revenge } from './revenge';
 export { default as sai } from './sai';
 export { default as sheepHunter } from './sheepHunter';

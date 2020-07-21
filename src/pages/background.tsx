@@ -179,7 +179,7 @@ const Background: NextPage = () => {
     overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
 
     overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-      if (info.error) {
+      if (info.error || !info.res) {
         return;
       }
       const queueId = parseInt(info.res.lobby_info?.queueId);

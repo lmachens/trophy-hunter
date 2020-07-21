@@ -129,7 +129,7 @@ export const getParticipantIdentity = (
 ): ParticipantIdentity => {
   return match.participantIdentities.find(
     (participantIdentity) =>
-      participantIdentity.player.accountId === account.summoner.accountId
+      participantIdentity.player.currentAccountId === account.summoner.accountId
   );
 };
 

@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 interface ProgressBarProps {
   progress: number;
+  category: string;
   max?: number;
 }
 
@@ -20,18 +21,28 @@ const Progress = styled.div`
   margin-right: 4px;
 `;
 
+const islandColors = {
+  combat: '#ff9330',
+  epic: '#c956ff',
+  objectives: '#0f8cff',
+  skills: '#FBFF2E',
+  teamwork: '#07ef1e',
+  special: 'linear-gradient(to right, #EF1ACD, #EFB31A)',
+};
+
 const Bar = styled.div<ProgressBarProps>`
   width: ${(props) => Math.floor(props.progress * 100)}%;
   height: 100%;
-  background: #ff9330;
+  background: ${(props) => islandColors[props.category]};
   position: absolute;
 `;
 
-const ProgressBar: FC<ProgressBarProps> = ({ progress, max }) => {
+const ProgressBar: FC<ProgressBarProps> = ({ progress, max, category }) => {
+  console.log(category);
   return (
     <Container>
       <Progress>
-        <Bar progress={progress} />
+        <Bar progress={progress} category={category} />
       </Progress>
       {Math.floor(progress * max)}/{max}
     </Container>

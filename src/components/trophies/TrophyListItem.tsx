@@ -80,7 +80,11 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
         <h3>{trophy.title}</h3>
         <p>{trophy.description}</p>
         {trophy.maxProgress && (
-          <ProgressBar progress={trophyProgress} max={trophy.maxProgress} />
+          <ProgressBar
+            progress={trophyProgress}
+            max={trophy.maxProgress}
+            category={trophy.category}
+          />
         )}
       </Grow>
       {!trophy.checkLive && (

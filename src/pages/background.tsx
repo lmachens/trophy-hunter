@@ -150,18 +150,6 @@ const Background: NextPage = () => {
       if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
         return;
       }
-      if (infoUpdate.feature === 'end_game' && infoUpdate.info.end_game_lol) {
-        const endGameStats = parseJSON(
-          infoUpdate.info.end_game_lol.lol_end_game_stats
-        );
-        if (
-          endGameStats &&
-          localStorage.getItem('checkGameId') !== endGameStats.gameId.toString()
-        ) {
-          console.log(`Check game ${endGameStats.gameId}`);
-          localStorage.setItem('checkGameId', endGameStats.gameId);
-        }
-      }
       if (infoUpdate.feature === 'lobby_info' && infoUpdate.info?.lobby_info) {
         const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
         if (isNaN(queueId) || !SUPPORTED_QUEUE_IDS.includes(queueId)) {
@@ -218,6 +206,32 @@ const Background: NextPage = () => {
     if (leagueRunning && playingSupportedGame && autoLaunch) {
       openWindow('in_game');
     }
+
+    const handleInfoUpdate = (infoUpdate) => {
+      if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
+        return;
+      }
+      if (infoUpdate.feature === 'end_game' && infoUpdate.info.end_game_lol) {
+        const endGameStats = parseJSON(
+          infoUpdate.info.end_game_lol.lol_end_game_stats
+        );
+        if (
+          endGameStats &&
+          localStorage.getItem('checkGameId') !== endGameStats.gameId.toString()
+        ) {
+          console.log(`Check game ${endGameStats.gameId}`);
+          localStorage.setItem('checkGameId', endGameStats.gameId);
+        }
+      }
+    };
+
+    overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
+
+    return () => {
+      overwolf.games.launchers.events.onInfoUpdates.removeListener(
+        handleInfoUpdate
+      );
+    };
   }, [leagueRunning, playingSupportedGame, autoLaunch]);
 
   return (

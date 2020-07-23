@@ -15,6 +15,7 @@ import ExitButton from './ExitButton';
 import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
 import Status from '../common/Status';
+import { useAccount } from '../../contexts/account';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -39,6 +40,8 @@ const WriteUsFeedback = styled.div`
 `;
 
 const AppHeader: FC = () => {
+  const { loading, account } = useAccount();
+
   const [showFeedback, setShowFeedback] = useState(false);
 
   return (
@@ -55,7 +58,7 @@ const AppHeader: FC = () => {
         </LogoContainer>
         <Toolbar>
           <Status />
-          <AfterMatch />
+          {account && !loading && <AfterMatch />}
           <Grow />
           <WriteUsFeedback onClick={() => setShowFeedback(true)}>
             <Feedback />

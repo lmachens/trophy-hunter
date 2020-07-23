@@ -31,7 +31,7 @@ const islandColors = {
 };
 
 const Bar = styled.div<ProgressBarProps>`
-  width: ${(props) => Math.floor(props.progress * 100)}%;
+  width: ${(props) => Math.min(100, Math.floor(props.progress * 100))}%;
   height: 100%;
   background: ${(props) => islandColors[props.category]};
   position: absolute;

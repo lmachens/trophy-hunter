@@ -206,6 +206,12 @@ const Background: NextPage = () => {
     if (leagueRunning && playingSupportedGame && autoLaunch) {
       openWindow('in_game');
     }
+  }, [leagueRunning, playingSupportedGame, autoLaunch]);
+
+  useEffect(() => {
+    if (!playingSupportedGame) {
+      return;
+    }
 
     const handleInfoUpdate = (infoUpdate) => {
       if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
@@ -232,7 +238,7 @@ const Background: NextPage = () => {
         handleInfoUpdate
       );
     };
-  }, [leagueRunning, playingSupportedGame, autoLaunch]);
+  }, [playingSupportedGame]);
 
   return (
     <Head>

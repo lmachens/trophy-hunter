@@ -64,7 +64,7 @@ const AppHeader: FC = () => {
             <Feedback />
             Write us a feedback
           </WriteUsFeedback>
-          <DiscordButtonLink href="https://discord.gg/dgZAmW" target="_blank">
+          <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
             <Discord />
           </DiscordButtonLink>
           <HeaderButton>

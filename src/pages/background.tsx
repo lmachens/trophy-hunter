@@ -158,7 +158,9 @@ const Background: NextPage = () => {
             `QueueId ${infoUpdate.info.lobby_info?.queueId} is not supported`
           );
         } else {
-          console.log('QueueId is supported');
+          console.log(
+            `QueueId ${infoUpdate.info.lobby_info?.queueId} is supported`
+          );
           setPlayingSupportedGame(true);
         }
       }
@@ -175,7 +177,7 @@ const Background: NextPage = () => {
         console.log(`QueueId ${info.res.lobby_info?.queueId} is not supported`);
         setPlayingSupportedGame(false);
       } else {
-        console.log('QueueId is supported');
+        console.log(`QueueId ${info.res.lobby_info?.queueId} is supported`);
         setPlayingSupportedGame(true);
       }
     });

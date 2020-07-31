@@ -38,7 +38,6 @@ const Bar = styled.div<ProgressBarProps>`
 `;
 
 const ProgressBar: FC<ProgressBarProps> = ({ progress, max, category }) => {
-  console.log(category);
   return (
     <Container>
       <Progress>

@@ -9,3 +9,4 @@ export { default as rageblade } from './rageblade';
 export { default as revenantOfTheKaiser } from './revenantOfTheKaiser';
 export { default as sandsOfTime } from './sandsOfTime';
 export { default as sweetHoney } from './sweetHoney';
+export { default as theBear } from './theBear';

@@ -37,4 +37,5 @@ export { default as rockSurfing } from './rockSurfing';
 export { default as sasquatch } from './sasquatch';
 export { default as teamEffort } from './teamEffort';
 export { default as teamPlayer } from './teamPlayer';
+export { default as theBull } from './theBull';
 export { default as theElephant } from './theElephant';

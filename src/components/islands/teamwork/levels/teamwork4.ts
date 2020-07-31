@@ -7,6 +7,7 @@ import {
   radar,
   rejuvenation,
   sasquatch,
+  theBull,
 } from '../../../trophies';
 
 const teamwork4: Level = {
@@ -15,7 +16,7 @@ const teamwork4: Level = {
   title: 'Teamwork island Lvl. 4',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [quackery, quadraAssist, radar, rejuvenation, sasquatch],
+  trophies: [quackery, quadraAssist, radar, rejuvenation, sasquatch, theBull],
   unlocksLevels: [teamwork5],
 };
 

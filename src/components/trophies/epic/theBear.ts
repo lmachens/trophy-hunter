@@ -19,13 +19,15 @@ const theBear: Trophy = {
       )
     );
 
-    const trophyProgress = getTrophyProgress(account, 'theBear');
-    return (
-      Number(
-        participant.stats.kills + participant.stats.assists >=
-          maxKillParticipation
-      ) + trophyProgress
+    const highestKillParticipation = Number(
+      participant.stats.kills + participant.stats.assists >=
+        maxKillParticipation
     );
+    if (!highestKillParticipation) {
+      return 0;
+    }
+    const trophyProgress = getTrophyProgress(account, 'theBear');
+    return highestKillParticipation / 3 + trophyProgress;
   },
 };
 

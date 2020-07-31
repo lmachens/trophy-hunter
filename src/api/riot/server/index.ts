@@ -13,17 +13,27 @@ const requestRiot = async <T>(input: RequestInfo) => {
 };
 
 export const getSummoner = async ({ platformId, summonerName }) => {
-  const summoner = await requestRiot<Summoner>(
-    `https://${platformId}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}`
-  );
-  return { platformId, ...summoner };
+  try {
+    const summoner = await requestRiot<Summoner>(
+      `https://${platformId}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}`
+    );
+    return { platformId, ...summoner };
+  } catch (error) {
+    console.error(`getSummoner ${platformId} ${summonerName}`, error);
+    return null;
+  }
 };
 
 export const getMatch = async ({ platformId, matchId }) => {
-  const match = await requestRiot<Match>(
-    `https://${platformId}.api.riotgames.com/lol/match/v4/matches/${matchId}`
-  );
-  return match;
+  try {
+    const match = await requestRiot<Match>(
+      `https://${platformId}.api.riotgames.com/lol/match/v4/matches/${matchId}`
+    );
+    return match;
+  } catch (error) {
+    console.error(`getMatch ${platformId} ${matchId}`, error);
+    return null;
+  }
 };
 
 export const getTimeline = async ({
@@ -33,15 +43,25 @@ export const getTimeline = async ({
   platformId: string;
   matchId: number;
 }): Promise<MatchTimeline> => {
-  const timeline = await requestRiot<MatchTimeline>(
-    `https://${platformId}.api.riotgames.com/lol/match/v4/timelines/by-match/${matchId}`
-  );
-  return timeline;
+  try {
+    const timeline = await requestRiot<MatchTimeline>(
+      `https://${platformId}.api.riotgames.com/lol/match/v4/timelines/by-match/${matchId}`
+    );
+    return timeline;
+  } catch (error) {
+    console.error(`getTimeline ${platformId} ${matchId}`, error);
+    return null;
+  }
 };
 
 export const getRecentVersion = async () => {
-  const versions = await getJSON<string[]>(
-    'https://ddragon.leagueoflegends.com/api/versions.json'
-  );
-  return versions[0];
+  try {
+    const versions = await getJSON<string[]>(
+      'https://ddragon.leagueoflegends.com/api/versions.json'
+    );
+    return versions[0];
+  } catch (error) {
+    console.error(`getRecentVersion`, error);
+    return null;
+  }
 };

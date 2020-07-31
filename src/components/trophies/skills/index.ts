@@ -28,4 +28,5 @@ export { default as precision } from './precision';
 export { default as rivalry } from './rivalry';
 export { default as tarzan } from './tarzan';
 export { default as theBee } from './theBee';
+export { default as theCougar } from './theCougar';
 export { default as unstoppable } from './unstoppable';

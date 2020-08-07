@@ -38,12 +38,13 @@ const Bar = styled.div<ProgressBarProps>`
 `;
 
 const ProgressBar: FC<ProgressBarProps> = ({ progress, max, category }) => {
+  const fixedProgress = Math.min(100, Math.floor(progress * 100));
   return (
     <Container>
       <Progress>
-        <Bar progress={progress} category={category} />
+        <Bar progress={fixedProgress} category={category} />
       </Progress>
-      {Math.floor(progress * max)}/{max}
+      {Math.floor(fixedProgress * max)}/{max}
     </Container>
   );
 };

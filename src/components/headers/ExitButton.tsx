@@ -11,13 +11,7 @@ const Button = styled(HeaderButton)`
 
 const ExitButton = () => {
   return (
-    <Button
-      onClick={() =>
-        overwolf.windows.getCurrentWindow((result) => {
-          overwolf.windows.close(result.window.id);
-        })
-      }
-    >
+    <Button onClick={() => overwolf.windows.getMainWindow().close()}>
       <Close />
     </Button>
   );

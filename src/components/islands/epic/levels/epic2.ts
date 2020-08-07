@@ -1,6 +1,6 @@
 import { Level } from '../../../levels/types';
 import { EpicIcon, EpicMarker } from '../../../levels/epic';
-import { theBlackFlag, theCat, theHive } from '../../../trophies';
+import { theBlackFlag, theCat, theHive, thePhoenix } from '../../../trophies';
 
 const epic2: Level = {
   island: 'epic',
@@ -8,7 +8,7 @@ const epic2: Level = {
   title: 'Epic island Lvl. 2',
   Icon: EpicIcon,
   Marker: EpicMarker,
-  trophies: [theBlackFlag, theCat, theHive],
+  trophies: [theBlackFlag, theCat, theHive, thePhoenix],
   unlocksLevels: [],
 };
 

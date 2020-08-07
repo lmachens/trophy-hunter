@@ -19,7 +19,9 @@ const dragonLord: Trophy = {
 
     const dragonKills = events.filter(
       (event) =>
-        event.type === 'ELITE_MONSTER_KILL' && teamIds.includes(event.killerId)
+        event.type === 'ELITE_MONSTER_KILL' &&
+        event.monsterType === 'DRAGON' &&
+        teamIds.includes(event.killerId)
     ).length;
 
     return dragonKills / 5;

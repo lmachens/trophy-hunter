@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theCannon: Trophy = {
-  island: 'combatIsland',
+  island: 'objectivesIsland',
   name: 'theCannon',
   level: 'objectives3',
   title: 'The Cannon',

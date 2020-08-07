@@ -41,3 +41,4 @@ export { default as theBull } from './theBull';
 export { default as theCompanion } from './theCompanion';
 export { default as theElephant } from './theElephant';
 export { default as theGriffin } from './theGriffin';
+export { default as theGuard } from './theGuard';

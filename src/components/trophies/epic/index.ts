@@ -12,3 +12,4 @@ export { default as sweetHoney } from './sweetHoney';
 export { default as theBear } from './theBear';
 export { default as theBlackFlag } from './theBlackFlag';
 export { default as theCat } from './theCat';
+export { default as theHive } from './theHive';

@@ -14,3 +14,4 @@ export { default as theBlackFlag } from './theBlackFlag';
 export { default as theCat } from './theCat';
 export { default as theHive } from './theHive';
 export { default as thePhoenix } from './thePhoenix';
+export { default as thePiranha } from './thePiranha';

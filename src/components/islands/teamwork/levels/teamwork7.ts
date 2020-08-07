@@ -8,6 +8,7 @@ import {
   nurturing,
   omnipresent,
   pentaAssist,
+  theKnight,
 } from '../../../trophies';
 
 const teamwork7: Level = {
@@ -23,6 +24,7 @@ const teamwork7: Level = {
     nurturing,
     omnipresent,
     pentaAssist,
+    theKnight,
   ],
   unlocksLevels: [teamwork8],
 };

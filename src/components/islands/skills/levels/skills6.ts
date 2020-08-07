@@ -1,6 +1,6 @@
 import { Level } from '../../../levels/types';
 import { SkillsIcon, SkillsMarker } from '../../../levels/skills';
-import { leagueOfDraven, tarzan, theBee } from '../../../trophies';
+import { leagueOfDraven, tarzan, theBee, theGoblin } from '../../../trophies';
 
 const skills6: Level = {
   island: 'skills',
@@ -8,7 +8,7 @@ const skills6: Level = {
   title: 'Skills island Lvl. 6',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [leagueOfDraven, tarzan, theBee],
+  trophies: [leagueOfDraven, tarzan, theBee, theGoblin],
   unlocksLevels: [],
 };
 

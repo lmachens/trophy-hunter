@@ -1,6 +1,6 @@
 import { Level } from '../../../levels/types';
 import { ObjectivesIcon, ObjectivesMarker } from '../../../levels/objectives';
-import { siegeMaster } from '../../../trophies';
+import { siegeMaster, theGrandChallenge } from '../../../trophies';
 
 const objectives5: Level = {
   island: 'objectives',
@@ -8,7 +8,7 @@ const objectives5: Level = {
   title: 'Objectives island Lvl. 5',
   Icon: ObjectivesIcon,
   Marker: ObjectivesMarker,
-  trophies: [siegeMaster],
+  trophies: [siegeMaster, theGrandChallenge],
   unlocksLevels: [],
 };
 

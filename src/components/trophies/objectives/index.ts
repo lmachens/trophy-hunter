@@ -16,4 +16,5 @@ export { default as skullMedal } from './skullMedal';
 export { default as stomp } from './stomp';
 export { default as theCannon } from './theCannon';
 export { default as theDragonMaster } from './theDragonMaster';
+export { default as theGrandChallenge } from './theGrandChallenge';
 export { default as theViking } from './theViking';

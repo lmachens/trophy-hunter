@@ -18,4 +18,5 @@ export { default as theCannon } from './theCannon';
 export { default as theDragonMaster } from './theDragonMaster';
 export { default as theGrandChallenge } from './theGrandChallenge';
 export { default as theSacrifice } from './theSacrifice';
+export { default as theSphinx } from './theSphinx';
 export { default as theViking } from './theViking';

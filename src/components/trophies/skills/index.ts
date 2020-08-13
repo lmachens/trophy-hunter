@@ -31,4 +31,5 @@ export { default as theBee } from './theBee';
 export { default as theCougar } from './theCougar';
 export { default as theGoblin } from './theGoblin';
 export { default as thePolice } from './thePolice';
+export { default as theSpartan } from './theSpartan';
 export { default as unstoppable } from './unstoppable';

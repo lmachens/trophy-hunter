@@ -6,7 +6,7 @@ const thePiranha: Trophy = {
   island: 'epicIsland',
   name: 'thePiranha',
   level: 'epic2',
-  title: 'First Blood King',
+  title: 'The Piranha',
   description: 'Deal most damage to champions three times in a row.',
   category: 'epic',
   maxProgress: 3,

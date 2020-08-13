@@ -45,3 +45,4 @@ export { default as theGuard } from './theGuard';
 export { default as theHound } from './theHound';
 export { default as theKnight } from './theKnight';
 export { default as theRoam } from './theRoam';
+export { default as thorsHammer } from './thorsHammer';

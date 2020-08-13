@@ -18,3 +18,4 @@ export { default as thePiranha } from './thePiranha';
 export { default as thePirate } from './thePirate';
 export { default as theSheriff } from './theSheriff';
 export { default as theTortoise } from './theTortoise';
+export { default as theWhale } from './theWhale';

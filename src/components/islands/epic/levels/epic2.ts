@@ -9,6 +9,7 @@ import {
   thePirate,
   theSheriff,
   theTortoise,
+  theWhale,
 } from '../../../trophies';
 
 const epic2: Level = {
@@ -26,6 +27,7 @@ const epic2: Level = {
     thePirate,
     theSheriff,
     theTortoise,
+    theWhale,
   ],
   unlocksLevels: [],
 };

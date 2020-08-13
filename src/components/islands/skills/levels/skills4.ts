@@ -1,7 +1,7 @@
 import { Level } from '../../../levels/types';
 import { SkillsIcon, SkillsMarker } from '../../../levels/skills';
 import skills5 from './skills5';
-import { legendary, lunatic, overfed } from '../../../trophies';
+import { legendary, lunatic, overfed, thePolice } from '../../../trophies';
 
 const skills4: Level = {
   island: 'skills',
@@ -9,7 +9,7 @@ const skills4: Level = {
   title: 'Skills island Lvl. 4',
   Icon: SkillsIcon,
   Marker: SkillsMarker,
-  trophies: [legendary, lunatic, overfed],
+  trophies: [legendary, lunatic, overfed, thePolice],
   unlocksLevels: [skills5],
 };
 

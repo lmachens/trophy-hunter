@@ -6,6 +6,7 @@ import {
   explosiveCharge,
   dragonLord,
   skullMedal,
+  theSacrifice,
 } from '../../../trophies';
 
 const objectives2: Level = {
@@ -14,7 +15,7 @@ const objectives2: Level = {
   title: 'Objectives island Lvl. 2',
   Icon: ObjectivesIcon,
   Marker: ObjectivesMarker,
-  trophies: [earlyBird, explosiveCharge, dragonLord, skullMedal],
+  trophies: [earlyBird, explosiveCharge, dragonLord, skullMedal, theSacrifice],
   unlocksLevels: [objectives3],
 };
 

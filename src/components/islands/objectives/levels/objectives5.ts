@@ -5,6 +5,7 @@ import {
   theGrandChallenge,
   theSphinx,
   tornado,
+  unlockTheBeast,
 } from '../../../trophies';
 
 const objectives5: Level = {
@@ -13,7 +14,13 @@ const objectives5: Level = {
   title: 'Objectives island Lvl. 5',
   Icon: ObjectivesIcon,
   Marker: ObjectivesMarker,
-  trophies: [siegeMaster, theGrandChallenge, theSphinx, tornado],
+  trophies: [
+    siegeMaster,
+    theGrandChallenge,
+    theSphinx,
+    tornado,
+    unlockTheBeast,
+  ],
   unlocksLevels: [],
 };
 

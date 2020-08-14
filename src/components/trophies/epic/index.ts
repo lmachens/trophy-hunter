@@ -21,3 +21,4 @@ export { default as theTortoise } from './theTortoise';
 export { default as theWhale } from './theWhale';
 export { default as thornmail } from './thornmail';
 export { default as uncleScrooge } from './uncleScrooge';
+export { default as wormMasher } from './wormMasher';

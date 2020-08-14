@@ -12,6 +12,7 @@ import {
   theWhale,
   thornmail,
   uncleScrooge,
+  wormMasher,
 } from '../../../trophies';
 
 const epic2: Level = {
@@ -32,6 +33,7 @@ const epic2: Level = {
     theWhale,
     thornmail,
     uncleScrooge,
+    wormMasher,
   ],
   unlocksLevels: [],
 };

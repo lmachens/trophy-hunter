@@ -49,3 +49,4 @@ export { default as thorsHammer } from './thorsHammer';
 export { default as tripleAssist } from './tripleAssist';
 export { default as unbreakableWill } from './unbreakableWill';
 export { default as visionGame } from './visionGame';
+export { default as voidAura } from './voidAura';

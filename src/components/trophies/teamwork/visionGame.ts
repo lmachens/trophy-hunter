@@ -7,7 +7,7 @@ const visionGame: Trophy = {
   level: 'teamwork8',
   title: 'Vision Game',
   description:
-    '*Place at least four control wards, Clear at least four wards and place at least 20 wards.',
+    'Place at least four control wards, Clear at least four wards and place at least 20 wards.',
   category: 'teamwork',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);

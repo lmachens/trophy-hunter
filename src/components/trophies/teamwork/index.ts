@@ -47,3 +47,4 @@ export { default as theKnight } from './theKnight';
 export { default as theRoam } from './theRoam';
 export { default as thorsHammer } from './thorsHammer';
 export { default as tripleAssist } from './tripleAssist';
+export { default as unbreakableWill } from './unbreakableWill';

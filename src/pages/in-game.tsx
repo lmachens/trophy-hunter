@@ -226,20 +226,30 @@ const InGame: NextPage = () => {
 
     const trophyDataClone = { ...trophyData };
     const achievedTrophies = trophies
-      .map((trophy) => ({
-        trophy,
-        progress: Math.min(
-          1,
-          trophy.checkLive?.({
-            activePlayer,
-            allPlayers,
-            gameData,
-            events,
-            trophyData: trophyDataClone,
-            account,
-          }) || 0
-        ),
-      }))
+      .map((trophy) => {
+        try {
+          return {
+            trophy,
+            progress: Math.min(
+              1,
+              trophy.checkLive?.({
+                activePlayer,
+                allPlayers,
+                gameData,
+                events,
+                trophyData: trophyDataClone,
+                account,
+              }) || 0
+            ),
+          };
+        } catch (error) {
+          console.error(`checkLive error in ${trophy.name}`, error.message);
+          return {
+            trophy,
+            progress: 0,
+          };
+        }
+      })
       .filter(({ progress }) => progress > 0);
 
     setTrophyData(trophyDataClone);

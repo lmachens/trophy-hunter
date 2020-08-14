@@ -1,12 +1,12 @@
 import { Trophy } from '../types';
 import { getParticipantByAccount } from '../../../api/riot/helpers';
 
-const theSphinx: Trophy = {
+const tornado: Trophy = {
   island: 'objectivesIsland',
-  name: 'theSphinx',
+  name: 'tornado',
   level: 'objectives6',
-  title: 'The Sphinx',
-  description: 'Kill three earth dragons.',
+  title: 'Tornado',
+  description: 'Kill three air dragons.',
   category: 'objectives',
   checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
@@ -17,14 +17,14 @@ const theSphinx: Trophy = {
       )
       .map((teammate) => teammate.participantId);
 
-    const earthDragonKills = events.filter(
+    const airDragonKills = events.filter(
       (event) =>
         event.type === 'ELITE_MONSTER_KILL' &&
-        event.monsterSubType === 'EARTH_DRAGON' &&
+        event.monsterSubType === 'AIR_DRAGON' &&
         teamIds.includes(event.killerId)
     ).length;
 
-    return earthDragonKills / 3;
+    return airDragonKills / 3;
   },
   checkLive: ({ events, allPlayers, account }) => {
     const accountPlayer = allPlayers.find(
@@ -35,15 +35,15 @@ const theSphinx: Trophy = {
       .filter((player) => player.team === accountPlayer.team)
       .map((player) => player.summonerName);
 
-    const earthDragonKills = events.filter(
+    const airDragonKills = events.filter(
       (event) =>
         event.EventName === 'DragonKill' &&
-        event.DragonType === 'Earth' &&
+        event.DragonType === 'Air' &&
         teamNames.includes(event.KillerName)
     ).length;
 
-    return earthDragonKills / 3;
+    return airDragonKills / 3;
   },
 };
 
-export default theSphinx;
+export default tornado;

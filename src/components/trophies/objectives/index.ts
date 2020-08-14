@@ -20,3 +20,4 @@ export { default as theGrandChallenge } from './theGrandChallenge';
 export { default as theSacrifice } from './theSacrifice';
 export { default as theSphinx } from './theSphinx';
 export { default as theViking } from './theViking';
+export { default as tornado } from './tornado';

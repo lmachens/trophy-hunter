@@ -158,6 +158,11 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     onSuccess: () => {
       queryCache.invalidateQueries('account');
     },
+    onError: (error: Response) => {
+      if (error.status === 403) {
+        localStorage.removeItem('checkGameId');
+      }
+    },
   });
   const loading = status === 'loading';
 

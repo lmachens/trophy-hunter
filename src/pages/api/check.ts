@@ -37,7 +37,7 @@ export default applyMiddleware(
     const { matchId } = req.body;
 
     if (account.lastGameIds.includes(matchId)) {
-      return res.status(401).end('Already checked');
+      return res.status(403).end('Already checked');
     }
 
     const [match, timeline] = await Promise.all([

@@ -28,6 +28,9 @@ const theCannon: Trophy = {
     const firstTurretDeath = events.find(
       (event) => event.EventName === 'TurretKilled'
     );
+    if (!firstTurretDeath) {
+      return 0;
+    }
 
     const isEarly = firstTurretDeath.EventTime < 10 * 60;
     const isKiller = firstTurretDeath.KillerName === account.summoner.name;

@@ -6,6 +6,7 @@ import {
   unbreakableWill,
   voidAura,
   watcher,
+  zenithBlade,
 } from '../../../trophies';
 
 const teamwork5: Level = {
@@ -14,7 +15,7 @@ const teamwork5: Level = {
   title: 'Teamwork island Lvl. 5',
   Icon: TeamworkIcon,
   Marker: TeamworkMarker,
-  trophies: [theGuard, unbreakableWill, voidAura, watcher],
+  trophies: [theGuard, unbreakableWill, voidAura, watcher, zenithBlade],
   unlocksLevels: [teamwork6],
 };
 

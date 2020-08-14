@@ -51,3 +51,4 @@ export { default as unbreakableWill } from './unbreakableWill';
 export { default as visionGame } from './visionGame';
 export { default as voidAura } from './voidAura';
 export { default as watcher } from './watcher';
+export { default as zenithBlade } from './zenithBlade';

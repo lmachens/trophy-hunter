@@ -14,6 +14,7 @@ const theGrandChallenge: Trophy = {
 
     const buildingKills = events.filter(
       (event) =>
+        event.type === 'CHAMPION_KILL' &&
         (event.killerId === participant.participantId ||
           event.assistingParticipantIds.some(
             (id) => id === participant.participantId

@@ -20,3 +20,4 @@ export { default as theSheriff } from './theSheriff';
 export { default as theTortoise } from './theTortoise';
 export { default as theWhale } from './theWhale';
 export { default as thornmail } from './thornmail';
+export { default as uncleScrooge } from './uncleScrooge';

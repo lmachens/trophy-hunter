@@ -1,10 +1,8 @@
 import { Trophy } from '../types';
 import {
   getParticipantByAccount,
-  getParticipantAssists,
   getTeammates,
 } from '../../../api/riot/helpers';
-import { zip } from '../../../api/utils/arrays';
 
 const unbreakableWill: Trophy = {
   island: 'teamworkIsland',

@@ -31,7 +31,7 @@ const islandColors = {
 };
 
 const Bar = styled.div<ProgressBarProps>`
-  width: ${(props) => Math.min(100, Math.floor(props.progress * 100))}%;
+  width: ${(props) => props.progress}%;
   height: 100%;
   background: ${(props) => islandColors[props.category]};
   position: absolute;
@@ -44,7 +44,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ progress, max, category }) => {
       <Progress>
         <Bar progress={fixedProgress} category={category} />
       </Progress>
-      {Math.floor(fixedProgress * max)}/{max}
+      {Math.floor(fixedProgress / max)}/{max}
     </Container>
   );
 };

@@ -88,8 +88,15 @@ const GlobalStyles = () => (
         font-family: 'Roboto Mono', monospace;
       }
 
-      a {
+      a,
+      a:active,
+      a:visited {
         text-decoration: none;
+        color: #77777a;
+      }
+
+      details {
+        margin: 4px 0px;
       }
     `}
   />

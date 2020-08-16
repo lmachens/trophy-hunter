@@ -16,6 +16,7 @@ import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
 import Status from '../common/Status';
 import { useAccount } from '../../contexts/account';
+import HelpModal from '../guides/HelpModal';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -43,6 +44,7 @@ const AppHeader: FC = () => {
   const { loading, account } = useAccount();
 
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   return (
     <>
@@ -67,7 +69,7 @@ const AppHeader: FC = () => {
           <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
             <Discord />
           </DiscordButtonLink>
-          <HeaderButton>
+          <HeaderButton onClick={() => setShowHelp(true)}>
             <Support />
           </HeaderButton>
           <MinimizeButton />
@@ -75,6 +77,7 @@ const AppHeader: FC = () => {
         </Toolbar>
       </MovableHeader>
       {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
     </>
   );
 };

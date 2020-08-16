@@ -5,8 +5,11 @@ import Backdrop from '../common/Backdrop';
 
 const Container = styled.div`
   width: 500px;
+  height: 451px;
   background: #3f3e43;
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h3`
@@ -15,7 +18,9 @@ const Title = styled.h3`
 `;
 
 const Body = styled.div`
-  margin: 20px 30px 30px 30px;
+  padding: 10px 20px 20px 20px;
+  margin: 10px;
+  overflow: auto;
 `;
 
 const Close = styled(CloseIcon)`

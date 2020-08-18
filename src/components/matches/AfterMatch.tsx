@@ -161,6 +161,13 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     onError: (error: Response) => {
       if (error.status === 403) {
         localStorage.removeItem('checkGameId');
+      } else {
+        setTimeout(() => {
+          const oldCheckGameId = localStorage.getItem('checkGameId');
+          if (oldCheckGameId) {
+            check(parseInt(oldCheckGameId));
+          }
+        }, 10000);
       }
     },
   });

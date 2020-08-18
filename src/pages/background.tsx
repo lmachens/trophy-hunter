@@ -129,20 +129,26 @@ const Background: NextPage = () => {
 
     const timeoutId = setTimeout(() => {
       setLeagueLauncherFeatures(INTERESTED_IN_LAUNCHER_FEATURES, () => {
-        overwolf.games.launchers.events.getInfo(
-          LEAGUE_LAUNCHER_ID,
-          (response) => {
-            if (response?.res?.summoner_info) {
-              const {
-                platform_id: platformId,
-                display_name: summonerName,
-              } = response.res.summoner_info;
+        const getSummonerInfo = () => {
+          overwolf.games.launchers.events.getInfo(
+            LEAGUE_LAUNCHER_ID,
+            (response) => {
+              if (response?.res?.summoner_info) {
+                const {
+                  platform_id: platformId,
+                  display_name: summonerName,
+                } = response.res.summoner_info;
 
-              console.log(`Login as ${summonerName} on ${platformId}`);
-              login({ platformId, summonerName });
+                console.log(`Login as ${summonerName} on ${platformId}`);
+                login({ platformId, summonerName });
+              } else {
+                setTimeout(getSummonerInfo, 1000);
+              }
             }
-          }
-        );
+          );
+        };
+
+        getSummonerInfo();
       });
     }, 1000);
 

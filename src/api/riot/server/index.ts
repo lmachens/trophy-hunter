@@ -19,7 +19,9 @@ export const getSummoner = async ({ platformId, summonerName }) => {
     );
     return { platformId, ...summoner };
   } catch (error) {
-    console.error(`getSummoner ${platformId} ${summonerName} ${error.status}`);
+    console.error(
+      `getSummoner ${platformId} ${summonerName} ${error.status} ${error.statusText}`
+    );
     return null;
   }
 };
@@ -31,7 +33,9 @@ export const getMatch = async ({ platformId, matchId }) => {
     );
     return match;
   } catch (error) {
-    console.error(`getMatch ${platformId} ${matchId} ${error.status}`);
+    console.error(
+      `getMatch ${platformId} ${matchId} ${error.status} ${error.statusText}`
+    );
     return null;
   }
 };
@@ -49,7 +53,9 @@ export const getTimeline = async ({
     );
     return timeline;
   } catch (error) {
-    console.error(`getTimeline ${platformId} ${matchId}  ${error.status}`);
+    console.error(
+      `getTimeline ${platformId} ${matchId}  ${error.status} ${error.statusText}`
+    );
     return null;
   }
 };
@@ -61,7 +67,7 @@ export const getRecentVersion = async () => {
     );
     return versions[0];
   } catch (error) {
-    console.error(`getRecentVersion ${error.status}`);
+    console.error(`getRecentVersion ${error.status} ${error.statusText}`);
     return null;
   }
 };

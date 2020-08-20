@@ -19,7 +19,7 @@ export const getSummoner = async ({ platformId, summonerName }) => {
     );
     return { platformId, ...summoner };
   } catch (error) {
-    console.error(`getSummoner ${platformId} ${summonerName}`, error);
+    console.error(`getSummoner ${platformId} ${summonerName} ${error.status}`);
     return null;
   }
 };
@@ -31,7 +31,7 @@ export const getMatch = async ({ platformId, matchId }) => {
     );
     return match;
   } catch (error) {
-    console.error(`getMatch ${platformId} ${matchId}`, error);
+    console.error(`getMatch ${platformId} ${matchId} ${error.status}`);
     return null;
   }
 };

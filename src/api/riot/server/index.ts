@@ -49,7 +49,7 @@ export const getTimeline = async ({
     );
     return timeline;
   } catch (error) {
-    console.error(`getTimeline ${platformId} ${matchId}`, error);
+    console.error(`getTimeline ${platformId} ${matchId}  ${error.status}`);
     return null;
   }
 };
@@ -61,7 +61,7 @@ export const getRecentVersion = async () => {
     );
     return versions[0];
   } catch (error) {
-    console.error(`getRecentVersion`, error);
+    console.error(`getRecentVersion ${error.status}`);
     return null;
   }
 };

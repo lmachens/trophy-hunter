@@ -148,6 +148,7 @@ const NoTropiesContainer = styled.div`
   justify-content: center;
 `;
 
+let tryAgainTime = 0;
 const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -157,17 +158,19 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     },
     onSuccess: () => {
       queryCache.invalidateQueries('account');
+      tryAgainTime = 0;
     },
     onError: (error: Response) => {
       if (error.status === 403) {
         localStorage.removeItem('checkGameId');
       } else {
+        tryAgainTime += 10000;
         setTimeout(() => {
           const oldCheckGameId = localStorage.getItem('checkGameId');
           if (oldCheckGameId) {
             check(parseInt(oldCheckGameId));
           }
-        }, 10000);
+        }, tryAgainTime);
       }
     },
   });

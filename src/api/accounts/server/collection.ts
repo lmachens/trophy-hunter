@@ -2,7 +2,14 @@ import { getDatabase, getCollection } from '../../utils/server/db';
 import { Account } from '../types';
 
 export const createAccountsCollection = async () => {
-  await getDatabase().createCollection('accounts', {
+  const db = await getDatabase();
+  const collections = await db.listCollections().toArray();
+  if (collections.some((collection) => collection.name === 'accounts')) {
+    console.log('accounts Collection already exists');
+    return;
+  }
+
+  db.createCollection('accounts', {
     validator: {
       $jsonSchema: {
         bsonType: 'object',

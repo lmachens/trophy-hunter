@@ -15,7 +15,9 @@ const requestRiot = async <T>(input: RequestInfo) => {
 export const getSummoner = async ({ platformId, summonerName }) => {
   try {
     const summoner = await requestRiot<Summoner>(
-      `https://${platformId}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}`
+      `https://${platformId}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${encodeURI(
+        summonerName
+      )}`
     );
     return { platformId, ...summoner };
   } catch (error) {

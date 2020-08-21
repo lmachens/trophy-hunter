@@ -47,11 +47,11 @@ export default applyMiddleware(
         return res.status(401).end('Unauthorized');
       }
 
-      console.log(`Check ${matchId} of ${account.summoner.name}`);
-
       if (account.lastGameIds.includes(matchId)) {
         return res.status(403).end('Already checked');
       }
+
+      console.log(`Check ${matchId} of ${account.summoner.name}`);
 
       const [match, timeline] = await Promise.all([
         getMatch({
@@ -82,7 +82,6 @@ export default applyMiddleware(
         );
         return res.status(403).end('Participant not found');
       }
-      console.log(participantIdentity, activeLevels);
 
       const updateLevels = activeLevels.map(async (accountLevel) => {
         const level = levels[accountLevel.name] as Level;

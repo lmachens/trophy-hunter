@@ -14,7 +14,7 @@ const sweetHoney: Trophy = {
     return (
       (participant.timeline.creepsPerMinDeltas['0-10'] +
         participant.timeline.creepsPerMinDeltas['10-20']) /
-      18
+        18 || 0
     );
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {

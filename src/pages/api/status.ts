@@ -36,6 +36,7 @@ export default applyMiddleware(
     if (launcherIssues.length > 0) {
       issues.push('launcher');
     }
+    res.setHeader('Cache-Control', 'max-age=180');
     res.json(issues);
   },
   withError,

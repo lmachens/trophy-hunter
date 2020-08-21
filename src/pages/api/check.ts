@@ -13,208 +13,223 @@ import { getMatch, getTimeline } from '../../api/riot/server';
 import { AccountTrophy } from '../../api/accounts';
 import { getAllEvents, getParticipantIdentity } from '../../api/riot/helpers';
 
+const activeChecks: string[] = [];
+
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { authToken } = req.cookies;
-    if (!authToken) {
-      console.log('Unauthorized');
-      return res.status(401).end('Unauthorized');
-    }
-
-    const Accounts = await getAccountsCollection();
-    let account = await Accounts.findOne({
-      authTokens: {
-        $elemMatch: {
-          token: authToken,
-          expiresAt: { $gt: new Date() },
-        },
-      },
-    });
-
-    if (!account) {
-      console.log(`Account not found ${authToken}`);
-      res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
-      return res.status(401).end('Unauthorized');
-    }
-
     const { matchId } = req.body;
-    console.log(`Check ${matchId} of ${account.summoner.name}`);
 
-    if (account.lastGameIds.includes(matchId)) {
-      return res.status(403).end('Already checked');
-    }
+    try {
+      if (activeChecks.includes(authToken)) {
+        return res.status(401).end('Already checking a match');
+      }
+      activeChecks.push(authToken);
 
-    const [match, timeline] = await Promise.all([
-      getMatch({
-        platformId: account.summoner.platformId,
-        matchId,
-      }),
-      getTimeline({
-        platformId: account.summoner.platformId,
-        matchId,
-      }),
-    ]);
-    if (!match || !timeline) {
-      return res.status(404).end('Not Found');
-    }
-    const events = getAllEvents(timeline);
+      if (!authToken) {
+        console.log('Unauthorized');
+        return res.status(401).end('Unauthorized');
+      }
 
-    const now = Date.now();
-    const activeLevels = account.levels.filter(
-      (level) => level.status === 'active'
-    );
+      const Accounts = await getAccountsCollection();
+      let account = await Accounts.findOne({
+        authTokens: {
+          $elemMatch: {
+            token: authToken,
+            expiresAt: { $gt: new Date() },
+          },
+        },
+      });
 
-    const accountTrophies = [...account.trophies];
-    const completedTrophyNames = [];
-    const participantIdentity = getParticipantIdentity(match, account);
-    if (!participantIdentity) {
-      console.log(`Participant not found ${matchId} ${account.summoner.name}`);
-      return res.status(403).end('Participant not found');
-    }
-    const updateLevels = activeLevels.map(async (accountLevel) => {
-      const level = levels[accountLevel.name] as Level;
-      const { levelTrophiesCompleted } = level.trophies.reduce(
-        ({ levelTrophiesCompleted }, trophy) => {
-          const accountTrophy = accountTrophies.find(
-            (accountTrophy) => accountTrophy.name === trophy.name
-          );
-          if (accountTrophy?.status === 'completed') {
-            return {
-              levelTrophiesCompleted: levelTrophiesCompleted + 1,
-              accountTrophies,
-            };
-          }
-          const progress = trophy.checkProgress({
-            match,
-            timeline,
-            account,
-            events,
-          });
-          if (progress < 1 && !trophy.maxProgress) {
-            return {
-              levelTrophiesCompleted,
-              accountTrophies,
-            };
-          }
-          if (accountTrophy) {
-            accountTrophy.progress = progress;
-            if (progress >= 1) {
-              accountTrophy.status = 'completed';
-              completedTrophyNames.push(accountTrophy.name);
+      if (!account) {
+        console.log(`Account not found ${authToken}`);
+        res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
+        return res.status(401).end('Unauthorized');
+      }
+
+      console.log(`Check ${matchId} of ${account.summoner.name}`);
+
+      if (account.lastGameIds.includes(matchId)) {
+        return res.status(403).end('Already checked');
+      }
+
+      const [match, timeline] = await Promise.all([
+        getMatch({
+          platformId: account.summoner.platformId,
+          matchId,
+        }),
+        getTimeline({
+          platformId: account.summoner.platformId,
+          matchId,
+        }),
+      ]);
+      if (!match || !timeline) {
+        return res.status(404).end('Not Found');
+      }
+      const events = getAllEvents(timeline);
+
+      const now = Date.now();
+      const activeLevels = account.levels.filter(
+        (level) => level.status === 'active'
+      );
+
+      const accountTrophies = [...account.trophies];
+      const completedTrophyNames = [];
+      const participantIdentity = getParticipantIdentity(match, account);
+      if (!participantIdentity) {
+        console.log(
+          `Participant not found ${matchId} ${account.summoner.name}`
+        );
+        return res.status(403).end('Participant not found');
+      }
+      console.log(participantIdentity, activeLevels);
+
+      const updateLevels = activeLevels.map(async (accountLevel) => {
+        const level = levels[accountLevel.name] as Level;
+        const { levelTrophiesCompleted } = level.trophies.reduce(
+          ({ levelTrophiesCompleted }, trophy) => {
+            const accountTrophy = accountTrophies.find(
+              (accountTrophy) => accountTrophy.name === trophy.name
+            );
+            if (accountTrophy?.status === 'completed') {
               return {
                 levelTrophiesCompleted: levelTrophiesCompleted + 1,
                 accountTrophies,
               };
             }
-            return {
-              levelTrophiesCompleted,
-              accountTrophies,
+            const progress = trophy.checkProgress({
+              match,
+              timeline,
+              account,
+              events,
+            });
+            if (progress < 1 && !trophy.maxProgress) {
+              return {
+                levelTrophiesCompleted,
+                accountTrophies,
+              };
+            }
+            if (accountTrophy) {
+              accountTrophy.progress = progress;
+              if (progress >= 1) {
+                accountTrophy.status = 'completed';
+                completedTrophyNames.push(accountTrophy.name);
+                return {
+                  levelTrophiesCompleted: levelTrophiesCompleted + 1,
+                  accountTrophies,
+                };
+              }
+              return {
+                levelTrophiesCompleted,
+                accountTrophies,
+              };
+            }
+            const newTrophy: AccountTrophy = {
+              name: trophy.name,
+              island: trophy.island,
+              level: trophy.level,
+              status: progress >= 1 ? 'completed' : 'active',
+              progress: Math.min(1, progress),
             };
-          }
-          const newTrophy: AccountTrophy = {
-            name: trophy.name,
-            island: trophy.island,
-            level: trophy.level,
-            status: progress >= 1 ? 'completed' : 'active',
-            progress: Math.min(1, progress),
-          };
-          accountTrophies.push(newTrophy);
-          if (progress >= 1) {
-            completedTrophyNames.push(newTrophy.name);
+            accountTrophies.push(newTrophy);
+            if (progress >= 1) {
+              completedTrophyNames.push(newTrophy.name);
+              return {
+                levelTrophiesCompleted: levelTrophiesCompleted + 1,
+              };
+            }
             return {
-              levelTrophiesCompleted: levelTrophiesCompleted + 1,
+              levelTrophiesCompleted: levelTrophiesCompleted,
             };
-          }
-          return {
-            levelTrophiesCompleted: levelTrophiesCompleted,
-          };
-        },
-        {
-          levelTrophiesCompleted: 0,
-        }
-      );
-
-      const isLevelCompleted =
-        levelTrophiesCompleted / level.trophies.length > 0.8;
-
-      let updated = await Accounts.findOneAndUpdate(
-        { _id: account._id, 'levels.name': level.name },
-        {
-          $set: {
-            'levels.$.status': isLevelCompleted
-              ? 'completed'
-              : accountLevel.status,
           },
-        },
-        { returnOriginal: false }
-      );
+          {
+            levelTrophiesCompleted: 0,
+          }
+        );
 
-      account = updated.value;
-      if (!isLevelCompleted) {
-        return;
-      }
+        const isLevelCompleted =
+          levelTrophiesCompleted / level.trophies.length > 0.8;
 
-      const unlockIslandLevels = level.unlocksLevels.filter(
-        (unlockLevel) => unlockLevel.island !== level.island
-      );
-      updated = await Accounts.findOneAndUpdate(
+        let updated = await Accounts.findOneAndUpdate(
+          { _id: account._id, 'levels.name': level.name },
+          {
+            $set: {
+              'levels.$.status': isLevelCompleted
+                ? 'completed'
+                : accountLevel.status,
+            },
+          },
+          { returnOriginal: false }
+        );
+
+        account = updated.value;
+        if (!isLevelCompleted) {
+          return;
+        }
+
+        const unlockIslandLevels = level.unlocksLevels.filter(
+          (unlockLevel) => unlockLevel.island !== level.island
+        );
+        updated = await Accounts.findOneAndUpdate(
+          { _id: account._id },
+          {
+            $push: {
+              islands: {
+                $each: unlockIslandLevels.map((level) => ({
+                  name: level.island,
+                  status: 'open',
+                })),
+              },
+              levels: {
+                $each: level.unlocksLevels.map((level) => ({
+                  name: level.name,
+                  island: level.island,
+                  status: 'active',
+                  unlockedAt: now,
+                })),
+              },
+            },
+          },
+          { returnOriginal: false }
+        );
+        account = updated.value;
+
+        const isIslandComplete = !account.levels
+          .filter(
+            (accountLevel) =>
+              accountLevel.island === level.island &&
+              accountLevel.name !== level.name
+          )
+          .find((level) => level.status !== 'completed');
+        if (!isIslandComplete) {
+          return;
+        }
+        await Accounts.updateOne(
+          { _id: account._id, 'islands.name': level.island },
+          {
+            $set: {
+              'islands.$.status': 'done',
+            },
+          }
+        );
+      });
+      await Promise.all(updateLevels);
+      await Accounts.updateOne(
         { _id: account._id },
         {
-          $push: {
-            islands: {
-              $each: unlockIslandLevels.map((level) => ({
-                name: level.island,
-                status: 'open',
-              })),
-            },
-            levels: {
-              $each: level.unlocksLevels.map((level) => ({
-                name: level.name,
-                island: level.island,
-                status: 'active',
-                unlockedAt: now,
-              })),
-            },
-          },
-        },
-        { returnOriginal: false }
-      );
-      account = updated.value;
-
-      const isIslandComplete = !account.levels
-        .filter(
-          (accountLevel) =>
-            accountLevel.island === level.island &&
-            accountLevel.name !== level.name
-        )
-        .find((level) => level.status !== 'completed');
-      if (!isIslandComplete) {
-        return;
-      }
-      await Accounts.updateOne(
-        { _id: account._id, 'islands.name': level.island },
-        {
           $set: {
-            'islands.$.status': 'done',
+            trophies: accountTrophies,
+            games: account.games + 1,
+          },
+          $push: {
+            lastGameIds: matchId,
           },
         }
       );
-    });
-    await Promise.all(updateLevels);
-    await Accounts.updateOne(
-      { _id: account._id },
-      {
-        $set: {
-          trophies: accountTrophies,
-          games: account.games + 1,
-        },
-        $push: {
-          lastGameIds: matchId,
-        },
-      }
-    );
-
-    res.json({ trophyNames: completedTrophyNames });
+      res.json({ trophyNames: completedTrophyNames });
+    } finally {
+      activeChecks.splice(activeChecks.indexOf(authToken), 1);
+    }
   },
   withError,
   withMethods('POST'),

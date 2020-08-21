@@ -62,11 +62,19 @@ export const getTimeline = async ({
   }
 };
 
+const cachedVersion = {
+  timestamp: 0,
+  promise: null,
+};
 export const getRecentVersion = async () => {
   try {
-    const versions = await getJSON<string[]>(
-      'https://ddragon.leagueoflegends.com/api/versions.json'
-    );
+    if (cachedVersion.timestamp < Date.now() - 1000 * 60 * 60) {
+      cachedVersion.promise = getJSON<string[]>(
+        'https://ddragon.leagueoflegends.com/api/versions.json'
+      );
+      cachedVersion.timestamp = Date.now();
+    }
+    const versions = await cachedVersion.promise;
     return versions[0];
   } catch (error) {
     console.error(`getRecentVersion ${error.status} ${error.statusText}`);

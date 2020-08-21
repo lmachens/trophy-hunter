@@ -38,7 +38,7 @@ export default applyMiddleware(
     }
 
     const { matchId } = req.body;
-    console.log(`Check ${matchId} of  ${account.summoner.name}`);
+    console.log(`Check ${matchId} of ${account.summoner.name}`);
 
     if (account.lastGameIds.includes(matchId)) {
       return res.status(403).end('Already checked');

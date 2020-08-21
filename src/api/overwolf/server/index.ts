@@ -1,4 +1,5 @@
 import { getJSON } from '../../utils/request';
+import { LOL_ID, LEAGUE_LAUNCHER_ID } from '..';
 
 type State = 0 | 1 | 2 | 3;
 
@@ -19,9 +20,24 @@ interface EventStatus {
   }[];
 }
 
+const cachedEventStatus = {
+  [LOL_ID]: {
+    timestamp: 0,
+    promise: null,
+  },
+  [LEAGUE_LAUNCHER_ID]: {
+    timestamp: 0,
+    promise: null,
+  },
+};
 export const getEventStatus = async (gameId: number): Promise<EventStatus> => {
-  const eventStatus = await getJSON<EventStatus>(
-    `https://game-events-status.overwolf.com/${gameId}_prod.json`
-  );
+  const cache = cachedEventStatus[gameId];
+  if (cache.timestamp < Date.now() - 1000 * 60) {
+    cache.promise = getJSON<EventStatus>(
+      `https://game-events-status.overwolf.com/${gameId}_prod.json`
+    );
+    cache.timestamp = Date.now();
+  }
+  const eventStatus = await cache.promise;
   return eventStatus;
 };

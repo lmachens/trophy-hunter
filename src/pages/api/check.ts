@@ -11,13 +11,13 @@ import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
 import { getMatch, getTimeline } from '../../api/riot/server';
 import { AccountTrophy } from '../../api/accounts';
-import { getAllEvents } from '../../api/riot/helpers';
+import { getAllEvents, getParticipantIdentity } from '../../api/riot/helpers';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
-    console.log('Check', req.cookies.authToken, req.body.matchId);
     const { authToken } = req.cookies;
     if (!authToken) {
+      console.log('Unauthorized');
       return res.status(401).end('Unauthorized');
     }
 
@@ -30,11 +30,15 @@ export default applyMiddleware(
         },
       },
     });
+
     if (!account) {
+      console.log(`Account not found ${authToken}`);
       res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
       return res.status(401).end('Unauthorized');
     }
+
     const { matchId } = req.body;
+    console.log(`Check ${matchId} of  ${account.summoner.name}`);
 
     if (account.lastGameIds.includes(matchId)) {
       return res.status(403).end('Already checked');
@@ -62,6 +66,11 @@ export default applyMiddleware(
 
     const accountTrophies = [...account.trophies];
     const completedTrophyNames = [];
+    const participantIdentity = getParticipantIdentity(match, account);
+    if (!participantIdentity) {
+      console.log(`Participant not found ${matchId} ${account.summoner.name}`);
+      return res.status(403).end('Participant not found');
+    }
     const updateLevels = activeLevels.map(async (accountLevel) => {
       const level = levels[accountLevel.name] as Level;
       const { levelTrophiesCompleted } = level.trophies.reduce(

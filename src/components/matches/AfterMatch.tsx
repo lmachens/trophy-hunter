@@ -159,6 +159,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     onSuccess: () => {
       queryCache.invalidateQueries('account');
       tryAgainTime = 0;
+      restoreCurrentWindow();
     },
     onError: (error: Response) => {
       if (error.status === 403) {
@@ -196,7 +197,6 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
 
   useEffect(() => {
     if (!loading) {
-      restoreCurrentWindow();
       return;
     }
 

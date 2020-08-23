@@ -15,7 +15,7 @@ import Lottie from 'react-lottie';
 import animationData from './confetti.json';
 import { bounce } from '../../styles/animations';
 import Squid from '../icons/Squid';
-import { restoreCurrentWindow } from '../../api/overwolf';
+import { flashUntilFocus } from '../../api/overwolf';
 
 const sandClockMotion = keyframes`
   from {
@@ -159,7 +159,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     onSuccess: () => {
       queryCache.invalidateQueries('account');
       tryAgainTime = 0;
-      restoreCurrentWindow();
+      flashUntilFocus('desktop');
     },
     onError: (error: Response) => {
       if (error.status === 403) {

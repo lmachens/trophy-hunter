@@ -6,12 +6,11 @@ import {
   withDatabase,
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
-import { newAccount } from '../../api/accounts/server';
 
 const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   const { authToken } = req.cookies;
   if (!authToken) {
-    return res.json(newAccount);
+    return res.status(401).end('Unauthorized');
   }
 
   const Accounts = await getAccountsCollection();
@@ -24,7 +23,13 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
   if (!account) {
-    res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
+    res.setHeader(
+      'Set-Cookie',
+      `authToken=${authToken};path=/;Max-Age=0;HttpOnly;SameSite=None${
+        process.env.NODE_ENV === 'production' ? ';Secure' : ''
+      }`
+    );
+
     return res.status(401).end('Unauthorized');
   }
   res.json(account);

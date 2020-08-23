@@ -27,7 +27,6 @@ export default applyMiddleware(
       activeChecks.push(authToken);
 
       if (!authToken) {
-        console.log('Unauthorized');
         return res.status(401).end('Unauthorized');
       }
 

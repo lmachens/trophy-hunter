@@ -106,6 +106,14 @@ export const restoreCurrentWindow = (): void => {
   });
 };
 
+export const flashUntilFocus = (windowName: string): void => {
+  overwolf.windows.flash(
+    windowName,
+    // @ts-ignore
+    overwolf.windows.enums.FlashBehavior.automatic
+  );
+};
+
 export const SR_DRAFT_PICK = 400;
 export const SR_RANKED_SOLO = 420;
 export const SR_BLIND_PICK = 430;

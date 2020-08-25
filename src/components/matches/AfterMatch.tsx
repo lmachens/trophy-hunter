@@ -89,7 +89,9 @@ const LottieContainer = styled.div`
   pointer-events: none;
 `;
 
-const AnimatedSandClock = styled(SandClock)<{ loading: boolean }>`
+const AnimatedSandClock = styled(({ loading, ...props }) => (
+  <SandClock {...props} />
+))<{ loading: boolean }>`
   animation: ${(props) => (props.loading ? sandClockMotion : bounce)} 2s ease
     infinite;
 

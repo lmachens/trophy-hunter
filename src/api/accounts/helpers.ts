@@ -13,7 +13,11 @@ export const getTrophyProgress = (
   trophyName: string
 ): number => {
   const trophy = getTrophy(account, trophyName);
-  return trophy ? trophy.progress : 0;
+  const progress = trophy ? trophy.progress : 0;
+  if (progress === Infinity || progress === -Infinity) {
+    return 0;
+  }
+  return progress;
 };
 
 export const findPerk = (

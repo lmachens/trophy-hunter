@@ -11,6 +11,7 @@ import * as trophies from '../../components/trophies';
 import { newAccount } from '../../api/accounts/server';
 import { Account } from '../../api/accounts';
 import { getAllEvents } from '../../api/riot/helpers';
+import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -34,6 +35,11 @@ export default applyMiddleware(
     if (!match || !timeline) {
       return res.status(404).end('Not Found');
     }
+
+    if (!SUPPORTED_QUEUE_IDS.includes(match.queueId)) {
+      return res.status(403).end(`Game mode ${match.queueId} is not supported`);
+    }
+
     const events = getAllEvents(timeline);
 
     const account: Account = {

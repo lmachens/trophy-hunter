@@ -12,6 +12,7 @@ import { Level } from '../../components/levels/types';
 import { getMatch, getTimeline } from '../../api/riot/server';
 import { AccountTrophy } from '../../api/accounts';
 import { getAllEvents, getParticipantIdentity } from '../../api/riot/helpers';
+import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 
 const activeChecks: string[] = [];
 
@@ -65,6 +66,13 @@ export default applyMiddleware(
       if (!match || !timeline) {
         return res.status(404).end('Not Found');
       }
+
+      if (!SUPPORTED_QUEUE_IDS.includes(match.queueId)) {
+        return res
+          .status(403)
+          .end(`Game mode ${match.queueId} is not supported`);
+      }
+
       const events = getAllEvents(timeline);
 
       const now = Date.now();

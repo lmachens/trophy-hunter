@@ -15,7 +15,7 @@ const dominus: Trophy = {
   checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    if (!participant.timeline || !participant.timeline.creepsPerMinDeltas) {
+    if (!participant.timeline.creepsPerMinDeltas) {
       return 0;
     }
     const laneOpponent = getLaneOpponent(match.participants, participant);

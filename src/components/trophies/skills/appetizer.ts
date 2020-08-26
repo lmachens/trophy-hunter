@@ -11,6 +11,10 @@ const appetizer: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
+    if (!participant.timeline.creepsPerMinDeltas) {
+      return 0;
+    }
+
     return participant.timeline.creepsPerMinDeltas['0-10'] / 8;
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {

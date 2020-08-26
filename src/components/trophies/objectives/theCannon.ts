@@ -17,6 +17,9 @@ const theCannon: Trophy = {
         event.type === 'BUILDING_KILL' &&
         event.buildingType === 'TOWER_BUILDING'
     );
+    if (!firstTurretDeath) {
+      return 0;
+    }
     const isEarly = firstTurretDeath.timestamp < 10 * 60 * 1000;
     const isKiller = firstTurretDeath.killerId === participant.participantId;
     const isAssistant = firstTurretDeath.assistingParticipantIds.some(

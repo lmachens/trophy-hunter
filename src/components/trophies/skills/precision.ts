@@ -24,6 +24,10 @@ const precision: Trophy = {
       return 0;
     }
 
+    if (!participant.timeline.creepsPerMinDeltas) {
+      return 0;
+    }
+
     const creepsDiffAt10 =
       participant.timeline.creepsPerMinDeltas['0-10'] * 10 -
       opponent.timeline.creepsPerMinDeltas['0-10'] * 10;

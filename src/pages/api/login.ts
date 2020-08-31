@@ -18,21 +18,6 @@ export default applyMiddleware(
 
     const Accounts = await getAccountsCollection();
 
-    if (oldAuthToken) {
-      const { accountId } = jwt.verify(oldAuthToken, process.env.JWT_SECRET);
-
-      await Accounts.updateOne(
-        { 'summoner.accountId': accountId },
-        {
-          $pull: {
-            authTokens: {
-              token: oldAuthToken,
-            },
-          },
-        }
-      );
-    }
-
     const summoner = await getSummoner({ summonerName, platformId });
     if (!summoner) {
       return res.status(404).end('Summoner not found');
@@ -91,6 +76,22 @@ export default applyMiddleware(
     if (!account.ok) {
       throw account.lastErrorObject;
     }
+
+    if (oldAuthToken) {
+      const { accountId } = jwt.verify(oldAuthToken, process.env.JWT_SECRET);
+
+      await Accounts.updateOne(
+        { 'summoner.accountId': accountId },
+        {
+          $pull: {
+            authTokens: {
+              token: oldAuthToken,
+            },
+          },
+        }
+      );
+    }
+
     res.setHeader(
       'Set-Cookie',
       `authToken=${authToken};path=/;Max-Age=${

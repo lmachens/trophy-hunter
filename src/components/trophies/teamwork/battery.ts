@@ -5,7 +5,7 @@ const battery: Trophy = {
   island: 'teamworkIsland',
   name: 'battery',
   level: 'teamwork2',
-  title: 'battery',
+  title: 'Battery',
   description: 'Heal/Regenerate most damage and take most damage.',
   category: 'teamwork',
   checkProgress: ({ match, account }) => {

@@ -5,7 +5,7 @@ const myJungle: Trophy = {
   island: 'skillsIsland',
   name: 'myJungle',
   level: 'skills2',
-  title: 'myJungle',
+  title: 'My Jungle',
   description: 'Kill most team jungle creeps and most enemy jungle creeps.',
   category: 'skills',
   checkProgress: ({ match, account }) => {

@@ -15,11 +15,16 @@ const theWhale: Trophy = {
 
     const mostCS = Math.max(
       ...match.participants.map(
-        (participant) => participant.stats.totalMinionsKilled
+        (participant) =>
+          participant.stats.totalMinionsKilled +
+          participant.stats.neutralMinionsKilled
       )
     );
 
-    const hasMostCS = participant.stats.totalMinionsKilled >= mostCS;
+    const hasMostCS =
+      participant.stats.totalMinionsKilled +
+        participant.stats.neutralMinionsKilled >=
+      mostCS;
     if (!hasMostCS) {
       return 0;
     }

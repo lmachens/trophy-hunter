@@ -11,7 +11,11 @@ const pesticide: Trophy = {
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    return participant.stats.totalMinionsKilled / 400;
+    return (
+      (participant.stats.totalMinionsKilled +
+        participant.stats.neutralMinionsKilled) /
+      400
+    );
   },
   checkLive: ({ allPlayers, account }) => {
     const accountPlayer = allPlayers.find(

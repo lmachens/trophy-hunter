@@ -10,7 +10,11 @@ const landlord: Trophy = {
   category: 'skills',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    return participant.stats.totalMinionsKilled / 300;
+    return (
+      (participant.stats.totalMinionsKilled +
+        participant.stats.neutralMinionsKilled) /
+      300
+    );
   },
   checkLive: ({ allPlayers, account }) => {
     const accountPlayer = allPlayers.find(

@@ -18,13 +18,17 @@ const glutton: Trophy = {
 
     const maxTotalMinionsKilled = Math.max(
       ...match.participants.map(
-        (participant) => participant.stats.totalMinionsKilled
+        (participant) =>
+          participant.stats.totalMinionsKilled +
+          participant.stats.neutralMinionsKilled
       )
     );
 
     return Number(
       participant.stats.kills >= maxKills &&
-        participant.stats.totalMinionsKilled >= maxTotalMinionsKilled
+        participant.stats.totalMinionsKilled +
+          participant.stats.neutralMinionsKilled >=
+          maxTotalMinionsKilled
     );
   },
 };

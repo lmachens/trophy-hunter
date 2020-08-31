@@ -76,9 +76,6 @@ export default applyMiddleware(
       const events = getAllEvents(timeline);
 
       const now = Date.now();
-      const activeLevels = account.levels.filter(
-        (level) => level.status === 'active'
-      );
 
       const accountTrophies = [...account.trophies];
       const completedTrophyNames = [];
@@ -90,7 +87,7 @@ export default applyMiddleware(
         return res.status(403).end('Participant not found');
       }
 
-      const updateLevels = activeLevels.map(async (accountLevel) => {
+      const updateLevels = account.levels.map(async (accountLevel) => {
         const level = levels[accountLevel.name] as Level;
         const { levelTrophiesCompleted } = level.trophies.reduce(
           ({ levelTrophiesCompleted }, trophy) => {
@@ -156,7 +153,11 @@ export default applyMiddleware(
         const isLevelCompleted =
           levelTrophiesCompleted / level.trophies.length > 0.8;
 
-        let updated = await Accounts.findOneAndUpdate(
+        if (!isLevelCompleted || accountLevel.status === 'completed') {
+          return;
+        }
+
+        await Accounts.findOneAndUpdate(
           { _id: account._id, 'levels.name': level.name },
           {
             $set: {
@@ -164,19 +165,13 @@ export default applyMiddleware(
                 ? 'completed'
                 : accountLevel.status,
             },
-          },
-          { returnOriginal: false }
+          }
         );
-
-        account = updated.value;
-        if (!isLevelCompleted) {
-          return;
-        }
 
         const unlockIslandLevels = level.unlocksLevels.filter(
           (unlockLevel) => unlockLevel.island !== level.island
         );
-        updated = await Accounts.findOneAndUpdate(
+        const updated = await Accounts.findOneAndUpdate(
           { _id: account._id },
           {
             $push: {

@@ -138,9 +138,17 @@ const Background: NextPage = () => {
                   platform_id: platformId,
                   display_name: summonerName,
                 } = response.res.summoner_info;
-
-                console.log(`Login as ${summonerName} on ${platformId}`);
-                login({ platformId, summonerName });
+                if (!summonerName || !platformId) {
+                  console.error(
+                    `SummonerName not found ${JSON.stringify(
+                      response.res.summoner_info
+                    )}`
+                  );
+                  setTimeout(getSummonerInfo, 1000);
+                } else {
+                  console.log(`Login as ${summonerName} on ${platformId}`);
+                  login({ platformId, summonerName });
+                }
               } else {
                 setTimeout(getSummonerInfo, 1000);
               }

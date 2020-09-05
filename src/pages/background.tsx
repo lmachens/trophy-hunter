@@ -137,6 +137,7 @@ const Background: NextPage = () => {
                 const {
                   platform_id: platformId,
                   display_name: summonerName,
+                  is_garena_user: isGarenaUser,
                 } = response.res.summoner_info;
                 if (!summonerName || !platformId) {
                   console.error(
@@ -145,7 +146,13 @@ const Background: NextPage = () => {
                     )}`
                   );
                   setTimeout(getSummonerInfo, 1000);
+                } else if (isGarenaUser) {
+                  console.info(
+                    `User ${summonerName} ${platformId} is a garena user`
+                  );
+                  localStorage.setItem('isGarenaUser', 'true');
                 } else {
+                  localStorage.removeItem('isGarenaUser');
                   console.log(`Login as ${summonerName} on ${platformId}`);
                   login({ platformId, summonerName });
                 }

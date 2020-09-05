@@ -11,6 +11,7 @@ import { bounce } from '../../styles/animations';
 import { flashUntilFocus } from '../../api/overwolf';
 import TrophiesModal from './TrophiesModal';
 import IslandsModal from './IslandsModal';
+import usePersistentState from '../../hooks/usePersistentState';
 
 const sandClockMotion = keyframes`
   from {
@@ -131,6 +132,11 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showUnlockedIslandNames, setShowUnlockedIslandNames] = useState(false);
+  const [checkGameId, setCheckGameId, unsetCheckGameId] = usePersistentState(
+    'checkGameId',
+    null
+  );
+
   const [check, { data: match, status, reset }] = useMutation(postCheck, {
     onMutate: () => {
       setShowModal(true);
@@ -142,13 +148,12 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     },
     onError: (error: Response) => {
       if (error.status === 403) {
-        localStorage.removeItem('checkGameId');
+        unsetCheckGameId();
       } else {
         tryAgainTime += 10000;
         setTimeout(() => {
-          const oldCheckGameId = localStorage.getItem('checkGameId');
-          if (oldCheckGameId) {
-            check(parseInt(oldCheckGameId));
+          if (checkGameId) {
+            check(parseInt(checkGameId));
           }
         }, tryAgainTime);
       }
@@ -157,22 +162,10 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   const loading = status === 'loading';
 
   useEffect(() => {
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key !== 'checkGameId' || !event.newValue) {
-        return;
-      }
-      check(parseInt(event.newValue));
-    };
-    window.addEventListener('storage', handleStorage, false);
-
-    const oldCheckGameId = localStorage.getItem('checkGameId');
-    if (oldCheckGameId) {
-      check(parseInt(oldCheckGameId));
+    if (checkGameId) {
+      check(parseInt(checkGameId));
     }
-    return () => {
-      window.removeEventListener('storage', handleStorage);
-    };
-  }, []);
+  }, [checkGameId]);
 
   useEffect(() => {
     if (!loading) {

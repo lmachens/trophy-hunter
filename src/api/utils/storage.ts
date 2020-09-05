@@ -14,3 +14,7 @@ export const getLocalStorageItem = <T>(key: string, defaultValue: T) => {
 export const setLocalStorageItem = (key: string, value: unknown) => {
   return localStorage.setItem(key, JSON.stringify(value));
 };
+
+export const unsetLocalStorageItem = (key: string) => {
+  return localStorage.removeItem(key);
+};

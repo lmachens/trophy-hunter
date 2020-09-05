@@ -5,12 +5,16 @@ import {
   SetStateAction,
   useEffect,
 } from 'react';
-import { getLocalStorageItem, setLocalStorageItem } from '../api/utils/storage';
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+  unsetLocalStorageItem,
+} from '../api/utils/storage';
 
 const usePersistentState = <T>(
   key: string,
   defaultValue: T
-): [T, Dispatch<SetStateAction<T>>] => {
+): [T, Dispatch<SetStateAction<T>>, () => void] => {
   const [value, setValue] = useState<T>(
     getLocalStorageItem<T>(key, defaultValue)
   );
@@ -23,12 +27,21 @@ const usePersistentState = <T>(
     [key]
   );
 
+  const unsetPersistentValue = useCallback(() => {
+    unsetLocalStorageItem(key);
+    setValue(undefined);
+  }, [key]);
+
   useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
-      if (event.key !== key || !event.newValue) {
+      if (event.key !== key) {
         return;
       }
-      setValue(getLocalStorageItem<T>(key, defaultValue));
+      if (!event.newValue) {
+        setValue(undefined);
+      } else {
+        setValue(getLocalStorageItem<T>(key, defaultValue));
+      }
     };
     window.addEventListener('storage', handleStorage, false);
 
@@ -37,7 +50,7 @@ const usePersistentState = <T>(
     };
   }, [key]);
 
-  return [value, setPersistentValue];
+  return [value, setPersistentValue, unsetPersistentValue];
 };
 
 export default usePersistentState;

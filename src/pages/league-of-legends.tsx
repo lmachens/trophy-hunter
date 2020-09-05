@@ -21,6 +21,8 @@ import Profile from '../components/trophies/Profile';
 import AvailableTrophies from '../components/trophies/AvailableTrophies';
 import { VideoAds } from '../components/ads';
 import * as levels from '../components/islands/levels';
+import usePersistentState from '../hooks/usePersistentState';
+import GarenaModal from '../components/modals/GarenaModal';
 
 const islands = [
   transformIsland({
@@ -112,6 +114,10 @@ const LeagueOfLegends: NextPage = () => {
   const [activeTool, setActiveTool] = useState(null);
   const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
   const [visibleIslandDetails, setVisibleIslandDetails] = useState(false);
+  const [isGarenaUser, , unsetIsGarenaUser] = usePersistentState(
+    'isGarenaUser',
+    null
+  );
 
   const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
@@ -195,6 +201,7 @@ const LeagueOfLegends: NextPage = () => {
         visibleIslandDetails={visibleIslandDetails}
         targetLevel={targetLevel}
       />
+      {isGarenaUser && <GarenaModal onClose={() => unsetIsGarenaUser()} />}
     </GameLayout>
   );
 };

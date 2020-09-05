@@ -61,6 +61,10 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   progress,
   ...props
 }) => {
+  if (!trophy) {
+    return null;
+  }
+
   const { account } = useAccount();
   const [patch] = useMutation(patchAccount, {
     onSuccess: () => {

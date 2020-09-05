@@ -21,6 +21,7 @@ const Body = styled.div`
   padding: 10px 20px 20px 20px;
   margin: 10px;
   overflow: auto;
+  height: 100%;
 `;
 
 const Close = styled(CloseIcon)`

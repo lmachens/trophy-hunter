@@ -2,20 +2,15 @@ import styled from '@emotion/styled';
 import { FC, useState, useEffect } from 'react';
 import Backdrop from '../common/Backdrop';
 import SandClock from '../icons/SandClock';
-import Modal from '../modals/Modal';
-import TrophyListItem from '../trophies/TrophyListItem';
 import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
 import { keyframes } from '@emotion/core';
-import TrophyList from '../trophies/TrophyList';
 import { postCheck } from '../../api/accounts';
 import { queryCache, useMutation } from 'react-query';
-import * as trophies from '../trophies';
-import Lottie from 'react-lottie';
-import animationData from './confetti.json';
 import { bounce } from '../../styles/animations';
-import Squid from '../icons/Squid';
 import { flashUntilFocus } from '../../api/overwolf';
+import TrophiesModal from './TrophiesModal';
+import IslandsModal from './IslandsModal';
 
 const sandClockMotion = keyframes`
   from {
@@ -81,14 +76,6 @@ const sandMotion3 = keyframes`
   }
 `;
 
-const LottieContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-`;
-
 const AnimatedSandClock = styled(({ loading, ...props }) => (
   <SandClock {...props} />
 ))<{ loading: boolean }>`
@@ -139,21 +126,11 @@ const ButtonContainer = styled.div`
   padding: 15px 10px 10px;
 `;
 
-const ListItem = styled(TrophyListItem)`
-  &:hover {
-    background-color: #2b2a30;
-  }
-`;
-
-const NoTropiesContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 let tryAgainTime = 0;
 const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showUnlockedIslandNames, setShowUnlockedIslandNames] = useState(false);
   const [check, { data: match, status, reset }] = useMutation(postCheck, {
     onMutate: () => {
       setShowModal(true);
@@ -253,46 +230,30 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
           </Container>
         </Backdrop>
       )}
-      {showModal && match && (
-        <Modal
+      {showModal && match && !showUnlockedIslandNames && (
+        <TrophiesModal
+          onClose={() => {
+            if (match.unlockedIslandNames.length > 0) {
+              setShowUnlockedIslandNames(true);
+            } else {
+              setShowTooltip(false);
+              setShowModal(false);
+              reset();
+            }
+          }}
+          trophyNames={match.trophyNames}
+        />
+      )}
+      {showModal && match && showUnlockedIslandNames && (
+        <IslandsModal
           onClose={() => {
             setShowTooltip(false);
             setShowModal(false);
+            setShowUnlockedIslandNames(false);
             reset();
           }}
-          title={
-            match.trophyNames.length === 0
-              ? 'No trophies completed this match'
-              : 'Trophies completed in this match, GG!'
-          }
-        >
-          <TrophyList>
-            {match.trophyNames.map((trophyName) => (
-              <ListItem trophy={trophies[trophyName]} key={trophyName} />
-            ))}
-            {match.trophyNames.length === 0 && (
-              <NoTropiesContainer>
-                <Squid />
-              </NoTropiesContainer>
-            )}
-          </TrophyList>
-          {match.trophyNames.length > 0 && (
-            <LottieContainer>
-              <Lottie
-                options={{
-                  loop: true,
-                  autoplay: true,
-                  animationData: animationData,
-                  rendererSettings: {
-                    preserveAspectRatio: 'xMidYMid slice',
-                  },
-                }}
-                height={500}
-                width={666}
-              />
-            </LottieContainer>
-          )}
-        </Modal>
+          unlockedIslandNames={match.unlockedIslandNames}
+        />
       )}
     </>
   );

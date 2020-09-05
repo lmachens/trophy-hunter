@@ -14,6 +14,7 @@ export const postCheck = (matchId: number) => {
   console.log(`postCheck ${matchId}`);
   return postJSON<{
     trophyNames: string[];
+    unlockedIslandNames: string[];
   }>('/api/check', { matchId });
 };
 

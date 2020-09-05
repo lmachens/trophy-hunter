@@ -79,6 +79,8 @@ export default applyMiddleware(
 
       const accountTrophies = [...account.trophies];
       const completedTrophyNames = [];
+      const unlockedIslandNames = [];
+
       const participantIdentity = getParticipantIdentity(match, account);
       if (!participantIdentity) {
         console.log(
@@ -205,6 +207,7 @@ export default applyMiddleware(
         if (!isIslandComplete) {
           return;
         }
+        unlockedIslandNames.push(level.island);
         await Accounts.updateOne(
           { _id: account._id, 'islands.name': level.island },
           {
@@ -227,7 +230,10 @@ export default applyMiddleware(
           },
         }
       );
-      res.json({ trophyNames: completedTrophyNames });
+      res.json({
+        trophyNames: completedTrophyNames,
+        unlockedIslandNames: unlockedIslandNames,
+      });
     } finally {
       activeChecks.splice(activeChecks.indexOf(authToken), 1);
     }

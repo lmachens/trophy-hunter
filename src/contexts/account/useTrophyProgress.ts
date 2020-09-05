@@ -3,7 +3,6 @@ import { Trophy } from '../../components/trophies/types';
 
 const useTrophyProgress = (trophy: Trophy) => {
   const { account } = useAccount();
-
   const progress =
     account?.trophies.find(
       (accountTrophy) => accountTrophy.name === trophy.name

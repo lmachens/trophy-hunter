@@ -146,7 +146,7 @@ const Background: NextPage = () => {
                     )}`
                   );
                   setTimeout(getSummonerInfo, 1000);
-                } else if (isGarenaUser) {
+                } else if (isGarenaUser === 'true' || isGarenaUser === true) {
                   console.info(
                     `User ${summonerName} ${platformId} is a garena user`
                   );

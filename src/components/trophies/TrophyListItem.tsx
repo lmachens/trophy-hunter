@@ -89,7 +89,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
       </Grow>
       {!trophy.checkLive && (
         <Tooltip
-          text="This trophy can not be checked in-game"
+          text="This trophy doesn't have live-progress tracking"
           placement="bottomRight"
         >
           <Flag />

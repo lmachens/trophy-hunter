@@ -77,21 +77,6 @@ export default applyMiddleware(
       throw account.lastErrorObject;
     }
 
-    if (oldAuthToken) {
-      const { accountId } = jwt.verify(oldAuthToken, process.env.JWT_SECRET);
-
-      await Accounts.updateOne(
-        { 'summoner.accountId': accountId },
-        {
-          $pull: {
-            authTokens: {
-              token: oldAuthToken,
-            },
-          },
-        }
-      );
-    }
-
     res.setHeader(
       'Set-Cookie',
       `authToken=${authToken};path=/;Max-Age=${
@@ -101,6 +86,22 @@ export default applyMiddleware(
       }`
     );
     res.json(account.value);
+
+    if (oldAuthToken) {
+      const { accountId } = jwt.verify(oldAuthToken, process.env.JWT_SECRET);
+
+      // Limit to 5 authTokens
+      for (let i = 5; i < account.value.authTokens.length; i++) {
+        await Accounts.updateOne(
+          { 'summoner.accountId': accountId },
+          {
+            $pop: {
+              authTokens: -1,
+            },
+          }
+        );
+      }
+    }
   },
   withError,
   withMethods('POST'),

@@ -43,7 +43,12 @@ export default applyMiddleware(
 
       if (!account) {
         console.log(`Account not found ${authToken}`);
-        res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
+        res.setHeader(
+          'Set-Cookie',
+          `authToken=${authToken};Max-Age=0${
+            process.env.NODE_ENV === 'production' ? ';Secure' : ''
+          }`
+        );
         return res.status(401).end('Unauthorized');
       }
 
@@ -51,7 +56,9 @@ export default applyMiddleware(
         return res.status(403).end('Already checked');
       }
 
-      console.log(`Check ${matchId} of ${account.summoner.name}`);
+      console.log(
+        `Check ${matchId} of ${account.summoner.name} ${account.summoner.platformId}`
+      );
 
       const [match, timeline] = await Promise.all([
         getMatch({

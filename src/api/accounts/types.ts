@@ -8,6 +8,10 @@ export interface Credential {
 export interface Account {
   _id?: string;
   summoner: Summoner;
+  authTokens: {
+    token: string;
+    expiresAt: Date;
+  }[];
   islands: AccountIsland[];
   levels: AccountLevel[];
   trophies: AccountTrophy[];

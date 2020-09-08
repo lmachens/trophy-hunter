@@ -195,7 +195,6 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({
             trophy={trophy}
             key={trophy.name}
             borderless
-            showFavorite
             progress={
               trophyProgress?.find(
                 (trophyProgress) => trophyProgress.trophy.name === trophy.name

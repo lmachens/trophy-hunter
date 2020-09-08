@@ -55,9 +55,11 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
             <TrophyListItem
               key={trophy.name}
               trophy={trophy}
-              showFavorite={availableTrophies.some(
-                (availableTrophy) => availableTrophy.name === trophy.name
-              )}
+              disableFavorite={
+                !availableTrophies.some(
+                  (availableTrophy) => availableTrophy.name === trophy.name
+                )
+              }
               data-tooltip-id={trophy.name}
             />
           ))}

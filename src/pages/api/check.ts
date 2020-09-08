@@ -237,6 +237,17 @@ export default applyMiddleware(
           },
         }
       );
+      // Limit to 10 lastGameIds
+      for (let i = 10; i < account.lastGameIds.length; i++) {
+        await Accounts.updateOne(
+          { _id: account._id },
+          {
+            $pop: {
+              lastGameIds: -1,
+            },
+          }
+        );
+      }
       res.json({
         trophyNames: completedTrophyNames,
         unlockedIslandNames: unlockedIslandNames,

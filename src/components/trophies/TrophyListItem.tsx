@@ -32,6 +32,7 @@ interface TrophyListItemProps
   extends ListItemProps,
     HTMLAttributes<HTMLDivElement> {
   trophy: Trophy;
+  showFavorite: boolean;
   progress?: number;
 }
 
@@ -59,6 +60,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   trophy,
   borderless,
   progress,
+  showFavorite,
   ...props
 }) => {
   if (!trophy) {
@@ -99,7 +101,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <Flag />
         </Tooltip>
       )}
-      {account && trophyProgress < 1 && (
+      {showFavorite && account && trophyProgress < 1 && (
         <Favorite
           active={account.favoriteTrophyNames.includes(trophy.name)}
           onClick={(event) => {

@@ -80,6 +80,13 @@ export default applyMiddleware(
           .end(`Game mode ${match.queueId} is not supported`);
       }
 
+      if (match.gameDuration < 600) {
+        return res.json({
+          trophyNames: [],
+          unlockedIslandNames: [],
+        });
+      }
+
       const events = getAllEvents(timeline);
 
       const now = Date.now();

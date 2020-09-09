@@ -10,6 +10,7 @@ export const newAccount: Account = {
     puuid: '',
     summonerLevel: 0,
   },
+  authTokens: [],
   islands: [
     {
       name: 'hub',

@@ -77,7 +77,6 @@ const Background: NextPage = () => {
       if (isLeagueLaunched(res)) {
         setLeagueRunning(true);
       } else if (isLeagueClosed(res)) {
-        setPlayingSupportedGame(false);
         setLeagueRunning(false);
       }
     };

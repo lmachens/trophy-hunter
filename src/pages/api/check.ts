@@ -187,6 +187,9 @@ export default applyMiddleware(
         if (!isLevelCompleted || accountLevel.status === 'completed') {
           return;
         }
+        unlockedIslandNames.push(
+          ...level.unlocksLevels.map((level) => levels[level.name].island)
+        );
 
         await Accounts.findOneAndUpdate(
           { _id: account._id, 'levels.name': level.name },
@@ -236,7 +239,6 @@ export default applyMiddleware(
         if (!isIslandComplete) {
           return;
         }
-        unlockedIslandNames.push(level.island);
         await Accounts.updateOne(
           { _id: account._id, 'islands.name': level.island },
           {

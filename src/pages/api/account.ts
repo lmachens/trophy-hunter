@@ -25,8 +25,8 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!account) {
     res.setHeader(
       'Set-Cookie',
-      `authToken=${authToken};path=/;Max-Age=0;HttpOnly;SameSite=None${
-        process.env.NODE_ENV === 'production' ? ';Secure' : ''
+      `authToken=${authToken};path=/;Max-Age=0;HttpOnly${
+        process.env.NODE_ENV === 'production' ? ';SameSite=None;Secure' : ''
       }`
     );
 

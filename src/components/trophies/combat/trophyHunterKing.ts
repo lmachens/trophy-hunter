@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const trophyHunterKing: Trophy = {
@@ -11,9 +10,7 @@ const trophyHunterKing: Trophy = {
     'Achieve a Trophy Hunt (kill each opponent at least once) three times in a row.',
   category: 'combat',
   maxProgress: 3,
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant, account }) => {
     const victimIds = events
       .filter(
         (event) =>

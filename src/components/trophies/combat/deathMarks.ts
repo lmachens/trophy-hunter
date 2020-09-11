@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity, getAllKills } from '../../../api/riot/helpers';
+import { getAllKills } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const THIRTY_SECONDS = 30000;
@@ -12,18 +12,16 @@ const deathMarks: Trophy = {
     "Perform seven kills and don't die in the 30 seconds afer each kill.",
   category: 'combat',
   maxProgress: 7,
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
+  checkProgress: ({ account, events, participant }) => {
     const kills = getAllKills(events);
     const deathMarks = kills.filter((kill) => {
-      if (kill.killerId !== participantIdentity.participantId) {
+      if (kill.killerId !== participant.participantId) {
         return false;
       }
 
       const deathInsideCooldown = kills.find(
         (death) =>
-          death.victimId === participantIdentity.participantId &&
+          death.victimId === participant.participantId &&
           death.timestamp >= kill.timestamp &&
           death.timestamp < kill.timestamp + THIRTY_SECONDS
       );

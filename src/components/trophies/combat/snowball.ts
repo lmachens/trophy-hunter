@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const snowball: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const snowball: Trophy = {
   title: 'Snowball',
   description: 'Achieve five kills before twelve minutes.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const snowballKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

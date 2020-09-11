@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const darkinBlade: Trophy = {
   island: 'combatIsland',
@@ -9,12 +8,10 @@ const darkinBlade: Trophy = {
   description:
     'Kill an opponent in 90 seconds after you finish Guinsoos Rageblade.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const darkinBladeBuy = events.find(
       (event) =>
-        event.participantId === participantIdentity.participantId &&
+        event.participantId === participant.participantId &&
         event.type === 'ITEM_PURCHASED' &&
         event.itemId === 3124
     );
@@ -25,7 +22,7 @@ const darkinBlade: Trophy = {
     const darkinBladeKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&
-        event.killerId === participantIdentity.participantId &&
+        event.killerId === participant.participantId &&
         event.timestamp > darkinBladeBuy.timestamp &&
         darkinBladeBuy.timestamp <= event.timestamp + 90
     ).length;

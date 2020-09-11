@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theFinalHour: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const theFinalHour: Trophy = {
   title: 'The Final Hour',
   description: 'Get at least ten kills in the last ten minutes of the game.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const killsAtEndgame = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

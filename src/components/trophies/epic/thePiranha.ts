@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const thePiranha: Trophy = {
@@ -10,9 +9,7 @@ const thePiranha: Trophy = {
   description: 'Deal most damage to champions three times in a row.',
   category: 'epic',
   maxProgress: 3,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, account, participant }) => {
     const maxDamage = Math.max(
       ...match.participants.map(
         (participant) => participant.stats.totalDamageDealtToChampions

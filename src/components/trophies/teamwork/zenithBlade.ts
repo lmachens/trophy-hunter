@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const zenithBlade: Trophy = {
   island: 'teamworkIsland',
@@ -12,9 +9,7 @@ const zenithBlade: Trophy = {
   description:
     'Participate in a kill between the two and four minute mark on Summoners Rift.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, events }) => {
     const killsAndAssists = getParticipantKillsAndAssists(
       events,
       participant.participantId

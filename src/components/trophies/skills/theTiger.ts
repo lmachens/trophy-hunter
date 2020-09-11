@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const theTiger: Trophy = {
@@ -10,10 +9,7 @@ const theTiger: Trophy = {
   description: 'Have most kills three times in a row.',
   category: 'skills',
   maxProgress: 3,
-
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, account, participant }) => {
     const maxKills = Math.max(
       ...match.participants.map((participant) => participant.stats.kills)
     );

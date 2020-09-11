@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const noxianKnight: Trophy = {
   island: 'skillsIsland',
@@ -11,8 +8,7 @@ const noxianKnight: Trophy = {
   title: 'Noxian Knight',
   description: 'Be involved in 60% of your teams kills and achieve level 18.',
   category: 'skills',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, events, participant }) => {
     const teamParticipantIds = match.participants
       .filter((other) => other.teamId === participant.teamId)
       .map((teammate) => teammate.participantId);

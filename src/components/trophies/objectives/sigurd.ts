@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const sigurd: Trophy = {
   island: 'combatIsland',
@@ -9,8 +8,7 @@ const sigurd: Trophy = {
   description:
     'Kill the first dragon, at least four more and at least one baron (team achievement).',
   category: 'objectives',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const team = match.teams.find((team) => team.teamId === participant.teamId);
 
     return Number(

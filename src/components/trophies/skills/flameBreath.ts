@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const flameBreath: Trophy = {
   island: 'skillsIsland',
@@ -8,9 +7,7 @@ const flameBreath: Trophy = {
   title: 'Flame Breath',
   description: 'Have highest cs score in the game as a jungler.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     if (participant.timeline.lane !== 'JUNGLE') {
       return 0;
     }

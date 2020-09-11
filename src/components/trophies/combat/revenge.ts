@@ -3,7 +3,6 @@ import {
   calcDeathTime,
   calcLevel,
   eventTimeToTimestamp,
-  getParticipantIdentity,
   getParticipantKills,
   getParticipantDeaths,
 } from '../../../api/riot/helpers';
@@ -15,24 +14,16 @@ const revenge: Trophy = {
   title: 'REVENGE!!!',
   description: 'Kill your killer in the 30 seconds after you have respawned.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
-    const kills = getParticipantKills(
-      events,
-      participantIdentity.participantId
-    );
-    const deaths = getParticipantDeaths(
-      events,
-      participantIdentity.participantId
-    );
+  checkProgress: ({ events, participant }) => {
+    const kills = getParticipantKills(events, participant.participantId);
+    const deaths = getParticipantDeaths(events, participant.participantId);
 
     const revengeKills = kills.filter(
       (kill) =>
         deaths.filter((death) => {
           const level = calcLevel(
             events,
-            participantIdentity.participantId,
+            participant.participantId,
             death.timestamp
           );
           const deathTime = calcDeathTime(level, death.timestamp);

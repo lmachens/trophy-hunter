@@ -3,7 +3,6 @@ import {
   getTrophyProgress,
   getTrophyProgressDetails,
 } from '../../../api/accounts/helpers';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const oneTrickPony: Trophy = {
   island: 'specialIsland',
@@ -14,8 +13,7 @@ const oneTrickPony: Trophy = {
     'Play the same champion in the last five matches and win all of them.',
   category: 'special',
   maxProgress: 5,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ account, participant }) => {
     if (!participant.stats.win) {
       return 0;
     }

@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theCougar: Trophy = {
   island: 'skillsIsland',
@@ -9,8 +8,7 @@ const theCougar: Trophy = {
   description:
     'Have a 1000 gold lead over the opposing jungler as a jungler at 10 minutes.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     if (participant.timeline.lane !== 'JUNGLE') {
       return 0;
     }

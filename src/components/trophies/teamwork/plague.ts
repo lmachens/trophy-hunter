@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const plague: Trophy = {
   island: 'teamworkIsland',
@@ -8,9 +7,7 @@ const plague: Trophy = {
   title: 'Plague',
   description: 'Have highest kill participation and highest total heal.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const maxKillParticipation = Math.max(
       ...match.participants.map(
         (participant) => participant.stats.kills + participant.stats.assists

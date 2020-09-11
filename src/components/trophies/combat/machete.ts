@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const machete: Trophy = {
@@ -10,9 +9,7 @@ const machete: Trophy = {
   description: 'Deal more than 50000 total damage to champions.',
   category: 'combat',
   maxProgress: 50000,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ account, participant }) => {
     const trophyProgress = getTrophyProgress(account, 'machete');
     return (
       participant.stats.totalDamageDealtToChampions / 50000 + trophyProgress

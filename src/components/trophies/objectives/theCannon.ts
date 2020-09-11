@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theCannon: Trophy = {
   island: 'objectivesIsland',
@@ -9,9 +8,7 @@ const theCannon: Trophy = {
   description:
     'Participate in a first turret kill before ten minutes into the game.',
   category: 'objectives',
-  checkProgress: ({ match, account, events }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, events }) => {
     const firstTurretDeath = events.find(
       (event) =>
         event.type === 'BUILDING_KILL' &&

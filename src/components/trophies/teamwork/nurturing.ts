@@ -1,6 +1,5 @@
 import { Trophy } from '../types';
 import {
-  getParticipantByAccount,
   getParticipantAssists,
   getTeammates,
   getOtherParticipants,
@@ -14,8 +13,7 @@ const nurturing: Trophy = {
   description:
     'Feed them when they are small. One of your teammates has most kills and damage in game. You assisted him three kills pre ten minutes.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, events, participant }) => {
     const assists = getParticipantAssists(events, participant.participantId);
 
     const teammates = getTeammates(match, participant);

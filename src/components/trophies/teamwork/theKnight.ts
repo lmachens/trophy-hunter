@@ -1,6 +1,5 @@
 import { Trophy } from '../types';
 import {
-  getParticipantByAccount,
   getAllKills,
   calcDeathTime,
   calcLevel,
@@ -14,9 +13,7 @@ const theKnight: Trophy = {
   title: 'The Knight',
   description: 'Be the only champion alive on Summoners Rift.',
   category: 'teamwork',
-  checkProgress: ({ match, account, events }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, events }) => {
     const allKills = getAllKills(events);
     const isValid = allKills.some((kill, index) => {
       if (index < 9 || kill.victimId === participant.participantId) {

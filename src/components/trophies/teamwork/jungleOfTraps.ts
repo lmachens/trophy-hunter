@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const jungleOfTraps: Trophy = {
   island: 'teamworkIsland',
@@ -9,8 +8,7 @@ const jungleOfTraps: Trophy = {
   description:
     'Place at least four control wards, remove four enemy wards, kill two dragons and score a killing spree.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const team = match.teams.find((team) => team.teamId === participant.teamId);
 
     return Number(

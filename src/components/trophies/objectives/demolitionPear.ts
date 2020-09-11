@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const demolitionPear: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const demolitionPear: Trophy = {
   title: 'Demolition Pear',
   description: 'Takedown at least 5 turrets.',
   category: 'objectives',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.turretKills / 5;
   },
   checkLive: ({ events, account }) => {

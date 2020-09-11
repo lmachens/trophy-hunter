@@ -1,20 +1,15 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const theWanderer: Trophy = {
   island: 'combatIsland',
   name: 'theWanderer',
   level: 'combat7',
-  title: 'theWanderer',
+  title: 'The Wanderer',
   description:
     'Participate in a kill on each opponent pre 15 minutes as a botlaner.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     if (participant.timeline.lane !== 'BOTTOM') {
       return 0;
     }

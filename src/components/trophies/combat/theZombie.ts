@@ -1,6 +1,5 @@
 import { Trophy } from '../types';
 import {
-  getParticipantByAccount,
   getParticipantKills,
   getParticipantDeaths,
 } from '../../../api/riot/helpers';
@@ -12,9 +11,7 @@ const theZombie: Trophy = {
   title: 'The Zombie',
   description: 'Score at least two kills being dead (ten seconds after death).',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const deaths = getParticipantDeaths(events, participant.participantId);
     const kills = getParticipantKills(events, participant.participantId);
     const zombieKills = kills.filter((kill) =>

@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theGrandChallenge: Trophy = {
   island: 'objectivesIsland',
@@ -9,9 +8,7 @@ const theGrandChallenge: Trophy = {
   description:
     'Get a solo-kill and take an inhib-turret or an inhibitor in the 20 seconds after that.',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const buildingKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

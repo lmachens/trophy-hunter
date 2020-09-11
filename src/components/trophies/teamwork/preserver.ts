@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const preserver: Trophy = {
   island: 'teamworkIsland',
@@ -9,9 +8,7 @@ const preserver: Trophy = {
   description:
     'Heal more damage than any opposing player dealt damage to champions.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const opponentTeam = match.participants.filter(
       (other) => other.teamId !== participant.teamId
     );

@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const teamEffort: Trophy = {
   island: 'teamworkIsland',
@@ -12,9 +9,7 @@ const teamEffort: Trophy = {
   description:
     'Be part of at least three kills with everyone of your team involved.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const killsAndAssists = getParticipantKillsAndAssists(
       events,
       participant.participantId

@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantAssists } from '../../../api/riot/helpers';
 
 const theHound: Trophy = {
   island: 'teamworkIsland',
@@ -12,8 +9,7 @@ const theHound: Trophy = {
   description:
     'Set up others to carry. Achieve five assists before ten minutes.',
   category: 'teamwork',
-  checkProgress: ({ match, account, events }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant, events }) => {
     const assists = getParticipantAssists(
       events,
       participant.participantId

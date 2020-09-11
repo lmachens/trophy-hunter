@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const visionGame: Trophy = {
   island: 'teamworkIsland',
@@ -9,9 +8,7 @@ const visionGame: Trophy = {
   description:
     'Place at least four control wards, Clear at least four wards and place at least 20 wards.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return Number(
       participant.stats.visionWardsBoughtInGame >= 4 &&
         participant.stats.wardsPlaced >= 20 &&

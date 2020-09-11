@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const keyTargets: Trophy = {
   island: 'combatIsland',
@@ -9,8 +8,7 @@ const keyTargets: Trophy = {
   description:
     'Achieve three kills on the opponent with the highest amount of gold in the game at that point (gold checked at full minutes).',
   category: 'combat',
-  checkProgress: ({ match, timeline, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, timeline, participant }) => {
     const opponentIds = match.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId !== participant.teamId

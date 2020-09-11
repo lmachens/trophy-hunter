@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  BUFF_POSITIONS,
-} from '../../../api/riot/helpers';
+import { BUFF_POSITIONS } from '../../../api/riot/helpers';
 import { TEN_MINUTES } from '../../../api/utils/dates';
 
 const cursedGrounds: Trophy = {
@@ -12,9 +9,7 @@ const cursedGrounds: Trophy = {
   title: 'Cursed Grounds',
   description: 'Kill an opponent around a red or blue buff before 10 minutes.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const validKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

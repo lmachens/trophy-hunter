@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity, calcLevel } from '../../../api/riot/helpers';
+import { calcLevel } from '../../../api/riot/helpers';
 
 const david: Trophy = {
   island: 'combatIsland',
@@ -8,13 +8,11 @@ const david: Trophy = {
   title: 'David',
   description: 'Kill an opponent who is at least two levels above you.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const davidKills = events.filter((event) => {
       if (
         event.type !== 'CHAMPION_KILL' ||
-        event.killerId !== participantIdentity.participantId
+        event.killerId !== participant.participantId
       ) {
         return false;
       }

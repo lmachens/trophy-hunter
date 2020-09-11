@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const sai: Trophy = {
   island: 'combatIsland',
@@ -9,9 +8,7 @@ const sai: Trophy = {
   description:
     'Achieve a takedown on at least four enemy champions before ten minutes.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const killsBefore10 = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

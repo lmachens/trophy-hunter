@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const dragonLord: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const dragonLord: Trophy = {
   title: 'Dragon Lord',
   description: 'Kill five dragons (team achievement).',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const teamIds = match.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId

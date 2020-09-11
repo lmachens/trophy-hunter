@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const battery: Trophy = {
   island: 'teamworkIsland',
@@ -8,8 +7,7 @@ const battery: Trophy = {
   title: 'Battery',
   description: 'Heal/Regenerate most damage and take most damage.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const maxTotalHeal = Math.max(
       ...match.participants.map((other) => other.stats.totalHeal)
     );

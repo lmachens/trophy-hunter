@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const killerInstinct: Trophy = {
   island: 'skillsIsland',
@@ -8,9 +7,7 @@ const killerInstinct: Trophy = {
   title: 'Killer Instinct',
   description: 'Have the highest number of kills.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, match }) => {
     const maxKills = Math.max(
       ...match.participants.map((participant) => participant.stats.kills)
     );

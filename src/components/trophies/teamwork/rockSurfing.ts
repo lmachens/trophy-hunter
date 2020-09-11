@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const rockSurfing: Trophy = {
   island: 'teamworkIsland',
@@ -12,9 +9,7 @@ const rockSurfing: Trophy = {
   description:
     'Participate in two kills on bottom lane before 10 minutes as a midlaner.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     if (
       participant.timeline.lane !== 'MIDDLE' ||
       participant.timeline.role !== 'SOLO'

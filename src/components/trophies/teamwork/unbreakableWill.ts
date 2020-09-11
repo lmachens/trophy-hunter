@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getTeammates,
-} from '../../../api/riot/helpers';
+import { getTeammates } from '../../../api/riot/helpers';
 
 const unbreakableWill: Trophy = {
   island: 'teamworkIsland',
@@ -12,9 +9,7 @@ const unbreakableWill: Trophy = {
   description:
     'Have highest self-mitigated damage and most assists of your team as a support.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     if (participant.timeline.role !== 'DUO_SUPPORT') {
       return 0;
     }

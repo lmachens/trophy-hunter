@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getOtherParticipants,
-} from '../../../api/riot/helpers';
+import { getOtherParticipants } from '../../../api/riot/helpers';
 
 const tarzan: Trophy = {
   island: 'skillsIsland',
@@ -12,9 +9,7 @@ const tarzan: Trophy = {
   description:
     'Kill most neutral monsters and be at least one level above everyone else in the end.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const maxNeutralMinionsKilled = Math.max(
       ...match.participants.map(
         (participant) => participant.stats.neutralMinionsKilled

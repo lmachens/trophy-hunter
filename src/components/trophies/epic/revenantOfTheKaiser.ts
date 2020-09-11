@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount, getTeam } from '../../../api/riot/helpers';
+import { getTeam } from '../../../api/riot/helpers';
 
 const revenantOfTheKaiser: Trophy = {
   island: 'epicIsland',
@@ -9,8 +9,7 @@ const revenantOfTheKaiser: Trophy = {
   description:
     'Kill the elder dragon, then secure baron nashor in the 60 seconds following.',
   category: 'epic',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, events, participant }) => {
     const teamIds = getTeam(match, participant.teamId).map(
       (teammate) => teammate.participantId
     );

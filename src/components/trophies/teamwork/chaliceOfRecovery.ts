@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  calcTotalGoldFrames,
-} from '../../../api/riot/helpers';
+import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const chaliceOfRecovery: Trophy = {
@@ -12,9 +9,7 @@ const chaliceOfRecovery: Trophy = {
   title: 'Chalice Of Recovery',
   description: 'Win a match where your team was 5000 gold behind.',
   category: 'teamwork',
-  checkProgress: ({ match, timeline, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, timeline, participant }) => {
     const team = match.teams.find((team) => team.teamId === participant.teamId);
     const opponent = match.teams.find(
       (team) => team.teamId !== participant.teamId

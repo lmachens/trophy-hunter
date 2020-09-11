@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress, findPerk } from '../../../api/accounts/helpers';
 
 const voidAura: Trophy = {
@@ -10,9 +9,7 @@ const voidAura: Trophy = {
   description: 'Regenerate 2000 mana using presence of mind (rune).',
   category: 'teamwork',
   maxProgress: 2000,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const lifeAndDeath = findPerk(participant, 8009);
     const trophyProgress = getTrophyProgress(account, 'voidAura');
 

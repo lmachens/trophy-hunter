@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getTeammates,
-} from '../../../api/riot/helpers';
+import { getTeammates } from '../../../api/riot/helpers';
 
 const noxianShield: Trophy = {
   island: 'teamworkIsland',
@@ -12,8 +9,7 @@ const noxianShield: Trophy = {
   description:
     'Tank most damage of your team while having the least number of deaths of your team.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const teammates = getTeammates(match, participant);
     const minTeamDeaths = Math.min(
       ...teammates.map((participant) => participant.stats.deaths)

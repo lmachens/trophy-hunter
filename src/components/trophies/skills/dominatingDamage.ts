@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const dominatingDamage: Trophy = {
@@ -10,9 +9,7 @@ const dominatingDamage: Trophy = {
   description: 'Deal more than 200k total damage.',
   category: 'skills',
   maxProgress: 200000,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'dominatingDamage');
     return participant.stats.totalDamageDealt / 200000 + trophyProgress;
   },

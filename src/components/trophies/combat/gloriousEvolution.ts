@@ -1,20 +1,15 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantDeaths,
-} from '../../../api/riot/helpers';
+import { getParticipantDeaths } from '../../../api/riot/helpers';
 
 const gloriousEvolution: Trophy = {
   island: 'combatIsland',
   name: 'gloriousEvolution',
   level: 'combat8',
-  title: 'gloriousEvolution',
+  title: 'Glorious Evolution',
   description:
     'Win a 30+ minute game, where you dealt most damage and did not die in the last 5 minutes of the game.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const maxDamage = Math.max(
       ...match.participants.map(
         (participant) => participant.stats.totalDamageDealtToChampions

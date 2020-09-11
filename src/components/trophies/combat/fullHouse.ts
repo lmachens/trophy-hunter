@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const fullHouse: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const fullHouse: Trophy = {
   title: 'Full House',
   description: 'Achieve a doublekill and a triplekill.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     const progress =
       Number(participant.stats.doubleKills > 0) +
       Number(participant.stats.tripleKills > 0);

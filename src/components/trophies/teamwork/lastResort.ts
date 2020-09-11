@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const lastResort: Trophy = {
   island: 'teamworkIsland',
@@ -9,8 +8,7 @@ const lastResort: Trophy = {
   description:
     'You lost, but you have highest kill participation and least deaths on your team.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const team = match.teams.find((team) => team.teamId === participant.teamId);
     const teammates = match.participants.filter(
       (other) =>

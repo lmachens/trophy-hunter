@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getLaneOpponent,
-} from '../../../api/riot/helpers';
+import { getLaneOpponent } from '../../../api/riot/helpers';
 
 const dominus: Trophy = {
   island: 'combatIsland',
@@ -12,9 +9,7 @@ const dominus: Trophy = {
   description:
     'Achieve a 10 cs advantage over your opponent, 3 kills (at least one of them is a solo kill) at 10 minutes into the game.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     if (!participant.timeline.creepsPerMinDeltas) {
       return 0;
     }

@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const invade: Trophy = {
   island: 'teamworkIsland',
@@ -8,9 +7,7 @@ const invade: Trophy = {
   title: 'INVADE!!!',
   description: 'Participate in a kill before minions spawn (75 sec).',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const hasInvadeKillParticipation = events.some(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

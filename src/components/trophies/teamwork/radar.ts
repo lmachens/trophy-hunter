@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const radar: Trophy = {
   island: 'teamworkIsland',
@@ -8,9 +7,7 @@ const radar: Trophy = {
   title: 'Radar',
   description: 'Place most wards, control wards and clear most wards.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const maxWardsPlaced = Math.max(
       ...match.participants.map((participant) => participant.stats.wardsPlaced)
     );

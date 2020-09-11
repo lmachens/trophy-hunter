@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const kitchenKnife: Trophy = {
   island: 'hubIsland',
@@ -8,9 +7,7 @@ const kitchenKnife: Trophy = {
   title: 'Kitchen Knife',
   description: 'Deal more than 30000 total damage to champions.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.totalDamageDealtToChampions / 30000;
   },
 };

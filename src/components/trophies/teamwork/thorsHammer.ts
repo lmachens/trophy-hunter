@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  calcTotalGoldFrames,
-} from '../../../api/riot/helpers';
+import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const thorsHammer: Trophy = {
@@ -13,9 +10,7 @@ const thorsHammer: Trophy = {
   description:
     'Gain 5000+ more gold than the enemy team in one minute (checked at full minutes).',
   category: 'teamwork',
-  checkProgress: ({ match, account, timeline }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant, timeline }) => {
     const team = match.teams.find((team) => team.teamId === participant.teamId);
     const opponent = match.teams.find(
       (team) => team.teamId !== participant.teamId

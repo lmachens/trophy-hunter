@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const sinisterBlades: Trophy = {
   island: 'combatIsland',
@@ -9,9 +8,7 @@ const sinisterBlades: Trophy = {
   description:
     'Achieve at least four multikills (double-, triple-, quadra- or pentakill).',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.doubleKills / 5;
   },
   checkLive: ({ events, account }) => {

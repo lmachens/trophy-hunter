@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getOpponents,
-} from '../../../api/riot/helpers';
+import { getOpponents } from '../../../api/riot/helpers';
 
 const rockSolid: Trophy = {
   island: 'teamworkIsland',
@@ -12,8 +9,7 @@ const rockSolid: Trophy = {
   description:
     'Counterpick: Win a game as Malphite where the opponent team dealt at least 60% physical damage to champions.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const opponents = getOpponents(match, participant);
 
     const physicalDamageTotal = opponents

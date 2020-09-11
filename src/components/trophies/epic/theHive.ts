@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theHive: Trophy = {
   island: 'epicIsland',
@@ -9,9 +8,7 @@ const theHive: Trophy = {
   description:
     'Your team kills every enemy champion with all of your team being involved.',
   category: 'epic',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const hiveKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

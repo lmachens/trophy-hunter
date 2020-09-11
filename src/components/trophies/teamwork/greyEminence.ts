@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const greyEminence: Trophy = {
   island: 'teamworkIsland',
@@ -8,9 +7,7 @@ const greyEminence: Trophy = {
   title: 'Grey Eminence',
   description: 'Have most assists while having the least number of deaths.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const maxAssists = Math.max(
       ...match.participants.map((participant) => participant.stats.assists)
     );

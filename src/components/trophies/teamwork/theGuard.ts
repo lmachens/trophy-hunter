@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { findPerk } from '../../../api/accounts/helpers';
 
 const theGuard: Trophy = {
@@ -10,9 +9,7 @@ const theGuard: Trophy = {
   description:
     'Shield your allies for at least 4000 damage using Guardian in one match (rune).',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     const guardian = findPerk(participant, 8465);
     return Number(guardian.var1 >= 4000);
   },

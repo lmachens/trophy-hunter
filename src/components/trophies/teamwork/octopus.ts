@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const octopus: Trophy = {
   island: 'teamworkIsland',
@@ -8,8 +7,7 @@ const octopus: Trophy = {
   title: 'Octopus',
   description: 'Have most assists.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const maxAssists = Math.max(
       ...match.participants.map((other) => other.stats.assists)
     );

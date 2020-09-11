@@ -1,8 +1,5 @@
 import { Trophy, Event } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const annihilation: Trophy = {
@@ -12,9 +9,7 @@ const annihilation: Trophy = {
   title: 'Annihilation',
   description: 'Be involved in 5 kills in 15 seconds.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const killsAndAssists = getParticipantKillsAndAssists(
       events,
       participant.participantId

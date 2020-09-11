@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKills,
-} from '../../../api/riot/helpers';
+import { getParticipantKills } from '../../../api/riot/helpers';
 
 const bloodThirst: Trophy = {
   island: 'combatIsland',
@@ -12,8 +9,7 @@ const bloodThirst: Trophy = {
   description:
     'Perform a kill every 5 minutes after minions have spawned in a 20 min+ match.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, events, participant }) => {
     const kills = getParticipantKills(events, participant.participantId);
 
     const gameLongEnough = match.gameDuration > 20 * 60;

@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  calcTotalGoldFrames,
-} from '../../../api/riot/helpers';
+import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const theBlackFlag: Trophy = {
@@ -13,9 +10,7 @@ const theBlackFlag: Trophy = {
   description:
     'Never resign! Come back in a game where you have been 10000 gold down.',
   category: 'epic',
-  checkProgress: ({ match, account, timeline }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, timeline, participant }) => {
     const team = match.teams.find((team) => team.teamId === participant.teamId);
     const opponent = match.teams.find(
       (team) => team.teamId !== participant.teamId

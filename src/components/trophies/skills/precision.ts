@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const precision: Trophy = {
   island: 'skillsIsland',
@@ -9,8 +8,7 @@ const precision: Trophy = {
   description:
     'Be 15 cs ahead of your lane opponent at 10 minutes as top, mid or adc.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, account, participant }) => {
     const opponent = match.participants.find(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&

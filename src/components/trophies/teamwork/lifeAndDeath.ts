@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { findPerk, getTrophyProgress } from '../../../api/accounts/helpers';
 
 const lifeAndDeath: Trophy = {
@@ -11,9 +10,7 @@ const lifeAndDeath: Trophy = {
     'Deal and heal more than 2500 in total with grasp of the undying (rune).',
   category: 'teamwork',
   maxProgress: 2500,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const lifeAndDeath = findPerk(participant, 8437);
     const trophyProgress = getTrophyProgress(account, 'lifeAndDeath');
 

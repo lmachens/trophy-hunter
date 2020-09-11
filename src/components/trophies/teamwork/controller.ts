@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const controller: Trophy = {
   island: 'teamworkIsland',
@@ -8,9 +7,7 @@ const controller: Trophy = {
   title: 'Controller',
   description: 'Place at least 6 control wards.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.visionWardsBoughtInGame / 6;
   },
 };

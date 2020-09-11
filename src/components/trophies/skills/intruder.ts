@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const intruder: Trophy = {
   island: 'skillsIsland',
@@ -8,8 +7,7 @@ const intruder: Trophy = {
   title: 'Intruder',
   description: 'Take at least 25 cs from the enemy jungle.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant }) => {
     return Number(participant.stats.neutralMinionsKilledEnemyJungle >= 25);
   },
 };

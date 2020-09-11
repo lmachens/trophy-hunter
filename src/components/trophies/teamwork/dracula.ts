@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress, findPerk } from '../../../api/accounts/helpers';
 
 const dracula: Trophy = {
@@ -10,9 +9,7 @@ const dracula: Trophy = {
   description: 'Heal more than 2000 damage with Taste of Blood (rune).',
   category: 'teamwork',
   maxProgress: 2000,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'dracula');
 
     const tasteOfBlood = findPerk(participant, 8139).var1;

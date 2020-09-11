@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const energized: Trophy = {
@@ -10,8 +9,7 @@ const energized: Trophy = {
   description: 'Take down at least 5 buildings during a baron buff.',
   category: 'objectives',
   maxProgress: 5,
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, events, participant, account }) => {
     const teamIds = match.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId

@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const pentaKill: Trophy = {
   island: 'epicIsland',
@@ -8,9 +7,7 @@ const pentaKill: Trophy = {
   title: 'Penta Kill',
   description: 'Achieve a penta kill.',
   category: 'epic',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.pentaKills;
   },
   checkLive: ({ events, account }) => {

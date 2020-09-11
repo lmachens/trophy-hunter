@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const superiorBrain: Trophy = {
   island: 'combatIsland',
@@ -9,9 +8,7 @@ const superiorBrain: Trophy = {
   description:
     'Have more than twice damage to enemy champions than damage taken.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     const damageDealtToTakenRatio =
       participant.stats.totalDamageDealtToChampions /
       Math.max(1, participant.stats.totalDamageTaken);

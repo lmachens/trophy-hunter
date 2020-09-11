@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const doubleKill: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const doubleKill: Trophy = {
   title: 'Double Kill',
   description: 'Achieve a double kill.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.doubleKills;
   },
   checkLive: ({ events, trophyData, account }) => {

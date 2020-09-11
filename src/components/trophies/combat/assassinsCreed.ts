@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const assassinsCreed: Trophy = {
   island: 'combatIsland',
@@ -8,13 +7,11 @@ const assassinsCreed: Trophy = {
   title: 'Assassins Creed',
   description: 'Achieve seven solo kills.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const soloKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&
-        event.killerId === participantIdentity.participantId &&
+        event.killerId === participant.participantId &&
         event.assistingParticipantIds.length === 0
     ).length;
     return soloKills / 7;

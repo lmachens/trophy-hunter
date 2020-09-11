@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const earlyBird: Trophy = {
   island: 'objectivesIsland',
@@ -8,8 +7,7 @@ const earlyBird: Trophy = {
   title: 'Early Bird',
   description: 'Take first blood and first turret (or assist).',
   category: 'objectives',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant }) => {
     if (
       !participant.stats.firstBloodKill ||
       (!participant.stats.firstTowerAssist && !participant.stats.firstTowerKill)

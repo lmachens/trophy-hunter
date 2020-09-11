@@ -1,9 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKills,
-  getTeammates,
-} from '../../../api/riot/helpers';
+import { getParticipantKills, getTeammates } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const vengeance: Trophy = {
@@ -15,8 +11,7 @@ const vengeance: Trophy = {
     'Revenge three of your teammates deaths (kill their killer in ten seconds after their death).',
   category: 'combat',
   maxProgress: 3,
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, events, participant, account }) => {
     const teammateIds = getTeammates(match, participant).map(
       (teammate) => teammate.participantId
     );

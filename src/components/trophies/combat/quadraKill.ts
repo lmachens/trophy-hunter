@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const quadraKill: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const quadraKill: Trophy = {
   title: 'Quadra Kill',
   description: 'Achieve a quadra kill.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.quadraKills;
   },
   checkLive: ({ events, account }) => {

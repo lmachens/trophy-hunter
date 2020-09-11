@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const darkness: Trophy = {
@@ -10,9 +9,7 @@ const darkness: Trophy = {
   description: 'Destroy at least twelve enemy wards.',
   category: 'epic',
   maxProgress: 12,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'darkness');
     return participant.stats.wardsKilled / 12 + trophyProgress;
   },

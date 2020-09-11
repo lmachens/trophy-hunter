@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theDragonMaster: Trophy = {
   island: 'objectivesIsland',
@@ -8,9 +7,7 @@ const theDragonMaster: Trophy = {
   title: 'The Dragon Master',
   description: 'Kill the first dragon before 10 minutes into the game.',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const earlyDragonKill = events.some(
       (event) =>
         event.type === 'ELITE_MONSTER_KILL' &&

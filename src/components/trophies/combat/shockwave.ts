@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantKills,
-  getParticipantIdentity,
-} from '../../../api/riot/helpers';
+import { getParticipantKills } from '../../../api/riot/helpers';
 
 const shockwave: Trophy = {
   island: 'combatIsland',
@@ -12,12 +9,8 @@ const shockwave: Trophy = {
   description:
     'Kill two opponents at the same time (+- 1 second) and the same location (+-350units).',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-    const kills = getParticipantKills(
-      events,
-      participantIdentity.participantId
-    );
+  checkProgress: ({ events, participant }) => {
+    const kills = getParticipantKills(events, participant.participantId);
 
     const shockwaveKills = kills.filter((kill, index) => {
       if (index === 0) {

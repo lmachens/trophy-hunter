@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const feedThem: Trophy = {
   island: 'hubIsland',
@@ -8,8 +7,7 @@ const feedThem: Trophy = {
   title: 'Feed Them',
   description: 'Assist each of your teammates for a kill.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant, events }) => {
     const assists = events.reduce<{ [teammateId: number]: number }>(
       (assists, event) => {
         if (

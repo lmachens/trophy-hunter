@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getOtherParticipants,
-} from '../../../api/riot/helpers';
+import { getOtherParticipants } from '../../../api/riot/helpers';
 
 const theBee: Trophy = {
   island: 'skillsIsland',
@@ -12,9 +9,7 @@ const theBee: Trophy = {
   description:
     'Diligence and hard work is key. Be ahead of everyone at least ten cs at ten minutes and 20 cs at 20 minutes.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     if (!participant.timeline.creepsPerMinDeltas) {
       return 0;
     }

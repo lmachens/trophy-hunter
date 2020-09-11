@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const purifyer: Trophy = {
   island: 'epicIsland',
@@ -8,9 +7,7 @@ const purifyer: Trophy = {
   title: 'Purifyer',
   description: 'Score at least 30 kills in a match.',
   category: 'epic',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.kills / 30;
   },
   checkLive: ({ allPlayers, account }) => {

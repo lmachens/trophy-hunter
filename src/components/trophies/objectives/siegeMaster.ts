@@ -1,7 +1,6 @@
 import { Trophy } from '../types';
 import {
   isInEnemyTurretRange,
-  getParticipantByAccount,
   getParticipantKills,
 } from '../../../api/riot/helpers';
 
@@ -13,9 +12,7 @@ const siegeMaster: Trophy = {
   description:
     'Have most damage dealt to turrets and kill at least five opponents near their turrets',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const kills = getParticipantKills(events, participant.participantId);
 
     const underTurretKills = kills.filter((kill) => {

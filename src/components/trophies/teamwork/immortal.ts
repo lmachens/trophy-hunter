@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const immortal: Trophy = {
   island: 'teamworkIsland',
@@ -8,9 +7,7 @@ const immortal: Trophy = {
   title: 'Immortal',
   description: 'Win a game that lasts 25 minutes or more without dying.',
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     return Number(
       participant.stats.deaths < 1 &&
         match.gameDuration >= 1500 &&

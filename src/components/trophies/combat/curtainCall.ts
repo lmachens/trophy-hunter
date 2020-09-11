@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity, getAllKills } from '../../../api/riot/helpers';
+import { getAllKills } from '../../../api/riot/helpers';
 
 const curtainCall: Trophy = {
   island: 'combatIsland',
@@ -9,14 +9,12 @@ const curtainCall: Trophy = {
   description:
     'Take the last kill in a teamfight twice in a game (Teamfight: at least four kills in 15 seconds and 2500 units).',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const kills = getAllKills(events);
     const teamFightRange = 2500;
     const teamFightTimeRange = 15000;
     const teamfightLastKills = kills.filter((kill, index) => {
-      if (index < 3 || kill.killerId !== participantIdentity.participantId) {
+      if (index < 3 || kill.killerId !== participant.participantId) {
         return false;
       }
       const kill1 = kills[index - 3];

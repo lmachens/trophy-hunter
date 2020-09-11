@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const disruptor: Trophy = {
   island: 'skillsIsland',
@@ -8,9 +7,7 @@ const disruptor: Trophy = {
   title: 'Disruptor',
   description: 'Have highest time crowd control dealt.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const maxTotalTimeCrowdControlDealt = Math.max(
       ...match.participants.map(
         (participant) => participant.stats.totalTimeCrowdControlDealt

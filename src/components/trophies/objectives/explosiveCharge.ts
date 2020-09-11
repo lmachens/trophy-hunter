@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const explosiveCharge: Trophy = {
   island: 'objectivesIsland',
@@ -8,9 +7,7 @@ const explosiveCharge: Trophy = {
   title: 'Explosive Charge',
   description: 'Deal more than 10000 damage to turrets.',
   category: 'objectives',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.damageDealtToTurrets / 10000;
   },
 };

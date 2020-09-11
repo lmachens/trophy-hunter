@@ -1,5 +1,4 @@
 import { Trophy, Event } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { MatchEvent } from '../../../api/riot/types';
 
 const ninjas: Trophy = {
@@ -10,9 +9,7 @@ const ninjas: Trophy = {
   description:
     'You and a teammate score three kills with no other assist and no more than ten seconds between two kills.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const duoKills = events.reduce<{ [teammateId: number]: MatchEvent[] }>(
       (duoKills, event) => {
         if (

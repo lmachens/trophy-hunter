@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const grimReaper: Trophy = {
   island: 'combatIsland',
@@ -9,9 +8,7 @@ const grimReaper: Trophy = {
   description:
     "You're gonna get them in the end. Score three kills in the last minute of the game.",
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const killsAtEndgame = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

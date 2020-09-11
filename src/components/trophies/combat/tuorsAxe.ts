@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const tuorsAxe: Trophy = {
   island: 'combatIsland',
@@ -9,9 +8,7 @@ const tuorsAxe: Trophy = {
   description:
     'Deal at least 50% more damage to champions than the next player.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const sortedParticipants = match.participants.sort(
       (participantA, participantB) => {
         return (

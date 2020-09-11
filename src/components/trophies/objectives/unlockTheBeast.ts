@@ -1,9 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getTeam,
-  getParticipantKills,
-} from '../../../api/riot/helpers';
+import { getTeam, getParticipantKills } from '../../../api/riot/helpers';
 
 const unlockTheBeast: Trophy = {
   island: 'objectivesIsland',
@@ -13,9 +9,7 @@ const unlockTheBeast: Trophy = {
   description:
     'Score two kills in the 40 seconds before your team takes baron nashor.',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const teamIds = getTeam(match, participant.teamId).map(
       (teammate) => teammate.participantId
     );

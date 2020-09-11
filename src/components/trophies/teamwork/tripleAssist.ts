@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const tripleAssist: Trophy = {
@@ -13,8 +10,7 @@ const tripleAssist: Trophy = {
   description:
     'Achieve three assists with no more than ten seconds between two successive assists.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ events, participant }) => {
     const assists = getParticipantAssists(events, participant.participantId);
 
     const participantMultiAssistEvents = zip(

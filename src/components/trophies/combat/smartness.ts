@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const smartness: Trophy = {
   island: 'combatIsland',
@@ -9,8 +8,7 @@ const smartness: Trophy = {
   description:
     'Score a killing spree, at least ten assists and die at most five times.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant }) => {
     const hasKillingSpree = Number(participant.stats.killingSprees >= 1);
     const hasTenAssists = Number(participant.stats.assists >= 10);
     const hasLessThanFiveDeaths = Number(participant.stats.deaths <= 5);

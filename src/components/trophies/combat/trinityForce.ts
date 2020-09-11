@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantIdentity } from '../../../api/riot/helpers';
 
 const trinityForce: Trophy = {
   island: 'combatIsland',
@@ -9,12 +8,10 @@ const trinityForce: Trophy = {
   description:
     'Use your powerspike. Kill an opponent in the three minutes after you finish Trinity Force.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participantIdentity = getParticipantIdentity(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const trinityForceBuy = events.find(
       (event) =>
-        event.participantId === participantIdentity.participantId &&
+        event.participantId === participant.participantId &&
         event.type === 'ITEM_PURCHASED' &&
         event.itemId === 3078
     );
@@ -25,7 +22,7 @@ const trinityForce: Trophy = {
     const trinityForceKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&
-        event.killerId === participantIdentity.participantId &&
+        event.killerId === participant.participantId &&
         event.timestamp > trinityForceBuy.timestamp &&
         trinityForceBuy.timestamp <= event.timestamp + 180000
     ).length;

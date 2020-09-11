@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theViking: Trophy = {
   island: 'hubIsland',
@@ -9,9 +8,7 @@ const theViking: Trophy = {
   description:
     'Get a solo kill before 10 minutes and take down or assist first tower.',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const hasSoloKillBefore10 = events.some(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

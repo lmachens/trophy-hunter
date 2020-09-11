@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  calcTotalGoldFrames,
-} from '../../../api/riot/helpers';
+import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const rivalry: Trophy = {
@@ -13,9 +10,7 @@ const rivalry: Trophy = {
   description:
     'Win a game where the gold difference in the first 15 minutes was always less than 2000.',
   category: 'skills',
-  checkProgress: ({ match, timeline, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, timeline, participant }) => {
     const team = match.teams.find((team) => team.teamId === participant.teamId);
     const opponent = match.teams.find(
       (team) => team.teamId !== participant.teamId

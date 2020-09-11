@@ -1,6 +1,5 @@
 import { Trophy } from '../types';
 import {
-  getParticipantByAccount,
   getParticipantDeaths,
   getParticipantKillsAndAssists,
 } from '../../../api/riot/helpers';
@@ -13,9 +12,7 @@ const theRoam: Trophy = {
   description:
     'You are support and you participate in a kill on midlane pre 10 minutes and your ADC may not die in +-10 seconds around that kill.',
   category: 'teamwork',
-  checkProgress: ({ match, account, events }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant, events }) => {
     if (participant.timeline.role !== 'DUO_SUPPORT') {
       return 0;
     }

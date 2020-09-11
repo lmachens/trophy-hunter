@@ -1,15 +1,13 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const landlord: Trophy = {
   island: 'skillsIsland',
   name: 'landlord',
   level: 'skills3',
-  title: 'landlord',
+  title: 'Landlord',
   description: 'Farm more than 300 minions.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant }) => {
     return (
       (participant.stats.totalMinionsKilled +
         participant.stats.neutralMinionsKilled) /

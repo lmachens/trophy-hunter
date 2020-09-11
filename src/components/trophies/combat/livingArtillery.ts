@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getTeammates,
-} from '../../../api/riot/helpers';
+import { getTeammates } from '../../../api/riot/helpers';
 
 const livingArtillery: Trophy = {
   island: 'combatIsland',
@@ -11,8 +8,7 @@ const livingArtillery: Trophy = {
   title: 'Living Artillery',
   description: "Deal more than 35% of your team's damage.",
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const teammates = getTeammates(match, participant);
 
     const teammatesDamage = teammates.reduce(

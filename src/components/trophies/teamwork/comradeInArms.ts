@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const comradeInArms: Trophy = {
   island: 'hubIsland',
@@ -9,9 +8,7 @@ const comradeInArms: Trophy = {
   description:
     'You and a teammate score three kills with only the two of you involved.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const duoKills = events.reduce<{ [teammateId: number]: number }>(
       (duoKills, event) => {
         if (

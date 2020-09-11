@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const trophyHunter: Trophy = {
   island: 'hubIsland',
@@ -8,9 +7,7 @@ const trophyHunter: Trophy = {
   title: 'Trophy Hunter',
   description: 'Kill each unique enemy champion at least once.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const victimIds = events
       .filter(
         (event) =>

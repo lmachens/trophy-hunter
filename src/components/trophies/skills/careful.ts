@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const careful: Trophy = {
   island: 'hubIsland',
@@ -8,8 +7,7 @@ const careful: Trophy = {
   title: 'Careful',
   description: 'Have the least number of deaths.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const lessDeathsParticipants = match.participants.filter(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&

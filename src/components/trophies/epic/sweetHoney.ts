@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const sweetHoney: Trophy = {
   island: 'hubIsland',
@@ -8,9 +7,7 @@ const sweetHoney: Trophy = {
   title: 'Sweet Honey',
   description: 'Farm at least 180 minions at 20 minutes.',
   category: 'epic',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     if (!participant.timeline.creepsPerMinDeltas) {
       return 0;
     }

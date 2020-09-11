@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const lunatic: Trophy = {
   island: 'skillsIsland',
@@ -8,9 +7,7 @@ const lunatic: Trophy = {
   title: 'Lunatic',
   description: 'Score at least 20 kills in a match.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.kills / 20;
   },
   checkLive: ({ allPlayers, account }) => {

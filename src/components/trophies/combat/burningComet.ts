@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const burningComet: Trophy = {
@@ -10,8 +9,7 @@ const burningComet: Trophy = {
   description: 'Deal more than 2500 damage with Arcane Comet (rune).',
   category: 'combat',
   maxProgress: 2500,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ account, participant }) => {
     const trophyProgress = getTrophyProgress(account, 'burningComet');
     const damage =
       participant.stats.perk0 === 8229 ? participant.stats.perk0Var1 : 0;

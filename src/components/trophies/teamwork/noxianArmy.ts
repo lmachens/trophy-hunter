@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const noxianArmy: Trophy = {
   island: 'teamworkIsland',
@@ -9,9 +8,7 @@ const noxianArmy: Trophy = {
   description:
     "Have at least eight kills, eight assists and don't die more than 6 times.",
   category: 'teamwork',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return Number(
       participant.stats.kills >= 8 &&
         participant.stats.deaths <= 6 &&

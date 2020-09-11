@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const soulHarvest: Trophy = {
@@ -10,8 +9,7 @@ const soulHarvest: Trophy = {
   description: 'Deal more than 2000 damage with Dark Harvest (rune).',
   category: 'combat',
   maxProgress: 2000,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'soulHarvest');
 
     const damage =

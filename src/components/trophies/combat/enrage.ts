@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const enrage: Trophy = {
@@ -10,9 +9,7 @@ const enrage: Trophy = {
   description: 'Score at least three killing sprees.',
   category: 'combat',
   maxProgress: 3,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'enrage');
 
     return participant.stats.killingSprees / 3 + trophyProgress;

@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getLevelUps,
-} from '../../../api/riot/helpers';
+import { getLevelUps } from '../../../api/riot/helpers';
 
 const blitzkrieg: Trophy = {
   island: 'combatIsland',
@@ -11,8 +8,7 @@ const blitzkrieg: Trophy = {
   title: 'Blitzkrieg',
   description: 'Achieve a kill before reaching level 3.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ events, participant }) => {
     const levelUps = getLevelUps(events, participant.participantId);
     const levelThreeEvent = levelUps[2];
     if (!levelThreeEvent) {

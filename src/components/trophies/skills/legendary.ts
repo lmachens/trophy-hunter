@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const legendary: Trophy = {
   island: 'skillsIsland',
@@ -8,9 +7,7 @@ const legendary: Trophy = {
   title: 'Legendary',
   description: 'Achieve a killing spree of eight.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.largestKillingSpree / 8;
   },
   checkLive: ({ events, account }) => {

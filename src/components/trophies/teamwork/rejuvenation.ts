@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress, findPerk } from '../../../api/accounts/helpers';
 
 const rejuvenation: Trophy = {
@@ -10,9 +9,7 @@ const rejuvenation: Trophy = {
   description: 'Heal more than 4000 with Fleet Footwork (rune).',
   category: 'teamwork',
   maxProgress: 4000,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'rejuvenation');
 
     const tasteOfBlood = findPerk(participant, 8021).var1;

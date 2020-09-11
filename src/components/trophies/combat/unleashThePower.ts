@@ -1,9 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getLevelUps,
-  getParticipantKills,
-} from '../../../api/riot/helpers';
+import { getLevelUps, getParticipantKills } from '../../../api/riot/helpers';
 
 const unleashThePower: Trophy = {
   island: 'combatIsland',
@@ -12,9 +8,7 @@ const unleashThePower: Trophy = {
   title: 'Unleash The Power',
   description: 'Achieve a kill in the 30 seconds after you reached level six.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const levelUps = getLevelUps(events, participant.participantId);
     const levelSix = levelUps[5];
     if (!levelSix) {

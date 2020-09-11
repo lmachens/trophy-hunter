@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const highSociety: Trophy = {
@@ -10,9 +9,7 @@ const highSociety: Trophy = {
   description: 'Let others do the dirty work. Score at least 20 assists.',
   category: 'teamwork',
   maxProgress: 20,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'highSociety');
     return participant.stats.assists / 20 + trophyProgress;
   },

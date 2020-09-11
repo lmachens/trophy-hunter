@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getLaneOpponent,
-} from '../../../api/riot/helpers';
+import { getLaneOpponent } from '../../../api/riot/helpers';
 
 const flameHorizon: Trophy = {
   island: 'skillsIsland',
@@ -11,9 +8,7 @@ const flameHorizon: Trophy = {
   title: 'Flame Breath',
   description: 'Kill at least 100 more minions than your lane opponent.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const laneOpponent = getLaneOpponent(match.participants, participant);
     if (!laneOpponent) {
       return 0;

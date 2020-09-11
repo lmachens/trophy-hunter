@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const deadlyVenom: Trophy = {
   island: 'combatIsland',
@@ -9,8 +8,7 @@ const deadlyVenom: Trophy = {
   description:
     'Deal at least 25% more damage to champions than the next player.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const sortedParticipants = match.participants.sort(
       (a, b) =>
         b.stats.totalDamageDealtToChampions -

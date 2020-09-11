@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const theTortoise: Trophy = {
   island: 'epicIsland',
@@ -8,9 +7,7 @@ const theTortoise: Trophy = {
   title: 'The Tortoise',
   description: 'Do not die for more than 30 minutes.',
   category: 'epic',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     if (
       !participant.stats.longestTimeSpentLiving &&
       match.gameDuration >= 1800

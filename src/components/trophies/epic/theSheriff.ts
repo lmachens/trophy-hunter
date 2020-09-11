@@ -1,6 +1,5 @@
 import { Trophy } from '../types';
 import {
-  getParticipantByAccount,
   getParticipantKills,
   getParticipantDeaths,
 } from '../../../api/riot/helpers';
@@ -12,9 +11,7 @@ const theSheriff: Trophy = {
   title: 'The Sheriff',
   description: 'Take part in six shutdown kills.',
   category: 'epic',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const kills = getParticipantKills(events, participant.participantId);
 
     const shutDowns = kills.filter((kill) => {

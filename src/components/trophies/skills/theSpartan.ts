@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getLaneOpponent,
-} from '../../../api/riot/helpers';
+import { getLaneOpponent } from '../../../api/riot/helpers';
 
 const theSpartan: Trophy = {
   island: 'skillsIsland',
@@ -12,9 +9,7 @@ const theSpartan: Trophy = {
   description:
     'Have a 1200 xp lead over the opposing solo laner at 10 minutes (approximatley 1.5 level difference).',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     if (participant.timeline.role !== 'SOLO') {
       return 0;
     }

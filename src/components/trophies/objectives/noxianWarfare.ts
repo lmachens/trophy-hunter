@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const noxianWarfare: Trophy = {
@@ -11,9 +10,7 @@ const noxianWarfare: Trophy = {
     'Have most buildings destroyed (turrets & inhibitors) three times in a row.',
   category: 'objectives',
   maxProgress: 3,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, account, participant }) => {
     const mostDestructs =
       participant.stats.inhibitorKills + participant.stats.turretKills >=
       Math.max(

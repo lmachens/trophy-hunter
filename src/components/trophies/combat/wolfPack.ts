@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const wolfPack: Trophy = {
   island: 'combatIsland',
@@ -12,9 +9,7 @@ const wolfPack: Trophy = {
   description:
     'Participate in a kill in the enemy jungle in the first ten minutes.',
   category: 'combat',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const killsAndAssists = getParticipantKillsAndAssists(
       events,
       participant.participantId

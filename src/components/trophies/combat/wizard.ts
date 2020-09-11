@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const wizard: Trophy = {
   island: 'combatIsland',
@@ -9,8 +8,7 @@ const wizard: Trophy = {
   description:
     'Deal more magic damage to champions than anyone else total damage to champions.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const others = match.participants.filter(
       (other) => other.participantId !== participant.participantId
     );

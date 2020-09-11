@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const skullMedal: Trophy = {
   island: 'objectivesIsland',
@@ -8,9 +7,7 @@ const skullMedal: Trophy = {
   title: 'Skull Medal',
   description: 'Score two killing sprees and destruct at least two inhibitors.',
   category: 'objectives',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return Number(
       participant.stats.killingSprees >= 2 &&
         participant.stats.inhibitorKills >= 2

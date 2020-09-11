@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantDeaths,
-} from '../../../api/riot/helpers';
+import { getParticipantDeaths } from '../../../api/riot/helpers';
 
 const theSacrifice: Trophy = {
   island: 'objectivesIsland',
@@ -12,9 +9,7 @@ const theSacrifice: Trophy = {
   description:
     'Secure your team an elite monster, eventhough you die in the five seconds after that.',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const deaths = getParticipantDeaths(events, participant.participantId);
 
     const eliteMonsterKills = events.filter(

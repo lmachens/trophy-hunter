@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const deadlyShadow: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const deadlyShadow: Trophy = {
   title: 'Deadly Shadow',
   description: 'Have most kills while taking least damage in the game.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     const maxKills = Math.max(
       ...match.participants.map((participant) => participant.stats.kills)
     );

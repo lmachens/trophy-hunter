@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const baronNashor: Trophy = {
   island: 'combatIsland',
@@ -9,9 +8,7 @@ const baronNashor: Trophy = {
   description:
     'Kill the giant worm called Baron Nashor twice on the same match.',
   category: 'objectives',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const teamIds = match.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId

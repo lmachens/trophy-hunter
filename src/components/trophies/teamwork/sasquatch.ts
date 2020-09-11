@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantAssists } from '../../../api/riot/helpers';
 
 const sasquatch: Trophy = {
   island: 'teamworkIsland',
@@ -11,9 +8,7 @@ const sasquatch: Trophy = {
   title: 'Sasquatch',
   description: 'Assist at least 3 of your teammates a kill before 12 minutes.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ events, participant }) => {
     const assistsBefore12 = getParticipantAssists(
       events,
       participant.participantId

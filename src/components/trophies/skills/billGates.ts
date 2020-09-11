@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const billGates: Trophy = {
   island: 'skillsIsland',
@@ -8,9 +7,7 @@ const billGates: Trophy = {
   title: 'Bill Gates',
   description: 'Gain more than 20000 gold.',
   category: 'skills',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant }) => {
     return participant.stats.goldEarned / 20000;
   },
   checkLive: ({ activePlayer }) => {

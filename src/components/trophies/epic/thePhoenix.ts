@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const thePhoenix: Trophy = {
   island: 'epicIsland',
@@ -8,8 +7,7 @@ const thePhoenix: Trophy = {
   title: 'The Phoenix',
   description: 'Win a game eventhough you lost three inhibitors.',
   category: 'epic',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, participant }) => {
     const opponentTeam = match.teams.find(
       (team) => team.teamId !== participant.teamId
     );

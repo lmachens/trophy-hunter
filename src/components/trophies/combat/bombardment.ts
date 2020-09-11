@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 
 const bombardment: Trophy = {
   island: 'combatIsland',
@@ -8,9 +7,7 @@ const bombardment: Trophy = {
   title: 'Bombardment',
   description: 'Deal more than 1000 damage to champions per minute.',
   category: 'combat',
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, participant }) => {
     return (
       (60 * participant.stats.totalDamageDealtToChampions) /
       match.gameDuration /

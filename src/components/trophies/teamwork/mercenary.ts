@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getParticipantKillsAndAssists,
-} from '../../../api/riot/helpers';
+import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const mercenary: Trophy = {
   island: 'teamworkIsland',
@@ -12,8 +9,7 @@ const mercenary: Trophy = {
   description:
     'You dont miss any fight. Be involved in more than 66% of your teams kills.',
   category: 'teamwork',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, events, participant }) => {
     const teamParticipantIds = match.participants
       .filter((other) => other.teamId === participant.teamId)
       .map((teammate) => teammate.participantId);

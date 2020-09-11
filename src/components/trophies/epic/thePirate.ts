@@ -1,8 +1,5 @@
 import { Trophy } from '../types';
-import {
-  getParticipantByAccount,
-  getOpponents,
-} from '../../../api/riot/helpers';
+import { getOpponents } from '../../../api/riot/helpers';
 
 const thePirate: Trophy = {
   island: 'epicIsland',
@@ -12,9 +9,7 @@ const thePirate: Trophy = {
   description:
     'Secure Baron Nashor eventhough two of your teammates died in the last 40 seconds.',
   category: 'epic',
-  checkProgress: ({ match, events, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ match, events, participant }) => {
     const participantBaronKills = events.filter(
       (event) =>
         event.type === 'ELITE_MONSTER_KILL' &&

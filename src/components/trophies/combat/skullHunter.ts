@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const skullHunter: Trophy = {
@@ -10,8 +9,7 @@ const skullHunter: Trophy = {
   description: 'Be involved in at least 20 kills.',
   category: 'combat',
   maxProgress: 20,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'skullHunter');
 
     const killsAssists = participant.stats.assists + participant.stats.kills;

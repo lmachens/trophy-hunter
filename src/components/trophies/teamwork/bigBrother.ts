@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const bigBrother: Trophy = {
@@ -10,8 +9,7 @@ const bigBrother: Trophy = {
   description: 'Have the highest vision score three matches in a row.',
   category: 'teamwork',
   maxProgress: 3,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
+  checkProgress: ({ match, account, participant }) => {
     const maxVisionScore = Math.max(
       ...match.participants.map((other) => other.stats.visionScore)
     );

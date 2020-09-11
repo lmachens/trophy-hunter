@@ -1,5 +1,4 @@
 import { Trophy } from '../types';
-import { getParticipantByAccount } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const firstBloodKing: Trophy = {
@@ -10,9 +9,7 @@ const firstBloodKing: Trophy = {
   description: 'Get first blood 3 matches in a row.',
   category: 'epic',
   maxProgress: 3,
-  checkProgress: ({ match, account }) => {
-    const participant = getParticipantByAccount(match, account);
-
+  checkProgress: ({ participant, account }) => {
     if (!participant.stats.firstBloodKill) {
       return 0;
     }

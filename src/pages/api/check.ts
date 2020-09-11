@@ -116,12 +116,18 @@ export default applyMiddleware(
                 accountTrophies,
               };
             }
-            const progress = trophy.checkProgress({
+
+            const result = trophy.checkProgress({
               match,
               timeline,
               account,
               events,
             });
+            const { progress, details } =
+              typeof result === 'number'
+                ? { progress: result, details: null }
+                : result;
+
             if (progress < 1 && !trophy.maxProgress) {
               return {
                 levelTrophiesCompleted,
@@ -130,6 +136,7 @@ export default applyMiddleware(
             }
             if (accountTrophy) {
               accountTrophy.progress = progress;
+              accountTrophy.progressDetails = details;
               if (progress >= 1) {
                 accountTrophy.status = 'completed';
                 completedTrophyNames.push(accountTrophy.name);
@@ -149,7 +156,9 @@ export default applyMiddleware(
               level: trophy.level,
               status: progress >= 1 ? 'completed' : 'active',
               progress: Math.min(1, progress),
+              progressDetails: details,
             };
+
             accountTrophies.push(newTrophy);
             if (progress >= 1) {
               completedTrophyNames.push(newTrophy.name);

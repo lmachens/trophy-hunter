@@ -24,7 +24,12 @@ export interface Trophy {
     timeline: MatchTimeline;
     account: Account;
     events: MatchEvent[];
-  }): number;
+  }):
+    | {
+        progress: number;
+        details: any;
+      }
+    | number;
   checkLive?(props: {
     activePlayer: ActivePlayer;
     allPlayers: AllPlayers;

@@ -38,4 +38,5 @@ export interface AccountTrophy {
   level: string;
   status: 'active' | 'completed';
   progress: number;
+  progressDetails: any;
 }

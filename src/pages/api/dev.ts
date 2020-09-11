@@ -10,7 +10,7 @@ import { getMatch, getTimeline, getSummoner } from '../../api/riot/server';
 import * as trophies from '../../components/trophies';
 import { newAccount } from '../../api/accounts/server';
 import { Account } from '../../api/accounts';
-import { getAllEvents } from '../../api/riot/helpers';
+import { getAllEvents, getParticipantByAccount } from '../../api/riot/helpers';
 import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 
 export default applyMiddleware(
@@ -46,6 +46,7 @@ export default applyMiddleware(
       ...newAccount,
       summoner: summoner,
     };
+    const participant = getParticipantByAccount(match, account);
     const checkedTrophies = Object.values(trophies).reduce(
       (current, trophy) => ({
         ...current,
@@ -54,6 +55,7 @@ export default applyMiddleware(
           timeline,
           account,
           events,
+          participant,
         }),
       }),
       {}

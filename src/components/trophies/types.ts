@@ -1,5 +1,10 @@
 import { SVGProps } from 'react';
-import { Match, MatchTimeline, MatchEvent } from '../../api/riot/types';
+import {
+  Match,
+  MatchTimeline,
+  MatchEvent,
+  Participant,
+} from '../../api/riot/types';
 import { Account } from '../../api/accounts';
 
 export type Category =
@@ -24,6 +29,7 @@ export interface Trophy {
     timeline: MatchTimeline;
     account: Account;
     events: MatchEvent[];
+    participant: Participant;
   }):
     | {
         progress: number;

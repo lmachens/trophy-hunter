@@ -11,7 +11,11 @@ import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
 import { getMatch, getTimeline } from '../../api/riot/server';
 import { AccountTrophy } from '../../api/accounts';
-import { getAllEvents, getParticipantIdentity } from '../../api/riot/helpers';
+import {
+  getAllEvents,
+  getParticipantIdentity,
+  getParticipantByAccount,
+} from '../../api/riot/helpers';
 import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 
 const activeChecks: string[] = [];
@@ -102,6 +106,7 @@ export default applyMiddleware(
         );
         return res.status(403).end('Participant not found');
       }
+      const participant = getParticipantByAccount(match, account);
 
       const updateLevels = account.levels.map(async (accountLevel) => {
         const level = levels[accountLevel.name] as Level;
@@ -122,6 +127,7 @@ export default applyMiddleware(
               timeline,
               account,
               events,
+              participant,
             });
             const { progress, details } =
               typeof result === 'number'

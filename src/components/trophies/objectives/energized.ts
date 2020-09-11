@@ -38,7 +38,8 @@ const energized: Trophy = {
               buildingKill.timestamp < event.timestamp + 210000 &&
               buildingKill.timestamp > event.timestamp
           ).length
-      )
+      ),
+      0
     );
 
     const trophyProgress = getTrophyProgress(account, 'energized');

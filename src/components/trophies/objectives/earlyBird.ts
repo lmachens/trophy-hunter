@@ -10,13 +10,13 @@ const earlyBird: Trophy = {
   category: 'objectives',
   checkProgress: ({ match, account }) => {
     const participant = getParticipantByAccount(match, account);
-    return (
-      (Number(participant.stats.firstBloodKill) +
-        Number(
-          participant.stats.firstTowerAssist || participant.stats.firstTowerKill
-        )) /
-      2
-    );
+    if (
+      !participant.stats.firstBloodKill ||
+      (!participant.stats.firstTowerAssist && !participant.stats.firstTowerKill)
+    ) {
+      return 0;
+    }
+    return 1;
   },
   checkLive: ({ events, account }) => {
     const firstKill = events.find(

@@ -3,8 +3,9 @@ import {
   applyMiddleware,
   withError,
   withMethods,
-} from '../../../api/utils/server/middleware';
-import { getChampions } from '../../../api/riot/server';
+} from '../../../../api/utils/server/middleware';
+import { getChampions } from '../../../../api/riot/server';
+import { getRecentVersion } from '../../../../api/riot/server';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -14,8 +15,14 @@ export default applyMiddleware(
     const champion = champions.find(
       (champion) => champion.key === championId.toString()
     );
+    if (!champion) {
+      return res.status(404).end('Not found');
+    }
     res.setHeader('Cache-Control', 'max-age=180');
-    res.json(champion);
+    const version = await getRecentVersion();
+    res.redirect(
+      `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champion.image.full}`
+    );
   },
   withError,
   withMethods('GET')

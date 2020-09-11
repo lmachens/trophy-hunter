@@ -71,8 +71,10 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
       queryCache.invalidateQueries('account');
     },
   });
-  const trophyProgress =
-    typeof progress !== 'undefined' ? progress : useTrophyProgress(trophy);
+  const { progress: trophyProgress, progressDetails } =
+    typeof progress !== 'undefined'
+      ? { progress, progressDetails: null }
+      : useTrophyProgress(trophy);
   const ProgressIcon = categoriesMap[trophy.category].Icon;
 
   return (
@@ -89,6 +91,9 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
             max={trophy.maxProgress}
             category={trophy.category}
           />
+        )}
+        {trophy.ProgressDetails && (
+          <trophy.ProgressDetails details={progressDetails} />
         )}
       </Grow>
       {!trophy.checkLive && (

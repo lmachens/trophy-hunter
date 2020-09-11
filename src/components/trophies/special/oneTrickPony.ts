@@ -3,6 +3,7 @@ import {
   getTrophyProgress,
   getTrophyProgressDetails,
 } from '../../../api/accounts/helpers';
+import OneTrickPonyDetails from './OneTrickPonyDetails';
 
 const oneTrickPony: Trophy = {
   island: 'specialIsland',
@@ -13,6 +14,7 @@ const oneTrickPony: Trophy = {
     'Play the same champion in the last five matches and win all of them.',
   category: 'special',
   maxProgress: 5,
+  ProgressDetails: OneTrickPonyDetails,
   checkProgress: ({ account, participant }) => {
     if (!participant.stats.win) {
       return 0;

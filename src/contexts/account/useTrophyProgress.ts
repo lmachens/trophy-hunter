@@ -3,11 +3,14 @@ import { Trophy } from '../../components/trophies/types';
 
 const useTrophyProgress = (trophy: Trophy) => {
   const { account } = useAccount();
-  const progress =
-    account?.trophies.find(
-      (accountTrophy) => accountTrophy.name === trophy.name
-    )?.progress || 0;
-  return progress;
+  const accountTrophy = account?.trophies.find(
+    (accountTrophy) => accountTrophy.name === trophy.name
+  );
+
+  return {
+    progress: accountTrophy?.progress || 0,
+    progressDetails: accountTrophy?.progressDetails || null,
+  };
 };
 
 export default useTrophyProgress;

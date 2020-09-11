@@ -81,3 +81,38 @@ export const getRecentVersion = async () => {
     return null;
   }
 };
+
+interface Champion {
+  key: string;
+  image: {
+    full: string;
+  };
+}
+interface ChampionResult {
+  type: 'champion';
+  format: 'standAloneComplex';
+  version: string;
+  data: {
+    [name: string]: Champion;
+  };
+}
+const cachedChampions = {
+  timestamp: 0,
+  promise: null,
+};
+export const getChampions = async () => {
+  try {
+    if (cachedChampions.timestamp < Date.now() - 1000 * 60 * 60) {
+      const version = await getRecentVersion();
+      cachedChampions.promise = getJSON<ChampionResult>(
+        `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`
+      );
+      cachedChampions.timestamp = Date.now();
+    }
+    const champions = await cachedChampions.promise;
+    return Object.values(champions.data) as Champion[];
+  } catch (error) {
+    console.error(`getChampions ${error.status} ${error.statusText}`);
+    return null;
+  }
+};

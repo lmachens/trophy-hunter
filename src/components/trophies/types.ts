@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import { SVGProps, FC } from 'react';
 import {
   Match,
   MatchTimeline,
@@ -24,6 +24,7 @@ export interface Trophy {
   island: string;
   category: Category;
   maxProgress?: number;
+  ProgressDetails?: FC<{ details: any }>;
   checkProgress(props: {
     match: Match;
     timeline: MatchTimeline;

@@ -49,7 +49,7 @@ export default applyMiddleware(
     );
 
     if (!account) {
-      res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
+      res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0`);
       return res.status(401).end('Unauthorized');
     }
 

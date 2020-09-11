@@ -26,7 +26,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
     res.setHeader(
       'Set-Cookie',
       `authToken=${authToken};path=/;Max-Age=0;HttpOnly${
-        process.env.NODE_ENV === 'production' ? ';SameSite=None;Secure' : ''
+        process.env.NODE_ENV === 'production' ? ';Secure' : ''
       }`
     );
 
@@ -51,7 +51,7 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
   if (!account) {
-    res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0;Secure`);
+    res.setHeader('Set-Cookie', `authToken=${authToken};Max-Age=0`);
     return res.status(401).end('Unauthorized');
   }
 

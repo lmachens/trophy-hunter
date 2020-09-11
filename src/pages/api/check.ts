@@ -50,7 +50,7 @@ export default applyMiddleware(
         res.setHeader(
           'Set-Cookie',
           `authToken=${authToken};Max-Age=0${
-            process.env.NODE_ENV === 'production' ? ';Secure' : ''
+            process.env.NODE_ENV === 'production' ? ';SameSite=None;Secure' : ''
           }`
         );
         return res.status(401).end('Unauthorized');

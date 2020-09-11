@@ -35,8 +35,7 @@ const bloodBrothers: Trophy = {
       },
       {}
     );
-
-    return Math.max(...Object.values(duoKills)) / 7;
+    return Math.max(...Object.values(duoKills), 0) / 7;
   },
   checkLive: ({ events, account, trophyData }) => {
     if (!events.length || trophyData.bloodBrothers) {

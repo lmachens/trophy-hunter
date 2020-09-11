@@ -11,16 +11,14 @@ const theDragonMaster: Trophy = {
   checkProgress: ({ match, events, account }) => {
     const participant = getParticipantByAccount(match, account);
 
-    const earlyDragonKills = events.filter(
+    const earlyDragonKill = events.some(
       (event) =>
         event.type === 'ELITE_MONSTER_KILL' &&
         event.monsterType === 'DRAGON' &&
-        event.timestamp < 10 * 60 * 1000
+        event.timestamp < 10 * 60 * 1000 &&
+        event.killerId === participant.participantId
     );
-    return Number(
-      earlyDragonKills[0] &&
-        earlyDragonKills[0].killerId === participant.participantId
-    );
+    return Number(earlyDragonKill);
   },
   checkLive: ({ events, account }) => {
     const earlyDragonKills = events.filter(

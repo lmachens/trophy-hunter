@@ -18,7 +18,7 @@ const OneTrickPonyDetails: FC<{ details: any }> = ({ details }) => {
             src={
               details?.length > index
                 ? `/api/champions/${details[index]}/img`
-                : '/unknown.png'
+                : `${process.env.PUBLIC_DIR}/unknown.png`
             }
           />
         ))}

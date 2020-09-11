@@ -24,6 +24,9 @@ const towerdive: Trophy = {
         event.type === 'BUILDING_KILL' &&
         event.buildingType === 'TOWER_BUILDING'
     );
+    if (!firstTurrentDeath) {
+      return 0;
+    }
 
     const underTurretKills = kills.filter((kill) => {
       const preFirstTurretDeath = kill.timestamp <= firstTurrentDeath.timestamp;

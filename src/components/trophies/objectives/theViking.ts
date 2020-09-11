@@ -20,13 +20,13 @@ const theViking: Trophy = {
         event.timestamp <= 600000
     );
 
-    const soloKillProgress = Number(hasSoloKillBefore10);
-
-    const firstTowerParticipationProgress = Number(
-      participant.stats.firstTowerKill || participant.stats.firstTowerAssist
-    );
-
-    return (soloKillProgress + firstTowerParticipationProgress) / 2;
+    if (
+      !hasSoloKillBefore10 ||
+      (!participant.stats.firstTowerKill && !participant.stats.firstTowerAssist)
+    ) {
+      return 0;
+    }
+    return 1;
   },
   checkLive: ({ events, gameData, account, trophyData }) => {
     if (!events.length || gameData.gameTime >= 600 || trophyData.theViking) {

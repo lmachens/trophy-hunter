@@ -36,7 +36,8 @@ const unlockTheBeast: Trophy = {
     );
 
     const unlockTheBeastScore = Math.max(
-      ...participantKillsBeforeBaron.map((kills) => kills.length)
+      ...participantKillsBeforeBaron.map((kills) => kills.length),
+      0
     );
 
     return unlockTheBeastScore / 2;

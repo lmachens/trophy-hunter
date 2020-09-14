@@ -17,50 +17,22 @@ const theTortoise: Trophy = {
 
     return participant.stats.longestTimeSpentLiving / 1800;
   },
-  checkLive: ({ events, trophyData, gameData, account }) => {
-    if (!events.length) {
-      return 0;
-    }
-
-    if (!trophyData.theTortoise) {
-      trophyData.theTortoise = {
-        deaths: 0,
-        aliveSince: 0,
-        achieved: false,
-      } as TheTortoiseTrophyData;
-    }
-    if (trophyData.theTortoise.achieved) {
-      return 0;
-    }
-
+  checkLive: ({ events, gameData, account }) => {
     const deaths = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
         event.VictimName === account.summoner.name
-    ).length;
+    );
 
-    if (deaths > trophyData.theTortoise.deaths) {
-      trophyData.theTortoise = {
-        deaths,
-        aliveSince: gameData.gameTime,
-        achieved: false,
-      } as TheTortoiseTrophyData;
-      return 0;
+    const lastDeath = deaths[deaths.length - 1];
+    if (!lastDeath && gameData.gameTime > 1800) {
+      return 1;
     }
-
-    const aliveFor = gameData.gameTime - trophyData.theTortoise.aliveSince;
-    const progress = Math.min(1, aliveFor / 1800);
-    if (progress === 1) {
-      trophyData.theTortoise.achieved = true;
+    if (gameData.gameTime - lastDeath.EventTime > 1800) {
+      return 1;
     }
-    return progress;
+    return 0;
   },
 };
-
-interface TheTortoiseTrophyData {
-  deaths: number;
-  aliveSince: number;
-  achieved: boolean;
-}
 
 export default theTortoise;

@@ -29,15 +29,16 @@ export const INTERESTED_IN_LAUNCHER_FEATURES = [
 export const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data'];
 
 export const isLeagueLauncherRunning = (
-  launcherInfo: overwolf.games.launchers.GetRunningLaunchersInfoResult
-) => {
-  return (
-    launcherInfo?.launchers[0] &&
-    Math.floor(launcherInfo.launchers[0].id / 10) === LEAGUE_LAUNCHER_ID
+  launchers: overwolf.games.launchers.LauncherInfo[]
+): boolean => {
+  return launchers.some(
+    (launcher) => Math.floor(launcher.id / 10) === LEAGUE_LAUNCHER_ID
   );
 };
 
-export const isLeagueRunning = (gameInfo: overwolf.games.RunningGameInfo) => {
+export const isLeagueRunning = (
+  gameInfo: overwolf.games.RunningGameInfo
+): boolean => {
   return Boolean(
     gameInfo?.isRunning && Math.floor(gameInfo.id / 10) === LOL_ID
   );
@@ -45,7 +46,7 @@ export const isLeagueRunning = (gameInfo: overwolf.games.RunningGameInfo) => {
 
 export const isLeagueLaunched = (
   gameInfoResult: overwolf.games.GameInfoUpdatedEvent
-) => {
+): boolean => {
   return Boolean(
     gameInfoResult?.gameInfo?.isRunning &&
       (gameInfoResult.runningChanged || gameInfoResult.gameChanged) &&
@@ -124,20 +125,6 @@ export const SUPPORTED_QUEUE_IDS = [
   SR_BLIND_PICK,
   SR_RANKED_FLEX,
 ];
-
-export const addLeagueLauncherListener = (onLaunched) => {
-  overwolf.games.launchers.onLaunched.addListener((launcher) => {
-    if (Math.floor(launcher.id / 10) === LEAGUE_LAUNCHER_ID) {
-      onLaunched();
-    }
-  });
-
-  overwolf.games.launchers.getRunningLaunchersInfo((res) => {
-    if (isLeagueLauncherRunning(res)) {
-      onLaunched();
-    }
-  });
-};
 
 export const setLeagueLauncherFeatures = (
   interestedInFeatures: string[],

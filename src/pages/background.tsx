@@ -68,7 +68,9 @@ const Background: NextPage = () => {
     overwolf.games.launchers.onTerminated.addListener(handleLauncherTerminated);
 
     overwolf.games.launchers.getRunningLaunchersInfo((res) => {
-      setLeagueLauncherRunning(isLeagueLauncherRunning(res));
+      if (res.success) {
+        setLeagueLauncherRunning(isLeagueLauncherRunning(res.launchers));
+      }
     });
 
     const handleGameInfoUpdated = (
@@ -115,6 +117,7 @@ const Background: NextPage = () => {
 
   useEffect(() => {
     if (leagueLauncherRunning === null) {
+      console.log(`League launcher is null`);
       return;
     }
 

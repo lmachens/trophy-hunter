@@ -28,7 +28,7 @@ const theElephant: Trophy = {
     if (!lastDeath && gameData.gameTime > 1200) {
       return 1;
     }
-    if (gameData.gameTime - lastDeath.EventTime > 1200) {
+    if (lastDeath && gameData.gameTime - lastDeath.EventTime > 1200) {
       return 1;
     }
     return 0;

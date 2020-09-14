@@ -17,49 +17,22 @@ const theElephant: Trophy = {
 
     return participant.stats.longestTimeSpentLiving / 1200;
   },
-  checkLive: ({ events, trophyData, gameData, account }) => {
-    if (!events.length) {
-      return 0;
-    }
-
-    if (!trophyData.theElephant) {
-      trophyData.theElephant = {
-        deaths: 0,
-        aliveSince: 0,
-        achieved: false,
-      } as TheElephantTrophyData;
-    }
-    if (trophyData.theElephant.achieved) {
-      return 0;
-    }
-
+  checkLive: ({ events, gameData, account }) => {
     const deaths = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
         event.VictimName === account.summoner.name
-    ).length;
+    );
 
-    if (deaths > trophyData.theElephant.deaths) {
-      trophyData.theElephant = {
-        deaths,
-        aliveSince: gameData.gameTime,
-        achieved: false,
-      } as TheElephantTrophyData;
-      return 0;
+    const lastDeath = deaths[deaths.length - 1];
+    if (!lastDeath && gameData.gameTime > 1200) {
+      return 1;
     }
-
-    const aliveFor = gameData.gameTime - trophyData.theElephant.aliveSince;
-    const progress = Math.min(1, aliveFor / 1200);
-    if (progress === 1) {
-      trophyData.theElephant.achieved = true;
+    if (gameData.gameTime - lastDeath.EventTime > 1200) {
+      return 1;
     }
-    return progress;
+    return 0;
   },
 };
 
-interface TheElephantTrophyData {
-  deaths: number;
-  aliveSince: number;
-  achieved: boolean;
-}
 export default theElephant;

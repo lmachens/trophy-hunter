@@ -25,8 +25,8 @@ export const getTrophyProgressDetails = (
   trophyName: string
 ): any => {
   const trophy = getTrophy(account, trophyName);
-  const history = trophy ? trophy.progressDetails : [];
-  return history;
+  const progressDetails = trophy?.progressDetails || [];
+  return progressDetails;
 };
 
 export const findPerk = (

@@ -18,13 +18,8 @@ const sweetHoney: Trophy = {
         18 || 0
     );
   },
-  checkLive: ({ allPlayers, trophyData, gameData, account }) => {
-    if (
-      !allPlayers ||
-      !gameData ||
-      trophyData.sweetHoney ||
-      gameData.gameTime > 1200
-    ) {
+  checkLive: ({ allPlayers, gameData, account }) => {
+    if (gameData.gameTime > 1200) {
       return 0;
     }
 
@@ -33,9 +28,6 @@ const sweetHoney: Trophy = {
     );
 
     const process = Math.min(1, accountPlayer.scores.creepScore / 180);
-    if (process === 1) {
-      trophyData.sweetHoney = true;
-    }
     return process;
   },
 };

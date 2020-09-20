@@ -17,6 +17,7 @@ import MovableHeader from './MovableHeader';
 import Status from '../common/Status';
 import { useAccount } from '../../contexts/account';
 import HelpModal from '../guides/HelpModal';
+import AlienwareChallenge from './AlienwareChallenge';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -66,6 +67,7 @@ const AppHeader: FC = () => {
             <Feedback />
             Write us a feedback
           </WriteUsFeedback>
+          <AlienwareChallenge />
           <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
             <Discord />
           </DiscordButtonLink>

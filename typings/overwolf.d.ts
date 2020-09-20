@@ -4801,10 +4801,6 @@ declare namespace overwolf.extensions.sharedData {
 /**
  * overwolf.campaigns.crossapp
  *
- * *****************************************************************************
- * NOTE: This namespace is still not available and is subject to change.
- * *****************************************************************************
- *
  * An API that allows crossapp-promotions: One app can promote another app and
  * then get an indication for a successful conversion.
  *
@@ -4817,7 +4813,7 @@ declare namespace overwolf.extensions.sharedData {
  *      id: 'lkjk23535', // An extension-specific unique campaign id
  *      action: 'social-share', // The action for conversion
  *      expiration: 1601510400000,
- *      target_apps_uids: [ 'PROMOTED-EXTENSION-ID' ],
+ *      target_apps_uids: [ 'PROMOTED-EXTENSION-ID' ], // '*' for any app
  *      data: {
  *        social_networks: [ 'twitter' ],
  *        game_ids: [9196, 5426],
@@ -4994,6 +4990,11 @@ declare namespace overwolf.campaigns.crossapp {
   function consumeConversions(
     callback: CallbackFunction<GetCrossAppConversionsResult>
   );
+
+  /*
+   * Called when an available action has updated (or added)
+   */
+  const onAvailableActionUpdated: Event<CrossAppCampaign>;
 }
 
 declare namespace overwolf.utils {

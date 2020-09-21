@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
+import { setLocalStorageItem } from '../api/utils/storage';
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);
@@ -230,14 +231,14 @@ const Background: NextPage = () => {
       return;
     }
 
-    if (playingSupportedGame) {
-      console.log('Playing a supported game');
-    } else if (playingSupportedGame === false) {
-      console.log('Not playing a supported game');
-    }
-
-    if (leagueRunning && playingSupportedGame && autoLaunch) {
-      openWindow('in_game');
+    if (leagueRunning && autoLaunch) {
+      if (playingSupportedGame) {
+        console.log('Playing a supported game');
+        openWindow('in_game');
+      } else {
+        console.log('Not playing a supported game');
+        openWindow('not_supported');
+      }
     }
   }, [leagueRunning, playingSupportedGame, autoLaunch]);
 

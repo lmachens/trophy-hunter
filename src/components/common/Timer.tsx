@@ -23,7 +23,8 @@ const circleDashOffest = keyframes`
 const ForegroundCircle = styled.circle`
   fill: transparent;
   stroke: #eaeaea;
-  animation: ${circleDashOffest} 3s linear;
+  animation: ${circleDashOffest}
+    ${(props: { timeout: number }) => props.timeout}s linear;
   stroke-width: 10px;
   stroke-dasharray: 600;
   transform: rotate(-90deg);
@@ -38,16 +39,21 @@ const BackgroundCircle = styled.circle`
 
 interface TimerProps {
   onDone(): void;
+  timeout?: number;
 }
 
-const Timer: FC<TimerProps> = ({ onDone }) => {
-  const [timeLeft, setTimeLeft] = useState(3);
+const Timer: FC<TimerProps> = ({ onDone, timeout = 3 }) => {
+  const [timeLeft, setTimeLeft] = useState(timeout);
 
   useEffect(() => {
     if (timeLeft <= 0) {
       onDone();
-      setTimeLeft(3);
-      return;
+      const timeoutId = setTimeout(() => {
+        setTimeLeft(timeout);
+      }, 1000);
+      return () => {
+        clearTimeout(timeoutId);
+      };
     }
 
     const timeoutId = setTimeout(() => {
@@ -65,7 +71,9 @@ const Timer: FC<TimerProps> = ({ onDone }) => {
         {timeLeft}
       </text>
       <BackgroundCircle cx="100" cy="100" r="90" />
-      {timeLeft !== 0 && <ForegroundCircle cx="100" cy="100" r="90" />}
+      {timeLeft !== 0 && (
+        <ForegroundCircle cx="100" cy="100" r="90" timeout={timeout} />
+      )}
     </SVG>
   );
 };

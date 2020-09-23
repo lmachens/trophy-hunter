@@ -133,6 +133,7 @@ const Background: NextPage = () => {
 
     const timeoutId = setTimeout(() => {
       setLeagueLauncherFeatures(INTERESTED_IN_LAUNCHER_FEATURES, () => {
+        let summonerNotFound = false;
         const getSummonerInfo = () => {
           overwolf.games.launchers.events.getInfo(
             LEAGUE_LAUNCHER_ID,
@@ -144,11 +145,14 @@ const Background: NextPage = () => {
                   is_garena_user: isGarenaUser,
                 } = response.res.summoner_info;
                 if (!summonerName || !platformId) {
-                  console.error(
-                    `SummonerName not found ${JSON.stringify(
-                      response.res.summoner_info
-                    )}`
-                  );
+                  if (!summonerNotFound) {
+                    console.error(
+                      `SummonerName not found ${JSON.stringify(
+                        response.res.summoner_info
+                      )}`
+                    );
+                    summonerNotFound = true;
+                  }
                   setTimeout(getSummonerInfo, 1000);
                 } else if (isGarenaUser === 'true' || isGarenaUser === true) {
                   console.info(
@@ -184,44 +188,48 @@ const Background: NextPage = () => {
     }
 
     const handleInfoUpdate = (infoUpdate) => {
-      if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
+      if (
+        infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
+        !infoUpdate.info?.lobby_info
+      ) {
         return;
       }
-      if (infoUpdate.feature === 'lobby_info' && infoUpdate.info?.lobby_info) {
-        const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
-        if (isNaN(queueId)) {
-          console.log(
-            `QueueId is NaN: ${JSON.stringify(infoUpdate.info.lobby_info)}`
-          );
-
-          return;
-        }
-        if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-          setPlayingSupportedGame(false);
-          console.log(`QueueId ${queueId} is not supported`);
-        } else {
-          console.log(`QueueId ${queueId} is supported`);
-          setPlayingSupportedGame(true);
-        }
+      const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
+      if (isNaN(queueId)) {
+        console.log(
+          `[handleInfoUpdate] QueueId is NaN: ${JSON.stringify(
+            infoUpdate.info.lobby_info
+          )}`
+        );
+        return;
+      }
+      if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
+        setPlayingSupportedGame(false);
+        console.log(`[handleInfoUpdate] QueueId ${queueId} is not supported`);
+      } else {
+        console.log(`[handleInfoUpdate] QueueId ${queueId} is supported`);
+        setPlayingSupportedGame(true);
       }
     };
 
     overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
 
     overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-      if (info.error || !info.res) {
+      if (info.error || !info.res || !info.res.lobby_info) {
         return;
       }
-      const queueId = parseInt(info.res.lobby_info?.queueId);
+      const queueId = parseInt(info.res.lobby_info.queueId);
       if (isNaN(queueId)) {
-        console.log(`QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`);
+        console.log(
+          `[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`
+        );
         return;
       }
       if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-        console.log(`QueueId ${queueId} is not supported`);
+        console.log(`[getInfo] QueueId ${queueId} is not supported`);
         setPlayingSupportedGame(false);
       } else {
-        console.log(`QueueId ${queueId} is supported`);
+        console.log(`[getInfo] QueueId ${queueId} is supported`);
         setPlayingSupportedGame(true);
       }
     });

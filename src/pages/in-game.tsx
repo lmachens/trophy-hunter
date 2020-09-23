@@ -30,6 +30,11 @@ import overwolf, {
 import { parseJSON } from '../api/utils/json';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
+import { log } from '../api/logs';
+
+overwolf.extensions.current.getManifest((manifest) =>
+  log(`Running v${manifest.meta.version}`)
+);
 
 const ConnectionStatus = styled.div`
   min-height: 100px;
@@ -118,7 +123,7 @@ const InGame: NextPage = () => {
 
   useEffect(() => {
     if (account) {
-      console.log('Account is ready');
+      log('Account is ready');
       setProgress((progress) => progress + 0.5);
     }
   }, [account]);
@@ -214,7 +219,7 @@ const InGame: NextPage = () => {
       ];
     }, []);
 
-    console.log(`Can achieve ${trophies.length} trophies`, trophies);
+    log(`Can achieve ${trophies.length} trophies`, trophies);
 
     setTrophies(trophies);
   }, [account]);

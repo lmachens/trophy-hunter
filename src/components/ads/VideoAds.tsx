@@ -6,6 +6,7 @@ import overwolf, {
   isLeagueRunning,
 } from '../../api/overwolf';
 import { OwAd } from '../../../typings/owAds';
+import { log } from '../../api/logs';
 
 const Container = styled.div`
   background: #2b2a30;
@@ -34,7 +35,7 @@ const VideoAds: FC<VideoAdsProps> = ({ showIngame }) => {
       if (typeof globalThis.OwAd === 'undefined') {
         return;
       }
-      console.log(`OwAd ready`);
+      log(`OwAd ready`);
 
       const owAd: OwAd = new globalThis.OwAd(containerRef.current, {
         size: { width: 400, height: 300 },

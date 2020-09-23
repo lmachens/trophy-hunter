@@ -1,5 +1,7 @@
 // Creates magic proxy to avoid crashes non-overwolf environments
 
+import { log } from '../logs';
+
 if (typeof overwolf === 'undefined') {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -141,7 +143,7 @@ export const setLeagueLauncherFeatures = (
         );
       }
 
-      console.log('Successfully set League Launcher features');
+      log('Successfully set League Launcher features');
       if (onReady) {
         onReady();
       }
@@ -161,7 +163,7 @@ export const setLeagueFeatures = (
       );
     }
 
-    console.log('Successfully set League features');
+    log('Successfully set League features');
     if (onReady) {
       onReady();
     }

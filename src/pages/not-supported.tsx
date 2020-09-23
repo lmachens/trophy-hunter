@@ -5,7 +5,11 @@ import Timer from '../components/common/Timer';
 import NotificationHeader from '../components/notifications/NotificationHeader';
 import NotificationTitle from '../components/notifications/NotificationTitle';
 import NotificationContainer from '../components/notifications/NotificationContainer';
-import { useEffect } from 'react';
+import { log } from '../api/logs';
+
+overwolf.extensions.current.getManifest((manifest) =>
+  log(`Running v${manifest.meta.version}`)
+);
 
 const Message = styled.div`
   background-image: url(${process.env.PUBLIC_DIR}/notifications/allIslands.png);

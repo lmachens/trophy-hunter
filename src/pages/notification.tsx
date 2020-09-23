@@ -10,6 +10,11 @@ import { Trophy } from '../components/trophies/types';
 import NotificationHeader from '../components/notifications/NotificationHeader';
 import NotificationTitle from '../components/notifications/NotificationTitle';
 import NotificationContainer from '../components/notifications/NotificationContainer';
+import { log } from '../api/logs';
+
+overwolf.extensions.current.getManifest((manifest) =>
+  log(`Running v${manifest.meta.version}`)
+);
 
 const ListItem = styled(TrophyListItem)`
   background-image: ${(props) =>

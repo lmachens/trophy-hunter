@@ -17,6 +17,7 @@ import {
   getParticipantByAccount,
 } from '../../api/riot/helpers';
 import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
+import { log } from '../../api/logs';
 
 const activeChecks: string[] = [];
 
@@ -46,7 +47,7 @@ export default applyMiddleware(
       });
 
       if (!account) {
-        console.log(`Account not found ${authToken}`);
+        log(`Account not found ${authToken}`);
         res.setHeader(
           'Set-Cookie',
           `authToken=${authToken};Max-Age=0${
@@ -60,7 +61,7 @@ export default applyMiddleware(
         return res.status(403).end('Already checked');
       }
 
-      console.log(
+      log(
         `Check ${matchId} of ${account.summoner.name} ${account.summoner.platformId}`
       );
 
@@ -101,9 +102,7 @@ export default applyMiddleware(
 
       const participantIdentity = getParticipantIdentity(match, account);
       if (!participantIdentity) {
-        console.log(
-          `Participant not found ${matchId} ${account.summoner.name}`
-        );
+        log(`Participant not found ${matchId} ${account.summoner.name}`);
         return res.status(403).end('Participant not found');
       }
       const participant = getParticipantByAccount(match, account);

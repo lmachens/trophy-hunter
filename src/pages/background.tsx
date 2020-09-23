@@ -18,6 +18,11 @@ import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
+import { log } from '../api/logs';
+
+overwolf.extensions.current.getManifest((manifest) =>
+  log(`Running v${manifest.meta.version}`)
+);
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);
@@ -45,7 +50,7 @@ const Background: NextPage = () => {
       'source=gamelaunchevent'
     );
     if (!launchedByEvent) {
-      console.log('Not launched by event => open Desktop window');
+      log('Not launched by event => open Desktop window');
       openWindow('desktop');
     }
 
@@ -118,15 +123,15 @@ const Background: NextPage = () => {
 
   useEffect(() => {
     if (leagueLauncherRunning === null) {
-      console.log(`League launcher is null`);
+      log(`League launcher is null`);
       return;
     }
 
     if (leagueLauncherRunning === false) {
-      console.log(`League launcher is not running`);
+      log(`League launcher is not running`);
       return;
     }
-    console.log(`League launcher is running`);
+    log(`League launcher is running`);
     if (autoLaunch) {
       openWindow('desktop');
     }
@@ -162,7 +167,7 @@ const Background: NextPage = () => {
                   setRegisteredFeatures(true);
                 } else {
                   localStorage.removeItem('isGarenaUser');
-                  console.log(`Login as ${summonerName} on ${platformId}`);
+                  log(`Login as ${summonerName} on ${platformId}`);
                   login({ platformId, summonerName });
                   setRegisteredFeatures(true);
                 }
@@ -196,7 +201,7 @@ const Background: NextPage = () => {
       }
       const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
       if (isNaN(queueId)) {
-        console.log(
+        log(
           `[handleInfoUpdate] QueueId is NaN: ${JSON.stringify(
             infoUpdate.info.lobby_info
           )}`
@@ -205,9 +210,9 @@ const Background: NextPage = () => {
       }
       if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
         setPlayingSupportedGame(false);
-        console.log(`[handleInfoUpdate] QueueId ${queueId} is not supported`);
+        log(`[handleInfoUpdate] QueueId ${queueId} is not supported`);
       } else {
-        console.log(`[handleInfoUpdate] QueueId ${queueId} is supported`);
+        log(`[handleInfoUpdate] QueueId ${queueId} is supported`);
         setPlayingSupportedGame(true);
       }
     };
@@ -220,16 +225,14 @@ const Background: NextPage = () => {
       }
       const queueId = parseInt(info.res.lobby_info.queueId);
       if (isNaN(queueId)) {
-        console.log(
-          `[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`
-        );
+        log(`[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`);
         return;
       }
       if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-        console.log(`[getInfo] QueueId ${queueId} is not supported`);
+        log(`[getInfo] QueueId ${queueId} is not supported`);
         setPlayingSupportedGame(false);
       } else {
-        console.log(`[getInfo] QueueId ${queueId} is supported`);
+        log(`[getInfo] QueueId ${queueId} is supported`);
         setPlayingSupportedGame(true);
       }
     });
@@ -243,19 +246,19 @@ const Background: NextPage = () => {
 
   useEffect(() => {
     if (leagueRunning) {
-      console.log('League is running');
+      log('League is running');
     } else if (leagueRunning === false) {
-      console.log('League is not running');
+      log('League is not running');
       closeWindow('in_game');
       return;
     }
 
     if (leagueRunning && autoLaunch) {
       if (playingSupportedGame) {
-        console.log('Playing a supported game');
+        log('Playing a supported game');
         openWindow('in_game');
-      } else {
-        console.log('Not playing a supported game');
+      } else if (playingSupportedGame === false) {
+        log('Not playing a supported game');
         openWindow('not_supported');
       }
     }
@@ -278,7 +281,7 @@ const Background: NextPage = () => {
           endGameStats &&
           localStorage.getItem('checkGameId') !== endGameStats.gameId.toString()
         ) {
-          console.log(`Check game ${endGameStats.gameId}`);
+          log(`Check game ${endGameStats.gameId}`);
           localStorage.setItem('checkGameId', endGameStats.gameId);
         }
       }

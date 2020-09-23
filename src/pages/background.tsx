@@ -18,12 +18,12 @@ import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
-import { setLocalStorageItem } from '../api/utils/storage';
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);
   const [leagueLauncherRunning, setLeagueLauncherRunning] = useState(null);
   const [playingSupportedGame, setPlayingSupportedGame] = useState(null);
+  const [registeredFeatures, setRegisteredFeatures] = useState(false);
   const [autoLaunch] = usePersistentState('autoLaunch', true);
 
   const [login] = useMutation(postLogin);
@@ -155,10 +155,12 @@ const Background: NextPage = () => {
                     `User ${summonerName} ${platformId} is a garena user`
                   );
                   localStorage.setItem('isGarenaUser', 'true');
+                  setRegisteredFeatures(true);
                 } else {
                   localStorage.removeItem('isGarenaUser');
                   console.log(`Login as ${summonerName} on ${platformId}`);
                   login({ platformId, summonerName });
+                  setRegisteredFeatures(true);
                 }
               } else {
                 setTimeout(getSummonerInfo, 1000);
@@ -170,6 +172,16 @@ const Background: NextPage = () => {
         getSummonerInfo();
       });
     }, 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [leagueLauncherRunning, autoLaunch]);
+
+  useEffect(() => {
+    if (!registeredFeatures) {
+      return;
+    }
 
     const handleInfoUpdate = (infoUpdate) => {
       if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
@@ -215,12 +227,11 @@ const Background: NextPage = () => {
     });
 
     return () => {
-      clearTimeout(timeoutId);
       overwolf.games.launchers.events.onInfoUpdates.removeListener(
         handleInfoUpdate
       );
     };
-  }, [leagueLauncherRunning, autoLaunch]);
+  }, [registeredFeatures]);
 
   useEffect(() => {
     if (leagueRunning) {

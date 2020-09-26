@@ -40,7 +40,7 @@ const resetStates = () => {
     allPlayers: null,
     events: null,
     gameData: null,
-    trophyData: null,
+    trophyData: {},
     account: null,
   };
   notifiedNear = [];
@@ -176,7 +176,8 @@ const handleInfoUpdates2 = (
         live.activePlayer &&
         live.allPlayers &&
         live.events &&
-        live.account
+        live.account &&
+        live.trophyData
       ) {
         setLocalStorageItem(LIVE, live);
         setTrophyProgress();

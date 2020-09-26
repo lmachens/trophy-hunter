@@ -151,22 +151,25 @@ export const setLeagueLauncherFeatures = (
   );
 };
 
-export const setLeagueFeatures = (
-  interestedInFeatures: string[],
-  onReady?: () => void
-) => {
-  overwolf.games.events.setRequiredFeatures(interestedInFeatures, (info) => {
-    if (!info.success) {
-      return setTimeout(
-        () => setLeagueFeatures(interestedInFeatures, onReady),
-        2000
-      );
-    }
+export const setLeagueFeatures = (interestedInFeatures: string[]) => {
+  return new Promise((res) => {
+    const setRequiredFeatures = (interestedInFeatures: string[]) => {
+      overwolf.games.events.setRequiredFeatures(
+        interestedInFeatures,
+        (info) => {
+          if (!info.success) {
+            return setTimeout(
+              () => setRequiredFeatures(interestedInFeatures),
+              2000
+            );
+          }
 
-    log('Successfully set League features');
-    if (onReady) {
-      onReady();
-    }
+          log('Successfully set League features');
+          res();
+        }
+      );
+    };
+    setRequiredFeatures(interestedInFeatures);
   });
 };
 

@@ -15,10 +15,12 @@ import overwolf, {
 import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
 import { useState, useEffect } from 'react';
-import { useMutation } from 'react-query';
+import { queryCache, useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
 import { log } from '../api/logs';
+import { runLiveCheck, stopLiveCheck } from '../api/overwolf/live';
+import { useAccount } from '../contexts/account';
 
 overwolf.extensions.current.getManifest((manifest) =>
   log(`Running v${manifest.meta.version}`)
@@ -30,8 +32,13 @@ const Background: NextPage = () => {
   const [playingSupportedGame, setPlayingSupportedGame] = useState(null);
   const [registeredFeatures, setRegisteredFeatures] = useState(false);
   const [autoLaunch] = usePersistentState('autoLaunch', true);
+  const { account } = useAccount();
 
-  const [login] = useMutation(postLogin);
+  const [login] = useMutation(postLogin, {
+    onSuccess: () => {
+      queryCache.invalidateQueries('account');
+    },
+  });
 
   useEffect(() => {
     const handleHotkeyPressed = () => {
@@ -257,6 +264,8 @@ const Background: NextPage = () => {
       if (playingSupportedGame) {
         log('Playing a supported game');
         openWindow('in_game');
+        runLiveCheck(account);
+        return stopLiveCheck;
       } else if (playingSupportedGame === false) {
         log('Not playing a supported game');
         openWindow('not_supported');

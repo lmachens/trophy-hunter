@@ -79,9 +79,9 @@ export default applyMiddleware(
 
     res.setHeader(
       'Set-Cookie',
-      `authToken=${authToken};path=/;Max-Age=${ONE_YEAR / 1000};HttpOnly${
-        process.env.NODE_ENV === 'production' ? ';SameSite=None;Secure' : ''
-      }`
+      `authToken=${authToken};path=/;Max-Age=${
+        ONE_YEAR / 1000
+      };HttpOnly;SameSite=None`
     );
     res.json(account.value);
 

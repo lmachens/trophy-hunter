@@ -25,9 +25,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!account) {
     res.setHeader(
       'Set-Cookie',
-      `authToken=${authToken};path=/;Max-Age=0;HttpOnly${
-        process.env.NODE_ENV === 'production' ? ';Secure' : ''
-      }`
+      `authToken=${authToken};path=/;Max-Age=0;HttpOnly;SameSite=None`
     );
 
     return res.status(401).end('Unauthorized');

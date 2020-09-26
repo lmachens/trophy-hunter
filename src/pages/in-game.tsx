@@ -85,9 +85,10 @@ const InGame: NextPage = () => {
   const hotkey = useHotkey();
   const [progress] = usePersistentState(PROGRESS, 0);
   const [connectionStatus, setConnectionStatus] = useState('connecting');
-  const [trophyProgress] = usePersistentState<
-    { trophy: Trophy; progress: number }[]
-  >(TROPHY_PROGRESS, []);
+  const [trophyProgress] = usePersistentState<{ [trophyName: string]: number }>(
+    TROPHY_PROGRESS,
+    {}
+  );
   useEffect(() => {
     if (progress !== 1) {
       return;

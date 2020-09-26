@@ -22,10 +22,6 @@ export const TROPHY_PROGRESS = 'TROPHY_PROGRESS';
 
 let activeTrophies: Trophy[] = null;
 let live: Live = null;
-let trophyProgress: {
-  trophy: Trophy;
-  progress: number;
-}[] = null;
 let notifiedNear: string[] = null;
 let notifiedCompleted: string[] = null;
 
@@ -34,7 +30,6 @@ const resetStates = () => {
   unsetLocalStorageItem(LIVE);
   unsetLocalStorageItem(TROPHY_PROGRESS);
   activeTrophies = [];
-  trophyProgress = [];
   live = {
     activePlayer: null,
     allPlayers: null,
@@ -47,44 +42,64 @@ const resetStates = () => {
   notifiedCompleted = [];
 };
 
-const notificate = () => {
+const setTrophyProgress = () => {
+  const trophiesProgress = activeTrophies.map((trophy) => {
+    try {
+      return {
+        trophyName: trophy.name,
+        progress: Math.min(1, trophy.checkLive?.(live) || 0),
+      };
+    } catch (error) {
+      console.error(`checkLive error in ${trophy.name}`, error.message);
+      return {
+        trophyName: trophy.name,
+        progress: 0,
+      };
+    }
+  });
+
+  const progressByTrophyName = trophiesProgress.reduce((acc, cur) => ({
+    ...acc,
+    [cur.trophyName]: cur.progress,
+  }));
+  setLocalStorageItem(TROPHY_PROGRESS, progressByTrophyName);
+
   const showTrophyNearCompletion = getLocalStorageItem(
     'trophyNearCompletion',
     true
   );
   const showTrophyCompleted = getLocalStorageItem('trophyCompleted', false);
 
-  const notificateNearTrophies = showTrophyNearCompletion
-    ? trophyProgress.filter(
-        ({ progress, trophy }) =>
-          progress >= 0.8 && progress < 1 && !notifiedNear.includes(trophy.name)
+  const nearCompletedTrophies = showTrophyNearCompletion
+    ? trophiesProgress.filter(
+        (trophyProgress) =>
+          trophyProgress.progress >= 0.8 &&
+          trophyProgress.progress < 1 &&
+          !notifiedNear.includes(trophyProgress.trophyName)
       )
     : [];
+  nearCompletedTrophies.forEach((nearCompletedTrophy) => {
+    notifiedNear.push(nearCompletedTrophy.trophyName);
+  });
 
-  if (notificateNearTrophies.length > 0) {
-    notifiedNear = [
-      ...notifiedNear,
-      ...notificateNearTrophies.map((trophy) => trophy.trophy.name),
-    ];
-  }
-
-  const notificateCompleteTrophies = showTrophyCompleted
-    ? trophyProgress.filter(
-        ({ progress, trophy }) =>
-          progress === 1 && !notifiedCompleted.includes(trophy.name)
+  const completedTrophies = showTrophyCompleted
+    ? trophiesProgress.filter(
+        (trophyProgress) =>
+          trophyProgress.progress >= 1 &&
+          !notifiedCompleted.includes(trophyProgress.trophyName)
       )
     : [];
-  if (notificateCompleteTrophies.length > 0) {
-    notifiedCompleted = [
-      ...notifiedCompleted,
-      ...notificateCompleteTrophies.map((trophy) => trophy.trophy.name),
-    ];
-  }
+  completedTrophies.forEach((completedTrophy) => {
+    const activeTrophyIndex = activeTrophies.findIndex(
+      (activeTrophy) => activeTrophy.name === completedTrophy.trophyName
+    );
+    if (activeTrophyIndex > -1) {
+      activeTrophies.splice(activeTrophyIndex, 1);
+    }
+    notifiedCompleted.push(completedTrophy.trophyName);
+  });
 
-  const notificateTrophies = [
-    ...notificateNearTrophies,
-    ...notificateCompleteTrophies,
-  ];
+  const notificateTrophies = [...nearCompletedTrophies, ...completedTrophies];
   if (notificateTrophies.length === 0) {
     return;
   }
@@ -92,57 +107,16 @@ const notificate = () => {
   const notifications = getLocalStorageItem('notifications', []).filter(
     (notification) =>
       !notificateTrophies.find(
-        (achievedTrophy) =>
-          achievedTrophy.trophy.name === notification.trophyName
+        (notificateTrophy) =>
+          notificateTrophy.trophyName === notification.trophyName
       )
   );
 
-  const newNotifications = [
-    ...notifications,
-    ...notificateTrophies.map(({ trophy, progress }) => ({
-      trophyName: trophy.name,
-      progress,
-    })),
-  ];
+  const newNotifications = [...notifications, ...notificateTrophies];
   setLocalStorageItem('notifications', newNotifications);
   log('Notificate trophies', newNotifications);
 
   openWindow('notification');
-};
-
-const setTrophyProgress = () => {
-  const achievedTrophies = activeTrophies
-    .map((trophy) => {
-      try {
-        return {
-          trophy,
-          progress: Math.min(1, trophy.checkLive?.(live) || 0),
-        };
-      } catch (error) {
-        console.error(`checkLive error in ${trophy.name}`, error.message);
-        return {
-          trophy,
-          progress: 0,
-        };
-      }
-    })
-    .filter(({ progress }) => progress > 0);
-
-  if (achievedTrophies.length === 0) {
-    return;
-  }
-  trophyProgress = [
-    ...achievedTrophies,
-    ...trophyProgress.filter(
-      (progressTrophy) =>
-        !achievedTrophies.find(
-          (achievedTrophy) =>
-            achievedTrophy.trophy.name === progressTrophy.trophy.name
-        )
-    ),
-  ];
-  setLocalStorageItem(TROPHY_PROGRESS, trophyProgress);
-  notificate();
 };
 
 const handleInfoUpdates2 = (

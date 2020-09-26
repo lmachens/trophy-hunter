@@ -81,9 +81,8 @@ const Checkbox = styled.input`
 
 interface AvailableTrophiesProps {
   trophyProgress?: {
-    trophy: Trophy;
-    progress: number;
-  }[];
+    [trophyName: string]: number;
+  };
   onTrophyClick?(trophy: Trophy): void;
 }
 
@@ -108,7 +107,7 @@ const CheckMarkAbsolute = styled(CheckMark)`
 `;
 
 const AvailableTrophies: FC<AvailableTrophiesProps> = ({
-  trophyProgress,
+  trophyProgress = {},
   onTrophyClick,
 }) => {
   const { account } = useAccount();
@@ -195,11 +194,7 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({
             trophy={trophy}
             key={trophy.name}
             borderless
-            progress={
-              trophyProgress?.find(
-                (trophyProgress) => trophyProgress.trophy.name === trophy.name
-              )?.progress
-            }
+            progress={trophyProgress[trophy.name]}
             onClick={
               onTrophyClick
                 ? () => {

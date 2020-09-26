@@ -252,6 +252,9 @@ const Background: NextPage = () => {
   }, [registeredFeatures]);
 
   useEffect(() => {
+    if (!account) {
+      return;
+    }
     if (leagueRunning) {
       log('League is running');
     } else if (leagueRunning === false) {
@@ -271,7 +274,7 @@ const Background: NextPage = () => {
         openWindow('not_supported');
       }
     }
-  }, [leagueRunning, playingSupportedGame, autoLaunch]);
+  }, [leagueRunning, playingSupportedGame, autoLaunch, account?._id]);
 
   useEffect(() => {
     if (!playingSupportedGame) {

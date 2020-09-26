@@ -31,7 +31,7 @@ const dominating: Trophy = {
         return 0;
       })
       .filter((killingSpree) => killingSpree > 0);
-    const largestKillingSpree = Math.max(...killingSprees);
+    const largestKillingSpree = Math.max(0, ...killingSprees);
     return largestKillingSpree / 6;
   },
 };

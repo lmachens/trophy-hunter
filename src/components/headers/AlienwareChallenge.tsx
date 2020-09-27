@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Tooltip } from '../tooltip';
+import { log } from '../../api/logs';
 
 const Container = styled.div`
   background: #00d2d7;
   width: 30px;
   height: 30px;
+  display: flex;
 `;
 
 const Catchline = styled.span`
@@ -18,29 +20,36 @@ const Text = styled.div`
   line-height: normal;
 `;
 
-const ALIENWARE_ACTION_ID = '';
+const ALIENWARE_ACTION = 'ar-invite';
 
 const AlienwareChallenge: FC = () => {
-  const [active, setActive] = useState(false);
+  const [campaign, setCampaign] = useState<
+    overwolf.campaigns.crossapp.CrossAppCampaign
+  >(null);
 
   useEffect(() => {
     overwolf.campaigns.crossapp.getAvailableActions((result) => {
       if (!result.success) {
         return;
       }
-      const hasAlienwareAction = result.actions.some(
-        (action) => action.id === ALIENWARE_ACTION_ID
+      const alienwareCampaign = result.actions.find(
+        (campaign) =>
+          campaign.action === ALIENWARE_ACTION &&
+          campaign.expiration > Date.now()
       );
-      if (hasAlienwareAction) {
-        setActive(true);
+      log('[getAvailableActions]', result);
+      if (alienwareCampaign) {
+        setCampaign(alienwareCampaign);
       }
     });
 
     const handleAvailableActionUpdated = (
-      event: overwolf.campaigns.crossapp.CrossAppCampaign
+      campaign: overwolf.campaigns.crossapp.CrossAppCampaign
     ) => {
-      if (event.id === ALIENWARE_ACTION_ID) {
-        setActive(true);
+      log('[handleAvailableActionUpdated]', campaign);
+
+      if (campaign.action === ALIENWARE_ACTION) {
+        setCampaign(campaign);
       }
     };
 
@@ -55,21 +64,33 @@ const AlienwareChallenge: FC = () => {
     };
   }, []);
 
-  if (!active) {
+  if (!campaign || campaign.expiration < Date.now()) {
     return null;
   }
+
+  const handleClick = () => {
+    overwolf.campaigns.crossapp.reportConversion(
+      {
+        id: campaign.id,
+        owner_app_uid: campaign.owner_app_uid,
+        data: {},
+      },
+      (result) => log(`[reportConversion]`, result)
+    );
+  };
 
   return (
     <Tooltip
       placement="top"
       text={
         <Text>
-          <Catchline>Gewinne 650RP</Catchline> mit der
-          Alienware-Herausforderung!
+          <Catchline>{campaign.data.title}</Catchline> {campaign.data.text}
         </Text>
       }
     >
-      <Container></Container>
+      <Container onClick={handleClick}>
+        <img src={campaign.data.iconUrl} alt={campaign.data.name} />
+      </Container>
     </Tooltip>
   );
 };

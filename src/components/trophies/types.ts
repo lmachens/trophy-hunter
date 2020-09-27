@@ -37,14 +37,16 @@ export interface Trophy {
         details: any;
       }
     | number;
-  checkLive?(props: {
-    activePlayer: ActivePlayer;
-    allPlayers: AllPlayers;
-    events: Events;
-    gameData: GameData;
-    trophyData: TrophyData;
-    account: Account;
-  }): number;
+  checkLive?(props: Live): number;
+}
+
+export interface Live {
+  activePlayer: ActivePlayer;
+  allPlayers: AllPlayers;
+  events: Events;
+  gameData: GameData;
+  trophyData: TrophyData;
+  account: Account;
 }
 
 export interface Ability {

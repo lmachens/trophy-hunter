@@ -15,17 +15,30 @@ import overwolf, {
 import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
 import { useState, useEffect } from 'react';
-import { useMutation } from 'react-query';
+import { queryCache, useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
+import { log } from '../api/logs';
+import { runLiveCheck, stopLiveCheck } from '../api/overwolf/live';
+import { useAccount } from '../contexts/account';
+
+overwolf.extensions.current.getManifest((manifest) =>
+  log(`Running v${manifest.meta.version}`)
+);
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);
   const [leagueLauncherRunning, setLeagueLauncherRunning] = useState(null);
   const [playingSupportedGame, setPlayingSupportedGame] = useState(null);
+  const [registeredFeatures, setRegisteredFeatures] = useState(false);
   const [autoLaunch] = usePersistentState('autoLaunch', true);
+  const { account } = useAccount();
 
-  const [login] = useMutation(postLogin);
+  const [login] = useMutation(postLogin, {
+    onSuccess: () => {
+      queryCache.invalidateQueries('account');
+    },
+  });
 
   useEffect(() => {
     const handleHotkeyPressed = () => {
@@ -44,7 +57,7 @@ const Background: NextPage = () => {
       'source=gamelaunchevent'
     );
     if (!launchedByEvent) {
-      console.log('Not launched by event => open Desktop window');
+      log('Not launched by event => open Desktop window');
       openWindow('desktop');
     }
 
@@ -117,21 +130,22 @@ const Background: NextPage = () => {
 
   useEffect(() => {
     if (leagueLauncherRunning === null) {
-      console.log(`League launcher is null`);
+      log(`League launcher is null`);
       return;
     }
 
     if (leagueLauncherRunning === false) {
-      console.log(`League launcher is not running`);
+      log(`League launcher is not running`);
       return;
     }
-    console.log(`League launcher is running`);
+    log(`League launcher is running`);
     if (autoLaunch) {
       openWindow('desktop');
     }
 
     const timeoutId = setTimeout(() => {
       setLeagueLauncherFeatures(INTERESTED_IN_LAUNCHER_FEATURES, () => {
+        let summonerNotFound = false;
         const getSummonerInfo = () => {
           overwolf.games.launchers.events.getInfo(
             LEAGUE_LAUNCHER_ID,
@@ -143,21 +157,26 @@ const Background: NextPage = () => {
                   is_garena_user: isGarenaUser,
                 } = response.res.summoner_info;
                 if (!summonerName || !platformId) {
-                  console.error(
-                    `SummonerName not found ${JSON.stringify(
-                      response.res.summoner_info
-                    )}`
-                  );
+                  if (!summonerNotFound) {
+                    console.error(
+                      `SummonerName not found ${JSON.stringify(
+                        response.res.summoner_info
+                      )}`
+                    );
+                    summonerNotFound = true;
+                  }
                   setTimeout(getSummonerInfo, 1000);
                 } else if (isGarenaUser === 'true' || isGarenaUser === true) {
                   console.info(
                     `User ${summonerName} ${platformId} is a garena user`
                   );
                   localStorage.setItem('isGarenaUser', 'true');
+                  setRegisteredFeatures(true);
                 } else {
                   localStorage.removeItem('isGarenaUser');
-                  console.log(`Login as ${summonerName} on ${platformId}`);
+                  log(`Login as ${summonerName} on ${platformId}`);
                   login({ platformId, summonerName });
+                  setRegisteredFeatures(true);
                 }
               } else {
                 setTimeout(getSummonerInfo, 1000);
@@ -170,76 +189,92 @@ const Background: NextPage = () => {
       });
     }, 1000);
 
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [leagueLauncherRunning, autoLaunch]);
+
+  useEffect(() => {
+    if (!registeredFeatures) {
+      return;
+    }
+
     const handleInfoUpdate = (infoUpdate) => {
-      if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
+      if (
+        infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
+        !infoUpdate.info?.lobby_info
+      ) {
         return;
       }
-      if (infoUpdate.feature === 'lobby_info' && infoUpdate.info?.lobby_info) {
-        const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
-        if (isNaN(queueId)) {
-          console.log(
-            `QueueId is NaN: ${JSON.stringify(infoUpdate.info.lobby_info)}`
-          );
-
-          return;
-        }
-        if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-          setPlayingSupportedGame(false);
-          console.log(`QueueId ${queueId} is not supported`);
-        } else {
-          console.log(`QueueId ${queueId} is supported`);
-          setPlayingSupportedGame(true);
-        }
+      const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
+      if (isNaN(queueId)) {
+        log(
+          `[handleInfoUpdate] QueueId is NaN: ${JSON.stringify(
+            infoUpdate.info.lobby_info
+          )}`
+        );
+        return;
+      }
+      if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
+        setPlayingSupportedGame(false);
+        log(`[handleInfoUpdate] QueueId ${queueId} is not supported`);
+      } else {
+        log(`[handleInfoUpdate] QueueId ${queueId} is supported`);
+        setPlayingSupportedGame(true);
       }
     };
 
     overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
 
     overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-      if (info.error || !info.res) {
+      if (info.error || !info.res || !info.res.lobby_info) {
         return;
       }
-      const queueId = parseInt(info.res.lobby_info?.queueId);
+      const queueId = parseInt(info.res.lobby_info.queueId);
       if (isNaN(queueId)) {
-        console.log(`QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`);
+        log(`[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`);
         return;
       }
       if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-        console.log(`QueueId ${queueId} is not supported`);
+        log(`[getInfo] QueueId ${queueId} is not supported`);
         setPlayingSupportedGame(false);
       } else {
-        console.log(`QueueId ${queueId} is supported`);
+        log(`[getInfo] QueueId ${queueId} is supported`);
         setPlayingSupportedGame(true);
       }
     });
 
     return () => {
-      clearTimeout(timeoutId);
       overwolf.games.launchers.events.onInfoUpdates.removeListener(
         handleInfoUpdate
       );
     };
-  }, [leagueLauncherRunning, autoLaunch]);
+  }, [registeredFeatures]);
 
   useEffect(() => {
+    if (!account) {
+      return;
+    }
     if (leagueRunning) {
-      console.log('League is running');
+      log('League is running');
     } else if (leagueRunning === false) {
-      console.log('League is not running');
+      log('League is not running');
       closeWindow('in_game');
       return;
     }
 
-    if (playingSupportedGame) {
-      console.log('Playing a supported game');
-    } else if (playingSupportedGame === false) {
-      console.log('Not playing a supported game');
+    if (leagueRunning && autoLaunch) {
+      if (playingSupportedGame) {
+        log('Playing a supported game');
+        openWindow('in_game');
+        runLiveCheck(account);
+        return stopLiveCheck;
+      } else if (playingSupportedGame === false) {
+        log('Not playing a supported game');
+        openWindow('not_supported');
+      }
     }
-
-    if (leagueRunning && playingSupportedGame && autoLaunch) {
-      openWindow('in_game');
-    }
-  }, [leagueRunning, playingSupportedGame, autoLaunch]);
+  }, [leagueRunning, playingSupportedGame, autoLaunch, account?._id]);
 
   useEffect(() => {
     if (!playingSupportedGame) {
@@ -258,7 +293,7 @@ const Background: NextPage = () => {
           endGameStats &&
           localStorage.getItem('checkGameId') !== endGameStats.gameId.toString()
         ) {
-          console.log(`Check game ${endGameStats.gameId}`);
+          log(`Check game ${endGameStats.gameId}`);
           localStorage.setItem('checkGameId', endGameStats.gameId);
         }
       }

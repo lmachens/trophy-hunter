@@ -1,3 +1,4 @@
+import { warn } from '../../../api/logs';
 import { Trophy } from '../types';
 
 const precision: Trophy = {
@@ -16,7 +17,7 @@ const precision: Trophy = {
         otherParticipant.timeline.lane === participant.timeline.lane
     );
     if (!opponent) {
-      console.log(
+      warn(
         `Can not find lane opponent for ${account.summoner.name} as ${participant.timeline.role} ${participant.timeline.lane}`
       );
       return 0;
@@ -50,7 +51,7 @@ const precision: Trophy = {
         player.team !== accountPlayer.team
     );
     if (!opponent) {
-      console.log(
+      warn(
         `Can not find lane opponent for ${accountPlayer.summonerName} as ${accountPlayer.position}`
       );
       return 0;

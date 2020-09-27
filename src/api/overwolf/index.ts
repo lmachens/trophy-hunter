@@ -1,5 +1,7 @@
 // Creates magic proxy to avoid crashes non-overwolf environments
 
+import { log } from '../logs';
+
 if (typeof overwolf === 'undefined') {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -141,7 +143,7 @@ export const setLeagueLauncherFeatures = (
         );
       }
 
-      console.log('Successfully set League Launcher features');
+      log('Successfully set League Launcher features');
       if (onReady) {
         onReady();
       }
@@ -149,22 +151,25 @@ export const setLeagueLauncherFeatures = (
   );
 };
 
-export const setLeagueFeatures = (
-  interestedInFeatures: string[],
-  onReady?: () => void
-) => {
-  overwolf.games.events.setRequiredFeatures(interestedInFeatures, (info) => {
-    if (!info.success) {
-      return setTimeout(
-        () => setLeagueFeatures(interestedInFeatures, onReady),
-        2000
-      );
-    }
+export const setLeagueFeatures = (interestedInFeatures: string[]) => {
+  return new Promise((res) => {
+    const setRequiredFeatures = (interestedInFeatures: string[]) => {
+      overwolf.games.events.setRequiredFeatures(
+        interestedInFeatures,
+        (info) => {
+          if (!info.success) {
+            return setTimeout(
+              () => setRequiredFeatures(interestedInFeatures),
+              2000
+            );
+          }
 
-    console.log('Successfully set League features');
-    if (onReady) {
-      onReady();
-    }
+          log('Successfully set League features');
+          res();
+        }
+      );
+    };
+    setRequiredFeatures(interestedInFeatures);
   });
 };
 

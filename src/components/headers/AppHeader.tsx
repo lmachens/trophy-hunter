@@ -6,18 +6,12 @@ import Feedback from '../icons/Feedback';
 import FeedbackModal from '../modals/FeedbackModal';
 import Grow from '../common/Grow';
 import AfterMatch from '../matches/AfterMatch';
-import Background from './Background';
-import LogoContainer from './LogoContainer';
-import Logo from './Logo';
-import Toolbar from './Toolbar';
 import HeaderButton from './HeaderButton';
-import ExitButton from './ExitButton';
-import MinimizeButton from './MinimizeButton';
-import MovableHeader from './MovableHeader';
 import Status from '../common/Status';
 import { useAccount } from '../../contexts/account';
 import HelpModal from '../guides/HelpModal';
 import AlienwareChallenge from './AlienwareChallenge';
+import Header from './Header';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -49,35 +43,22 @@ const AppHeader: FC = () => {
 
   return (
     <>
-      <MovableHeader>
-        <LogoContainer>
-          <Logo
-            src={`${process.env.PUBLIC_DIR}/trophy-hunter-logo.png`}
-            draggable={false}
-          />
-          <Background viewBox="0 0 200 48" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0H200V30H200L183 48H0V0Z" />
-          </Background>
-        </LogoContainer>
-        <Toolbar>
-          <Status />
-          {account && !loading && <AfterMatch />}
-          <Grow />
-          <WriteUsFeedback onClick={() => setShowFeedback(true)}>
-            <Feedback />
-            Write us a feedback
-          </WriteUsFeedback>
-          <AlienwareChallenge />
-          <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
-            <Discord />
-          </DiscordButtonLink>
-          <HeaderButton onClick={() => setShowHelp(true)}>
-            <Support />
-          </HeaderButton>
-          <MinimizeButton />
-          <ExitButton />
-        </Toolbar>
-      </MovableHeader>
+      <Header exitable>
+        <Status />
+        {account && !loading && <AfterMatch />}
+        <Grow />
+        <WriteUsFeedback onClick={() => setShowFeedback(true)}>
+          <Feedback />
+          Write us a feedback
+        </WriteUsFeedback>
+        <AlienwareChallenge />
+        <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
+          <Discord />
+        </DiscordButtonLink>
+        <HeaderButton onClick={() => setShowHelp(true)}>
+          <Support />
+        </HeaderButton>
+      </Header>
       {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
     </>

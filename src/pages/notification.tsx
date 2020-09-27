@@ -7,32 +7,21 @@ import { getLocalStorageItem, setLocalStorageItem } from '../api/utils/storage';
 import * as trophies from '../components/trophies';
 import Timer from '../components/common/Timer';
 import { Trophy } from '../components/trophies/types';
+import NotificationHeader from '../components/notifications/NotificationHeader';
+import NotificationTitle from '../components/notifications/NotificationTitle';
+import NotificationContainer from '../components/notifications/NotificationContainer';
+import { log } from '../api/logs';
 
-const Header = styled.header`
-  background: #1f1f1f;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Title = styled.h2`
-  text-transform: uppercase;
-  margin: 0;
-`;
+overwolf.extensions.current.getManifest((manifest) =>
+  log(`Running v${manifest.meta.version}`)
+);
 
 const ListItem = styled(TrophyListItem)`
-  background-image: url(${process.env.PUBLIC_DIR}/notifications/${(props) => props.trophy.island}.png);
+  background-image: ${(props) =>
+    `url(${process.env.PUBLIC_DIR}/notifications/${props.trophy.island}.png)`};
   background-position: bottom right;
   background-repeat: no-repeat;
   flex-grow: 1;
-`;
-
-const Container = styled.div`
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
 `;
 
 const Notification: NextPage = () => {
@@ -66,23 +55,23 @@ const Notification: NextPage = () => {
 
   const trophy: Trophy = trophies[notification.trophyName];
   return (
-    <Container>
-      <Header
+    <NotificationContainer>
+      <NotificationHeader
         onMouseDown={() =>
           overwolf.windows.getCurrentWindow((result) => {
             overwolf.windows.dragMove(result.window.id);
           })
         }
       >
-        <Title>
+        <NotificationTitle>
           {notification.progress === 1
             ? 'Achievement completed!'
             : 'Achievment near completion!'}
-        </Title>
+        </NotificationTitle>
         <Timer onDone={loadNotification} />
-      </Header>
+      </NotificationHeader>
       <ListItem trophy={trophy} progress={notification.progress} />
-    </Container>
+    </NotificationContainer>
   );
 };
 

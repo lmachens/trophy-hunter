@@ -31,6 +31,7 @@ if (process.env.TARGET === 'OVERWOLF') {
       '/in-game': { page: '/in-game' },
       '/league-of-legends': { page: '/league-of-legends' },
       '/notification': { page: '/notification' },
+      '/not-supported': { page: '/not-supported' },
     };
   };
 }

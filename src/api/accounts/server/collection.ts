@@ -1,3 +1,4 @@
+import { log } from '../../logs';
 import { getDatabase, getCollection } from '../../utils/server/db';
 import { Account } from '../types';
 
@@ -5,7 +6,7 @@ export const createAccountsCollection = async () => {
   const db = await getDatabase();
   const collections = await db.listCollections().toArray();
   if (collections.some((collection) => collection.name === 'accounts')) {
-    console.log('accounts Collection already exists');
+    log('accounts Collection already exists');
     return;
   }
 

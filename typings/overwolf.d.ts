@@ -3822,6 +3822,7 @@ declare namespace overwolf.streaming {
 
   /**
    * Update stream desktop capture options.
+   * @deprecated Since version 0.155. Will be deleted in version 0.160.
    * @param streamId The id of the stream for which to set the Be Right Back
    * image.
    * @param newOptions The updated desktop capture streaming options.
@@ -4894,9 +4895,14 @@ declare namespace overwolf.campaigns.crossapp {
     expiration: number;
 
     /**
+     * The UID of the app that owns the targeted cross-app campaign.
+     */
+    owner_app_uid?: string;
+
+    /**
      * An array of app UIDs this cross-app campaign targets.
      */
-    target_apps_uids: string[];
+    target_apps_uids?: string[];
 
     /**
      * Information about the cross-app campaign.

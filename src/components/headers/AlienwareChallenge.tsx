@@ -4,7 +4,6 @@ import { Tooltip } from '../tooltip';
 import { log } from '../../api/logs';
 
 const Container = styled.div`
-  background: #00d2d7;
   width: 30px;
   height: 30px;
   display: flex;

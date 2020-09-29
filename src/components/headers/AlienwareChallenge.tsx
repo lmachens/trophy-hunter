@@ -4,8 +4,6 @@ import { Tooltip } from '../tooltip';
 import { log } from '../../api/logs';
 
 const Container = styled.div`
-  width: 30px;
-  height: 30px;
   display: flex;
 `;
 
@@ -86,8 +84,9 @@ const AlienwareChallenge: FC = () => {
           <Catchline>{campaign.data.title}</Catchline> {campaign.data.text}
         </Text>
       }
+      targetId="alienware-challenge"
     >
-      <Container onClick={handleClick}>
+      <Container onClick={handleClick} data-tooltip-id="alienware-challenge">
         <img src={campaign.data.iconUrl} alt={campaign.data.name} />
       </Container>
     </Tooltip>

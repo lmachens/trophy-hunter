@@ -5,6 +5,7 @@ import { log } from '../../api/logs';
 
 const Container = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 const Catchline = styled.span`

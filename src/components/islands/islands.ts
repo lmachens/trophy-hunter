@@ -35,6 +35,14 @@ const islands = [
     centerLeft: 350,
   }),
   transformIsland({
+    name: 'objectives',
+    top: 295,
+    left: 530,
+    Component: ObjectivesIsland,
+    centerTop: 0,
+    centerLeft: 350,
+  }),
+  transformIsland({
     name: 'special',
     top: 320,
     left: 0,
@@ -49,14 +57,6 @@ const islands = [
     Component: EpicIsland,
     centerTop: 0,
     centerLeft: 140,
-  }),
-  transformIsland({
-    name: 'objectives',
-    top: 295,
-    left: 530,
-    Component: ObjectivesIsland,
-    centerTop: 0,
-    centerLeft: 350,
   }),
   transformIsland({
     name: 'hub',

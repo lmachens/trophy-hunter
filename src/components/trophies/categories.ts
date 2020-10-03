@@ -16,8 +16,13 @@ export const categoriesMap: {
   };
 } = {
   welcome: {
-    value: 'welcome',
-    label: 'Welcome',
+    value: 'hub',
+    label: 'Hub',
+    Icon: HubProgress,
+  },
+  hub: {
+    value: 'hub',
+    label: 'Hub',
     Icon: HubProgress,
   },
   combat: {

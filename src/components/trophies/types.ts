@@ -9,6 +9,7 @@ import { Account } from '../../api/accounts';
 
 export type Category =
   | 'welcome'
+  | 'hub'
   | 'combat'
   | 'skills'
   | 'teamwork'

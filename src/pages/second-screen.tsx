@@ -54,7 +54,7 @@ const Container = styled.div`
   }
 
   button {
-    margin-right: 18px;
+    margin-right: 16px;
   }
 `;
 
@@ -98,10 +98,10 @@ const SecondScreen: NextPage = () => {
     const handleHotkeyPressed = (
       event: overwolf.settings.hotkeys.OnPressedEvent
     ) => {
-      if (event.name === nextPageHotkey) {
-        setFilterIndex((filterIndex) =>
-          filterIndex + 1 === allFilters.length ? -1 : filterIndex + 1
-        );
+      if (event.name === 'next_page_trophy_hunter') {
+        setFilterIndex((filterIndex) => {
+          return filterIndex + 1 >= allFilters.length ? -1 : filterIndex + 1;
+        });
       }
     };
     overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
@@ -145,7 +145,10 @@ const SecondScreen: NextPage = () => {
         <main>
           <div>
             <Favorites
-              selected={filterIndex === allFilters.indexOf('favorites')}
+              selected={
+                filterIndex === -1 ||
+                filterIndex === allFilters.indexOf('favorites')
+              }
               disabled={
                 !availableTrophies.some((trophy) =>
                   account.favoriteTrophyNames.includes(trophy.name)
@@ -154,7 +157,10 @@ const SecondScreen: NextPage = () => {
               onClick={() => setFilterIndex(allFilters.indexOf('favorites'))}
             />
             <Combat
-              selected={filterIndex === allFilters.indexOf('combat')}
+              selected={
+                filterIndex === -1 ||
+                filterIndex === allFilters.indexOf('combat')
+              }
               disabled={
                 !availableTrophies.some(
                   (trophy) => trophy.category === 'combat'
@@ -163,7 +169,10 @@ const SecondScreen: NextPage = () => {
               onClick={() => setFilterIndex(allFilters.indexOf('combat'))}
             />
             <Skills
-              selected={filterIndex === allFilters.indexOf('skills')}
+              selected={
+                filterIndex === -1 ||
+                filterIndex === allFilters.indexOf('skills')
+              }
               disabled={
                 !availableTrophies.some(
                   (trophy) => trophy.category === 'skills'
@@ -172,7 +181,10 @@ const SecondScreen: NextPage = () => {
               onClick={() => setFilterIndex(allFilters.indexOf('skills'))}
             />
             <Teamwork
-              selected={filterIndex === allFilters.indexOf('teamwork')}
+              selected={
+                filterIndex === -1 ||
+                filterIndex === allFilters.indexOf('teamwork')
+              }
               disabled={
                 !availableTrophies.some(
                   (trophy) => trophy.category === 'teamwork'
@@ -181,7 +193,10 @@ const SecondScreen: NextPage = () => {
               onClick={() => setFilterIndex(allFilters.indexOf('teamwork'))}
             />
             <Objectives
-              selected={filterIndex === allFilters.indexOf('objectives')}
+              selected={
+                filterIndex === -1 ||
+                filterIndex === allFilters.indexOf('objectives')
+              }
               disabled={
                 !availableTrophies.some(
                   (trophy) => trophy.category === 'objectives'
@@ -190,29 +205,34 @@ const SecondScreen: NextPage = () => {
               onClick={() => setFilterIndex(allFilters.indexOf('objectives'))}
             />
             <Special
-              selected={filterIndex === allFilters.indexOf('objectives')}
+              selected={
+                filterIndex === -1 ||
+                filterIndex === allFilters.indexOf('special')
+              }
               disabled={
                 !availableTrophies.some(
-                  (trophy) => trophy.category === 'objectives'
+                  (trophy) => trophy.category === 'special'
                 )
               }
-              onClick={() => setFilterIndex(allFilters.indexOf('objectives'))}
+              onClick={() => setFilterIndex(allFilters.indexOf('special'))}
             />
             <Epic
-              selected={filterIndex === allFilters.indexOf('epic')}
+              selected={
+                filterIndex === -1 || filterIndex === allFilters.indexOf('epic')
+              }
               disabled={
                 !availableTrophies.some((trophy) => trophy.category === 'epic')
               }
               onClick={() => setFilterIndex(allFilters.indexOf('epic'))}
             />
             <Origin
-              selected={filterIndex === allFilters.indexOf('welcome')}
-              disabled={
-                !availableTrophies.some(
-                  (trophy) => trophy.category === 'welcome'
-                )
+              selected={
+                filterIndex === -1 || filterIndex === allFilters.indexOf('hub')
               }
-              onClick={() => setFilterIndex(allFilters.indexOf('welcome'))}
+              disabled={
+                !availableTrophies.some((trophy) => trophy.category === 'hub')
+              }
+              onClick={() => setFilterIndex(allFilters.indexOf('hub'))}
             />
           </div>
           <List>
@@ -232,7 +252,11 @@ const SecondScreen: NextPage = () => {
             {islands.map(({ name, Component: Island }) => (
               <Island
                 key={name}
-                status={filters.includes(name) ? 'open' : 'closed'}
+                status={
+                  account?.islands.find(
+                    (accountIsland) => accountIsland.name === name
+                  )?.status || 'closed'
+                }
                 levels={levels}
                 onLevelClick={() => setFilterIndex(allFilters.indexOf(name))}
               />

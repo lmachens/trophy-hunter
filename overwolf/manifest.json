@@ -13,7 +13,7 @@
     "launcher_icon": "icons/icon.ico",
     "window_icon": "icons/taskbarIcon.png"
   },
-  "permissions": ["Hotkeys", "GameInfo"],
+  "permissions": ["Hotkeys", "GameInfo", "DesktopStreaming"],
   "data": {
     "start_window": "background",
     "windows": {
@@ -90,7 +90,8 @@
         },
         "block_top_window_navigation": true,
         "popup_blocker": true,
-        "mute": true
+        "mute": true,
+        "keep_window_location": true
       },
       "notification": {
         "file": "build/notification.html",

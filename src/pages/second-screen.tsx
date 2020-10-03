@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import styled from '@emotion/styled';
 import overwolf from '../api/overwolf';
 import Head from 'next/head';
-import { log } from '../api/logs';
+import { log, warn } from '../api/logs';
 import { VideoAds } from '../components/ads';
 import Profile from '../components/trophies/Profile';
 import { Islands } from '../components/islands';
@@ -105,6 +105,25 @@ const SecondScreen: NextPage = () => {
       }
     };
     overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
+
+    overwolf.utils.getMonitorsList((result) => {
+      if (result.displays.length < 2) {
+        warn('[second-screen] Not enough displays');
+        return;
+      }
+      const secondaryDisplay = result.displays.find(
+        (display) => !display.is_primary
+      );
+      if (!secondaryDisplay) {
+        warn('[second-screen] No secondary display found');
+        return;
+      }
+      overwolf.windows.changePosition(
+        'second_screen',
+        secondaryDisplay.x,
+        secondaryDisplay.y
+      );
+    });
     return () => {
       overwolf.settings.hotkeys.onPressed.removeListener(handleHotkeyPressed);
     };

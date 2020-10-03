@@ -114,6 +114,11 @@ const Background: NextPage = () => {
 
         if (leagueIsRunning && res.isInFocus) {
           openWindow('in_game');
+          overwolf.utils.getMonitorsList((result) => {
+            if (result.displays.length > 1) {
+              openWindow('second_screen');
+            }
+          });
         } else {
           openWindow('desktop');
         }
@@ -274,6 +279,11 @@ const Background: NextPage = () => {
       if (playingSupportedGame) {
         log('Playing a supported game');
         openWindow('in_game');
+        overwolf.utils.getMonitorsList((result) => {
+          if (result.displays.length > 1) {
+            openWindow('second_screen');
+          }
+        });
         runLiveCheck(account);
         return stopLiveCheck;
       } else if (playingSupportedGame === false) {

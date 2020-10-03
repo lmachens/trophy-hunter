@@ -39,7 +39,7 @@ export interface IslandProps {
   targetLevel?: TargetLevel;
   status: 'open' | 'done' | 'closed';
   levels: AccountLevel[];
-  onLevelClick?(level: Level): void;
+  onLevelClick(level: Level): void;
 }
 
 export interface UserLevels {

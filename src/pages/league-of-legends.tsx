@@ -96,7 +96,7 @@ const LeagueOfLegends: NextPage = () => {
                   (accountIsland) => accountIsland.name === name
                 )?.status || 'closed'
               }
-              levels={account?.levels}
+              levels={account?.levels || []}
             />
           ))}
           <Background />

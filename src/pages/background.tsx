@@ -41,8 +41,14 @@ const Background: NextPage = () => {
   });
 
   useEffect(() => {
-    const handleHotkeyPressed = () => {
-      toggleWindow('in_game');
+    const handleHotkeyPressed = (
+      event: overwolf.settings.hotkeys.OnPressedEvent
+    ) => {
+      if (event.name === 'show_trophy_hunter') {
+        toggleWindow('in_game');
+      } else if (event.name === 'show_second_screen_trophy_hunter') {
+        toggleWindow('second_screen');
+      }
     };
 
     overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
@@ -260,6 +266,7 @@ const Background: NextPage = () => {
     } else if (leagueRunning === false) {
       log('League is not running');
       closeWindow('in_game');
+      closeWindow('second_screen');
       return;
     }
 

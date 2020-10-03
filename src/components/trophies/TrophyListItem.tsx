@@ -52,6 +52,7 @@ const Favorite = styled((props) => (
   flex-shrink: 0;
   fill: ${(props: FavoriteProps) => (props.active ? '#77777A' : '#1F1F1F')};
   stroke: #77777a;
+  cursor: pointer;
 `;
 
 const TrophyListItem: FC<TrophyListItemProps> = ({

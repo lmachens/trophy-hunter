@@ -37,7 +37,7 @@ const GlobalStyles = () => (
 
       body {
         margin: 0;
-        background: #26252b;
+        background: #2b2a30;
         color: #eaeaea;
         font-family: Helvetica, Arial, sans-serif;
         user-select: none;

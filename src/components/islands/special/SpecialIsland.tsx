@@ -46,7 +46,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="46.6289"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint0_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint0_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path
@@ -58,7 +58,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="0.5"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint1_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint1_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -66,7 +66,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="4.51074"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint2_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint2_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -74,7 +74,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="14.5391"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint3_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint3_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -82,7 +82,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="26.5732"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint4_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint4_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -90,7 +90,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="45.626"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint5_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint5_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -98,7 +98,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="63.6758"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint6_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint6_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -106,7 +106,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="78.7188"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint7_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint7_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -114,7 +114,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="87.7432"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint8_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint8_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -122,7 +122,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="91.7549"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint9_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint9_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -130,7 +130,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="88.7461"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint10_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint10_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -138,7 +138,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="78.7188"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint11_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint11_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -146,7 +146,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="63.6758"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint12_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint12_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -154,7 +154,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="28.5781"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint13_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint13_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -162,7 +162,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="13.5361"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint14_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint14_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -170,7 +170,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="3.50879"
         width="6"
         height="4.01399"
-        fill={status === 'done' ? 'url(#paint15_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint15_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path
@@ -236,12 +236,12 @@ const SpecialIsland: FC<IslandProps> = ({
       />
       <path
         d="M54 142.736V148.226H85.5V142.736H54Z"
-        fill={status === 'done' ? 'url(#paint16_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint16_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path
         d="M69 101.812H71.5V105.805L85.5 117.783V122.275H54V117.783L69 105.805V101.812Z"
-        fill={status === 'done' ? 'url(#paint17_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint17_linear)' : '#2B2A30'}
       />
       <path
         d="M71.5 105.805V101.812H69V105.805M71.5 105.805L85.5 117.783M71.5 105.805H69.5M85.5 117.783V122.275H54V117.783M85.5 117.783H83M54 117.783L69 105.805M54 117.783H57M69 105.805H69.5M69.5 105.805L57 117.783M69.5 105.805L61 117.783M57 117.783H61M61 117.783H65.75M70.5 105.805V117.783M70.5 117.783H77.5M70.5 117.783H65.75M83 117.783L71 105.805L77.5 117.783M83 117.783H77.5M70 105.805L65.75 117.783"
@@ -283,7 +283,7 @@ const SpecialIsland: FC<IslandProps> = ({
         width="2.99631"
         height="2.99631"
         transform="rotate(45 70.3284 95.5323)"
-        fill={status === 'done' ? 'url(#paint18_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint18_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -291,7 +291,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="78.3564"
         width="5"
         height="4.98894"
-        fill={status === 'done' ? 'url(#paint19_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint19_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -299,7 +299,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="74.3643"
         width="5"
         height="4.98894"
-        fill={status === 'done' ? 'url(#paint20_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint20_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -307,7 +307,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="80.3525"
         width="5"
         height="4.98894"
-        fill={status === 'done' ? 'url(#paint21_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint21_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -315,7 +315,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="42.4229"
         width="5"
         height="4.98894"
-        fill={status === 'done' ? 'url(#paint22_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint22_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -323,7 +323,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="6.48926"
         width="5"
         height="4.98894"
-        fill={status === 'done' ? 'url(#paint23_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint23_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path d="M151 46.9141V57.8938" stroke="#EAEAEA" />
@@ -333,7 +333,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="73.3662"
         width="5"
         height="4.98894"
-        fill={status === 'done' ? 'url(#paint24_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint24_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -341,7 +341,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="68.375"
         width="5"
         height="4.98894"
-        fill={status === 'done' ? 'url(#paint25_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint25_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -349,7 +349,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="70.3711"
         width="6"
         height="5.98709"
-        fill={status === 'done' ? 'url(#paint26_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint26_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -357,7 +357,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="78.3564"
         width="6"
         height="5.98709"
-        fill={status === 'done' ? 'url(#paint27_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint27_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path
@@ -369,7 +369,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="82.3496"
         width="4"
         height="3.99078"
-        fill={status === 'done' ? 'url(#paint28_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint28_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect
@@ -377,7 +377,7 @@ const SpecialIsland: FC<IslandProps> = ({
         y="75.3623"
         width="4"
         height="3.99078"
-        fill={status === 'done' ? 'url(#paint29_linear)' : '#26252b'}
+        fill={status === 'done' ? 'url(#paint29_linear)' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <rect x="201" y="169" width="8" height="0.998156" fill="#EAEAEA" />

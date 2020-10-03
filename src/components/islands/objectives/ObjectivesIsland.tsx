@@ -63,7 +63,7 @@ const ObjectivesIsland: FC<IslandProps> = ({
       <path d="M191.504 89.3545V124.796" stroke="#EAEAEA" />
       <path
         d="M96.0042 90.6165L107.888 61.5918L120.196 90.6165L116.588 94.43H99.1873L96.0042 90.6165Z"
-        fill={status === 'done' ? '#0F8CFF' : '#26252b'}
+        fill={status === 'done' ? '#0F8CFF' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path
@@ -95,7 +95,7 @@ const ObjectivesIsland: FC<IslandProps> = ({
       />
       <path
         d="M159.004 1V8.32124L169.004 4.66062L159.004 1Z"
-        fill={status === 'done' ? '#0F8CFF' : '#26252b'}
+        fill={status === 'done' ? '#0F8CFF' : '#2B2A30'}
       />
       <path
         d="M159.004 8.32124V1L169.004 4.66062L159.004 8.32124ZM159.004 8.32124V11.9819"
@@ -123,7 +123,7 @@ const ObjectivesIsland: FC<IslandProps> = ({
       />
       <path
         d="M108.004 52.9141V59.0618L115.004 55.7515L108.004 52.9141Z"
-        fill={status === 'done' ? '#0F8CFF' : '#26252b'}
+        fill={status === 'done' ? '#0F8CFF' : '#2B2A30'}
       />
       <path
         d="M108.004 59.0618V52.9141L115.004 55.7515L108.004 59.0618ZM108.004 59.0618V61.8992"
@@ -139,7 +139,7 @@ const ObjectivesIsland: FC<IslandProps> = ({
       />
       <path
         d="M165.004 64.8945V71.7254L172.004 68.0472L165.004 64.8945Z"
-        fill={status === 'done' ? '#0F8CFF' : '#26252b'}
+        fill={status === 'done' ? '#0F8CFF' : '#2B2A30'}
       />
       <path
         d="M165.004 71.7254V64.8945L172.004 68.0472L165.004 71.7254ZM165.004 71.7254V74.878"
@@ -148,7 +148,7 @@ const ObjectivesIsland: FC<IslandProps> = ({
       <path d="M143.004 71.883V64.8945" stroke="#EAEAEA" />
       <path
         d="M168.792 38.7107L159.242 11.3809L149.056 38.7107L151.178 41.253H167.094L168.792 38.7107Z"
-        fill={status === 'done' ? '#0F8CFF' : '#26252b'}
+        fill={status === 'done' ? '#0F8CFF' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path
@@ -157,7 +157,7 @@ const ObjectivesIsland: FC<IslandProps> = ({
       />
       <path
         d="M10.0042 176.211L18.0042 166.227H45.5042L50.5042 166.227H74.0042V146.26H170.004H173.504V193.183H185.504V154.746H214.004V143.265H198.004V135.777H223.504V161.235V165.229H194.504V202.168H161.004V156.244H83.5042V176.211H10.0042Z"
-        fill={status === 'done' ? '#0F8CFF' : '#26252b'}
+        fill={status === 'done' ? '#0F8CFF' : '#2B2A30'}
       />
       <path
         d="M223.504 161.235H194.504V165.229M223.504 161.235V135.777H198.004V143.265H214.004V154.746H185.504V193.183H173.504M223.504 161.235V165.229H194.504M173.504 193.183V146.26H170.004M173.504 193.183H170.004V146.26M194.504 165.229V202.168H161.004V156.244H83.5042V176.211H10.0042L18.0042 166.227H45.5042L50.5042 166.227H74.0042V146.26H170.004"
@@ -265,7 +265,7 @@ const ObjectivesIsland: FC<IslandProps> = ({
       />
       <path
         d="M153.004 102.707L164.898 73.8799L177.004 103.358L173.181 106.825H155.978L153.004 102.707Z"
-        fill={status === 'done' ? '#0F8CFF' : '#26252b'}
+        fill={status === 'done' ? '#0F8CFF' : '#2B2A30'}
         stroke="#EAEAEA"
       />
       <path

@@ -50,9 +50,7 @@ export default applyMiddleware(
         log(`Account not found ${authToken}`);
         res.setHeader(
           'Set-Cookie',
-          `authToken=${authToken};Max-Age=0${
-            process.env.NODE_ENV === 'production' ? ';SameSite=None;Secure' : ''
-          }`
+          `authToken=${authToken};Max-Age=0;SameSite=None;Secure`
         );
         return res.status(401).end('Unauthorized');
       }

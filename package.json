@@ -2,7 +2,7 @@
   "name": "trophy-hunter",
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "node dev.js",
     "build": "next build",
     "build:overwolf": "TARGET=OVERWOLF next build && TARGET=OVERWOLF next export -o overwolf/build",
     "export": "next build && next export",

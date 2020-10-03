@@ -81,23 +81,27 @@ export default applyMiddleware(
       'Set-Cookie',
       `authToken=${authToken};path=/;Max-Age=${
         ONE_YEAR / 1000
-      };HttpOnly;SameSite=None`
+      };HttpOnly;SameSite=None;Secure`
     );
     res.json(account.value);
 
     if (oldAuthToken) {
-      const { accountId } = jwt.verify(oldAuthToken, process.env.JWT_SECRET);
+      try {
+        const { accountId } = jwt.verify(oldAuthToken, process.env.JWT_SECRET);
 
-      // Limit to 5 authTokens
-      for (let i = 5; i < account.value.authTokens.length; i++) {
-        await Accounts.updateOne(
-          { 'summoner.accountId': accountId },
-          {
-            $pop: {
-              authTokens: -1,
-            },
-          }
-        );
+        // Limit to 5 authTokens
+        for (let i = 5; i < account.value.authTokens.length; i++) {
+          await Accounts.updateOne(
+            { 'summoner.accountId': accountId },
+            {
+              $pop: {
+                authTokens: -1,
+              },
+            }
+          );
+        }
+      } catch (error) {
+        console.error('Invalid oldAuthToken');
       }
     }
   },

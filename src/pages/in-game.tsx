@@ -9,7 +9,6 @@ import { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
 import { keyframes } from '@emotion/core';
 import useHotkey from '../hooks/useHotkey';
-import { Trophy } from '../components/trophies/types';
 import overwolf from '../api/overwolf';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
@@ -72,7 +71,6 @@ const Motivation = styled.div`
 
 const Appear = styled.div`
   animation: ${appear} ease 2s 1;
-  animaton-delay: 1s;
 `;
 
 const GrowFlex = styled(Grow)`

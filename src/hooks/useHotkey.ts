@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { getHotkey } from '../api/overwolf';
 
-const useHotkey = () => {
+const useHotkey = (name: string): string => {
   const [hotkey, setHotkey] = useState('');
 
   useEffect(() => {
-    getHotkey('show_trophy_hunter')
+    getHotkey(name)
       .then(setHotkey)
       .catch(() => setHotkey('unknown'));
 
     const handleChange = (event: overwolf.settings.hotkeys.OnChangedEvent) => {
-      if (event.name === 'show_trophy_hunter') {
+      if (event.name === name) {
         setHotkey(event.binding);
       }
     };

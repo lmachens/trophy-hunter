@@ -17,7 +17,7 @@ const Hint = styled.span`
 `;
 
 const InGameHeader: FC = () => {
-  const hotkey = useHotkey();
+  const hotkey = useHotkey('show_trophy_hunter');
 
   return (
     <Header>

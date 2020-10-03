@@ -80,7 +80,7 @@ const GrowFlex = styled(Grow)`
 `;
 
 const InGame: NextPage = () => {
-  const hotkey = useHotkey();
+  const hotkey = useHotkey('show_trophy_hunter');
   const [progress] = usePersistentState(PROGRESS, 0);
   const [connectionStatus, setConnectionStatus] = useState('connecting');
   const [trophyProgress] = usePersistentState<{ [trophyName: string]: number }>(

@@ -29,7 +29,7 @@ const Setting = styled.div`
 const SettingsLink = SettingsButton.withComponent('a');
 
 const Settings: FC = () => {
-  const hotkey = useHotkey();
+  const hotkey = useHotkey('show_trophy_hunter');
   const [autoLaunch, setAutoLaunch] = usePersistentState('autoLaunch', true);
   const [trophyNearCompletion, setTrophyNearCompletion] = usePersistentState(
     'trophyNearCompletion',

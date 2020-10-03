@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import Grow from '../common/Grow';
 import Background from './Background';
 import LogoContainer from './LogoContainer';
 import Logo from './Logo';

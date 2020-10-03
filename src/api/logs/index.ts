@@ -12,4 +12,4 @@ export const createLog = (output: (...data: any[]) => void) => (
 
 export const log = createLog(console.log);
 export const warn = createLog(console.warn);
-export const errror = createLog(console.error);
+export const error = createLog(console.error);

@@ -5,7 +5,7 @@ import {
 } from '.';
 import { Live, Trophy } from '../../components/trophies/types';
 import { Account } from '../accounts';
-import { errror, log } from '../logs';
+import { error, log } from '../logs';
 import { waitFor } from '../utils/async';
 import { parseJSON } from '../utils/json';
 import {
@@ -200,8 +200,8 @@ export const runLiveCheck = async (account: Account): Promise<void> => {
     );
 
     overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdates2);
-  } catch (error) {
-    errror('[runLiveCheck]', error);
+  } catch (err) {
+    error('[runLiveCheck]', err);
   }
 };
 

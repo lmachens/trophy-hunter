@@ -1,6 +1,7 @@
 import { ComponentType } from 'react';
 import styled from '@emotion/styled';
 import { Level, TargetLevel } from '../levels/types';
+import { AccountLevel } from '../../api/accounts';
 
 interface TransformIslandProps {
   name: string;
@@ -18,7 +19,7 @@ export function transformIsland({
   Component,
   centerTop,
   centerLeft,
-}: TransformIslandProps) {
+}: TransformIslandProps): TransformIslandProps {
   return {
     name,
     top,
@@ -36,6 +37,8 @@ export function transformIsland({
 export interface IslandProps {
   className?: string;
   targetLevel?: TargetLevel;
+  status: 'open' | 'done' | 'closed';
+  levels: AccountLevel[];
   onLevelClick?(level: Level): void;
 }
 

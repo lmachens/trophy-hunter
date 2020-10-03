@@ -8,23 +8,14 @@ import {
   objectives4,
   objectives5,
 } from './levels';
-import { useAccount } from '../../../contexts/account';
 
 const ObjectivesIsland: FC<IslandProps> = ({
   targetLevel,
   onLevelClick,
+  status,
+  levels,
   ...svgProps
 }) => {
-  const { account } = useAccount();
-  const status =
-    account?.islands.find(
-      (accountIsland) => accountIsland.name === 'objectives'
-    )?.status || 'closed';
-  const levels =
-    account?.levels.filter(
-      (accountLevel) => accountLevel.island === 'objectives'
-    ) || [];
-
   return (
     <IslandSVG
       width="235"

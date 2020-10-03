@@ -10,21 +10,14 @@ import {
   hubTeamwork,
   welcome,
 } from './levels';
-import { useAccount } from '../../../contexts/account';
 
 const HubIsland: FC<IslandProps> = ({
   targetLevel,
   onLevelClick,
+  status,
+  levels,
   ...svgProps
 }) => {
-  const { account } = useAccount();
-  const status =
-    account?.islands.find((accountIsland) => accountIsland.name === 'hub')
-      ?.status || 'closed';
-  const levels =
-    account?.levels.filter((accountLevel) => accountLevel.island === 'hub') ||
-    [];
-
   return (
     <IslandSVG
       width="187"

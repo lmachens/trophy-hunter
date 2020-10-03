@@ -11,22 +11,14 @@ import {
   teamwork7,
   teamwork8,
 } from './levels';
-import { useAccount } from '../../../contexts/account';
 
 const TeamWorkIsland: FC<IslandProps> = ({
   targetLevel,
   onLevelClick,
+  status,
+  levels,
   ...svgProps
 }) => {
-  const { account } = useAccount();
-  const status =
-    account?.islands.find((accountIsland) => accountIsland.name === 'teamwork')
-      ?.status || 'closed';
-  const levels =
-    account?.levels.filter(
-      (accountLevel) => accountLevel.island === 'teamwork'
-    ) || [];
-
   return (
     <IslandSVG
       width="240"

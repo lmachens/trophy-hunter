@@ -11,22 +11,14 @@ import {
   combat7,
   combat8,
 } from './levels';
-import { useAccount } from '../../../contexts/account';
 
 const CombatIsland: FC<IslandProps> = ({
   targetLevel,
   onLevelClick,
+  status,
+  levels,
   ...svgProps
 }) => {
-  const { account } = useAccount();
-  const status =
-    account?.islands.find((accountIsland) => accountIsland.name === 'combat')
-      ?.status || 'closed';
-  const levels =
-    account?.levels.filter(
-      (accountLevel) => accountLevel.island === 'combat'
-    ) || [];
-
   return (
     <IslandSVG
       width="235"

@@ -14,6 +14,7 @@ import * as levels from '../components/islands/levels';
 import usePersistentState from '../hooks/usePersistentState';
 import GarenaModal from '../components/modals/GarenaModal';
 import islands from '../components/islands/islands';
+import { useAccount } from '../contexts/account';
 
 const SizeContainer = styled.div`
   position: absolute;
@@ -50,6 +51,7 @@ const LeagueOfLegends: NextPage = () => {
     'isGarenaUser',
     null
   );
+  const { account } = useAccount();
 
   const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
@@ -89,6 +91,12 @@ const LeagueOfLegends: NextPage = () => {
                 setVisibleIslandDetails(true);
               }}
               targetLevel={targetLevel}
+              status={
+                account?.islands.find(
+                  (accountIsland) => accountIsland.name === name
+                )?.status || 'closed'
+              }
+              levels={account?.levels}
             />
           ))}
           <Background />

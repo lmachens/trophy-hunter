@@ -2,21 +2,14 @@ import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
 import { epic1, epic2 } from './levels';
-import { useAccount } from '../../../contexts/account';
 
 const EpicIsland: FC<IslandProps> = ({
   targetLevel,
   onLevelClick,
+  status,
+  levels,
   ...svgProps
 }) => {
-  const { account } = useAccount();
-  const status =
-    account?.islands.find((accountIsland) => accountIsland.name === 'epic')
-      ?.status || 'closed';
-  const levels =
-    account?.levels.filter((accountLevel) => accountLevel.island === 'epic') ||
-    [];
-
   return (
     <IslandSVG
       width="207"

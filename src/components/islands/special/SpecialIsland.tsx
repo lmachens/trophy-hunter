@@ -2,22 +2,14 @@ import { FC } from 'react';
 import { IslandProps } from '../utils';
 import IslandSVG from '../IslandSVG';
 import { special1, special2, special3, special4 } from './levels';
-import { useAccount } from '../../../contexts/account';
 
 const SpecialIsland: FC<IslandProps> = ({
   targetLevel,
   onLevelClick,
+  status,
+  levels,
   ...svgProps
 }) => {
-  const { account } = useAccount();
-  const status =
-    account?.islands.find((accountIsland) => accountIsland.name === 'special')
-      ?.status || 'closed';
-  const levels =
-    account?.levels.filter(
-      (accountLevel) => accountLevel.island === 'special'
-    ) || [];
-
   return (
     <IslandSVG
       width="235"

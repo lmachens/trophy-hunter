@@ -11,7 +11,7 @@ import { transformIsland } from './utils';
 
 const islands = [
   transformIsland({
-    name: 'combatIsland',
+    name: 'combat',
     top: 56,
     left: 0,
     Component: CombatIsland,
@@ -19,7 +19,7 @@ const islands = [
     centerLeft: 0,
   }),
   transformIsland({
-    name: 'skillsIsland',
+    name: 'skills',
     top: 8,
     left: 285,
     Component: SkillsIsland,
@@ -27,7 +27,7 @@ const islands = [
     centerLeft: 140,
   }),
   transformIsland({
-    name: 'teamworkIsland',
+    name: 'teamwork',
     top: 20,
     left: 535,
     Component: TeamworkIsland,
@@ -35,7 +35,7 @@ const islands = [
     centerLeft: 350,
   }),
   transformIsland({
-    name: 'specialIsland',
+    name: 'special',
     top: 320,
     left: 0,
     Component: SpecialIsland,
@@ -43,7 +43,7 @@ const islands = [
     centerLeft: 0,
   }),
   transformIsland({
-    name: 'epicIsland',
+    name: 'epic',
     top: 460,
     left: 260,
     Component: EpicIsland,
@@ -51,7 +51,7 @@ const islands = [
     centerLeft: 140,
   }),
   transformIsland({
-    name: 'objectivesIsland',
+    name: 'objectives',
     top: 295,
     left: 530,
     Component: ObjectivesIsland,
@@ -59,7 +59,7 @@ const islands = [
     centerLeft: 350,
   }),
   transformIsland({
-    name: 'hubIsland',
+    name: 'hub',
     top: 250,
     left: 275,
     Component: HubIsland,

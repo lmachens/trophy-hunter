@@ -10,12 +10,12 @@ const Container = styled.div`
 `;
 
 interface IslandsProps {
-  onClick(): void;
+  onClick?(): void;
 }
 
-const Islands: FC<IslandsProps> = ({ children, onClick }) => {
+const Islands: FC<IslandsProps> = ({ children, onClick, ...props }) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} {...props}>
       <SpecialGradients />
       {children}
     </Container>

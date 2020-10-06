@@ -76,8 +76,11 @@ const List = styled.section`
 const allFilters = ['favorites', ...islands.map((island) => island.name)];
 const SecondScreen: NextPage = () => {
   const { account } = useAccount();
-  const [filterIndex, setFilterIndex] = useState(-1);
-  const [nextFilterIndex, setNextFilterIndex] = useState(1);
+  const [filterIndex, setFilterIndex] = usePersistentState(
+    'last-filter-index',
+    -1
+  );
+  const [nextFilterIndex, setNextFilterIndex] = useState(-1);
   const levels = account?.levels || [];
   const availableTrophies = useAvailableTrophies();
   const [trophyProgress] = usePersistentState<{ [trophyName: string]: number }>(
@@ -98,7 +101,6 @@ const SecondScreen: NextPage = () => {
   const hasFavorites = availableTrophies.some((trophy) =>
     account.favoriteTrophyNames.includes(trophy.name)
   );
-
   useEffect(() => {
     const getNextIndex = (index) => {
       let nextFilterIndex = (index + 1) % allFilters.length;

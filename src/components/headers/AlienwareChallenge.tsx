@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Tooltip } from '../tooltip';
 import { log } from '../../api/logs';
+import usePersistentState from '../../hooks/usePersistentState';
 
 const Container = styled.div`
   display: flex;
@@ -22,6 +23,10 @@ const Text = styled.div`
 const ALIENWARE_ACTION = 'ar-invite';
 
 const AlienwareChallenge: FC = () => {
+  const [autoShowTooltip, setAutoShowTooltip] = usePersistentState(
+    'alienware-show-tooltip',
+    true
+  );
   const [campaign, setCampaign] = useState<
     overwolf.campaigns.crossapp.CrossAppCampaign
   >(null);
@@ -39,6 +44,9 @@ const AlienwareChallenge: FC = () => {
       log('[getAvailableActions]', result);
       if (alienwareCampaign) {
         setCampaign(alienwareCampaign);
+        setTimeout(() => {
+          setAutoShowTooltip(false);
+        }, 1000);
       }
     });
 
@@ -49,6 +57,9 @@ const AlienwareChallenge: FC = () => {
 
       if (campaign.action === ALIENWARE_ACTION) {
         setCampaign(campaign);
+        setTimeout(() => {
+          setAutoShowTooltip(false);
+        }, 1000);
       }
     };
 
@@ -74,7 +85,9 @@ const AlienwareChallenge: FC = () => {
         owner_app_uid: campaign.owner_app_uid,
         data: {},
       },
-      (result) => log(`[reportConversion]`, result)
+      (result) => {
+        log(`[reportConversion]`, result);
+      }
     );
   };
 
@@ -86,7 +99,7 @@ const AlienwareChallenge: FC = () => {
           <Catchline>{campaign.data.title}</Catchline> {campaign.data.text}
         </Text>
       }
-      targetId="alienware-challenge"
+      targetId={autoShowTooltip && 'alienware-challenge'}
     >
       <Container onClick={handleClick} data-tooltip-id="alienware-challenge">
         <img src={campaign.data.iconUrl} alt={campaign.data.name} />

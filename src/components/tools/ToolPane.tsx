@@ -6,7 +6,7 @@ const ToolPane = styled.div`
   background: #2b2a30;
   padding: 20px;
   border-top: 1px solid #eaeaea;
-  width: 100%;
+  width: calc(100% - 440px);
 `;
 
 export default ToolPane;

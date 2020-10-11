@@ -7,14 +7,18 @@ import useHotkey from '../../hooks/useHotkey';
 
 const Row = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const Col = styled.div`
   padding: 0px 12px;
+  min-width: 240px;
 `;
 
 const Divider = styled.div`
   width: 1px;
+  min-width: 1px;
   background: #3f3e43;
   margin: 0px 12px;
 `;
@@ -23,13 +27,14 @@ const Setting = styled.div`
   margin: 7px 0px;
   display: flex;
   justify-content: space-between;
-  min-width: 240px;
 `;
 
 const SettingsLink = SettingsButton.withComponent('a');
 
 const Settings: FC = () => {
-  const hotkey = useHotkey('show_trophy_hunter');
+  const showTrophyHunterHotkey = useHotkey('show_trophy_hunter');
+  const nextPageHotkey = useHotkey('next_page_trophy_hunter');
+  const showSecondScreenHotkey = useHotkey('show_second_screen_trophy_hunter');
   const [autoLaunch, setAutoLaunch] = usePersistentState('autoLaunch', true);
   const [trophyNearCompletion, setTrophyNearCompletion] = usePersistentState(
     'trophyNearCompletion',
@@ -47,9 +52,9 @@ const Settings: FC = () => {
         <Col>
           <h3>General</h3>
           <Setting>
-            Show / Hide hotkey{' '}
-            <SettingsLink href="overwolf://settings/hotkeys#show_trophy_hunter">
-              {hotkey}
+            Show / Hide hotkey
+            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_trophy_hunter">
+              {showTrophyHunterHotkey}
             </SettingsLink>
           </Setting>
           <Setting>
@@ -64,7 +69,7 @@ const Settings: FC = () => {
         <Col>
           <h3>In-Game Notifications</h3>
           <Setting>
-            Trophy near completion{' '}
+            Trophy near completion
             <SettingsToggle
               checked={trophyNearCompletion}
               onChange={(event) =>
@@ -73,11 +78,27 @@ const Settings: FC = () => {
             />
           </Setting>
           <Setting>
-            Trophy completed{' '}
+            Trophy completed
             <SettingsToggle
               checked={trophyCompleted}
               onChange={(event) => setTrophyCompleted(event.target.checked)}
             />
+          </Setting>
+        </Col>
+        <Divider />
+        <Col>
+          <h3>Second Screen</h3>
+          <Setting>
+            Next page hotkey
+            <SettingsLink href="overwolf://settings/games-overlay?hotkey=next_page_trophy_hunter">
+              {nextPageHotkey}
+            </SettingsLink>
+          </Setting>
+          <Setting>
+            Show / Hide hotkey
+            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_second_screen_trophy_hunter">
+              {showSecondScreenHotkey}
+            </SettingsLink>
           </Setting>
         </Col>
       </Row>

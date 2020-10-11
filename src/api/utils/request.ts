@@ -24,7 +24,11 @@ export const requestJSON = async <T>(
 
   const fetchInput =
     typeof input === 'string' && input.startsWith('/api')
-      ? `${publicRuntimeConfig.API_ENDPOINT || ''}${input}`
+      ? `${
+          localStorage.getItem('apiEndpoint') ||
+          publicRuntimeConfig.API_ENDPOINT ||
+          ''
+        }${input}`
       : input;
 
   const response = await fetch(fetchInput, options);

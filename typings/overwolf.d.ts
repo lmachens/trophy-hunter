@@ -17,6 +17,8 @@ declare namespace overwolf {
      * Information regarding the error (if an error occurred)
      */
     error?: string;
+    status?: string;
+    reason?: string;
   }
 
   interface Event<T> {
@@ -40,6 +42,8 @@ declare namespace overwolf {
   }
 
   type CallbackFunction<T extends Result> = (result: T) => void;
+
+  type DeepPartial<T> = { [P in keyof T]?: DeepPartial<T[P]> };
 }
 
 declare namespace overwolf.io {
@@ -424,6 +428,9 @@ declare namespace overwolf.media {
   const onGifGenerationError: Event<GifGenerationErrorEvent>;
 }
 
+/**
+ * @deprecated Since version 0.155.
+ */
 declare namespace overwolf.media.audio {
   type PlayState = 'playing' | 'stopped' | 'paused';
 
@@ -763,6 +770,7 @@ declare namespace overwolf.media.replays {
 
   /**
    * Returns whether replay capturing is turned on or off.
+   * @deprecated Since version 0.155.
    * @param replayType The type of replay to get state for.
    * @param callback A callback function which will be called with the status of
    * the request.
@@ -799,6 +807,7 @@ declare namespace overwolf.media.replays {
    * callback which is needed to finish capturing the replay. You can only call
    * this method if replay mode is on and no other replay is currently being
    * captured to a file.
+   * @deprecated Since version 0.155.
    * @param replayType The type of replay to capture.
    * @param pastDuration The replay length, in milliseconds to include prior to
    * the time of this call.
@@ -838,6 +847,7 @@ declare namespace overwolf.media.replays {
    * callback which is needed to finish capturing the replay. You can only call
    * this method if replay mode is on and no other replay is currently being
    * captured to a file.
+   * @deprecated Since version 0.155.
    * @param replayType The type of replay to capture.
    * @param pastDuration The video length, in milliseconds to include prior to
    * the time of this call.
@@ -867,6 +877,7 @@ declare namespace overwolf.media.replays {
    * Finishes capturing a replay and returns a url to the created video file.
    * You can only call this method if replay mode is on and using a valid id of
    * a replay being captured to a file.
+   * @deprecated Since version 0.155.
    * @param replayType The type of replay to stop capture.
    * @param replayId The id of the replay you want to finish capturing.
    * @param callback A callback function which will be called with the status of
@@ -1116,6 +1127,11 @@ declare namespace overwolf.windows {
     window_id?: string;
   }
 
+  interface DragMovedResult extends Result {
+    horizontalChange: number;
+    verticalChange: number;
+  }
+
   interface GetWindowStateResult extends Result {
     window_id?: string;
     window_state?: string;
@@ -1237,7 +1253,7 @@ declare namespace overwolf.windows {
    */
   function dragMove(
     windowId: string,
-    callback?: CallbackFunction<WindowIdResult>
+    callback?: CallbackFunction<DragMovedResult>
   ): void;
 
   /**
@@ -1904,6 +1920,9 @@ declare namespace overwolf.windows.mediaPlayerElement {
   const onPlaybackError: Event<PlaybackEvent>;
 }
 
+/**
+ * @deprecated Since version 0.155.
+ */
 declare namespace overwolf.benchmarking {
   /**
    * Requests hardware information within a given interval. Note that this call
@@ -2422,8 +2441,8 @@ declare namespace overwolf.games.events {
     supportedFeatures?: string[];
   }
 
-  interface GetInfoResult extends Result {
-    res: any;
+  interface GetInfoResult<T = any> extends Result {
+    res: T;
   }
 
   interface GameEvent {
@@ -2439,9 +2458,14 @@ declare namespace overwolf.games.events {
     reason: string;
   }
 
-  interface InfoUpdates2Event {
-    info: any;
-    feature: string;
+  interface InfoUpdate2 {}
+
+  interface InfoUpdates2Event<
+    Feature = string,
+    Info extends InfoUpdate2 = InfoUpdate2
+  > {
+    info: Info;
+    feature: Feature;
   }
 
   /**
@@ -3822,7 +3846,7 @@ declare namespace overwolf.streaming {
 
   /**
    * Update stream desktop capture options.
-   * @deprecated Since version 0.155. Will be deleted in version 0.160.
+   * @deprecated Since version 0.155.
    * @param streamId The id of the stream for which to set the Be Right Back
    * image.
    * @param newOptions The updated desktop capture streaming options.
@@ -5289,7 +5313,7 @@ declare namespace overwolf.settings {
   }
 
   interface GeneralExtensionSettings {
-    auto_launch_with_overwolf: boolean;
+    auto_launch_with_overwolf?: boolean;
   }
 
   interface GetHotKeyResult extends Result {
@@ -5361,6 +5385,7 @@ declare namespace overwolf.settings {
    * failure. Otherwise, the callback function will be called when the hotkey is
    * pressed and the status will be "success". Note that Shift can only be
    * combined with F keys.
+   * @deprecated Since version 0.155.
    * @param actionId The action id for which to register the callback.
    * @param callback The function to run when the hotkey is pressed.
    */
@@ -5372,6 +5397,7 @@ declare namespace overwolf.settings {
   /**
    * Returns the current language overwolf is set to in a two letter ISO name
    * format.
+   * @deprecated Since version 0.155.
    * @param callback
    */
   function getCurrentOverwolfLanguage(
@@ -5462,6 +5488,7 @@ declare namespace overwolf.settings {
   /**
    * Sets the state (on/off), position, offset (in pixels) and scale [0, 1] of
    * the Fps control.
+   * @deprecated Since version 0.155.
    * @param settings
    * @param callback
    */
@@ -5515,6 +5542,7 @@ declare namespace overwolf.settings {
   /**
    * Fired when a hotkey is modified. Apps will only be notified ofhotkey
    * changes that relate to them.
+   * @deprecated Since version 0.155.
    */
   const OnHotKeyChanged: Event<HotKeyChangedEvent>;
 }
@@ -5628,6 +5656,28 @@ declare namespace overwolf.settings.hotkeys {
    * Fired on hotkey setting change.
    */
   const onChanged: Event<OnChangedEvent>;
+}
+
+declare namespace overwolf.settings.language {
+  interface GetLanguageResult extends Result {
+    language: string;
+  }
+
+  interface LanguageChangedEvent {
+    language: string;
+  }
+
+  /**
+   * Returns the current language overwolf is set to in a two letter ISO name format.
+   *
+   * @param callback
+   */
+  function get(callback: CallbackFunction<GetLanguageResult>): void;
+
+  /**
+   * Fired when user changes client language.
+   */
+  const onLanguageChanged: Event<LanguageChangedEvent>;
 }
 
 declare namespace overwolf.social {
@@ -6130,4 +6180,10 @@ declare namespace overwolf.social.reddit {
    * Fired when an error is returned from Reddit.
    */
   const onShareFailed: Event<ShareFailedEvent>;
+}
+
+declare namespace overwolf.gep {
+  type GepInternal = {
+    version_info: string;
+  };
 }

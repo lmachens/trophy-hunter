@@ -237,27 +237,35 @@ const Background: NextPage = () => {
 
     overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
 
-    overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-      if (info.error) {
-        error('[launchers getInfo]', info.error);
-        return;
-      }
-      if (!info.res || !info.res.lobby_info) {
-        return;
-      }
-      const queueId = parseInt(info.res.lobby_info.queueId);
-      if (isNaN(queueId)) {
-        log(`[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`);
-        return;
-      }
-      if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-        log(`[getInfo] QueueId ${queueId} is not supported`);
-        setPlayingSupportedGame(false);
-      } else {
-        log(`[getInfo] QueueId ${queueId} is supported`);
-        setPlayingSupportedGame(true);
-      }
-    });
+    const getLauncherInfo = (hideError = false) => {
+      overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
+        if (info.error || info.status === 'error') {
+          if (!hideError) {
+            error('[launchers getInfo]', info.error || info.reason);
+          }
+          setTimeout(() => getLauncherInfo(true), 5000);
+          return;
+        }
+        if (!info.res || !info.res.lobby_info) {
+          return;
+        }
+        const queueId = parseInt(info.res.lobby_info.queueId);
+        if (isNaN(queueId)) {
+          log(
+            `[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`
+          );
+          return;
+        }
+        if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
+          log(`[getInfo] QueueId ${queueId} is not supported`);
+          setPlayingSupportedGame(false);
+        } else {
+          log(`[getInfo] QueueId ${queueId} is supported`);
+          setPlayingSupportedGame(true);
+        }
+      });
+    };
+    getLauncherInfo();
 
     return () => {
       overwolf.games.launchers.events.onInfoUpdates.removeListener(

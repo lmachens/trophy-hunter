@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 const SettingsButton = styled.button`
   background: #3f3e43;
-  padding: 4px;
+  padding: 0;
   border: none;
   outline: none;
   color: #77777a;

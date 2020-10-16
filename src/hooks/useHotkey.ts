@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getHotkey } from '../api/overwolf';
 
 const useHotkey = (name: string): string => {
-  const [hotkey, setHotkey] = useState('');
+  const [hotkey, setHotkey] = useState('Unknown');
 
   useEffect(() => {
     getHotkey(name)

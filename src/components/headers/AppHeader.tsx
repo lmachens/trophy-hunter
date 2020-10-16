@@ -43,7 +43,7 @@ const AppHeader: FC = () => {
 
   return (
     <>
-      <Header exitable>
+      <Header exitable resizable>
         <Status />
         {account && !loading && <AfterMatch />}
         <Grow />

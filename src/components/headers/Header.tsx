@@ -6,12 +6,14 @@ import Toolbar from './Toolbar';
 import ExitButton from './ExitButton';
 import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
+import SizeButton from './SizeButton';
 
 interface HeaderProps {
   exitable?: boolean;
+  resizable?: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ children, exitable }) => {
+const Header: FC<HeaderProps> = ({ children, exitable, resizable }) => {
   return (
     <MovableHeader>
       <LogoContainer>
@@ -26,6 +28,7 @@ const Header: FC<HeaderProps> = ({ children, exitable }) => {
       <Toolbar>
         {children}
         <MinimizeButton />
+        {resizable && <SizeButton />}
         {exitable && <ExitButton />}
       </Toolbar>
     </MovableHeader>

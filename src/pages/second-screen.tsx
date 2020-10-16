@@ -180,7 +180,7 @@ const SecondScreen: NextPage = () => {
         <title>Trophy Hunter - Second Screen</title>
       </Head>
       <Container>
-        <Header>
+        <Header resizable>
           <Status />
           <Grow />
           <Hotkey hint="Next Page" value={nextPageHotkey} />

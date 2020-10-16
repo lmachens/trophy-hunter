@@ -41,7 +41,8 @@
         },
         "block_top_window_navigation": true,
         "popup_blocker": true,
-        "mute": true
+        "mute": true,
+        "use_os_windowing": true
       },
       "in_game": {
         "file": "build/in-game.html",
@@ -92,7 +93,8 @@
         "popup_blocker": true,
         "mute": true,
         "keep_window_location": true,
-        "topmost": true
+        "topmost": true,
+        "use_os_windowing": true
       },
       "notification": {
         "file": "build/notification.html",

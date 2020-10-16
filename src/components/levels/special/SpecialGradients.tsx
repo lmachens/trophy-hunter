@@ -1,6 +1,12 @@
+import styled from '@emotion/styled';
+
+const SVG = styled.svg`
+  position: absolute;
+`;
+
 const SpecialGradients = () => {
   return (
-    <svg>
+    <SVG>
       <defs>
         <linearGradient
           id="specialColor"
@@ -25,7 +31,7 @@ const SpecialGradients = () => {
           <stop offset="1" stopColor="#FAD064" />
         </linearGradient>
       </defs>
-    </svg>
+    </SVG>
   );
 };
 

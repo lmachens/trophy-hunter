@@ -21,8 +21,8 @@ import * as trophies from '../../trophies';
 const Items = styled.div`
   display: flex;
   font-family: 'Roboto Mono', monospace;
-  width: calc(100% - 436px);
   justify-content: space-evenly;
+  overflow: auto;
 `;
 
 const Collection: FC = () => {

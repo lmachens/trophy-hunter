@@ -15,8 +15,9 @@ import usePersistentState from '../hooks/usePersistentState';
 import GarenaModal from '../components/modals/GarenaModal';
 import islands from '../components/islands/islands';
 import { useAccount } from '../contexts/account';
+import ZoomToFit from '../components/common/ZoomToFit';
 
-const SizeContainer = styled.div`
+const SizeContainer = styled(ZoomToFit)`
   position: absolute;
   width: 820px;
   height: 720px;

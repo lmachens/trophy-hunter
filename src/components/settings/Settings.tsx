@@ -7,7 +7,7 @@ import useHotkey from '../../hooks/useHotkey';
 
 const Row = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  overflow: auto;
   justify-content: space-between;
 `;
 

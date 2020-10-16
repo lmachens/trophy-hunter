@@ -51,6 +51,23 @@ export const getAllEvents = (timeline: MatchTimeline): MatchEvents => {
   );
 };
 
+export const getMinionsAtMin = (
+  timeline: MatchTimeline,
+  minute: number,
+  participantId: number
+): number => {
+  const frame = timeline.frames.find(
+    (frame) => frame.timestamp > minute * 60 * 1000
+  );
+  if (!frame) {
+    return 0;
+  }
+  const participantFrame = Object.values(frame.participantFrames).find(
+    (participantFrame) => participantFrame.participantId === participantId
+  );
+  return participantFrame.minionsKilled + participantFrame.jungleMinionsKilled;
+};
+
 export const getLevelUps = (
   events: MatchEvents,
   participantId: number

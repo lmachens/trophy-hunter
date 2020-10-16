@@ -1,5 +1,8 @@
 import { Trophy } from '../types';
-import { getOtherParticipants } from '../../../api/riot/helpers';
+import {
+  getMinionsAtMin,
+  getOtherParticipants,
+} from '../../../api/riot/helpers';
 
 const theBee: Trophy = {
   island: 'skillsIsland',
@@ -9,30 +12,32 @@ const theBee: Trophy = {
   description:
     'Diligence and hard work is key. Be ahead of everyone at least ten cs at ten minutes and 20 cs at 20 minutes.',
   category: 'skills',
-  checkProgress: ({ match, participant }) => {
-    if (!participant.timeline.creepsPerMinDeltas) {
-      return 0;
-    }
+  checkProgress: ({ match, participant, timeline }) => {
     const others = getOtherParticipants(match, participant);
+    const participantMinionsAt10 = getMinionsAtMin(
+      timeline,
+      10,
+      participant.participantId
+    );
+    const participantMinionsAt20 = getMinionsAtMin(
+      timeline,
+      20,
+      participant.participantId
+    );
+
     const maxCsTen = Math.max(
       ...others.map((other) =>
-        other.timeline && other.timeline.creepsPerMinDeltas
-          ? other.timeline.creepsPerMinDeltas['0-10']
-          : 0
+        getMinionsAtMin(timeline, 10, other.participantId)
       )
     );
     const maxCsTwenty = Math.max(
       ...others.map((other) =>
-        other.timeline && other.timeline.creepsPerMinDeltas
-          ? other.timeline.creepsPerMinDeltas['10-20']
-          : 0
+        getMinionsAtMin(timeline, 20, other.participantId)
       )
     );
     return Number(
-      participant.timeline.creepsPerMinDeltas['0-10'] >= maxCsTen + 1 &&
-        participant.timeline.creepsPerMinDeltas['0-10'] +
-          participant.timeline.creepsPerMinDeltas['10-20'] >=
-          maxCsTwenty + 2
+      participantMinionsAt10 >= maxCsTen + 10 &&
+        participantMinionsAt20 >= maxCsTwenty + 20
     );
   },
 };

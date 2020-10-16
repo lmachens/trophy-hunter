@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react';
 import { queryCache, useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
-import { log } from '../api/logs';
+import { error, log } from '../api/logs';
 import { runLiveCheck, stopLiveCheck } from '../api/overwolf/live';
 import { useAccount } from '../contexts/account';
 
@@ -238,7 +238,11 @@ const Background: NextPage = () => {
     overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
 
     overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-      if (info.error || !info.res || !info.res.lobby_info) {
+      if (info.error) {
+        error('[launchers getInfo]', info.error);
+        return;
+      }
+      if (!info.res || !info.res.lobby_info) {
         return;
       }
       const queueId = parseInt(info.res.lobby_info.queueId);

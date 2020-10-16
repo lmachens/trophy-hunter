@@ -1,3 +1,4 @@
+import { getMinionsAtMin } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const appetizer: Trophy = {
@@ -7,20 +8,12 @@ const appetizer: Trophy = {
   title: 'Appetizer',
   description: 'Farm at least 80 minions at 10 minutes.',
   category: 'skills',
-  checkProgress: ({ participant }) => {
-    if (!participant.timeline.creepsPerMinDeltas) {
-      return 0;
-    }
-
-    return participant.timeline.creepsPerMinDeltas['0-10'] / 8;
+  checkProgress: ({ participant, timeline }) => {
+    const minions = getMinionsAtMin(timeline, 10, participant.participantId);
+    return minions / 80;
   },
-  checkLive: ({ allPlayers, trophyData, gameData, account }) => {
-    if (
-      !allPlayers ||
-      !gameData ||
-      trophyData.appetizer ||
-      gameData.gameTime > 600
-    ) {
+  checkLive: ({ allPlayers, gameData, account }) => {
+    if (gameData.gameTime > 600) {
       return 0;
     }
 
@@ -29,9 +22,6 @@ const appetizer: Trophy = {
     );
 
     const process = Math.min(1, accountPlayer.scores.creepScore / 80);
-    if (process === 1) {
-      trophyData.appetizer = true;
-    }
     return process;
   },
 };

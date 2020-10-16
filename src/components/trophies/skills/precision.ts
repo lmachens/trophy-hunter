@@ -1,4 +1,5 @@
 import { warn } from '../../../api/logs';
+import { getMinionsAtMin } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const precision: Trophy = {
@@ -9,7 +10,7 @@ const precision: Trophy = {
   description:
     'Be 15 cs ahead of your lane opponent at 10 minutes as top, mid or adc.',
   category: 'skills',
-  checkProgress: ({ match, account, participant }) => {
+  checkProgress: ({ match, account, participant, timeline }) => {
     const opponent = match.participants.find(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&
@@ -23,14 +24,18 @@ const precision: Trophy = {
       return 0;
     }
 
-    if (!participant.timeline.creepsPerMinDeltas) {
-      return 0;
-    }
+    const participantMinions = getMinionsAtMin(
+      timeline,
+      10,
+      participant.participantId
+    );
+    const opponentMinions = getMinionsAtMin(
+      timeline,
+      10,
+      opponent.participantId
+    );
 
-    const creepsDiffAt10 =
-      participant.timeline.creepsPerMinDeltas['0-10'] * 10 -
-      opponent.timeline.creepsPerMinDeltas['0-10'] * 10;
-
+    const creepsDiffAt10 = participantMinions - opponentMinions;
     return creepsDiffAt10 / 15;
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {

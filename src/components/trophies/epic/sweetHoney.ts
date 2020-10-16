@@ -1,3 +1,4 @@
+import { getMinionsAtMin } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const sweetHoney: Trophy = {
@@ -7,16 +8,9 @@ const sweetHoney: Trophy = {
   title: 'Sweet Honey',
   description: 'Farm at least 180 minions at 20 minutes.',
   category: 'epic',
-  checkProgress: ({ participant }) => {
-    if (!participant.timeline.creepsPerMinDeltas) {
-      return 0;
-    }
-
-    return (
-      (participant.timeline.creepsPerMinDeltas['0-10'] +
-        participant.timeline.creepsPerMinDeltas['10-20']) /
-        18 || 0
-    );
+  checkProgress: ({ participant, timeline }) => {
+    const minions = getMinionsAtMin(timeline, 20, participant.participantId);
+    return minions / 180;
   },
   checkLive: ({ allPlayers, gameData, account }) => {
     if (gameData.gameTime > 1200) {

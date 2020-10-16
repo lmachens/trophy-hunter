@@ -1,5 +1,5 @@
 import { Trophy } from '../types';
-import { getLaneOpponent } from '../../../api/riot/helpers';
+import { getLaneOpponent, getMinionsAtMin } from '../../../api/riot/helpers';
 
 const dominus: Trophy = {
   island: 'combatIsland',
@@ -9,17 +9,24 @@ const dominus: Trophy = {
   description:
     'Achieve a 10 cs advantage over your opponent, 3 kills (at least one of them is a solo kill) at 10 minutes into the game.',
   category: 'combat',
-  checkProgress: ({ match, events, participant }) => {
-    if (!participant.timeline.creepsPerMinDeltas) {
-      return 0;
-    }
+  checkProgress: ({ match, events, participant, timeline }) => {
     const laneOpponent = getLaneOpponent(match.participants, participant);
     if (!laneOpponent) {
       return 0;
     }
-    const csLaneDiffAt10 =
-      participant.timeline.creepsPerMinDeltas['0-10'] * 10 -
-      laneOpponent.timeline.creepsPerMinDeltas['0-10'] * 10;
+
+    const participantMinions = getMinionsAtMin(
+      timeline,
+      10,
+      participant.participantId
+    );
+    const laneOpponentMinions = getMinionsAtMin(
+      timeline,
+      10,
+      laneOpponent.participantId
+    );
+
+    const csLaneDiffAt10 = participantMinions - laneOpponentMinions;
 
     const soloKillsPre10 = events.filter(
       (event) =>

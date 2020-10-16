@@ -21,7 +21,6 @@ import * as trophies from '../../trophies';
 const Items = styled.div`
   display: flex;
   font-family: 'Roboto Mono', monospace;
-  justify-content: space-evenly;
   overflow: auto;
 `;
 

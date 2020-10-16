@@ -8,7 +8,6 @@ import useHotkey from '../../hooks/useHotkey';
 const Row = styled.div`
   display: flex;
   overflow: auto;
-  justify-content: space-between;
 `;
 
 const Col = styled.div`

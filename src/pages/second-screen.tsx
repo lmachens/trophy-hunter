@@ -153,8 +153,8 @@ const SecondScreen: NextPage = () => {
       }
       overwolf.windows.changePosition(
         'second_screen',
-        secondaryDisplay.x,
-        secondaryDisplay.y
+        secondaryDisplay.x + Math.round((secondaryDisplay.width - 1335) / 2),
+        secondaryDisplay.y + Math.round((secondaryDisplay.height - 750) / 2)
       );
     });
   }, []);

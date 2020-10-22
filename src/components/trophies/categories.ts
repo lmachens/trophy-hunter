@@ -15,11 +15,6 @@ export const categoriesMap: {
     Icon: FC<ProgressProps>;
   };
 } = {
-  welcome: {
-    value: 'hub',
-    label: 'Hub',
-    Icon: HubProgress,
-  },
   hub: {
     value: 'hub',
     label: 'Hub',

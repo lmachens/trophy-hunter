@@ -12,6 +12,7 @@ import { useAccount } from '../../contexts/account';
 import HelpModal from '../guides/HelpModal';
 import AlienwareChallenge from './AlienwareChallenge';
 import Header from './Header';
+import ErrorBoundary from '../common/ErrorBoundary';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -44,14 +45,16 @@ const AppHeader: FC = () => {
   return (
     <>
       <Header exitable resizable>
-        <Status />
-        {account && !loading && <AfterMatch />}
-        <Grow />
-        <WriteUsFeedback onClick={() => setShowFeedback(true)}>
-          <Feedback />
-          Write us a feedback
-        </WriteUsFeedback>
-        <AlienwareChallenge />
+        <ErrorBoundary>
+          <Status />
+          {account && !loading && <AfterMatch />}
+          <Grow />
+          <WriteUsFeedback onClick={() => setShowFeedback(true)}>
+            <Feedback />
+            Write us a feedback
+          </WriteUsFeedback>
+          <AlienwareChallenge />
+        </ErrorBoundary>
         <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
           <Discord />
         </DiscordButtonLink>

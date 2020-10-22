@@ -16,7 +16,6 @@ const ZoomToFit: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
 
   useEffect(() => {
     const calcZoom = () => {
-      console.log('calcZoom');
       const xRatio =
         ref.current.parentElement.offsetWidth / ref.current.offsetWidth;
       const yRatio =

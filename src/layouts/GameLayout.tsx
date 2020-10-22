@@ -5,6 +5,7 @@ import { Sidebar } from '../components/sidebar';
 import { ToolPane } from '../components/tools';
 import { Settings } from '../components/settings';
 import Collection from '../components/tools/collection';
+import ErrorBoundary from '../components/common/ErrorBoundary';
 
 const Container = styled.div`
   display: flex;
@@ -32,7 +33,7 @@ const GameLayout: FC<GameLayoutProps> = ({
       <AppHeader />
       <Sidebar activeTool={activeTool} onToolClick={onToolClick} />
       <Main>
-        {children}
+        <ErrorBoundary grid>{children}</ErrorBoundary>
         {activeTool && (
           <ToolPane>
             {activeTool === 'settings' && <Settings />}

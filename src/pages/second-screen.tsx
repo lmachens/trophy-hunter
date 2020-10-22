@@ -59,7 +59,9 @@ const Container = styled.div`
 `;
 
 const SmallIslands = styled(Islands)`
-  zoom: 0.5;
+  margin: 0;
+  margin-left: 12px;
+  zoom: 0.48;
 `;
 
 const List = styled.section`

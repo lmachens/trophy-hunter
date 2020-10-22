@@ -52,7 +52,7 @@ const Settings: FC = () => {
           <h3>General</h3>
           <Setting>
             Show / Hide hotkey
-            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_trophy_hunter">
+            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_trophy_hunter&gameId=5426">
               {showTrophyHunterHotkey}
             </SettingsLink>
           </Setting>
@@ -89,13 +89,13 @@ const Settings: FC = () => {
           <h3>Second Screen</h3>
           <Setting>
             Next page hotkey
-            <SettingsLink href="overwolf://settings/games-overlay?hotkey=next_page_trophy_hunter">
+            <SettingsLink href="overwolf://settings/games-overlay?hotkey=next_page_trophy_hunter&gameId=5426">
               {nextPageHotkey}
             </SettingsLink>
           </Setting>
           <Setting>
             Show / Hide hotkey
-            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_second_screen_trophy_hunter">
+            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_second_screen_trophy_hunter&gameId=5426">
               {showSecondScreenHotkey}
             </SettingsLink>
           </Setting>

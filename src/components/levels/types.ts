@@ -7,8 +7,17 @@ export interface MarkerProps extends SVGProps<SVGGElement> {
   level: Level;
 }
 
+export type Island =
+  | 'hub'
+  | 'combat'
+  | 'skills'
+  | 'teamwork'
+  | 'special'
+  | 'epic'
+  | 'objectives';
+
 export interface Level {
-  island: string;
+  island: Island;
   name: string;
   title: string;
   Icon: React.FC;

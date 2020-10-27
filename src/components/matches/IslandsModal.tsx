@@ -10,11 +10,13 @@ import {
   SpecialIsland,
   EpicIsland,
   ObjectivesIsland,
+  HubIsland,
 } from '../islands';
 import Slide from '../icons/Slide';
 import styled from '@emotion/styled';
 
 const islands = {
+  hub: { Component: HubIsland, title: 'Hub Island' },
   combat: { Component: CombatIsland, title: 'Combat Island' },
   skills: { Component: SkillsIsland, title: 'Skills Island' },
   teamwork: { Component: TeamworkIsland, title: 'Teamwork Island' },

@@ -184,9 +184,14 @@ export default applyMiddleware(
         if (!isLevelCompleted || accountLevel.status === 'completed') {
           return;
         }
-        unlockedIslandNames.push(
-          ...level.unlocksLevels.map((level) => levels[level.name].island)
-        );
+        const unlockedIslandNames = level.unlocksLevels
+          .map((level) => levels[level.name].island)
+          .filter(
+            (islandName) =>
+              !account.islands.some((island) => island.name === islandName)
+          );
+
+        unlockedIslandNames.push(...unlockedIslandNames);
 
         await Accounts.findOneAndUpdate(
           { _id: account._id, 'levels.name': level.name },

@@ -4,7 +4,7 @@ const playstyle: Trophy = {
   island: 'hubIsland',
   name: 'playstyle',
   level: 'welcome',
-  title: 'Playstyle',
+  title: 'New Born',
   description: "Play one game of Summoner's Rift with the Trophy Hunter app.",
   category: 'hub',
   checkProgress: () => 1,

@@ -63,6 +63,12 @@ const AlienwareChallenge: FC = () => {
       }
     };
 
+    if (!overwolf.campaigns.crossapp.onAvailableActionUpdated) {
+      console.error(
+        `overwolf.campaigns.crossapp.onAvailableActionUpdated is not defined? Why 🤔?`
+      );
+      return;
+    }
     overwolf.campaigns.crossapp.onAvailableActionUpdated.addListener(
       handleAvailableActionUpdated
     );

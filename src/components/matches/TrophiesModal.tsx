@@ -16,8 +16,10 @@ const ListItem = styled(TrophyListItem)`
 `;
 
 const NoTropiesContainer = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  place-items: center;
+  height: 100%;
 `;
 
 interface TrophiesModalProps {
@@ -40,6 +42,7 @@ const TrophiesModal: FC<TrophiesModalProps> = ({ onClose, trophyNames }) => {
         ))}
         {trophyNames.length === 0 && (
           <NoTropiesContainer>
+            <p>Oh well, keep on going and you&apos;ll get them next time!</p>
             <Squid />
           </NoTropiesContainer>
         )}

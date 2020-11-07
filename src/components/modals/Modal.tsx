@@ -41,7 +41,7 @@ interface ModalProps {
 
 const Modal: FC<ModalProps> = ({ children, onClose, title }) => {
   return (
-    <Backdrop onClick={onClose}>
+    <Backdrop>
       <Container onClick={(event) => event.stopPropagation()}>
         <Close onClick={onClose} />
         <Title>{title}</Title>

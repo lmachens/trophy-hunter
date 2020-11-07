@@ -7,7 +7,7 @@ interface SizeProps {
 
 const Container = styled.div`
   transform-origin: top left;
-  transform: scale(${(props: SizeProps) => props.zoom});
+  transform: scale(${(props: SizeProps) => props.zoom}) translateX(-50%);
 `;
 
 const ZoomToFit: FC<HTMLAttributes<HTMLDivElement>> = (props) => {

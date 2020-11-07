@@ -73,7 +73,7 @@ const LeagueOfLegends: NextPage = () => {
       >
         <SizeContainer
           style={{
-            left: `${-left}px`,
+            left: `calc(50% + ${-left}px)`,
             top: `${-top}px`,
             marginTop: `${top ? 100 : 30}px`,
           }}

@@ -32,13 +32,13 @@ const WelcomeGuide: FC<WelcomeGuideProps> = ({
       {!visibleIslandDetails && (
         <WelcomeTooltip
           title="Welcome to Trophy Hunter!"
-          text="Click on the first level to open the trophies shelf and view trophies, description and progress."
+          text="Click on the first levels to open the trophies shelf and view trophies, description and progress."
           placement="bottom"
           targetId="hub"
           offset={10}
         />
       )}
-      {targetLevel?.islandName === 'hubIsland' &&
+      {targetLevel?.islandName === 'hub' &&
         targetLevel?.level.name === 'welcome' && (
           <Tooltip
             title="It’s all about you :)"

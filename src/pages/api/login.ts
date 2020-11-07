@@ -31,7 +31,8 @@ export default applyMiddleware(
       }
     );
 
-    const expiresAt = new Date(Date.now() + ONE_YEAR);
+    const now = Date.now();
+    const expiresAt = new Date(now + ONE_YEAR);
     const account = await Accounts.findOneAndUpdate(
       {
         'summoner.accountId': summoner.accountId,
@@ -58,7 +59,43 @@ export default applyMiddleware(
               name: 'welcome',
               island: 'hub',
               status: 'active',
-              unlockedAt: Date.now(),
+              unlockedAt: now,
+            },
+            {
+              name: 'hubCombat',
+              island: 'hub',
+              status: 'active',
+              unlockedAt: now,
+            },
+            {
+              name: 'hubEpic',
+              island: 'hub',
+              status: 'active',
+              unlockedAt: now,
+            },
+            {
+              name: 'hubObjectives',
+              island: 'hub',
+              status: 'active',
+              unlockedAt: now,
+            },
+            {
+              name: 'hubSkills',
+              island: 'hub',
+              status: 'active',
+              unlockedAt: now,
+            },
+            {
+              name: 'hubSpecial',
+              island: 'hub',
+              status: 'active',
+              unlockedAt: now,
+            },
+            {
+              name: 'hubTeamwork',
+              island: 'hub',
+              status: 'active',
+              unlockedAt: now,
             },
           ],
           trophies: [],

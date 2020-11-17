@@ -10,8 +10,13 @@ import { getMatch, getTimeline, getSummoner } from '../../api/riot/server';
 import * as trophies from '../../components/trophies';
 import { newAccount } from '../../api/accounts/server';
 import { Account } from '../../api/accounts';
-import { getAllEvents, getParticipantByAccount } from '../../api/riot/helpers';
+import {
+  getAllEvents,
+  getParticipantByAccount,
+  getParticipantIdentity,
+} from '../../api/riot/helpers';
 import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
+import { log } from '../../api/logs';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -46,6 +51,16 @@ export default applyMiddleware(
       ...newAccount,
       summoner: summoner,
     };
+
+    const timeLabel = `Check ${matchId} of ${account.summoner.name} ${account.summoner.platformId}`;
+    console.time(timeLabel);
+
+    const participantIdentity = getParticipantIdentity(match, account);
+    if (!participantIdentity) {
+      log(`Participant not found ${matchId} ${account.summoner.name}`);
+      return res.status(403).end('Participant not found');
+    }
+
     const participant = getParticipantByAccount(match, account);
     const checkedTrophies = Object.values(trophies).reduce(
       (current, trophy) => ({
@@ -62,6 +77,7 @@ export default applyMiddleware(
     );
 
     res.json(checkedTrophies);
+    console.timeEnd(timeLabel);
   },
   withError,
   withMethods('POST'),

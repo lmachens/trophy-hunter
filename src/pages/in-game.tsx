@@ -7,7 +7,7 @@ import Grow from '../components/common/Grow';
 import SpecialProgress from '../components/trophies/special/SpecialProgress';
 import { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
-import { keyframes } from '@emotion/core';
+import { keyframes } from '@emotion/react';
 import useHotkey from '../hooks/useHotkey';
 import overwolf from '../api/overwolf';
 import usePersistentState from '../hooks/usePersistentState';

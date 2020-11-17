@@ -4,7 +4,7 @@ import Backdrop from '../common/Backdrop';
 import SandClock from '../icons/SandClock';
 import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
-import { keyframes } from '@emotion/core';
+import { keyframes } from '@emotion/react';
 import { postCheck } from '../../api/accounts';
 import { queryCache, useMutation } from 'react-query';
 import { bounce } from '../../styles/animations';

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/core';
+import { keyframes } from '@emotion/react';
 import { FC } from 'react';
 import { MarkerProps } from './types';
 import MarkerTooltip from './MarkerTooltip';

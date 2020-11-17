@@ -9,7 +9,7 @@ import {
   useCallback,
 } from 'react';
 import ReactDOM from 'react-dom';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 type Placement = 'right' | 'bottom' | 'bottomRight' | 'top' | 'topLeft';

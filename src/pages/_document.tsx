@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { extractCritical } from 'emotion-server';
-import { EmotionCritical } from 'create-emotion-server';
+import { extractCritical } from '@emotion/server';
+import { EmotionCritical } from '@emotion/server/create-instance';
 
 class MyDocument extends Document<EmotionCritical> {
   render() {

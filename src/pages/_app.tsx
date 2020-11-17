@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app';
-import { CacheProvider } from '@emotion/core';
-import { cache } from 'emotion';
+import { CacheProvider } from '@emotion/react';
+import { cache } from '@emotion/css';
 import Head from 'next/head';
 
 import { AccountProvider } from '../contexts/account';

@@ -4,102 +4,12 @@ import Backdrop from '../common/Backdrop';
 import SandClock from '../icons/SandClock';
 import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
-import { keyframes } from '@emotion/react';
 import { postCheck } from '../../api/accounts';
 import { queryCache, useMutation } from 'react-query';
-import { bounce } from '../../styles/animations';
 import { flashUntilFocus } from '../../api/overwolf';
 import TrophiesModal from './TrophiesModal';
 import IslandsModal from './IslandsModal';
 import usePersistentState from '../../hooks/usePersistentState';
-
-const sandClockMotion = keyframes`
-  from {
-    transform: rotateZ(0deg);
-  }
-
-  80% {
-    transform: rotateZ(0deg);
-  }
-
-  to {
-    transform: rotateZ(180deg);
-  }
-`;
-
-const sandMotion1 = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  80% {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const sandMotion2 = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  50%: {
-    opacity: 1;
-  }
-
-  80% {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const sandMotion3 = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  50$ {
-    opacity: 0;
-  }
-
-  80% {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const AnimatedSandClock = styled(({ loading, ...props }) => (
-  <SandClock {...props} />
-))<{ loading: boolean }>`
-  animation: ${(props) => (props.loading ? sandClockMotion : bounce)} 2s ease
-    infinite;
-
-  > .frame-1 {
-    opacity: 0;
-    animation: ${(props) => (props.loading ? sandMotion1 : 'none')} 2s ease
-      infinite;
-  }
-
-  > .frame-2 {
-    opacity: 0;
-    animation: ${(props) => (props.loading ? sandMotion2 : 'none')} 2s ease
-      infinite;
-  }
-
-  > .frame-3 {
-    animation: ${(props) => (props.loading ? sandMotion3 : 'none')} 2s ease
-      infinite;
-  }
-`;
 
 const Container = styled.div`
   display: flex;
@@ -185,7 +95,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   return (
     <>
       {(loading || match) && (
-        <AnimatedSandClock
+        <SandClock
           className={className}
           data-tooltip-id="sandClock"
           onClick={() => setShowModal(true)}

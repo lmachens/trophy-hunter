@@ -20,7 +20,7 @@
   "homepage": "https://github.com/lmachens/trophy-hunter#readme",
   "dependencies": {
     "@emotion/css": "^11.0.0",
-    "@emotion/react": "^11.1.0",
+    "@emotion/react": "^11.1.1",
     "@emotion/server": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "ajv": "^6.12.6",

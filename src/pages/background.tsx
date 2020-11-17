@@ -4,7 +4,6 @@ import overwolf, {
   isLeagueLaunched,
   isLeagueRunning,
   openWindow,
-  SUPPORTED_QUEUE_IDS,
   setLeagueLauncherFeatures,
   isLeagueLauncherRunning,
   isLeagueClosed,
@@ -18,8 +17,12 @@ import { useState, useEffect } from 'react';
 import { queryCache, useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
-import { error, log } from '../api/logs';
-import { runLiveCheck, stopLiveCheck } from '../api/overwolf/live';
+import { log } from '../api/logs';
+import {
+  isPlayingSupportedGame,
+  runLiveCheck,
+  stopLiveCheck,
+} from '../api/overwolf/live';
 import { useAccount } from '../contexts/account';
 
 overwolf.extensions.current.getManifest((manifest) =>
@@ -206,76 +209,7 @@ const Background: NextPage = () => {
   }, [leagueLauncherRunning, autoLaunch]);
 
   useEffect(() => {
-    if (!registeredFeatures) {
-      return;
-    }
-
-    const handleInfoUpdate = (infoUpdate) => {
-      if (
-        infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID ||
-        !infoUpdate.info?.lobby_info
-      ) {
-        return;
-      }
-      const queueId = parseInt(infoUpdate.info.lobby_info.queueId);
-      if (isNaN(queueId)) {
-        log(
-          `[handleInfoUpdate] QueueId is NaN: ${JSON.stringify(
-            infoUpdate.info.lobby_info
-          )}`
-        );
-        return;
-      }
-      if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-        setPlayingSupportedGame(false);
-        log(`[handleInfoUpdate] QueueId ${queueId} is not supported`);
-      } else {
-        log(`[handleInfoUpdate] QueueId ${queueId} is supported`);
-        setPlayingSupportedGame(true);
-      }
-    };
-
-    overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
-
-    const getLauncherInfo = (hideError = false) => {
-      overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-        if (info.error || info.status === 'error') {
-          if (!hideError) {
-            error('[launchers getInfo]', info.error || info.reason);
-          }
-          setTimeout(() => getLauncherInfo(true), 5000);
-          return;
-        }
-        if (!info.res || !info.res.lobby_info) {
-          return;
-        }
-        const queueId = parseInt(info.res.lobby_info.queueId);
-        if (isNaN(queueId)) {
-          log(
-            `[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`
-          );
-          return;
-        }
-        if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
-          log(`[getInfo] QueueId ${queueId} is not supported`);
-          setPlayingSupportedGame(false);
-        } else {
-          log(`[getInfo] QueueId ${queueId} is supported`);
-          setPlayingSupportedGame(true);
-        }
-      });
-    };
-    getLauncherInfo();
-
-    return () => {
-      overwolf.games.launchers.events.onInfoUpdates.removeListener(
-        handleInfoUpdate
-      );
-    };
-  }, [registeredFeatures]);
-
-  useEffect(() => {
-    if (!account) {
+    if (!account || !registeredFeatures) {
       return;
     }
     if (leagueRunning) {
@@ -288,22 +222,25 @@ const Background: NextPage = () => {
     }
 
     if (leagueRunning && autoLaunch) {
-      if (playingSupportedGame) {
-        log('Playing a supported game');
-        openWindow('in_game');
-        overwolf.utils.getMonitorsList((result) => {
-          if (result.displays.length > 1) {
-            openWindow('second_screen');
-          }
-        });
-        runLiveCheck(account);
-        return stopLiveCheck;
-      } else if (playingSupportedGame === false) {
-        log('Not playing a supported game');
-        openWindow('not_supported');
-      }
+      isPlayingSupportedGame().then((playingSupportedGame) => {
+        setPlayingSupportedGame(playingSupportedGame);
+        if (playingSupportedGame) {
+          log('Playing a supported game');
+          openWindow('in_game');
+          overwolf.utils.getMonitorsList((result) => {
+            if (result.displays.length > 1) {
+              openWindow('second_screen');
+            }
+          });
+          runLiveCheck(account);
+          return stopLiveCheck;
+        } else {
+          log('Not playing a supported game');
+          openWindow('not_supported');
+        }
+      });
     }
-  }, [leagueRunning, playingSupportedGame, autoLaunch, account?._id]);
+  }, [leagueRunning, registeredFeatures, autoLaunch, account?._id]);
 
   useEffect(() => {
     if (!playingSupportedGame) {

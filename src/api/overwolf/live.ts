@@ -1,7 +1,9 @@
 import {
   INTERESTED_IN_LEAGUE_FEATURES,
+  LEAGUE_LAUNCHER_ID,
   openWindow,
   setLeagueFeatures,
+  SUPPORTED_QUEUE_IDS,
 } from '.';
 import { Live, Trophy } from '../../components/trophies/types';
 import { Account } from '../accounts';
@@ -207,4 +209,50 @@ export const runLiveCheck = async (account: Account): Promise<void> => {
 
 export const stopLiveCheck = (): void => {
   overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdates2);
+};
+
+export const isPlayingSupportedGame = async (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    let launcherInfoTimeoutId = null;
+    const getLauncherInfo = (hideError = false) => {
+      overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
+        if (info.error || info.status === 'error') {
+          if (!hideError) {
+            error('[launchers getInfo]', info.error || info.reason);
+          }
+          clearTimeout(launcherInfoTimeoutId);
+          launcherInfoTimeoutId = setTimeout(() => getLauncherInfo(true), 5000);
+          return;
+        }
+        if (!info.res) {
+          return resolve(false);
+        }
+        const { lobby_info: lobbyInfo, game_flow: gameFlow } = info.res;
+        if (!gameFlow || !lobbyInfo) {
+          return resolve(false);
+        }
+
+        if (gameFlow.phase !== 'InProgress' && gameFlow.phase !== 'GameStart') {
+          log(`[getInfo] gameFlow.phase is ${gameFlow.phase}`);
+          resolve(false);
+        } else if (lobbyInfo?.queueId) {
+          const queueId = parseInt(info.res.lobby_info.queueId);
+          if (isNaN(queueId)) {
+            log(
+              `[getInfo] QueueId is NaN: ${JSON.stringify(info.res.lobby_info)}`
+            );
+            return;
+          }
+          if (!SUPPORTED_QUEUE_IDS.includes(queueId)) {
+            log(`[getInfo] QueueId ${queueId} is not supported`);
+            resolve(false);
+          } else {
+            log(`[getInfo] QueueId ${queueId} is supported`);
+            resolve(true);
+          }
+        }
+      });
+    };
+    getLauncherInfo();
+  });
 };

@@ -21,6 +21,10 @@ import { log } from '../../api/logs';
 
 const activeChecks: string[] = [];
 
+setInterval(() => {
+  console.log(`${activeChecks.length} active checks`);
+}, 60000);
+
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { authToken } = req.cookies;

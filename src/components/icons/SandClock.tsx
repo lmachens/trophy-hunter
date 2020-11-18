@@ -36,7 +36,7 @@ const sandMotion2 = keyframes`
     opacity: 0;
   }
 
-  50%: {
+  50$ {
     opacity: 1;
   }
 

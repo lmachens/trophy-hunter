@@ -20,11 +20,6 @@ import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
 
 const activeChecks: string[] = [];
-
-setInterval(() => {
-  console.log(`${activeChecks.length} active checks`);
-}, 60000);
-
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { authToken } = req.cookies;
@@ -64,7 +59,7 @@ export default applyMiddleware(
       }
 
       log(
-        `Check ${matchId} of ${account.summoner.name} ${account.summoner.platformId}`
+        `${activeChecks.length} check ${matchId} of ${account.summoner.name} ${account.summoner.platformId}`
       );
 
       const [match, timeline] = await getMatchAndTimeline({
@@ -127,7 +122,7 @@ export default applyMiddleware(
               progress: 0,
               progressDetails: null,
             };
-            account.trophies.push(accountTrophy);
+            accountTrophies.push(accountTrophy);
           }
           if (accountTrophy.status === 'completed') {
             levelTrophiesCompleted++;

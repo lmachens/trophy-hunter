@@ -14,6 +14,7 @@ import {
 } from '../islands';
 import Slide from '../icons/Slide';
 import styled from '@emotion/styled';
+import { useAccount } from '../../contexts/account';
 
 const islands = {
   hub: { Component: HubIsland, title: 'Hub Island' },
@@ -51,6 +52,7 @@ const IslandsModal: FC<IslandsModalProps> = ({
   const [slide, setSlide] = useState(0);
   const islandName = unlockedIslandNames[slide];
   const island = islands[islandName];
+  const { account } = useAccount();
 
   return (
     <Modal
@@ -66,6 +68,7 @@ const IslandsModal: FC<IslandsModalProps> = ({
           onLevelClick={() => {
             return;
           }}
+          levels={account?.levels || []}
         />
         <h3>{island.title}</h3>
         <SlidesActions>

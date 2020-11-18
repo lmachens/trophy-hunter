@@ -9,7 +9,11 @@ import {
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
-import { getMatch, getTimeline } from '../../api/riot/server';
+import {
+  getMatch,
+  getMatchAndTimeline,
+  getTimeline,
+} from '../../api/riot/server';
 import { AccountTrophy } from '../../api/accounts';
 import {
   getAllEvents,
@@ -67,16 +71,11 @@ export default applyMiddleware(
         `Check ${matchId} of ${account.summoner.name} ${account.summoner.platformId}`
       );
 
-      const [match, timeline] = await Promise.all([
-        getMatch({
-          platformId: account.summoner.platformId,
-          matchId,
-        }),
-        getTimeline({
-          platformId: account.summoner.platformId,
-          matchId,
-        }),
-      ]);
+      const [match, timeline] = await getMatchAndTimeline({
+        platformId: account.summoner.platformId,
+        matchId,
+      });
+
       if (!match || !timeline) {
         return res.status(404).end('Not Found');
       }

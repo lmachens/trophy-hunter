@@ -62,6 +62,18 @@ export const getTimeline = async ({
   }
 };
 
+export const getMatchAndTimeline = ({ platformId, matchId }) =>
+  Promise.all([
+    getMatch({
+      platformId,
+      matchId,
+    }),
+    getTimeline({
+      platformId,
+      matchId,
+    }),
+  ]);
+
 const cachedVersion = {
   timestamp: 0,
   promise: null,

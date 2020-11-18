@@ -151,12 +151,13 @@ export default applyMiddleware(
             completedTrophyNames.push(accountTrophy.name);
           }
         });
+        const isLevelNearlyCompleted =
+          levelTrophiesCompleted / level.trophies.length >= 0.8;
         const isLevelCompleted =
-          levelTrophiesCompleted / level.trophies.length > 0.8;
-        if (!isLevelCompleted) {
+          levelTrophiesCompleted / level.trophies.length >= 1;
+        if (!isLevelNearlyCompleted) {
           return;
         }
-
         unlockedIslandNames.push(
           ...level.unlocksLevels
             .map((level) => levels[level.name].island)
@@ -166,9 +167,11 @@ export default applyMiddleware(
             )
         );
 
-        accountLevel.status = isLevelCompleted
-          ? 'completed'
-          : accountLevel.status;
+        if (isLevelCompleted) {
+          accountLevel.status = 'completed';
+        } else if (isLevelNearlyCompleted) {
+          accountLevel.status = 'unlocked';
+        }
 
         const unlockIslandLevels = level.unlocksLevels.filter(
           (unlockLevel) => unlockLevel.island !== level.island
@@ -180,12 +183,19 @@ export default applyMiddleware(
           }))
         );
         accountLevels.push(
-          ...level.unlocksLevels.map<AccountLevel>((level) => ({
-            name: level.name,
-            island: level.island,
-            status: 'active',
-            unlockedAt: now,
-          }))
+          ...level.unlocksLevels
+            .filter(
+              (level) =>
+                !accountLevels.some(
+                  (accountLevel) => accountLevel.name === level.name
+                )
+            )
+            .map<AccountLevel>((level) => ({
+              name: level.name,
+              island: level.island,
+              status: 'active',
+              unlockedAt: now,
+            }))
         );
 
         const isIslandComplete = !accountLevels

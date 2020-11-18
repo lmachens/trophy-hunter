@@ -120,13 +120,13 @@ const SandClock: FC<SVGProps<SVGSVGElement> & FrameProps> = ({
         <path d="M9.5 17V9.5L7 6H9.5Z" fill="#EAEAEA" />
         <path d="M9.5 17V9.5L12 6H9.5Z" fill="#AFAFAF" />
       </Frame1>
-      <Frame2>
+      <Frame2 loading={loading}>
         <path d="M9.5 17V9.5L8.5 8H9.5Z" fill="#EAEAEA" />
         <path d="M9.5 17V9.5L10.5 8H9.5Z" fill="#AFAFAF" />
         <path d="M9.5 17V15L5 17H9.5Z" fill="#EAEAEA" />
         <path d="M9.5 17V15L14 17H9.5Z" fill="#AFAFAF" />
       </Frame2>
-      <Frame3>
+      <Frame3 loading={loading}>
         <path d="M9.5 17V14L5 17H9.5Z" fill="#EAEAEA" />
         <path d="M9.5 17V14L14 17H9.5Z" fill="#AFAFAF" />
       </Frame3>

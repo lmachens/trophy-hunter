@@ -44,12 +44,19 @@ const resetStates = () => {
   notifiedCompleted = [];
 };
 
-const setTrophyProgress = () => {
+const setTrophyProgress = (account: Account) => {
   const trophiesProgress = activeTrophies.map((trophy) => {
     try {
       return {
         trophyName: trophy.name,
-        progress: Math.min(1, trophy.checkLive?.(live) || 0),
+        progress: Math.min(
+          1,
+          trophy.checkLive?.(live) ||
+            account.trophies.find(
+              (accountTrophy) => accountTrophy.name === trophy.name
+            )?.progress ||
+            0
+        ),
       };
     } catch (error) {
       console.error(`checkLive error in ${trophy.name}`, error.message);
@@ -156,7 +163,7 @@ const handleInfoUpdates2 = (
         live.trophyData
       ) {
         setLocalStorageItem(LIVE, live);
-        setTrophyProgress();
+        setTrophyProgress(live.account);
       }
     }
   } catch (error) {

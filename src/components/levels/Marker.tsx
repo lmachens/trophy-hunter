@@ -46,7 +46,7 @@ const Path = styled.path`
 `;
 
 const HalfCircle = (props) => {
-  return <Path d="M4.4,7 a1,1 0 0,0 0,-6" {...props} />;
+  return <Path d="M7,10 a1,1 0 0,0 0,-6" {...props} />;
 };
 
 const Marker: FC<MarkerProps> = ({

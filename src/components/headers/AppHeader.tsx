@@ -3,6 +3,7 @@ import Discord from '../icons/Discord';
 import Support from '../icons/Support';
 import styled from '@emotion/styled';
 import Feedback from '../icons/Feedback';
+import Share from '../icons/Share';
 import FeedbackModal from '../modals/FeedbackModal';
 import Grow from '../common/Grow';
 import AfterMatch from '../matches/AfterMatch';
@@ -13,6 +14,7 @@ import HelpModal from '../guides/HelpModal';
 import AlienwareChallenge from './AlienwareChallenge';
 import Header from './Header';
 import ErrorBoundary from '../common/ErrorBoundary';
+import ShareModal from '../guides/ShareModal';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -41,6 +43,7 @@ const AppHeader: FC = () => {
 
   const [showFeedback, setShowFeedback] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   return (
     <>
@@ -58,11 +61,19 @@ const AppHeader: FC = () => {
         <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
           <Discord />
         </DiscordButtonLink>
-        <HeaderButton onClick={() => setShowHelp(true)}>
+        <HeaderButton
+          active={showShare}
+          onClick={() => setShowShare(true)}
+          data-tooltip-id="share"
+        >
+          <Share active={showShare} />
+        </HeaderButton>
+        <HeaderButton active={showHelp} onClick={() => setShowHelp(true)}>
           <Support />
         </HeaderButton>
       </Header>
       {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
+      {showShare && <ShareModal onClose={() => setShowShare(false)} />}
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
     </>
   );

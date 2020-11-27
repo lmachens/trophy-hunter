@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
-const HeaderButton = styled.button`
-  background-color: transparent;
+const HeaderButton = styled.button<{ active?: boolean }>`
+  background-color: ${(props) => (props.active ? '#59595c' : 'transparent')};
   width: 30px;
   height: 30px;
   transition: 0.15s;

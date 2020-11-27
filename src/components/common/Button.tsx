@@ -15,6 +15,10 @@ const Button = styled.button`
   text-overflow: ellipsis;
   white-space: nowrap;
   text-transform: uppercase;
+
+  :hover {
+    background: linear-gradient(137.21deg, #f543d9 3.57%, #fad064 100%);
+  }
 `;
 
 export default Button;

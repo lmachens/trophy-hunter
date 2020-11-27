@@ -165,7 +165,7 @@ export const setLeagueFeatures = (interestedInFeatures: string[]) => {
           }
 
           log('Successfully set League features');
-          res();
+          res(null);
         }
       );
     };

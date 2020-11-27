@@ -91,8 +91,8 @@ const GlobalStyles = () => (
       a,
       a:active,
       a:visited {
-        text-decoration: none;
-        color: #77777a;
+        text-decoration: underline;
+        color: #eaeaea;
       }
 
       details {

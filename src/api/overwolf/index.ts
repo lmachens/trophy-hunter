@@ -194,7 +194,7 @@ export const getHotkey = (name: string) => {
 export const getVersion = () => {
   return new Promise<string>((resolve) => {
     overwolf.extensions.current.getManifest((manifest) =>
-      resolve(manifest.meta.version)
+      resolve(`v${manifest.meta.version}`)
     );
   });
 };

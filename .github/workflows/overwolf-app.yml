@@ -27,7 +27,7 @@ jobs:
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
-          filename: 'th-reforged.zip'
+          filename: 'th-reforged.opk'
           directory: 'overwolf'
       - name: Create Release
         id: create_release

@@ -42,7 +42,7 @@ interface TimerProps {
   timeout?: number;
 }
 
-const Timer: FC<TimerProps> = ({ onDone, timeout = 3 }) => {
+const Timer: FC<TimerProps> = ({ onDone, timeout = 6 }) => {
   const [timeLeft, setTimeLeft] = useState(timeout);
 
   useEffect(() => {

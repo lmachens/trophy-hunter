@@ -27,7 +27,7 @@ const NotSupported: NextPage = () => {
     <NotificationContainer>
       <NotificationHeader>
         <NotificationTitle>Game Mode Unsupported</NotificationTitle>
-        <Timer onDone={closeCurrentWindow} timeout={5} />
+        <Timer onDone={closeCurrentWindow} />
       </NotificationHeader>
       <Message>
         <h3>

@@ -1,15 +1,13 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import overwolf, { closeCurrentWindow } from '../api/overwolf';
+import { closeCurrentWindow, getVersion } from '../api/overwolf';
 import Timer from '../components/common/Timer';
 import NotificationHeader from '../components/notifications/NotificationHeader';
 import NotificationTitle from '../components/notifications/NotificationTitle';
 import NotificationContainer from '../components/notifications/NotificationContainer';
 import { log } from '../api/logs';
 
-overwolf.extensions.current.getManifest((manifest) =>
-  log(`Running v${manifest.meta.version}`)
-);
+getVersion().then((version) => log(`Running v${version}`));
 
 const Message = styled.div`
   background-image: url(${process.env.PUBLIC_DIR}/notifications/allIslands.png);

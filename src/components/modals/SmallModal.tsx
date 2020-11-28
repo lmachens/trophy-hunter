@@ -17,8 +17,6 @@ const Container = styled.div<{ left: number; top: number }>`
   position: fixed;
   left: ${(props) => props.left}px;
   top: ${(props) => props.top}px;
-  padding: 15px;
-  min-width: 300px;
 `;
 
 const Title = styled.h3`
@@ -27,8 +25,9 @@ const Title = styled.h3`
 
 interface SmallModalProps {
   onClose(): void;
-  title: string;
+  title?: string;
   targetId: string;
+  className?: string;
 }
 
 const SmallModal: FC<SmallModalProps> = ({
@@ -36,6 +35,7 @@ const SmallModal: FC<SmallModalProps> = ({
   onClose,
   title,
   targetId,
+  className,
 }) => {
   const containerNode = useRef<HTMLDivElement>();
   const [left, setLeft] = useState(0);
@@ -60,12 +60,13 @@ const SmallModal: FC<SmallModalProps> = ({
   return (
     <Backdrop onClick={onClose}>
       <Container
+        className={className}
         onClick={(event) => event.stopPropagation()}
         ref={containerNode}
         left={left}
         top={top}
       >
-        <Title>{title}</Title>
+        {title && <Title>{title}</Title>}
         <div>{children}</div>
       </Container>
     </Backdrop>

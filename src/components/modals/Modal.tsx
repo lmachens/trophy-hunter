@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { FC } from 'react';
 import CloseIcon from '../icons/Close';
 import Backdrop from '../common/Backdrop';
+import Checkbox from '../common/Checkbox';
 
 const Container = styled.div`
   width: 500px;
@@ -34,18 +35,46 @@ const Close = styled(CloseIcon)`
   cursor: pointer;
 `;
 
+const DontShowAgain = styled.aside`
+  background: #1f1f1f;
+  color: #717174;
+
+  small {
+    margin: 0px 24px 10px 24px;
+    display: block;
+  }
+`;
+
 interface ModalProps {
   onClose(): void;
   title: string;
+  onShowAgainChange?(showAgain: boolean): void;
+  showAgain?: boolean;
 }
 
-const Modal: FC<ModalProps> = ({ children, onClose, title }) => {
+const Modal: FC<ModalProps> = ({
+  children,
+  onClose,
+  title,
+  onShowAgainChange,
+  showAgain,
+}) => {
   return (
     <Backdrop>
       <Container onClick={(event) => event.stopPropagation()}>
         <Close onClick={onClose} />
         <Title>{title}</Title>
         <Body>{children}</Body>
+        {onShowAgainChange && (
+          <DontShowAgain>
+            <Checkbox
+              label="Show this again"
+              checked={showAgain}
+              onChange={(event) => onShowAgainChange(event.target.checked)}
+            />
+            <small>*You can always change this in settings</small>
+          </DontShowAgain>
+        )}
       </Container>
     </Backdrop>
   );

@@ -1,6 +1,7 @@
 // Creates magic proxy to avoid crashes non-overwolf environments
 
 import { log } from '../logs';
+import { getLocalStorageItem, setLocalStorageItem } from '../utils/storage';
 
 if (typeof overwolf === 'undefined') {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -188,4 +189,20 @@ export const getHotkey = (name: string) => {
       return resolve(hotkey.binding);
     });
   });
+};
+
+export const getVersion = () => {
+  return new Promise<string>((resolve) => {
+    overwolf.extensions.current.getManifest((manifest) =>
+      resolve(manifest.meta.version)
+    );
+  });
+};
+
+export const isAppUpdated = async () => {
+  const lastVersion = getLocalStorageItem('lastVersion', '');
+  const version = await getVersion();
+  const isUpdated = version !== lastVersion;
+  setLocalStorageItem('lastVersion', version);
+  return isUpdated;
 };

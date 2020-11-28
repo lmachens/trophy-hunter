@@ -7,10 +7,10 @@ import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
 import TrophyList from './TrophyList';
 import { Trophy } from './types';
 import { Tooltip } from '../tooltip';
-import CheckMark from '../icons/CheckMark';
 import { categoriesMap } from './categories';
 import { toggleArrayElement } from '../../api/utils/arrays';
 import { useAccount } from '../../contexts/account';
+import Checkbox from '../common/Checkbox';
 
 const Header = styled.header`
   display: flex;
@@ -65,20 +65,6 @@ const Backdrop = styled.div`
   z-index: -1;
 `;
 
-const Label = styled.label`
-  height: 36px;
-  display: flex;
-  align-items: center;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 0.9rem;
-  cursor: pointer;
-`;
-const Checkbox = styled.input`
-  opacity: 0;
-  width: 0;
-  height: 0;
-`;
-
 interface AvailableTrophiesProps {
   trophyProgress?: {
     [trophyName: string]: number;
@@ -90,20 +76,6 @@ const IconContainer = styled.div`
   height: 40px;
   width: 10px;
   margin-right: 4px;
-`;
-
-const CheckMarkBox = styled.div`
-  height: 10px;
-  width: 10px;
-  border: 1px solid #77777a;
-  position: relative;
-  margin-right: 7px;
-`;
-
-const CheckMarkAbsolute = styled(CheckMark)`
-  position: absolute;
-  left: 1px;
-  bottom: 1px;
 `;
 
 const AvailableTrophies: FC<AvailableTrophiesProps> = ({
@@ -142,38 +114,33 @@ const AvailableTrophies: FC<AvailableTrophiesProps> = ({
         </Tooltip>
         {showCategories && (
           <Categories>
-            <Label>
-              <Checkbox
-                type="checkbox"
-                checked={categories.length === 7}
-                onChange={() =>
-                  categories.length === 7
-                    ? setCategories([])
-                    : setCategories(Object.keys(categoriesMap))
-                }
-              />
-              <CheckMarkBox>
-                {categories.length === 7 && <CheckMarkAbsolute />}
-              </CheckMarkBox>
-              Select all
-            </Label>
+            <Checkbox
+              checked={categories.length === 7}
+              onChange={() =>
+                categories.length === 7
+                  ? setCategories([])
+                  : setCategories(Object.keys(categoriesMap))
+              }
+              label="Select all"
+            />
+
             {Object.values(categoriesMap).map(({ value, label, Icon }) => {
               const checked = categories.includes(value);
               return (
-                <Label key={value}>
-                  <Checkbox
-                    type="checkbox"
-                    checked={checked}
-                    onChange={handleCategoryChange(value)}
-                  />
-                  <CheckMarkBox>
-                    {checked && <CheckMarkAbsolute />}
-                  </CheckMarkBox>
-                  <IconContainer>
-                    <Icon progress={1} />
-                  </IconContainer>
-                  {label}
-                </Label>
+                <Checkbox
+                  key={value}
+                  type="checkbox"
+                  checked={checked}
+                  onChange={handleCategoryChange(value)}
+                  label={
+                    <>
+                      <IconContainer>
+                        <Icon progress={1} />
+                      </IconContainer>
+                      {label}
+                    </>
+                  }
+                />
               );
             })}
             <Backdrop onClick={() => setShowCategories(false)} />

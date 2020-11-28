@@ -45,6 +45,10 @@ const Settings: FC = () => {
     'trophyCompleted',
     false
   );
+  const [changelogUpdates, setChangelogUpdates] = usePersistentState(
+    'changelogUpdates',
+    true
+  );
 
   return (
     <>
@@ -59,10 +63,17 @@ const Settings: FC = () => {
             </SettingsLink>
           </Setting>
           <Setting>
-            Auto Launch{' '}
+            Auto Launch
             <SettingsToggle
               checked={autoLaunch}
               onChange={(event) => setAutoLaunch(event.target.checked)}
+            />
+          </Setting>
+          <Setting>
+            Changelog Updates
+            <SettingsToggle
+              checked={changelogUpdates}
+              onChange={(event) => setChangelogUpdates(event.target.checked)}
             />
           </Setting>
         </Col>

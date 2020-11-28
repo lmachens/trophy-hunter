@@ -10,6 +10,7 @@ import overwolf, {
   closeWindow,
   toggleWindow,
   INTERESTED_IN_LAUNCHER_FEATURES,
+  getVersion,
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
@@ -25,9 +26,7 @@ import {
 } from '../api/overwolf/live';
 import { useAccount } from '../contexts/account';
 
-overwolf.extensions.current.getManifest((manifest) =>
-  log(`Running v${manifest.meta.version}`)
-);
+getVersion().then((version) => log(`Running v${version}`));
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);

@@ -21,6 +21,11 @@ const CopyContainer = styled.div`
   }
 `;
 
+const WideSmallModal = styled(SmallModal)`
+  padding: 15px;
+  min-width: 300px;
+`;
+
 interface ShareModalProps {
   onClose(): void;
 }
@@ -36,7 +41,11 @@ const ShareModal: FC<ShareModalProps> = ({ onClose }) => {
   };
 
   return (
-    <SmallModal onClose={onClose} title="Spread the love <3" targetId="share">
+    <WideSmallModal
+      onClose={onClose}
+      title="Spread the love <3"
+      targetId="share"
+    >
       <p>Let your friends join the fun as well!</p>
       <CopyContainer>
         <a href={URL} target="_blank" rel="noreferrer">
@@ -44,7 +53,7 @@ const ShareModal: FC<ShareModalProps> = ({ onClose }) => {
         </a>
         <Button onClick={handleClick}>{copied ? 'Copied!' : 'Copy'}</Button>
       </CopyContainer>
-    </SmallModal>
+    </WideSmallModal>
   );
 };
 

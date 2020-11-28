@@ -9,15 +9,13 @@ import { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
 import { keyframes } from '@emotion/react';
 import useHotkey from '../hooks/useHotkey';
-import overwolf from '../api/overwolf';
+import overwolf, { getVersion } from '../api/overwolf';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
 import { log } from '../api/logs';
 import { PROGRESS, TROPHY_PROGRESS } from '../api/overwolf/live';
 
-overwolf.extensions.current.getManifest((manifest) =>
-  log(`Running v${manifest.meta.version}`)
-);
+getVersion().then((version) => log(`Running v${version}`));
 
 const ConnectionStatus = styled.div`
   min-height: 100px;

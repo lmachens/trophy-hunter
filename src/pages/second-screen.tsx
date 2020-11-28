@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import overwolf from '../api/overwolf';
+import overwolf, { getVersion } from '../api/overwolf';
 import Head from 'next/head';
 import { log, warn } from '../api/logs';
 import { VideoAds } from '../components/ads';
@@ -29,9 +29,7 @@ import Header from '../components/headers/Header';
 import SizeButton from '../components/headers/SizeButton';
 import MinimizeButton from '../components/headers/MinimizeButton';
 
-overwolf.extensions.current.getManifest((manifest) =>
-  log(`Running v${manifest.meta.version}`)
-);
+getVersion().then((version) => log(`Running v${version}`));
 
 const Container = styled.div`
   display: flex;

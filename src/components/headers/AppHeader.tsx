@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useState, FC, useCallback } from 'react';
 import Discord from '../icons/Discord';
 import Support from '../icons/Support';
 import styled from '@emotion/styled';
@@ -46,12 +46,13 @@ const InnerToolbar = styled.div`
   min-width: 440px;
 `;
 
+type ModalName = 'feedback' | 'help' | 'share';
 const AppHeader: FC = () => {
   const { loading, account } = useAccount();
+  const [modal, setModal] = useState<ModalName>(null);
 
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
-  const [showShare, setShowShare] = useState(false);
+  const closeModal = useCallback(() => setModal(null), []);
+  const openModal = useCallback((name: ModalName) => () => setModal(name), []);
 
   return (
     <>
@@ -63,7 +64,7 @@ const AppHeader: FC = () => {
         <Grow />
         <InnerToolbar>
           <ErrorBoundary>
-            <WriteUsFeedback onClick={() => setShowFeedback(true)}>
+            <WriteUsFeedback onClick={openModal('feedback')}>
               <Feedback />
               Write us a feedback
             </WriteUsFeedback>
@@ -74,13 +75,13 @@ const AppHeader: FC = () => {
             <Discord />
           </DiscordButtonLink>
           <HeaderButton
-            active={showShare}
-            onClick={() => setShowShare(true)}
+            active={modal === 'share'}
+            onClick={openModal('share')}
             data-tooltip-id="share"
           >
-            <Share active={showShare} />
+            <Share active={modal === 'share'} />
           </HeaderButton>
-          <HeaderButton active={showHelp} onClick={() => setShowHelp(true)}>
+          <HeaderButton active={modal === 'help'} onClick={openModal('help')}>
             <Support />
           </HeaderButton>
           <MinimizeButton />
@@ -88,9 +89,9 @@ const AppHeader: FC = () => {
           <ExitButton />
         </InnerToolbar>
       </Header>
-      {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
-      {showShare && <ShareModal onClose={() => setShowShare(false)} />}
-      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+      {modal === 'feedback' && <FeedbackModal onClose={closeModal} />}
+      {modal === 'share' && <ShareModal onClose={closeModal} />}
+      {modal === 'help' && <HelpModal onClose={closeModal} />}
     </>
   );
 };

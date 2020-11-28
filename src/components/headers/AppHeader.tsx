@@ -21,6 +21,7 @@ import MinimizeButton from './MinimizeButton';
 import HelpModal from '../guides/HelpModal';
 import ChangelogModal from '../guides/ChangelogModal';
 import { isAppUpdated } from '../../api/overwolf';
+import { getLocalStorageItem } from '../../api/utils/storage';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -62,6 +63,11 @@ const AppHeader: FC = () => {
   const openModal = useCallback((name: ModalName) => () => setModal(name), []);
 
   useEffect(() => {
+    const changelogUpdates = getLocalStorageItem('changelogUpdates', true);
+    if (!changelogUpdates) {
+      return;
+    }
+
     isAppUpdated().then((isUpdated) => {
       if (isUpdated) {
         setModal('changelog');

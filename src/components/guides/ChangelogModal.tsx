@@ -35,6 +35,7 @@ const ChangelogModal: FC<ChangelogModalProps> = ({ onClose }) => {
   useEffect(() => {
     fetch('https://api.github.com/repos/lmachens/trophy-hunter/releases')
       .then((response) => response.json())
+      .then((releases) => releases.filter((release) => !release.prerelease))
       .then(setReleases);
   }, []);
 

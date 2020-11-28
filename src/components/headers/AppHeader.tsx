@@ -15,6 +15,9 @@ import AlienwareChallenge from './AlienwareChallenge';
 import Header from './Header';
 import ErrorBoundary from '../common/ErrorBoundary';
 import ShareModal from '../guides/ShareModal';
+import SizeButton from './SizeButton';
+import ExitButton from './ExitButton';
+import MinimizeButton from './MinimizeButton';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -38,6 +41,11 @@ const WriteUsFeedback = styled.div`
   }
 `;
 
+const InnerToolbar = styled.div`
+  display: flex;
+  min-width: 440px;
+`;
+
 const AppHeader: FC = () => {
   const { loading, account } = useAccount();
 
@@ -47,30 +55,38 @@ const AppHeader: FC = () => {
 
   return (
     <>
-      <Header exitable resizable>
+      <Header>
         <ErrorBoundary>
           <Status />
           {account && !loading && <AfterMatch />}
-          <Grow />
-          <WriteUsFeedback onClick={() => setShowFeedback(true)}>
-            <Feedback />
-            Write us a feedback
-          </WriteUsFeedback>
-          <AlienwareChallenge />
         </ErrorBoundary>
-        <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
-          <Discord />
-        </DiscordButtonLink>
-        <HeaderButton
-          active={showShare}
-          onClick={() => setShowShare(true)}
-          data-tooltip-id="share"
-        >
-          <Share active={showShare} />
-        </HeaderButton>
-        <HeaderButton active={showHelp} onClick={() => setShowHelp(true)}>
-          <Support />
-        </HeaderButton>
+        <Grow />
+        <InnerToolbar>
+          <ErrorBoundary>
+            <WriteUsFeedback onClick={() => setShowFeedback(true)}>
+              <Feedback />
+              Write us a feedback
+            </WriteUsFeedback>
+            <Grow />
+            <AlienwareChallenge />
+          </ErrorBoundary>
+          <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
+            <Discord />
+          </DiscordButtonLink>
+          <HeaderButton
+            active={showShare}
+            onClick={() => setShowShare(true)}
+            data-tooltip-id="share"
+          >
+            <Share active={showShare} />
+          </HeaderButton>
+          <HeaderButton active={showHelp} onClick={() => setShowHelp(true)}>
+            <Support />
+          </HeaderButton>
+          <MinimizeButton />
+          <SizeButton />
+          <ExitButton />
+        </InnerToolbar>
       </Header>
       {showFeedback && <FeedbackModal onClose={() => setShowFeedback(false)} />}
       {showShare && <ShareModal onClose={() => setShowShare(false)} />}

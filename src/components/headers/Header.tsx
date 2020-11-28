@@ -3,17 +3,14 @@ import Background from './Background';
 import LogoContainer from './LogoContainer';
 import Logo from './Logo';
 import Toolbar from './Toolbar';
-import ExitButton from './ExitButton';
-import MinimizeButton from './MinimizeButton';
 import MovableHeader from './MovableHeader';
-import SizeButton from './SizeButton';
 
 interface HeaderProps {
   exitable?: boolean;
   resizable?: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ children, exitable, resizable }) => {
+const Header: FC<HeaderProps> = ({ children }) => {
   return (
     <MovableHeader>
       <LogoContainer>
@@ -25,12 +22,7 @@ const Header: FC<HeaderProps> = ({ children, exitable, resizable }) => {
           <path d="M0 0H200V30H200L183 48H0V0Z" />
         </Background>
       </LogoContainer>
-      <Toolbar>
-        {children}
-        <MinimizeButton />
-        {resizable && <SizeButton />}
-        {exitable && <ExitButton />}
-      </Toolbar>
+      <Toolbar>{children}</Toolbar>
     </MovableHeader>
   );
 };

@@ -28,7 +28,9 @@ const Setting = styled.div`
   justify-content: space-between;
 `;
 
-const SettingsLink = SettingsButton.withComponent('a');
+const SettingsLink = styled(SettingsButton.withComponent('a'))`
+  text-decoration: none;
+`;
 
 const Settings: FC = () => {
   const showTrophyHunterHotkey = useHotkey('show_trophy_hunter');

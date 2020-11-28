@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 
 const Container = styled.span`
-  margin-right: 10px;
+  margin-right: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

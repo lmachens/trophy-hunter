@@ -26,6 +26,8 @@ import Grow from '../components/common/Grow';
 import Hotkey from '../components/headers/HotKey';
 import useHotkey from '../hooks/useHotkey';
 import Header from '../components/headers/Header';
+import SizeButton from '../components/headers/SizeButton';
+import MinimizeButton from '../components/headers/MinimizeButton';
 
 overwolf.extensions.current.getManifest((manifest) =>
   log(`Running v${manifest.meta.version}`)
@@ -51,10 +53,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
-  }
-
-  button {
-    margin-right: 16px;
   }
 `;
 
@@ -188,6 +186,8 @@ const SecondScreen: NextPage = () => {
           <Hotkey hint="Next Page" value={nextPageHotkey} />
           <Hotkey hint="Show/Hide" value={showHideHotkey} />
           <Grow />
+          <MinimizeButton />
+          <SizeButton />
         </Header>
         <main>
           <div>

@@ -63,13 +63,9 @@ const AppHeader: FC = () => {
   const openModal = useCallback((name: ModalName) => () => setModal(name), []);
 
   useEffect(() => {
-    const changelogUpdates = getLocalStorageItem('changelogUpdates', true);
-    if (!changelogUpdates) {
-      return;
-    }
-
     isAppUpdated().then((isUpdated) => {
-      if (isUpdated) {
+      const changelogUpdates = getLocalStorageItem('changelogUpdates', true);
+      if (isUpdated && changelogUpdates) {
         setModal('changelog');
       }
     });

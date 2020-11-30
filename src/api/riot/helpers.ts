@@ -235,9 +235,7 @@ export const getLaneOpponent = (
   const laneOpponents = otherTeamParticipants.filter(
     (teammate) =>
       teammate.timeline.lane === participant.timeline.lane &&
-      teammate.timeline.role === participant.timeline.role &&
-      'JUNGLE' !== participant.timeline.lane &&
-      'DUO_SUPPORT' !== participant.timeline.role
+      teammate.timeline.role === participant.timeline.role
   );
 
   if (laneOpponents.length === 0) {

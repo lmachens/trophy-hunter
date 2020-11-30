@@ -10,7 +10,6 @@ const flameHorizon: Trophy = {
   category: 'skills',
   checkProgress: ({ match, participant }) => {
     const laneOpponent = getLaneOpponent(match.participants, participant);
-    console.log({ laneOpponent }, { participant });
     if (!laneOpponent) {
       return 0;
     }

@@ -43,9 +43,16 @@ const Background: NextPage = () => {
   });
 
   useEffect(() => {
-    const handleHotkeyPressed = (
+    const handleHotkeyPressed = async (
       event: overwolf.settings.hotkeys.OnPressedEvent
     ) => {
+      const playingSupportedGame = await isPlayingSupportedGame();
+      if (!playingSupportedGame) {
+        log('Not playing a supported game');
+        openWindow('not_supported');
+        return;
+      }
+
       if (event.name === 'show_trophy_hunter') {
         toggleWindow('in_game');
       } else if (event.name === 'show_second_screen_trophy_hunter') {
@@ -110,17 +117,25 @@ const Background: NextPage = () => {
     });
 
     const handleAppLaunch = () => {
-      overwolf.games.getRunningGameInfo((res) => {
+      overwolf.games.getRunningGameInfo(async (res) => {
         const leagueIsRunning = isLeagueRunning(res);
         setLeagueRunning(leagueIsRunning);
 
         if (leagueIsRunning && res.isInFocus) {
-          openWindow('in_game');
-          overwolf.utils.getMonitorsList((result) => {
-            if (result.displays.length > 1) {
-              openWindow('second_screen');
-            }
-          });
+          const playingSupportedGame = await isPlayingSupportedGame();
+          if (playingSupportedGame) {
+            log('Playing a supported game');
+            openWindow('in_game');
+            overwolf.utils.getMonitorsList((result) => {
+              if (result.displays.length > 1) {
+                openWindow('second_screen');
+              }
+            });
+            runLiveCheck(account);
+          } else {
+            log('Not playing a supported game');
+            openWindow('not_supported');
+          }
         } else {
           openWindow('desktop');
         }
@@ -232,12 +247,12 @@ const Background: NextPage = () => {
             }
           });
           runLiveCheck(account);
-          return stopLiveCheck;
         } else {
           log('Not playing a supported game');
           openWindow('not_supported');
         }
       });
+      return stopLiveCheck;
     }
   }, [leagueRunning, registeredFeatures, autoLaunch, account?._id]);
 

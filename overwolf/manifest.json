@@ -74,6 +74,7 @@
       "second_screen": {
         "file": "build/second-screen.html",
         "desktop_only": true,
+        "disable_hardware_acceleration": true,
         "native_window": true,
         "resizable": false,
         "transparent": true,

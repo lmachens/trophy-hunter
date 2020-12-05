@@ -1,10 +1,4 @@
-import {
-  useState,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import {
   getLocalStorageItem,
   setLocalStorageItem,
@@ -15,22 +9,21 @@ const usePersistentState = <T>(
   key: string,
   defaultValue: T
 ): [T, Dispatch<SetStateAction<T>>, () => void] => {
-  const [value, setValue] = useState<T>(
+  const [value, setValue] = useState<T>(() =>
     getLocalStorageItem<T>(key, defaultValue)
   );
 
-  const setPersistentValue = useCallback(
-    (value: T) => {
-      setLocalStorageItem(key, value);
-      setValue(value);
-    },
-    [key]
-  );
-
-  const unsetPersistentValue = useCallback(() => {
-    unsetLocalStorageItem(key);
+  const unsetPersistentValue = () => {
     setValue(undefined);
-  }, [key]);
+  };
+
+  useEffect(() => {
+    if (value === undefined) {
+      unsetLocalStorageItem(key);
+    } else {
+      setLocalStorageItem(key, value);
+    }
+  }, [key, value]);
 
   useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
@@ -50,7 +43,7 @@ const usePersistentState = <T>(
     };
   }, [key]);
 
-  return [value, setPersistentValue, unsetPersistentValue];
+  return [value, setValue, unsetPersistentValue];
 };
 
 export default usePersistentState;

@@ -107,7 +107,7 @@ const AppHeader: FC = () => {
           </HeaderButton>
           <MinimizeButton />
           <SizeButton />
-          <ExitButton />
+          <ExitButton windowName="background" />
         </InnerToolbar>
       </Header>
       {modal === 'feedback' && <FeedbackModal onClose={closeModal} />}

@@ -1,14 +1,21 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import overwolf, { getVersion } from '../api/overwolf';
+import overwolf, {
+  closeCurrentWindow,
+  getCurrentWindow,
+  getMonitor,
+  getVersion,
+  openWindow,
+  WindowName,
+} from '../api/overwolf';
 import Head from 'next/head';
-import { log, warn } from '../api/logs';
+import { log } from '../api/logs';
 import { VideoAds } from '../components/ads';
 import Profile from '../components/trophies/Profile';
 import { Islands } from '../components/islands';
 import islands from '../components/islands/islands';
 import { useAccount } from '../contexts/account';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import Favorites from '../components/filters/Favorites';
 import useAvailableTrophies from '../contexts/account/useAvailableTrophies';
 import Combat from '../components/filters/Combat';
@@ -28,6 +35,11 @@ import useHotkey from '../hooks/useHotkey';
 import Header from '../components/headers/Header';
 import SizeButton from '../components/headers/SizeButton';
 import MinimizeButton from '../components/headers/MinimizeButton';
+import ExitButton from '../components/headers/ExitButton';
+import HeaderButton from '../components/headers/HeaderButton';
+import Monitor from '../components/icons/Monitor';
+import useDisplays from '../hooks/useDisplays';
+import useCenterWindow from '../hooks/useCenterWindow';
 
 getVersion().then((version) => log(`Running v${version}`));
 
@@ -78,7 +90,10 @@ const SecondScreen: NextPage = () => {
     'last-filter-index',
     -1
   );
-  const [nextFilterIndex, setNextFilterIndex] = useState(-1);
+  const [preferedWindow, setPreferedWindow] = usePersistentState<WindowName>(
+    'prefered-window',
+    'second_screen'
+  );
   const levels = account?.levels || [];
   const availableTrophies = useAvailableTrophies();
   const [trophyProgress] = usePersistentState<{ [trophyName: string]: number }>(
@@ -86,7 +101,11 @@ const SecondScreen: NextPage = () => {
     {}
   );
   const nextPageHotkey = useHotkey('next_page_trophy_hunter');
-  const showHideHotkey = useHotkey('show_second_screen_trophy_hunter');
+  const showHideHotkey = useHotkey('show_trophy_hunter');
+  const toggleMonitorHotkey = useHotkey('toggle_monitor_trophy_hunter');
+  const displays = useDisplays();
+  useCenterWindow();
+
   const filters = filterIndex === -1 ? [] : allFilters[filterIndex];
 
   const trophies = availableTrophies.filter(
@@ -99,8 +118,8 @@ const SecondScreen: NextPage = () => {
   const hasFavorites = availableTrophies.some((trophy) =>
     account.favoriteTrophyNames.includes(trophy.name)
   );
-  useEffect(() => {
-    const getNextIndex = (index) => {
+  const getNextIndex = useCallback(
+    (index) => {
       let nextFilterIndex = (index + 1) % allFilters.length;
       if (nextFilterIndex === allFilters.indexOf('favorites')) {
         if (hasFavorites) {
@@ -126,43 +145,35 @@ const SecondScreen: NextPage = () => {
       }
 
       return index;
+    },
+    [hasFavorites, availableTrophies]
+  );
+
+  useEffect(() => {
+    const updateMonitorPosition = async () => {
+      const monitor = await getMonitor(preferedWindow === 'in_game');
+      const currentWindow = await getCurrentWindow();
+      if (monitor && currentWindow.name !== preferedWindow) {
+        await openWindow(preferedWindow);
+        closeCurrentWindow();
+      }
     };
-    const nextIndex = getNextIndex(filterIndex);
+    updateMonitorPosition();
+  }, [preferedWindow]);
+
+  useEffect(() => {
     if (filterIndex === -1) {
-      setFilterIndex(nextIndex);
-      getNextIndex(nextIndex);
-    } else {
-      setNextFilterIndex(nextIndex);
+      setFilterIndex(getNextIndex(filterIndex));
     }
-  }, [filterIndex, hasFavorites, availableTrophies]);
-
-  useEffect(() => {
-    overwolf.utils.getMonitorsList((result) => {
-      if (result.displays.length < 2) {
-        warn('[second-screen] Not enough displays');
-        return;
-      }
-      const secondaryDisplay = result.displays.find(
-        (display) => !display.is_primary
-      );
-      if (!secondaryDisplay) {
-        warn('[second-screen] No secondary display found');
-        return;
-      }
-      overwolf.windows.changePosition(
-        'second_screen',
-        secondaryDisplay.x + Math.round((secondaryDisplay.width - 1335) / 2),
-        secondaryDisplay.y + Math.round((secondaryDisplay.height - 750) / 2)
-      );
-    });
-  }, []);
-
-  useEffect(() => {
     const handleHotkeyPressed = (
       event: overwolf.settings.hotkeys.OnPressedEvent
     ) => {
       if (event.name === 'next_page_trophy_hunter') {
-        setFilterIndex(nextFilterIndex);
+        setFilterIndex((filterIndex) => getNextIndex(filterIndex));
+      } else if (event.name === 'toggle_monitor_trophy_hunter') {
+        setPreferedWindow((gameWindow) =>
+          gameWindow === 'in_game' ? 'second_screen' : 'in_game'
+        );
       }
     };
     overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
@@ -170,7 +181,7 @@ const SecondScreen: NextPage = () => {
     return () => {
       overwolf.settings.hotkeys.onPressed.removeListener(handleHotkeyPressed);
     };
-  }, [nextFilterIndex]);
+  }, [filterIndex === -1, getNextIndex]);
 
   return (
     <>
@@ -181,11 +192,26 @@ const SecondScreen: NextPage = () => {
         <Header resizable>
           <Status />
           <Grow />
-          <Hotkey hint="Next Page" value={nextPageHotkey} />
           <Hotkey hint="Show/Hide" value={showHideHotkey} />
+          <Hotkey hint="Next Page" value={nextPageHotkey} />
+          {displays.length > 1 && (
+            <Hotkey hint="Toggle monitor" value={toggleMonitorHotkey} />
+          )}
           <Grow />
+          {displays.length > 1 && (
+            <HeaderButton
+              onClick={() =>
+                setPreferedWindow(
+                  preferedWindow === 'in_game' ? 'second_screen' : 'in_game'
+                )
+              }
+            >
+              <Monitor />
+            </HeaderButton>
+          )}
           <MinimizeButton />
           <SizeButton />
+          <ExitButton />
         </Header>
         <main>
           <div>

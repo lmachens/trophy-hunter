@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 import HeaderButton from './HeaderButton';
 import Close from '../icons/Close';
+import {
+  closeCurrentWindow,
+  closeWindow,
+  WindowName,
+} from '../../api/overwolf';
 
 const Button = styled(HeaderButton)`
   &:hover,
@@ -9,9 +14,16 @@ const Button = styled(HeaderButton)`
   }
 `;
 
-const ExitButton = () => {
+type Props = {
+  windowName?: WindowName;
+};
+const ExitButton = ({ windowName }: Props) => {
   return (
-    <Button onClick={() => overwolf.windows.getMainWindow().close()}>
+    <Button
+      onClick={() =>
+        windowName ? closeWindow(windowName) : closeCurrentWindow()
+      }
+    >
       <Close />
     </Button>
   );

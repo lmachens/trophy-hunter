@@ -67,35 +67,47 @@ export const isLeagueClosed = (
   );
 };
 
-export const openWindow = (windowName) => {
-  overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
-    if (result.error) {
-      throw new Error(result.error);
-    }
-    overwolf.windows.restore(result.window.id);
+export const openWindow = (windowName: WindowName) => {
+  return new Promise((resolve, reject) => {
+    overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
+      if (result.error) {
+        return reject(result.error);
+      }
+      overwolf.windows.restore(result.window.id, resolve);
+    });
   });
 };
 
-export const closeWindow = (windowName: string) => {
-  overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
-    if (result.error) {
-      throw new Error(result.error);
-    }
-    overwolf.windows.close(result.window.id);
+export const closeWindow = (windowName: WindowName) => {
+  return new Promise((resolve, reject) => {
+    overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
+      if (result.error) {
+        return reject(result.error);
+      }
+      overwolf.windows.close(result.window.id, resolve);
+    });
   });
 };
 
-export const toggleWindow = (windowName: string) => {
-  overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
-    if (
-      !result.success ||
-      ['minimized', 'hidden', 'closed'].includes(result.window.stateEx)
-    ) {
-      overwolf.windows.restore(result.window.id);
-    } else {
-      overwolf.windows.minimize(result.window.id);
+export const toggleInGameWindow = async () => {
+  const windowName = getLocalStorageItem<WindowName>(
+    'prefered-window',
+    'second_screen'
+  );
+  const secondScreen = await getMonitor(false);
+  overwolf.windows.obtainDeclaredWindow(
+    secondScreen ? windowName : 'in_game',
+    (result) => {
+      if (
+        !result.success ||
+        ['minimized', 'hidden', 'closed'].includes(result.window.stateEx)
+      ) {
+        overwolf.windows.restore(result.window.id);
+      } else {
+        overwolf.windows.minimize(result.window.id);
+      }
     }
-  });
+  );
 };
 
 export const closeCurrentWindow = (): void => {
@@ -205,4 +217,57 @@ export const isAppUpdated = async () => {
   const isUpdated = version !== lastVersion;
   setLocalStorageItem('lastVersion', version);
   return isUpdated;
+};
+
+export type WindowName =
+  | 'background'
+  | 'desktop'
+  | 'loading_screen'
+  | 'in_game'
+  | 'second_screen'
+  | 'notification'
+  | 'not_supported';
+
+export const getDisplays = () => {
+  return new Promise<overwolf.utils.Display[]>((resolve) => {
+    overwolf.utils.getMonitorsList((result) => {
+      resolve(result.displays);
+    });
+  });
+};
+
+export const getCurrentWindow = () => {
+  return new Promise<overwolf.windows.WindowInfo>((resolve, reject) => {
+    overwolf.windows.getCurrentWindow((result) => {
+      if (result.error) {
+        return reject(result.error);
+      }
+      resolve(result.window);
+    });
+  });
+};
+
+export const getMonitor = async (primaryDisplay: boolean) => {
+  const monitors = await getDisplays();
+
+  const monitor = monitors.find(
+    (display) => display.is_primary === primaryDisplay
+  );
+  return monitor;
+};
+
+export const centerWindow = async (
+  window: overwolf.windows.WindowInfo,
+  primaryDisplay = true
+) => {
+  const monitor = await getMonitor(primaryDisplay);
+
+  return new Promise((resolve) => {
+    overwolf.windows.changePosition(
+      window.name,
+      monitor.x + Math.round((monitor.width - window.width) / 2),
+      monitor.y + Math.round((monitor.height - window.height) / 2),
+      resolve
+    );
+  });
 };

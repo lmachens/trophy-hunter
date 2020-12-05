@@ -35,7 +35,7 @@ const SettingsLink = styled(SettingsButton.withComponent('a'))`
 const Settings: FC = () => {
   const showTrophyHunterHotkey = useHotkey('show_trophy_hunter');
   const nextPageHotkey = useHotkey('next_page_trophy_hunter');
-  const showSecondScreenHotkey = useHotkey('show_second_screen_trophy_hunter');
+  const toggleMonitorHotkey = useHotkey('toggle_monitor_trophy_hunter');
   const [autoLaunch, setAutoLaunch] = usePersistentState('autoLaunch', true);
   const [trophyNearCompletion, setTrophyNearCompletion] = usePersistentState(
     'trophyNearCompletion',
@@ -107,9 +107,9 @@ const Settings: FC = () => {
             </SettingsLink>
           </Setting>
           <Setting>
-            Show / Hide hotkey
-            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_second_screen_trophy_hunter&gameId=5426">
-              {showSecondScreenHotkey}
+            Toggle monitor hotkey
+            <SettingsLink href="overwolf://settings/games-overlay?hotkey=toggle_monitor_trophy_hunter&gameId=5426">
+              {toggleMonitorHotkey}
             </SettingsLink>
           </Setting>
         </Col>

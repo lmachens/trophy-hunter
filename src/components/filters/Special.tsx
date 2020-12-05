@@ -1,8 +1,9 @@
-import { FC } from 'react';
 import Filter, { FilterProps } from './Filter';
+import Path from './Path';
 
-const Special: FC<Omit<FilterProps, 'title'>> = (props) => {
-  const color = props.selected ? 'url(#paint0_linear)' : '#77777A';
+const Special = (props: Omit<FilterProps, 'title'>) => {
+  const color =
+    props.selected && !props.disabled ? 'url(#paint0_linear)' : '#77777A';
 
   return (
     <Filter title="Special" {...props}>
@@ -13,7 +14,7 @@ const Special: FC<Omit<FilterProps, 'title'>> = (props) => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
+        <Path
           d="M10 1L1 12.7692V81.3077L10 91H82L91 81.3077V12.7692L82 1H10Z"
           stroke={color}
         />
@@ -50,27 +51,27 @@ const Special: FC<Omit<FilterProps, 'title'>> = (props) => {
             transform="rotate(30 69.8263 8.98169)"
             fill={props.selected ? '#FBBA38' : '#77777A'}
           />
-          <path
+          <Path
             d="M69 58H17V49H26L25.878 42.0909H34.5V37H51.561V42.0909H60V49H69V58Z"
             fill={props.selected ? '#C0C0C0' : '#636365'}
           />
-          <path
+          <Path
             d="M17 58H48V42.0909V37H34.439V42.0909H26V49H17V58Z"
             fill={props.selected ? '#E8E8E8' : '#77777A'}
           />
-          <path
+          <Path
             fillRule="evenodd"
             clipRule="evenodd"
             d="M27.75 20H26.25V22.25H24V23.75H26.25V26H27.75V23.75H30V22.25H27.75V20Z"
             fill={props.selected ? '#EF1ACD' : '#C4C4C4'}
           />
-          <path
+          <Path
             fillRule="evenodd"
             clipRule="evenodd"
             d="M48.5 63H47.5V64.5H46V65.5H47.5V67H48.5V65.5H50V64.5H48.5V63Z"
             fill={props.selected ? '#EF874D' : '#C4C4C4'}
           />
-          <path
+          <Path
             fillRule="evenodd"
             clipRule="evenodd"
             d="M74.5 33H73.5V34.5H72V35.5H73.5V37H74.5V35.5H76V34.5H74.5V33Z"

@@ -16,6 +16,7 @@ import GarenaModal from '../components/modals/GarenaModal';
 import islands from '../components/islands/islands';
 import { useAccount } from '../contexts/account';
 import ZoomToFit from '../components/common/ZoomToFit';
+import useCenterWindow from '../hooks/useCenterWindow';
 
 const SizeContainer = styled(ZoomToFit)`
   position: absolute;
@@ -52,6 +53,8 @@ const LeagueOfLegends: NextPage = () => {
     'isGarenaUser',
     null
   );
+  useCenterWindow();
+
   const { account } = useAccount();
 
   const { left, top } = targetLevel || { left: 0, top: 0 };

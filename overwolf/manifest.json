@@ -25,7 +25,7 @@
         "file": "build/league-of-legends.html",
         "desktop_only": true,
         "native_window": true,
-        "resizable": false,
+        "resizable": true,
         "transparent": true,
         "size": {
           "width": 1335,
@@ -35,17 +35,14 @@
           "width": 1335,
           "height": 750
         },
-        "max_size": {
-          "width": 1335,
-          "height": 750
-        },
         "block_top_window_navigation": true,
         "popup_blocker": true,
         "mute": true,
-        "use_os_windowing": true
+        "use_os_windowing": true,
+        "keep_window_location": true
       },
-      "in_game": {
-        "file": "build/in-game.html",
+      "loading_screen": {
+        "file": "build/loading-screen.html",
         "in_game_only": true,
         "focus_game_takeover": "ReleaseOnHidden",
         "focus_game_takeover_release_hotkey": "showhide",
@@ -71,12 +68,12 @@
         "popup_blocker": true,
         "mute": true
       },
-      "second_screen": {
+      "in_game": {
         "file": "build/second-screen.html",
-        "desktop_only": true,
-        "disable_hardware_acceleration": true,
-        "native_window": true,
-        "resizable": false,
+        "in_game_only": true,
+        "focus_game_takeover": "ReleaseOnHidden",
+        "focus_game_takeover_release_hotkey": "showhide",
+        "resizable": true,
         "transparent": true,
         "size": {
           "width": 1335,
@@ -86,7 +83,23 @@
           "width": 1335,
           "height": 750
         },
-        "max_size": {
+        "block_top_window_navigation": true,
+        "popup_blocker": true,
+        "mute": true,
+        "keep_window_location": true
+      },
+      "second_screen": {
+        "file": "build/second-screen.html",
+        "desktop_only": true,
+        "disable_hardware_acceleration": true,
+        "native_window": true,
+        "resizable": true,
+        "transparent": true,
+        "size": {
+          "width": 1335,
+          "height": 750
+        },
+        "min_size": {
           "width": 1335,
           "height": 750
         },
@@ -171,12 +184,12 @@
       "next_page_trophy_hunter": {
         "title": "Next Page Second Screen Window",
         "action-type": "custom",
-        "default": "Ctrl+X"
+        "default": "Ctrl+Right"
       },
-      "show_second_screen_trophy_hunter": {
-        "title": "Show/Hide Second Screen Window",
+      "toggle_monitor_trophy_hunter": {
+        "title": "Toggle monitor",
         "action-type": "custom",
-        "default": "Ctrl+Z"
+        "default": "Ctrl+Up"
       }
     },
     "protocol_override_domains": {},

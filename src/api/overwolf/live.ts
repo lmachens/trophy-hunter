@@ -218,7 +218,7 @@ export const stopLiveCheck = (): void => {
   overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdates2);
 };
 
-export const isPlayingSupportedGame = async (): Promise<boolean> => {
+export const isPlayingSupportedGame = async (): Promise<boolean | number> => {
   return new Promise((resolve) => {
     let launcherInfoTimeoutId = null;
     const getLauncherInfo = (hideError = false) => {
@@ -254,8 +254,7 @@ export const isPlayingSupportedGame = async (): Promise<boolean> => {
             log(`[getInfo] QueueId ${queueId} is not supported`);
             resolve(false);
           } else {
-            log(`[getInfo] QueueId ${queueId} is supported`);
-            resolve(true);
+            resolve(queueId);
           }
         }
       });

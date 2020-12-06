@@ -6,12 +6,7 @@ import {
   withSchema,
   withDatabase,
 } from '../../api/utils/server/middleware';
-import {
-  getMatch,
-  getTimeline,
-  getSummoner,
-  getMatchAndTimeline,
-} from '../../api/riot/server';
+import { getSummoner, getMatchAndTimeline } from '../../api/riot/server';
 import * as trophies from '../../components/trophies';
 import { newAccount } from '../../api/accounts/server';
 import { Account } from '../../api/accounts';

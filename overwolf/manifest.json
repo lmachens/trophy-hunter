@@ -112,6 +112,7 @@
       },
       "notification": {
         "file": "build/notification.html",
+        "in_game_only": true,
         "resizable": false,
         "transparent": true,
         "clickthrough": true,

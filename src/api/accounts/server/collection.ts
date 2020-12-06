@@ -10,7 +10,7 @@ export const createAccountsCollection = async () => {
     return;
   }
 
-  db.createCollection('accounts', {
+  await db.createCollection('accounts', {
     validator: {
       $jsonSchema: {
         bsonType: 'object',

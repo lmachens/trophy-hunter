@@ -11,6 +11,7 @@ import { patchAccount } from '../../api/accounts';
 import { toggleArrayElement } from '../../api/utils/arrays';
 import Flag from '../icons/Flag';
 import { Tooltip } from '../tooltip';
+import TrophyStats from './TrophyStats';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -55,6 +56,12 @@ const Favorite = styled((props) => (
   cursor: pointer;
 `;
 
+const Title = styled.h3`
+  display: inline;
+  font-family: 'Roboto Mono', monospace;
+  margin-right: 0.5em;
+`;
+
 const TrophyListItem: FC<TrophyListItemProps> = ({
   trophy,
   borderless,
@@ -77,14 +84,14 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
       ? { progress, progressDetails: null }
       : useTrophyProgress(trophy);
   const ProgressIcon = categoriesMap[trophy.category].Icon;
-
   return (
     <ListItem borderless={borderless} {...props}>
       <Progress>
         <ProgressIcon progress={trophyProgress} />
       </Progress>
       <Grow>
-        <h3>{trophy.title}</h3>
+        <Title>{trophy.title}</Title>
+        <TrophyStats trophyName={trophy.name} />
         <p>{trophy.description}</p>
         {trophy.maxProgress && (
           <ProgressBar

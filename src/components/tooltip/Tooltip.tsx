@@ -84,10 +84,6 @@ const Title = styled.div`
   font-size: 1.14rem;
 `;
 
-const Text = styled.div`
-  font-family: 'Lato', sans-serif;
-`;
-
 interface TooltipProps {
   title?: ReactNode;
   text?: ReactNode;
@@ -214,7 +210,7 @@ const Tooltip: FC<TooltipProps> = ({
         onClick={onClick}
       >
         {title && <Title>{title}</Title>}
-        {text && <Text>{text}</Text>}
+        {text && <div>{text}</div>}
       </Container>,
       bodyChildNode.current
     );

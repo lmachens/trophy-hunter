@@ -4,3 +4,4 @@ export const THIRTY_SECONDS = 30 * 1000;
 export const FIFTEEN_MINUTES = 15 * 60 * 1000;
 export const THIRTY_MINUTES = 30 * 60 * 1000;
 export const FOURTY_FIVE_MINUTES = 45 * 60 * 1000;
+export const THREE_MINUTES = 3 * 60 * 1000;

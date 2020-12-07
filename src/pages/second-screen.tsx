@@ -84,6 +84,12 @@ const List = styled.section`
   }
 `;
 
+const Categories = styled.div`
+  > :not(:first-child) {
+    margin-left: 18px;
+  }
+`;
+
 const allFilters = ['favorites', ...islands.map((island) => island.name)];
 const SecondScreen: NextPage = () => {
   const { account } = useAccount();
@@ -215,7 +221,7 @@ const SecondScreen: NextPage = () => {
           <ExitButton />
         </Header>
         <main>
-          <div>
+          <Categories>
             <Favorites
               selected={filterIndex === allFilters.indexOf('favorites')}
               disabled={!hasFavorites}
@@ -280,7 +286,7 @@ const SecondScreen: NextPage = () => {
               }
               onClick={() => setFilterIndex(allFilters.indexOf('hub'))}
             />
-          </div>
+          </Categories>
           <List>
             {trophies.map((trophy) => (
               <TrophyListItem

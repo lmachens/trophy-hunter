@@ -16,7 +16,7 @@ const Container = styled.div`
 const Title = styled.h3`
   margin: 20px;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
 `;
 
 const Body = styled.div`

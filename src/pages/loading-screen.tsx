@@ -7,7 +7,11 @@ import { useState, useEffect } from 'react';
 import Button from '../components/common/Button';
 import { keyframes } from '@emotion/react';
 import useHotkey from '../hooks/useHotkey';
-import { closeCurrentWindow, getVersion, openWindow } from '../api/overwolf';
+import {
+  closeCurrentWindow,
+  getVersion,
+  toggleInGameWindow,
+} from '../api/overwolf';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
 import { log } from '../api/logs';
@@ -113,7 +117,7 @@ const LoadingScreen: NextPage = () => {
                 Hit {hotkey} or{' '}
                 <Button
                   onClick={async () => {
-                    await openWindow('second_screen');
+                    await toggleInGameWindow();
                     await closeCurrentWindow();
                   }}
                 >

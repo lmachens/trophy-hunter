@@ -140,7 +140,9 @@ export const SUPPORTED_QUEUE_IDS = [
   SR_BLIND_PICK,
   SR_RANKED_FLEX,
 ];
-
+if (getLocalStorageItem('dev', false)) {
+  SUPPORTED_QUEUE_IDS.push(0);
+}
 export const setLeagueLauncherFeatures = (
   interestedInFeatures: string[],
   onReady?: () => void

@@ -70,6 +70,7 @@ const SmallIslands = styled(Islands)`
   margin: 0;
   margin-left: 12px;
   zoom: 0.48;
+  pointer-events: none;
 `;
 
 const List = styled.section`

@@ -219,9 +219,7 @@ const Background: NextPage = () => {
     if (!account || !registeredFeatures) {
       return;
     }
-    if (leagueRunning) {
-      log('League is running');
-    } else if (leagueRunning === false) {
+    if (leagueRunning === false) {
       log('League is not running');
       closeWindow('loading_screen');
       closeWindow('in_game');
@@ -229,16 +227,19 @@ const Background: NextPage = () => {
       return;
     }
 
-    if (leagueRunning && autoLaunch) {
+    if (leagueRunning) {
+      log('League is running');
       isPlayingSupportedGame().then((playingSupportedGame) => {
         setPlayingSupportedGame(playingSupportedGame);
-        if (playingSupportedGame) {
-          log(`Playing a supported game ${playingSupportedGame}`);
-          openWindow('loading_screen');
-          runLiveCheck(account);
-        } else {
-          log(`Not playing a supported game ${playingSupportedGame}`);
-          openWindow('not_supported');
+        if (autoLaunch) {
+          if (playingSupportedGame) {
+            log(`Playing a supported game ${playingSupportedGame}`);
+            openWindow('loading_screen');
+            runLiveCheck(account);
+          } else {
+            log(`Not playing a supported game ${playingSupportedGame}`);
+            openWindow('not_supported');
+          }
         }
       });
       return stopLiveCheck;

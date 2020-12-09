@@ -141,7 +141,7 @@ export const SUPPORTED_QUEUE_IDS = [
   SR_RANKED_FLEX,
 ];
 if (getLocalStorageItem('dev', false)) {
-  SUPPORTED_QUEUE_IDS.push(0);
+  SUPPORTED_QUEUE_IDS.push(-1);
 }
 export const setLeagueLauncherFeatures = (
   interestedInFeatures: string[],

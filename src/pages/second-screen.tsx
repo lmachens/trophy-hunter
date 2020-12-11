@@ -314,7 +314,7 @@ const SecondScreen: NextPage = () => {
               />
             ))}
           </SmallIslands>
-          <VideoAds showIngame />
+          <VideoAds ingame autoRefresh={preferedWindow === 'second_screen'} />
         </aside>
       </Container>
     </>

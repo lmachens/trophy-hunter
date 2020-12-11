@@ -1,9 +1,11 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import overwolf, {
-  isLeagueLaunched,
-  isLeagueClosed,
   isLeagueRunning,
+  getRunningGameInfo,
+  getCurrentWindow,
+  isWindowStateVisible,
+  isLeagueGameId,
 } from '../../api/overwolf';
 import { OwAd } from '../../../typings/owAds';
 import { log } from '../../api/logs';
@@ -23,34 +25,132 @@ const Container = styled.div`
 `;
 
 interface VideoAdsProps {
-  showIngame: boolean;
+  ingame?: boolean;
+  autoRefresh?: boolean;
 }
 
-const VideoAds: FC<VideoAdsProps> = ({ showIngame }) => {
+const SEVEN_MINUTES = 7 * 60 * 1000;
+
+const VideoAds: FC<VideoAdsProps> = ({
+  ingame = false,
+  autoRefresh = false,
+}) => {
   const containerRef = useRef(null);
+  const adsVisible = useRef<boolean>(null);
   const [owAd, setOwAd] = useState<OwAd>(null);
+  const [timeoutStart, setTimeoutStart] = useState<number>(null);
+
+  const refreshAd = useCallback(
+    async (force = false) => {
+      if (!owAd) {
+        return;
+      }
+      const showAd = () => {
+        if (adsVisible.current && !force) {
+          return;
+        }
+        log(`Show ad (ingame: ${ingame})`);
+        owAd.refreshAd(null);
+        adsVisible.current = true;
+      };
+      const hideAd = () => {
+        if (!adsVisible.current && !force) {
+          return;
+        }
+        log(`Hide ad (ingame: ${ingame})`);
+        owAd.removeAd();
+        adsVisible.current = false;
+      };
+
+      const currentWindow = await getCurrentWindow();
+      if (!isWindowStateVisible(currentWindow.stateEx)) {
+        hideAd();
+        return;
+      }
+
+      const runningGameInfo = await getRunningGameInfo();
+      if (isLeagueRunning(runningGameInfo)) {
+        if (ingame) {
+          if (runningGameInfo.isInFocus) {
+            showAd();
+          } else {
+            hideAd();
+          }
+        } else {
+          hideAd();
+        }
+      } else {
+        showAd();
+      }
+
+      setTimeoutStart(Date.now());
+    },
+    [owAd, ingame]
+  );
+
+  useEffect(() => {
+    if (!autoRefresh) {
+      return;
+    }
+
+    let timeoutId = null;
+    const refreshTimeout = () => {
+      log('Start new ads timeout');
+
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => refreshAd(true), SEVEN_MINUTES);
+    };
+    refreshTimeout();
+
+    const handleHotkeyPressed = () => {
+      refreshTimeout();
+    };
+    const handleClick = () => {
+      refreshTimeout();
+    };
+
+    overwolf.settings.hotkeys.onPressed.addListener(handleHotkeyPressed);
+    window.addEventListener('click', handleClick);
+
+    return () => {
+      clearTimeout(timeoutId);
+      overwolf.settings.hotkeys.onPressed.removeListener(handleHotkeyPressed);
+      window.removeEventListener('click', handleClick);
+    };
+  }, [autoRefresh, timeoutStart]);
 
   useEffect(() => {
     const handleOwAdReady = () => {
       if (typeof globalThis.OwAd === 'undefined') {
         return;
       }
-      log(`OwAd ready`);
+      log(`OwAd script loaded`);
 
       const owAd: OwAd = new globalThis.OwAd(containerRef.current, {
         size: { width: 400, height: 300 },
       });
 
+      let owAdIsSet = false;
       const handleInternalRendered = () => {
+        if (owAdIsSet) {
+          return;
+        }
         owAd.removeEventListener(
           'ow_internal_rendered',
           handleInternalRendered
         );
 
         setOwAd(owAd);
+        log(`OwAd is ready`);
+        owAdIsSet = true;
       };
 
+      const handleDisplayAdLoaded = () => {
+        log(`Display ad loaded`);
+        setTimeoutStart(Date.now());
+      };
       owAd.addEventListener('ow_internal_rendered', handleInternalRendered);
+      owAd.addEventListener('display_ad_loaded', handleDisplayAdLoaded);
     };
 
     const script = document.createElement('script');
@@ -66,79 +166,40 @@ const VideoAds: FC<VideoAdsProps> = ({ showIngame }) => {
   }, []);
 
   useEffect(() => {
-    if (!owAd) {
-      return;
-    }
-    const handleWindowStateChanged = (
+    const handleWindowStateChanged = async (
       state: overwolf.windows.WindowStateChangedEvent
-    ): void => {
-      overwolf.windows.getCurrentWindow((res) => {
-        if (state && state.window_id === res.window.id) {
-          // when state changes to minimized, call removeAd()
-          if (state.window_state === 'minimized') {
-            owAd.removeAd();
-          }
-          // when state changes from minimized to normal, call refreshAd()
-          else if (
-            state.window_previous_state === 'minimized' &&
-            state.window_state === 'normal'
-          ) {
-            if (showIngame) {
-              owAd.refreshAd(null);
-            } else {
-              overwolf.games.getRunningGameInfo((res) => {
-                if (!isLeagueRunning(res)) {
-                  owAd.refreshAd(null);
-                }
-              });
-            }
-          }
-        }
-      });
+    ) => {
+      const currentWindow = await getCurrentWindow();
+      if (state.window_id !== currentWindow.id) {
+        return;
+      }
+      if (
+        (isWindowStateVisible(state.window_previous_state_ex) &&
+          !isWindowStateVisible(state.window_state_ex)) ||
+        (!isWindowStateVisible(state.window_previous_state_ex) &&
+          isWindowStateVisible(state.window_state_ex))
+      ) {
+        refreshAd();
+      }
     };
-    overwolf.windows.onStateChanged.addListener(handleWindowStateChanged);
-
-    return () => {
-      overwolf.windows.onStateChanged.removeListener(handleWindowStateChanged);
-    };
-  }, [showIngame, owAd]);
-
-  useEffect(() => {
-    if (!owAd) {
-      return;
-    }
-
     const handleGameInfoUpdated = (
       res: overwolf.games.GameInfoUpdatedEvent
     ) => {
-      if (
-        showIngame &&
-        isLeagueRunning(res.gameInfo) &&
-        !res.gameInfo?.isInFocus
-      ) {
-        owAd.removeAd();
-        return;
-      }
-
-      if (isLeagueLaunched(res)) {
-        owAd.removeAd();
-      } else if (isLeagueClosed(res)) {
-        owAd.refreshAd(null);
+      if (isLeagueGameId(res.gameInfo?.id)) {
+        refreshAd();
       }
     };
 
+    overwolf.windows.onStateChanged.addListener(handleWindowStateChanged);
     overwolf.games.onGameInfoUpdated.addListener(handleGameInfoUpdated);
 
-    overwolf.games.getRunningGameInfo((res) => {
-      if (!showIngame && isLeagueRunning(res)) {
-        owAd.removeAd();
-      }
-    });
-
+    refreshAd();
+    log(`Initialized window and game info listeners`);
     return () => {
+      overwolf.windows.onStateChanged.removeListener(handleWindowStateChanged);
       overwolf.games.onGameInfoUpdated.removeListener(handleGameInfoUpdated);
     };
-  }, [showIngame, owAd]);
+  }, [refreshAd]);
 
   return <Container ref={containerRef} />;
 };

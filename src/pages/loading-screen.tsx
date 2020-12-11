@@ -128,7 +128,7 @@ const LoadingScreen: NextPage = () => {
             </>
           )}
         </ConnectionStatus>
-        <VideoAds showIngame={true} />
+        <VideoAds ingame />
       </Container>
     </>
   );

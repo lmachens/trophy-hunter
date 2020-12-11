@@ -47,13 +47,16 @@ export const isLeagueRunning = (
   );
 };
 
+export const isLeagueGameId = (gameId: number) =>
+  Math.floor(gameId / 10) === LOL_ID;
+
 export const isLeagueLaunched = (
   gameInfoResult: overwolf.games.GameInfoUpdatedEvent
 ): boolean => {
   return Boolean(
     gameInfoResult?.gameInfo?.isRunning &&
       (gameInfoResult.runningChanged || gameInfoResult.gameChanged) &&
-      Math.floor(gameInfoResult.gameInfo.id / 10) === LOL_ID
+      isLeagueGameId(gameInfoResult.gameInfo.id)
   );
 };
 
@@ -63,7 +66,7 @@ export const isLeagueClosed = (
   return Boolean(
     gameInfoResult?.gameInfo?.isRunning === false &&
       gameInfoResult.runningChanged &&
-      Math.floor(gameInfoResult.gameInfo.id / 10) === LOL_ID
+      isLeagueGameId(gameInfoResult.gameInfo.id)
   );
 };
 
@@ -110,10 +113,13 @@ export const toggleInGameWindow = async () => {
   );
 };
 
-export const closeCurrentWindow = (): void => {
-  overwolf.windows.getCurrentWindow((result) => {
-    overwolf.windows.close(result.window.id);
-  });
+export const closeWindowById = (windowId: string) => {
+  return new Promise((resolve) => overwolf.windows.close(windowId, resolve));
+};
+
+export const closeCurrentWindow = async () => {
+  const currentWindow = await getCurrentWindow();
+  await closeWindowById(currentWindow.id);
 };
 
 export const restoreCurrentWindow = (): void => {
@@ -272,4 +278,18 @@ export const centerWindow = async (
       resolve
     );
   });
+};
+
+export const getRunningGameInfo = () => {
+  return new Promise<overwolf.games.GetRunningGameInfoResult>((resolve) => {
+    overwolf.games.getRunningGameInfo((res) => {
+      resolve(res);
+    });
+  });
+};
+
+export const isWindowStateVisible = (
+  stateEx: overwolf.windows.WindowStateEx
+) => {
+  return ['normal', 'maximized'].includes(stateEx);
 };

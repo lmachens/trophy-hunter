@@ -18,6 +18,11 @@ import {
 } from '../../api/riot/helpers';
 import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
+import {
+  getUnlockedIslandNames,
+  isLevelCompleted,
+  isLevelNearlyCompleted,
+} from '../../api/accounts/server/functions';
 
 const activeChecks: string[] = [];
 export default applyMiddleware(
@@ -104,7 +109,7 @@ export default applyMiddleware(
 
       accountLevels.forEach((accountLevel) => {
         if (accountLevel.status === 'completed') {
-          return accountLevel;
+          return;
         }
 
         const level = levels[accountLevel.name] as Level;
@@ -145,31 +150,35 @@ export default applyMiddleware(
           }
           accountTrophy.progress = Math.min(1, progress);
           accountTrophy.progressDetails = details;
-          if (progress >= 1) {
+          if (progress >= 0.99) {
+            // Sometimes it is not exactly 1
             accountTrophy.status = 'completed';
             levelTrophiesCompleted++;
             completedTrophyNames.push(accountTrophy.name);
           }
         });
-        const isLevelNearlyCompleted =
-          levelTrophiesCompleted / level.trophies.length >= 0.8;
-        const isLevelCompleted =
-          levelTrophiesCompleted / level.trophies.length >= 1;
-        if (!isLevelNearlyCompleted) {
+        const levelINearlyCompleted = isLevelNearlyCompleted(
+          level,
+          levelTrophiesCompleted
+        );
+        const levelIsCompleted = isLevelCompleted(
+          level,
+          levelTrophiesCompleted
+        );
+        if (!levelINearlyCompleted) {
           return;
         }
+        const newIslandNames = getUnlockedIslandNames(level);
         unlockedIslandNames.push(
-          ...level.unlocksLevels
-            .map((level) => levels[level.name].island)
-            .filter(
-              (islandName) =>
-                !account.islands.some((island) => island.name === islandName)
-            )
+          ...newIslandNames.filter(
+            (islandName) =>
+              !account.islands.some((island) => island.name === islandName)
+          )
         );
 
-        if (isLevelCompleted) {
+        if (levelIsCompleted) {
           accountLevel.status = 'completed';
-        } else if (isLevelNearlyCompleted) {
+        } else if (levelINearlyCompleted) {
           accountLevel.status = 'unlocked';
         }
 
@@ -182,21 +191,27 @@ export default applyMiddleware(
             status: 'open',
           }))
         );
-        accountLevels.push(
-          ...level.unlocksLevels
-            .filter(
-              (level) =>
-                !accountLevels.some(
-                  (accountLevel) => accountLevel.name === level.name
-                )
+        const newLevels = level.unlocksLevels.filter(
+          (level) =>
+            !accountLevels.some(
+              (accountLevel) => accountLevel.name === level.name
             )
-            .map<AccountLevel>((level) => ({
-              name: level.name,
-              island: level.island,
-              status: 'active',
-              unlockedAt: now,
-            }))
         );
+        accountLevels.push(
+          ...newLevels.map<AccountLevel>((level) => ({
+            name: level.name,
+            island: level.island,
+            status: 'active',
+            unlockedAt: now,
+          }))
+        );
+
+        // Add new trophies
+        const newTrophies = newLevels.reduce(
+          (curr, level) => [...curr, ...level.trophies],
+          []
+        );
+        accountTrophies.push(...newTrophies);
 
         const isIslandComplete = !accountLevels
           .filter(

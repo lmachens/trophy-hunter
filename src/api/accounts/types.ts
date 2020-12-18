@@ -1,3 +1,4 @@
+import { Category } from '../../components/trophies/types';
 import { Summoner } from '../riot/types';
 
 export interface Credential {
@@ -27,14 +28,14 @@ export interface AccountIsland {
 
 export interface AccountLevel {
   name: string;
-  island: string;
+  island: Category;
   status: 'active' | 'unlocked' | 'completed';
   unlockedAt: number;
 }
 
 export interface AccountTrophy {
   name: string;
-  island: string;
+  island: Category;
   level: string;
   status: 'active' | 'completed';
   progress: number;

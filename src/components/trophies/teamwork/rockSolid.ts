@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getOpponents } from '../../../api/riot/helpers';
 
 const rockSolid: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'rockSolid',
   level: 'teamwork8',
   title: 'Rock Solid',

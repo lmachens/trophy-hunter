@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const deepSea: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'deepSea',
   level: 'objectives3',
   title: 'Deep Sea',

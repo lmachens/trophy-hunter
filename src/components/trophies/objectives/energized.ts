@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const energized: Trophy = {
-  island: 'combatIsland',
+  island: 'objectives',
   name: 'energized',
   level: 'objectives1',
   title: 'Energized',

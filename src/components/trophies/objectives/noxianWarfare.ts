@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const noxianWarfare: Trophy = {
-  island: 'objectivesIsland',
+  island: 'objectives',
   name: 'noxianWarfare',
   level: 'objectives4',
   title: 'Noxian Warfare',

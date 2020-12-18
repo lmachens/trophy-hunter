@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const immortal: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'immortal',
   level: 'teamwork7',
   title: 'Immortal',

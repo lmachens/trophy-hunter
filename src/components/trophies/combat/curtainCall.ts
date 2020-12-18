@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getAllKills } from '../../../api/riot/helpers';
 
 const curtainCall: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'curtainCall',
   level: 'combat6',
   title: 'Curtain Call',

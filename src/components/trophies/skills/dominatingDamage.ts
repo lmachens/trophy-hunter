@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const dominatingDamage: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'dominatingDamage',
   level: 'skills3',
   title: 'Dominating Damage',

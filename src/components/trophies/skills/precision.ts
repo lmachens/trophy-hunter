@@ -3,7 +3,7 @@ import { getMinionsAtMin } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const precision: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'precision',
   level: 'skills2',
   title: 'Precision',

@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const clothArmor: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'clothArmor',
   level: 'combat3',
   title: 'Cloth Armor',

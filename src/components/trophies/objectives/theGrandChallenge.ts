@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const theGrandChallenge: Trophy = {
-  island: 'objectivesIsland',
+  island: 'objectives',
   name: 'theGrandChallenge',
   level: 'objectives5',
   title: 'The Grand Challenge',

@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const skullHunter: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'skullHunter',
   level: 'combat1',
   title: 'Skull Hunter',

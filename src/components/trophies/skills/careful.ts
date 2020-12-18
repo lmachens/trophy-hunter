@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const careful: Trophy = {
-  island: 'hubIsland',
+  island: 'hub',
   name: 'careful',
   level: 'hubSkills',
   title: 'Careful',

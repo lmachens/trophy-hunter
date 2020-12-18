@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const uncounterable: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'uncounterable',
   level: 'combat3',
   title: 'Uncounterable',

@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantDeaths } from '../../../api/riot/helpers';
 
 const gloriousEvolution: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'gloriousEvolution',
   level: 'combat8',
   title: 'Glorious Evolution',

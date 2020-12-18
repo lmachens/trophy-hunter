@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const wolfPack: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'wolfPack',
   level: 'combat6',
   title: 'Wolf Pack',

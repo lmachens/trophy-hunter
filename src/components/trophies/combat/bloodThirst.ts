@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKills } from '../../../api/riot/helpers';
 
 const bloodThirst: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'bloodThirst',
   level: 'combat5',
   title: 'Blood Thirst',

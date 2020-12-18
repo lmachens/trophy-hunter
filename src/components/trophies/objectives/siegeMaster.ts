@@ -5,7 +5,7 @@ import {
 } from '../../../api/riot/helpers';
 
 const siegeMaster: Trophy = {
-  island: 'objectivesIsland',
+  island: 'objectives',
   name: 'siegeMaster',
   level: 'objectives5',
   title: 'Siege Master',

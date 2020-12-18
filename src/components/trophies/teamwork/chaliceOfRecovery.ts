@@ -3,7 +3,7 @@ import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const chaliceOfRecovery: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'chaliceOfRecovery',
   level: 'teamwork2',
   title: 'Chalice Of Recovery',

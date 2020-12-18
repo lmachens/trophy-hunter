@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getOtherParticipants } from '../../../api/riot/helpers';
 
 const tarzan: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'tarzan',
   level: 'skills6',
   title: 'Tarzan',

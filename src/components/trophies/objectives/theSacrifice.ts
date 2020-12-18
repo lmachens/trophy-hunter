@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantDeaths } from '../../../api/riot/helpers';
 
 const theSacrifice: Trophy = {
-  island: 'objectivesIsland',
+  island: 'objectives',
   name: 'theSacrifice',
   level: 'objectives5',
   title: 'The Sacrifice',

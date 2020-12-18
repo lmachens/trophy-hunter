@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const healer: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'healer',
   level: 'teamwork7',
   title: 'Healer',

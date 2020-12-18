@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getLaneOpponent } from '../../../api/riot/helpers';
 
 const flameHorizon: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'flameHorizon',
   level: 'skills3',
   title: 'Flame Horizon',

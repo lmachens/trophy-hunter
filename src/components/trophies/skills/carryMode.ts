@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const carryMode: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'carryMode',
   level: 'skills5',
   title: 'Carry Mode',

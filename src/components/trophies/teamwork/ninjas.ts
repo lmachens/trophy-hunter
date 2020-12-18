@@ -2,7 +2,7 @@ import { Trophy, Event } from '../types';
 import { MatchEvent } from '../../../api/riot/types';
 
 const ninjas: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'ninjas',
   level: 'teamwork6',
   title: 'Ninjas',

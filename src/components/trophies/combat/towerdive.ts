@@ -6,7 +6,7 @@ import {
 } from '../../../api/riot/helpers';
 
 const towerdive: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'towerdive',
   level: 'combat3',
   title: 'Towerdive',

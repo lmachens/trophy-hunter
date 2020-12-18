@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const mercenary: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'mercenary',
   level: 'teamwork3',
   title: 'Mercenary',

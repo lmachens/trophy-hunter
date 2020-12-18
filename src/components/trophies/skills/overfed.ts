@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getOtherParticipants } from '../../../api/riot/helpers';
 
 const overfed: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'overfed',
   level: 'skills4',
   title: 'Overfed',

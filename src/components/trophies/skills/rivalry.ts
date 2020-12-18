@@ -3,7 +3,7 @@ import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const rivalry: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'rivalry',
   level: 'skills2',
   title: 'Rivalry',

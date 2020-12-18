@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const theWhale: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'theWhale',
   level: 'epic2',
   title: 'The Whale',

@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getLaneOpponent } from '../../../api/riot/helpers';
 
 const theSpartan: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'theSpartan',
   level: 'skills4',
   title: 'The Spartan',

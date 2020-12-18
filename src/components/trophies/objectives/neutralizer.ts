@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const neutralizer: Trophy = {
-  island: 'objectivesIsland',
+  island: 'objectives',
   name: 'neutralizer',
   level: 'objectives1',
   title: 'Neutralizer',

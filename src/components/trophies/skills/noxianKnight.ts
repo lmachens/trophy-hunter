@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const noxianKnight: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'noxianKnight',
   level: 'skills2',
   title: 'Noxian Knight',

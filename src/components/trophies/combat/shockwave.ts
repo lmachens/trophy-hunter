@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKills } from '../../../api/riot/helpers';
 
 const shockwave: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'shockwave',
   level: 'combat4',
   title: 'Shockwave',

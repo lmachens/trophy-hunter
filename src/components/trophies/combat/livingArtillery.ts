@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTeammates } from '../../../api/riot/helpers';
 
 const livingArtillery: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'livingArtillery',
   level: 'combat5',
   title: 'Living Artillery',

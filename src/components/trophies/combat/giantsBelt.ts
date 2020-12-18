@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const giantsBelt: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'giantsBelt',
   level: 'combat8',
   title: 'Giants Belt',

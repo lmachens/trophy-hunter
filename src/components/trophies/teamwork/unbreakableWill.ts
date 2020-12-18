@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTeammates } from '../../../api/riot/helpers';
 
 const unbreakableWill: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'unbreakableWill',
   level: 'teamwork5',
   title: 'Unbreakable Will',

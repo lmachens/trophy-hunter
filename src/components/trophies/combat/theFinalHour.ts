@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const theFinalHour: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'theFinalHour',
   level: 'combat5',
   title: 'The Final Hour',

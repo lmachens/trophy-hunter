@@ -8,7 +8,7 @@ import {
 } from '../../../api/riot/helpers';
 
 const revenge: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'revenge',
   level: 'combat3',
   title: 'REVENGE!!!',

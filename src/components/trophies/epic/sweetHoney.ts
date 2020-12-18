@@ -2,7 +2,7 @@ import { getMinionsAtMin } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const sweetHoney: Trophy = {
-  island: 'hubIsland',
+  island: 'hub',
   name: 'sweetHoney',
   level: 'hubEpic',
   title: 'Sweet Honey',

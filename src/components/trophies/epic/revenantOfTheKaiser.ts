@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTeam } from '../../../api/riot/helpers';
 
 const revenantOfTheKaiser: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'revenantOfTheKaiser',
   level: 'epic1',
   title: 'Revenant Of The Kaiser',

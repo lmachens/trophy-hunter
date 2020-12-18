@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const kitchenKnife: Trophy = {
-  island: 'hubIsland',
+  island: 'hub',
   name: 'kitchenKnife',
   level: 'hubCombat',
   title: 'Kitchen Knife',

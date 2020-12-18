@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { calcLevel } from '../../../api/riot/helpers';
 
 const sheepHunter: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'sheepHunter',
   level: 'combat2',
   title: 'Sheep Hunter',

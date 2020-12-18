@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const darkBinding: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'darkBinding',
   level: 'combat7',
   title: 'Dark Binding',

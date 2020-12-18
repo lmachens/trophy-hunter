@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantDeaths } from '../../../api/riot/helpers';
 
 const theBull: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'theBull',
   level: 'teamwork4',
   title: 'The Bull',

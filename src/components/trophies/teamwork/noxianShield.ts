@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTeammates } from '../../../api/riot/helpers';
 
 const noxianShield: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'noxianShield',
   level: 'teamwork3',
   title: 'Noxian Shield',

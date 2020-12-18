@@ -3,7 +3,7 @@ import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const annihilation: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'annihilation',
   level: 'teamwork6',
   title: 'Annihilation',

@@ -119,8 +119,8 @@ const LeagueOfLegends: NextPage = () => {
               setTargetLevel({
                 islandName: island.name,
                 level,
-                top: island.top,
-                left: island.left,
+                top: island.centerTop,
+                left: island.centerLeft,
               });
               setVisibleIslandDetails(true);
             }}

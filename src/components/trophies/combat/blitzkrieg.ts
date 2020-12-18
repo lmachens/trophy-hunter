@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getLevelUps } from '../../../api/riot/helpers';
 
 const blitzkrieg: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'blitzkrieg',
   level: 'combat4',
   title: 'Blitzkrieg',

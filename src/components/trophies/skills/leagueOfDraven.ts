@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKills } from '../../../api/riot/helpers';
 
 const leagueOfDraven: Trophy = {
-  island: 'skillsIsland',
+  island: 'skills',
   name: 'leagueOfDraven',
   level: 'skills6',
   title: 'League Of Draven',

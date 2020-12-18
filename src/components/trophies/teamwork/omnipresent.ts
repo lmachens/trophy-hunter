@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const omnipresent: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'omnipresent',
   level: 'teamwork7',
   title: 'Omnipresent',

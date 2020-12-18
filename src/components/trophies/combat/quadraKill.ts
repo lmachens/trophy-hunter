@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const quadraKill: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'quadraKill',
   level: 'combat8',
   title: 'Quadra Kill',

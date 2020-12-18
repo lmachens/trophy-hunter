@@ -5,7 +5,7 @@ import {
 } from '../../../api/riot/helpers';
 
 const theZombie: Trophy = {
-  island: 'hubIsland',
+  island: 'hub',
   name: 'theZombie',
   level: 'combat5',
   title: 'The Zombie',

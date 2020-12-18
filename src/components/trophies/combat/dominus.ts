@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getLaneOpponent, getMinionsAtMin } from '../../../api/riot/helpers';
 
 const dominus: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'dominus',
   level: 'combat7',
   title: 'Dominus',

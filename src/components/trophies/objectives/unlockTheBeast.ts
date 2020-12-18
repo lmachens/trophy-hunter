@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTeam, getParticipantKills } from '../../../api/riot/helpers';
 
 const unlockTheBeast: Trophy = {
-  island: 'objectivesIsland',
+  island: 'objectives',
   name: 'unlockTheBeast',
   level: 'objectives6',
   title: 'Unlock The Beast',

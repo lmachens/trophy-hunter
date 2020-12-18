@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getOpponents } from '../../../api/riot/helpers';
 
 const thePirate: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'thePirate',
   level: 'epic2',
   title: 'The Pirate',

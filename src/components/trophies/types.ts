@@ -21,7 +21,7 @@ export interface Trophy {
   title: string;
   description: string;
   level: string;
-  island: string;
+  island: Category;
   category: Category;
   maxProgress?: number;
   ProgressDetails?: FC<{ details: any }>;

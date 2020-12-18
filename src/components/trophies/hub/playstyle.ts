@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const playstyle: Trophy = {
-  island: 'hubIsland',
+  island: 'hub',
   name: 'playstyle',
   level: 'welcome',
   title: 'New Born',

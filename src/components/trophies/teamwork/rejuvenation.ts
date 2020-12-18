@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress, findPerk } from '../../../api/accounts/helpers';
 
 const rejuvenation: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'rejuvenation',
   level: 'teamwork4',
   title: 'Rejuvenation',

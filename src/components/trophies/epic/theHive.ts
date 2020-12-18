@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const theHive: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'theHive',
   level: 'epic2',
   title: 'The Hive',

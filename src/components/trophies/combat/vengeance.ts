@@ -3,7 +3,7 @@ import { getParticipantKills, getTeammates } from '../../../api/riot/helpers';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const vengeance: Trophy = {
-  island: 'hubIsland',
+  island: 'hub',
   name: 'vengeance',
   level: 'combat3',
   title: 'Vengeance',

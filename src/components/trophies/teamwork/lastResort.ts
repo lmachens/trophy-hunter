@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const lastResort: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'lastResort',
   level: 'teamwork6',
   title: 'Last Resort',

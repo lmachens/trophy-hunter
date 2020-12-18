@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantAssists } from '../../../api/riot/helpers';
 
 const sasquatch: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'sasquatch',
   level: 'teamwork4',
   title: 'Sasquatch',

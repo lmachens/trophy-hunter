@@ -4,7 +4,7 @@ import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const THIRTY_SECONDS = 30000;
 const deathMarks: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'deathMarks',
   level: 'combat2',
   title: 'Death Marks',

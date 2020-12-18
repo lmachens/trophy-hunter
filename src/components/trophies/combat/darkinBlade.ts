@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const darkinBlade: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'darkinBlade',
   level: 'combat6',
   title: 'Trinity Force',

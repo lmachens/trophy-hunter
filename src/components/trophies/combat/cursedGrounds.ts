@@ -3,7 +3,7 @@ import { BUFF_POSITIONS } from '../../../api/riot/helpers';
 import { TEN_MINUTES } from '../../../api/utils/dates';
 
 const cursedGrounds: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'cursedGrounds',
   level: 'combat4',
   title: 'Cursed Grounds',

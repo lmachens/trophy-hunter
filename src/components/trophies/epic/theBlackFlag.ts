@@ -3,7 +3,7 @@ import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const theBlackFlag: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'theBlackFlag',
   level: 'epic2',
   title: 'The Black Flag',

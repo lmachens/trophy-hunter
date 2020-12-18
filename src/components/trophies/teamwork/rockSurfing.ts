@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 
 const rockSurfing: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'rockSurfing',
   level: 'teamwork8',
   title: 'Rock Surfing',

@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const sandsOfTime: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'sandsOfTime',
   level: 'epic1',
   title: 'Sands Of Time',

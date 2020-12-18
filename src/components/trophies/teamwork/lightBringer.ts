@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const lightBringer: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'lightBringer',
   level: 'teamwork3',
   title: 'Light Bringer',

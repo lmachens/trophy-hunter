@@ -3,7 +3,7 @@ import { calcTotalGoldFrames } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const thorsHammer: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'thorsHammer',
   level: 'teamwork8',
   title: 'Thors Hammer',

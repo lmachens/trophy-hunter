@@ -8,7 +8,7 @@ const calculateDamagePerGold = (participant: Participant) => {
 };
 
 const flail: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'flail',
   level: 'combat1',
   title: 'Flail',

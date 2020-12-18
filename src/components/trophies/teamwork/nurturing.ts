@@ -6,7 +6,7 @@ import {
 } from '../../../api/riot/helpers';
 
 const nurturing: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'nurturing',
   level: 'teamwork7',
   title: 'Nurturing',

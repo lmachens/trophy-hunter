@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getLevelUps, getParticipantKills } from '../../../api/riot/helpers';
 
 const unleashThePower: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'unleashThePower',
   level: 'combat4',
   title: 'Unleash The Power',

@@ -3,7 +3,7 @@ import { getParticipantAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 
 const quadraAssist: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'quadraAssist',
   level: 'teamwork4',
   title: 'Quadra Assist',

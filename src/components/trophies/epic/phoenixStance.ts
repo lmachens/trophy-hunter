@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTeam } from '../../../api/riot/helpers';
 
 const phoenixStance: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'phoenixStance',
   level: 'epic1',
   title: 'Phoenix Stance',

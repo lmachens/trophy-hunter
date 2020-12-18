@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const sai: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'sai',
   level: 'combat5',
   title: 'Sai',

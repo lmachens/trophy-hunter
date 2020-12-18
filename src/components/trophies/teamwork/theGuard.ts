@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { findPerk } from '../../../api/accounts/helpers';
 
 const theGuard: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'theGuard',
   level: 'teamwork5',
   title: 'The Guard',

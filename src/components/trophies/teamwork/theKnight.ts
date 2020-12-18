@@ -7,7 +7,7 @@ import {
 } from '../../../api/riot/helpers';
 
 const theKnight: Trophy = {
-  island: 'teamworkIsland',
+  island: 'teamwork',
   name: 'theKnight',
   level: 'teamwork7',
   title: 'The Knight',

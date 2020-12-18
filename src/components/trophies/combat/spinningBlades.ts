@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { getTrophyProgress } from '../../../api/accounts/helpers';
 
 const spinningBlades: Trophy = {
-  island: 'combatIsland',
+  island: 'combat',
   name: 'spinningBlades',
   level: 'combat2',
   title: 'Spinning Blades',

@@ -1,7 +1,7 @@
 import { Trophy } from '../types';
 
 const mafiaBoss: Trophy = {
-  island: 'epicIsland',
+  island: 'epic',
   name: 'mafiaBoss',
   level: 'epic1',
   title: 'Mafia Boss',

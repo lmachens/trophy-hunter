@@ -6,7 +6,7 @@ import {
 import OneTrickPonyDetails from './OneTrickPonyDetails';
 
 const oneTrickPony: Trophy = {
-  island: 'specialIsland',
+  island: 'special',
   name: 'oneTrickPony',
   level: 'special4',
   title: 'One Trick Pony',

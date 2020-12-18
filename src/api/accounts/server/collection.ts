@@ -73,6 +73,9 @@ export const createAccountsCollection = async () => {
           favoriteTrophyNames: {
             bsonType: 'array',
           },
+          lastMigrationAt: {
+            bsonType: 'date',
+          },
         },
         required: ['islands', 'levels', 'trophies', 'authTokens'],
       },

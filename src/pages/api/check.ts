@@ -186,11 +186,19 @@ export default applyMiddleware(
           (unlockLevel) => unlockLevel.island !== level.island
         );
         accountIslands.push(
-          ...unlockIslandLevels.map<AccountIsland>((level) => ({
-            name: level.island,
-            status: 'open',
-          }))
+          ...unlockIslandLevels
+            .map<AccountIsland>((level) => ({
+              name: level.island,
+              status: 'open',
+            }))
+            .filter(
+              (accountLevel) =>
+                !account.levels.some(
+                  (level) => level.name === accountLevel.name
+                )
+            )
         );
+
         const newLevels = level.unlocksLevels.filter(
           (level) =>
             !accountLevels.some(
@@ -206,7 +214,6 @@ export default applyMiddleware(
           }))
         );
 
-        // Add new trophies
         const newTrophies = newLevels.reduce(
           (curr, level) => [...curr, ...level.trophies],
           []

@@ -10,7 +10,7 @@ import { log } from '../api/logs';
 getVersion().then((version) => log(`Running v${version}`));
 
 const Message = styled.div`
-  background-image: url(${process.env.PUBLIC_DIR}/notifications/allIslands.png);
+  background-image: url(${process.env.PUBLIC_DIR}/notifications/all.png);
   background-position: bottom center;
   background-repeat: no-repeat;
   flex-grow: 1;

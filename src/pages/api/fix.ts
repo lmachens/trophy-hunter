@@ -47,7 +47,7 @@ export default applyMiddleware(
               levelTrophiesCompleted++;
             }
             if (
-              accountTrophy.progress >= 1 &&
+              accountTrophy.progress >= 0.99 &&
               accountTrophy.status !== 'completed'
             ) {
               invalidTrophies.push({

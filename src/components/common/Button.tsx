@@ -1,23 +1,32 @@
 import styled from '@emotion/styled';
 
-const Button = styled.button`
-  background: ${(props) =>
-    props.disabled
-      ? '#77777a'
-      : 'linear-gradient(158.54deg, #EF1ACD -1.09%, #EFB31A 109.64%);'};
-  padding: 4px;
-  margin: 10px;
-  border: none;
-  outline: none;
-  color: ${(props) => (props.disabled ? '#3f3e43' : '#EAEAEA')};
+type Props = {
+  active?: boolean;
+};
+const Button = styled.button<Props>`
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  border: none;
+  color: #eaeaea;
+  outline: none;
+  font-size: 18px;
   text-transform: uppercase;
+  border: ${(props) => (props.active ? '1px solid #EAEAEA' : 'none')};
+  background: ${(props) => (props.active ? '#616165' : '#3f3e43')};
+  text-decoration: none;
 
-  :hover {
-    background: linear-gradient(137.21deg, #f543d9 3.57%, #fad064 100%);
+  &:hover {
+    background: #616165;
+  }
+
+  :disabled {
+    color: #77777a;
+    background: #39383d;
+    cursor: default;
   }
 `;
 

@@ -1,4 +1,4 @@
-import { Account, Credential } from './types';
+import { Account, Credential, Ranking } from './types';
 import { postJSON, getJSON, patchJSON } from '../utils/request';
 import { log } from '../logs';
 export * from './types';
@@ -21,4 +21,8 @@ export const postCheck = (matchId: number) => {
 
 export const patchAccount = (patch) => {
   return patchJSON<Account>('/api/account', patch);
+};
+
+export const getRankings = () => {
+  return getJSON<Ranking[]>('/api/rankings');
 };

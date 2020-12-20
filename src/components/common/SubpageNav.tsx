@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from '../common/Link';
+import Link from 'next/link';
 import IconButton from './IconButton';
 import MapIcon from '../icons/Map';
 import LeaderboardIcon from '../icons/Leaderboard';
@@ -25,45 +25,54 @@ const SubpageNav = () => {
 
   return (
     <Nav onClick={(event) => event.stopPropagation()}>
-      <Link
-        href={{
-          query: {
-            subpage: 'map',
-          },
-        }}
-      >
-        <Tooltip title="Map" placement="top">
-          <NavIconButton active={subpage === 'map'}>
-            <MapIcon />
-          </NavIconButton>
-        </Tooltip>
-      </Link>
-      <Link
-        href={{
-          query: {
-            subpage: 'leaderboard',
-          },
-        }}
-      >
-        <Tooltip title="Leaderboard" placement="top">
-          <NavIconButton active={subpage === 'leaderboard'}>
-            <LeaderboardIcon />
-          </NavIconButton>
-        </Tooltip>
-      </Link>
-      <Link
-        href={{
-          query: {
-            subpage: 'history',
-          },
-        }}
-      >
-        <Tooltip title="History" placement="top">
-          <NavIconButton active={subpage === 'history'}>
-            <HistoryIcon />
-          </NavIconButton>
-        </Tooltip>
-      </Link>
+      <Tooltip title="Map" placement="top">
+        <div>
+          <Link
+            href={{
+              query: {
+                subpage: 'map',
+              },
+            }}
+            passHref
+          >
+            <NavIconButton as="a" active={subpage === 'map'}>
+              <MapIcon />
+            </NavIconButton>
+          </Link>
+        </div>
+      </Tooltip>
+      <Tooltip title="Leaderboard" placement="top">
+        <div>
+          <Link
+            href={{
+              query: {
+                subpage: 'leaderboard',
+              },
+            }}
+            passHref
+          >
+            <NavIconButton as="a" active={subpage === 'leaderboard'}>
+              <LeaderboardIcon />
+            </NavIconButton>
+          </Link>
+        </div>
+      </Tooltip>
+      <Tooltip title="History" placement="top">
+        <div>
+          <Link
+            href={{
+              query: {
+                subpage: 'history',
+              },
+            }}
+            passHref
+          >
+            <NavIconButton as="a" active={subpage === 'history'}>
+              <HistoryIcon />
+            </NavIconButton>
+          </Link>
+        </div>
+      </Tooltip>
     </Nav>
   );
 };

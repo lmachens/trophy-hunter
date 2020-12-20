@@ -42,3 +42,10 @@ export interface AccountTrophy {
   progress: number;
   progressDetails: any;
 }
+
+export type Ranking = {
+  summonerName: string;
+  profileIconId: number;
+  islands: string[];
+  completed: number;
+};

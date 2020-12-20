@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import Link from '../common/Link';
+import Link from 'next/link';
 import { Tooltip } from '../tooltip';
 import Settings from '../icons/Settings';
 import ToolButton from '../tools/ToolButton';
@@ -15,16 +15,17 @@ const Aside = styled.aside`
   flex-direction: column;
 `;
 
-interface SidebarButtonProps {
+interface SidebarLinkProps {
   active?: boolean;
   comingSoon?: boolean;
 }
 
-const SidebarButton = styled.button<SidebarButtonProps>`
+const SidebarLink = styled.a<SidebarLinkProps>`
+  display: grid;
+  place-items: center;
   height: 75px;
   width: 100%;
   background: ${(props) => (props.active ? '#2B2A30' : '#222')};
-  border: none;
   border-bottom: 1px solid #3f3e43;
   cursor: ${(props) => (props.comingSoon ? 'inherit' : 'pointer')};
   transition: 0.15s;
@@ -48,20 +49,20 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = ({ activeTool, onToolClick }) => {
   return (
     <Aside>
-      <Link href="/league-of-legends?subpage=map">
-        <SidebarButton active>
+      <Link href="/league-of-legends?subpage=map" passHref>
+        <SidebarLink active>
           <img src={`${process.env.PUBLIC_DIR}/league-of-legends.png`} />
-        </SidebarButton>
+        </SidebarLink>
       </Link>
       <Tooltip title="Coming soon! <3" placement="right">
-        <SidebarButton comingSoon>
+        <SidebarLink comingSoon>
           <img src={`${process.env.PUBLIC_DIR}/teamfight-tactics.png`} />
-        </SidebarButton>
+        </SidebarLink>
       </Tooltip>
       <Tooltip title="Coming soon! <3" placement="right">
-        <SidebarButton comingSoon>
+        <SidebarLink comingSoon>
           <img src={`${process.env.PUBLIC_DIR}/legends-of-runeterra.png`} />
-        </SidebarButton>
+        </SidebarLink>
       </Tooltip>
       <Grow />
       <ToolButton

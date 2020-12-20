@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { VideoAds } from '../components/ads';
 import SpecialProgress from '../components/trophies/special/SpecialProgress';
 import { useState, useEffect } from 'react';
-import Button from '../components/common/Button';
+import FancyButton from '../components/common/FancyButton';
 import { keyframes } from '@emotion/react';
 import useHotkey from '../hooks/useHotkey';
 import {
@@ -115,14 +115,14 @@ const LoadingScreen: NextPage = () => {
               </Motivation>
               <div>
                 Hit {hotkey} or{' '}
-                <Button
+                <FancyButton
                   onClick={async () => {
                     await toggleInGameWindow();
                     await closeCurrentWindow();
                   }}
                 >
                   Click here
-                </Button>{' '}
+                </FancyButton>{' '}
                 to start
               </div>
             </>

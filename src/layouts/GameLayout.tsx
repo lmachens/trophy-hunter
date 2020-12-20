@@ -22,7 +22,7 @@ const Main = styled.main`
   position: relative;
   overflow: hidden;
 
-  nav {
+  > nav {
     position: absolute;
     right: 15px;
     top: 45px;

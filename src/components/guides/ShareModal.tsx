@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import SmallModal from '../modals/SmallModal';
 import styled from '@emotion/styled';
-import Button from '../common/Button';
+import FancyButton from '../common/FancyButton';
 import { copyTextToClipboard } from '../../api/utils/clipboard';
 
 const CopyContainer = styled.div`
@@ -15,7 +15,7 @@ const CopyContainer = styled.div`
     color: #eaeaea;
   }
 
-  ${Button} {
+  ${FancyButton} {
     margin: 0;
     padding: 8px 16px;
   }
@@ -51,7 +51,9 @@ const ShareModal: FC<ShareModalProps> = ({ onClose }) => {
         <a href={URL} target="_blank" rel="noreferrer">
           {URL}
         </a>
-        <Button onClick={handleClick}>{copied ? 'Copied!' : 'Copy'}</Button>
+        <FancyButton onClick={handleClick}>
+          {copied ? 'Copied!' : 'Copy'}
+        </FancyButton>
       </CopyContainer>
     </WideSmallModal>
   );

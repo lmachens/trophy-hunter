@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Component } from 'react';
 import { error as logError } from '../../api/logs';
-import Button from './Button';
+import FancyButton from './FancyButton';
 
 const grid = css`
   display: grid;
@@ -36,7 +36,7 @@ class ErrorBoundary extends Component<Props> {
       return (
         <Container grid={this.props.grid}>
           Something went wrong 😒.
-          <Button onClick={() => location.reload()}>Reload</Button>
+          <FancyButton onClick={() => location.reload()}>Reload</FancyButton>
         </Container>
       );
     }

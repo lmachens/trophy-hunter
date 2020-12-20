@@ -48,7 +48,7 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = ({ activeTool, onToolClick }) => {
   return (
     <Aside>
-      <Link href="/league-of-legends">
+      <Link href="/league-of-legends?subpage=map">
         <SidebarButton active>
           <img src={`${process.env.PUBLIC_DIR}/league-of-legends.png`} />
         </SidebarButton>

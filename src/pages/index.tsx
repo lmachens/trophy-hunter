@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 const Index: NextPage = () => {
   useEffect(() => {
-    Router.replace('/league-of-legends');
+    Router.replace('/league-of-legends?subpage=map');
   });
 
   return null;

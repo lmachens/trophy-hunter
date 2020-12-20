@@ -69,7 +69,7 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
   }
 
   return (
-    <Container open={open}>
+    <Container open={open} onClick={(event) => event.stopPropagation()}>
       <DetailsToggle open={open} onClick={onToggleClick} />
       <Content>{content}</Content>
     </Container>

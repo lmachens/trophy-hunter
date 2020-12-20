@@ -1,23 +1,14 @@
-import { FC } from 'react';
 import { Tooltip } from '../tooltip';
-import { TargetLevel } from '../levels/types';
 import { useAccount } from '../../contexts/account';
 import styled from '@emotion/styled';
 import { bounce } from '../../styles/animations';
-
-interface WelcomeGuideProps {
-  visibleIslandDetails: boolean;
-  targetLevel: TargetLevel;
-}
+import useTargetLevel from '../../hooks/useTargetLevel';
 
 const WelcomeTooltip = styled(Tooltip)`
   animation: ${bounce} 2s ease infinite;
 `;
 
-const WelcomeGuide: FC<WelcomeGuideProps> = ({
-  visibleIslandDetails,
-  targetLevel,
-}) => {
+const WelcomeGuide = () => {
   const { account } = useAccount();
 
   const showGuide =
@@ -26,10 +17,10 @@ const WelcomeGuide: FC<WelcomeGuideProps> = ({
   if (!showGuide) {
     return null;
   }
-
+  const { level, targetLevel } = useTargetLevel();
   return (
     <>
-      {!visibleIslandDetails && (
+      {!level && (
         <WelcomeTooltip
           title="Welcome to Trophy Hunter!"
           text="Click on the first levels to open the trophies shelf and view trophies, description and progress."

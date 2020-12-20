@@ -1,12 +1,13 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import ZoomToFit from '../common/ZoomToFit';
 import Background from '../islands/Background';
 import LevelPanel from '../levels/LevelPanel';
 import { useAccount } from '../../contexts/account';
-import { TargetLevel } from '../levels/types';
 import islands from '../islands/islands';
 import { SpecialGradients } from '../levels/special';
+import useTargetLevel from '../../hooks/useTargetLevel';
+import { GameChildProps } from '../../layouts/GameLayout';
 
 const SizeContainer = styled(ZoomToFit)`
   position: absolute;
@@ -16,19 +17,9 @@ const SizeContainer = styled(ZoomToFit)`
   margin: 30px;
 `;
 
-type Props = {
-  targetLevel: TargetLevel;
-  visibleIslandDetails: boolean;
-  onLevelClick(level: TargetLevel): void;
-  onLevelPaneToggleClick(event: MouseEvent): void;
-};
-const Map = ({
-  targetLevel,
-  visibleIslandDetails,
-  onLevelClick,
-  onLevelPaneToggleClick,
-}: Props) => {
+const Map = ({ onQueryChange }: GameChildProps) => {
   const { account } = useAccount();
+  const { level, targetLevel } = useTargetLevel();
 
   const { left, top } = targetLevel || { left: 0, top: 0 };
 
@@ -42,17 +33,12 @@ const Map = ({
           marginTop: `${top ? 148 : 78}px`,
         }}
       >
-        {islands.map(({ name, centerTop, centerLeft, Component: Island }) => (
+        {islands.map(({ name, Component: Island }) => (
           <Island
             key={name}
-            onLevelClick={(level) => {
-              onLevelClick({
-                islandName: name,
-                level,
-                top: centerTop,
-                left: centerLeft,
-              });
-            }}
+            onLevelClick={(level) =>
+              onQueryChange({ tool: undefined, level: level.name })
+            }
             targetLevel={targetLevel}
             status={
               account?.islands.find(
@@ -66,8 +52,14 @@ const Map = ({
       </SizeContainer>
       <LevelPanel
         level={targetLevel?.level}
-        open={visibleIslandDetails}
-        onToggleClick={onLevelPaneToggleClick}
+        open={Boolean(level)}
+        onToggleClick={(event) => {
+          event.stopPropagation();
+          onQueryChange({
+            tool: undefined,
+            level: level ? undefined : 'chooseLevel',
+          });
+        }}
       />
     </>
   );

@@ -1,70 +1,79 @@
 import { NextPage } from 'next';
-import { useState } from 'react';
-import { TargetLevel } from '../components/levels/types';
 import { WelcomeGuide } from '../components/guides';
-import GameLayout from '../layouts/GameLayout';
+import GameLayout, { GameChildProps } from '../layouts/GameLayout';
 import usePersistentState from '../hooks/usePersistentState';
 import GarenaModal from '../components/modals/GarenaModal';
 import useCenterWindow from '../hooks/useCenterWindow';
 import Map from '../components/map/Map';
 import MapOverview from '../components/map/MapOverview';
+import { useRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
+import Leaderboard from '../components/leaderboard/Leaderboard';
+import LeaderboardOverview from '../components/leaderboard/LeaderboardOverview';
+import History from '../components/history/History';
+import HistoryOverview from '../components/history/HistoryOverview';
+
+const subpages: {
+  [subpage: string]: {
+    Main: (props: GameChildProps) => JSX.Element;
+    Aside: (props: GameChildProps) => JSX.Element;
+  };
+} = {
+  map: {
+    Main: Map,
+    Aside: MapOverview,
+  },
+  leaderboard: {
+    Main: Leaderboard,
+    Aside: LeaderboardOverview,
+  },
+  history: {
+    Main: History,
+    Aside: HistoryOverview,
+  },
+};
 
 const LeagueOfLegends: NextPage = () => {
-  const [activeTool, setActiveTool] = useState(null);
-  const [targetLevel, setTargetLevel] = useState<TargetLevel>(null);
-  const [visibleIslandDetails, setVisibleIslandDetails] = useState(false);
   const [isGarenaUser, , unsetIsGarenaUser] = usePersistentState(
     'isGarenaUser',
     null
   );
+  const router = useRouter();
+  const { subpage = 'map', tool } = router.query;
   useCenterWindow();
+
+  const activeTool = tool === 'settings' || tool === 'collection' ? tool : null;
+
+  const setQueryParam = (query: ParsedUrlQuery) => {
+    const newQuery = { ...router.query, ...query };
+    Object.keys(newQuery).forEach(
+      (key) => newQuery[key] === undefined && delete newQuery[key]
+    );
+
+    router.push({
+      query: newQuery,
+    });
+  };
+
+  const activeSubpage = typeof subpage === 'string' ? subpage : null;
+  const { Main, Aside } = subpages[activeSubpage] || subpages.map;
 
   return (
     <GameLayout
       activeTool={activeTool}
       onToolClick={(tool) => {
-        setVisibleIslandDetails(null);
-        setTargetLevel(null);
-        setActiveTool(activeTool === tool ? null : tool);
+        setQueryParam({
+          tool: activeTool === tool ? undefined : tool,
+          level: undefined,
+        });
       }}
-      aside={
-        <MapOverview
-          onTrophyClick={(targetLevel) => {
-            setActiveTool(null);
-            setTargetLevel(targetLevel);
-            setVisibleIslandDetails(true);
-          }}
-        />
-      }
+      aside={<Aside onQueryChange={setQueryParam} />}
       onMainClick={() => {
-        setActiveTool(null);
-        setTargetLevel(null);
-        setVisibleIslandDetails(false);
+        setQueryParam({ tool: undefined, level: undefined });
       }}
     >
-      <Map
-        targetLevel={targetLevel}
-        visibleIslandDetails={visibleIslandDetails}
-        onLevelClick={(level) => {
-          setActiveTool(null);
-          setTargetLevel(level);
-          setVisibleIslandDetails(true);
-        }}
-        onLevelPaneToggleClick={(event) => {
-          event.stopPropagation();
-          setActiveTool(null);
-          if (visibleIslandDetails) {
-            setVisibleIslandDetails(false);
-            setTargetLevel(null);
-          } else {
-            setVisibleIslandDetails(true);
-          }
-        }}
-      />
-      <WelcomeGuide
-        visibleIslandDetails={visibleIslandDetails}
-        targetLevel={targetLevel}
-      />
+      <Main onQueryChange={setQueryParam} />
+      <WelcomeGuide />
       {isGarenaUser && <GarenaModal onClose={() => unsetIsGarenaUser()} />}
     </GameLayout>
   );

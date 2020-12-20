@@ -61,7 +61,7 @@ const Container = styled.div<ContainerProps>`
   background: #3f3e43;
   border: 1px solid #eaeaea;
   padding: 10px;
-  min-width: 100px;
+  min-width: 64px;
   left: ${(props) => props.left}px;
   top: ${(props) => props.top}px;
   pointer-events: ${(props) => (props.pointerEvents ? 'inherit' : 'none')};
@@ -69,6 +69,7 @@ const Container = styled.div<ContainerProps>`
   font-family: 'Roboto Mono', monospace;
   max-width: 320px;
   transition: opacity 0.15s;
+  text-align: center;
 
   ::after {
     position: absolute;

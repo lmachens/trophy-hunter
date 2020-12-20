@@ -8,6 +8,8 @@ import ErrorBoundary from '../components/common/ErrorBoundary';
 import { VideoAds } from '../components/ads';
 import Profile from '../components/trophies/Profile';
 import { ReactNode } from 'react';
+import SubpageNav from '../components/common/SubpageNav';
+import { ParsedUrlQuery } from 'querystring';
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +24,7 @@ const Main = styled.main`
 
   nav {
     position: absolute;
-    right: 20px;
+    right: 15px;
     top: 45px;
   }
 `;
@@ -57,7 +59,10 @@ const GameLayout = ({
       <AppHeader />
       <Sidebar activeTool={activeTool} onToolClick={onToolClick} />
       <Main onClick={onMainClick}>
-        <ErrorBoundary grid>{children}</ErrorBoundary>
+        <ErrorBoundary grid>
+          <SubpageNav />
+          {children}
+        </ErrorBoundary>
       </Main>
       <Side>
         <ErrorBoundary grid>
@@ -74,6 +79,10 @@ const GameLayout = ({
       )}
     </Container>
   );
+};
+
+export type GameChildProps = {
+  onQueryChange(query: ParsedUrlQuery): void;
 };
 
 export default GameLayout;

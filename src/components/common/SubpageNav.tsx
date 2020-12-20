@@ -1,0 +1,71 @@
+import React from 'react';
+import Link from '../common/Link';
+import IconButton from './IconButton';
+import MapIcon from '../icons/Map';
+import LeaderboardIcon from '../icons/Leaderboard';
+import HistoryIcon from '../icons/History';
+import styled from '@emotion/styled';
+import { Tooltip } from '../tooltip';
+import { useRouter } from 'next/router';
+
+const Nav = styled.nav`
+  display: flex;
+`;
+
+const NavIconButton = styled(IconButton)`
+  width: 30px;
+  height: 30px;
+  border: ${(props) => (props.active ? '1px solid #EAEAEA' : 'none')};
+  background: ${(props) => (props.active ? '#616165' : '#3f3e43')};
+`;
+
+const SubpageNav = () => {
+  const router = useRouter();
+  const { subpage = 'map' } = router.query;
+
+  return (
+    <Nav onClick={(event) => event.stopPropagation()}>
+      <Link
+        href={{
+          query: {
+            subpage: 'map',
+          },
+        }}
+      >
+        <Tooltip title="Map" placement="top">
+          <NavIconButton active={subpage === 'map'}>
+            <MapIcon />
+          </NavIconButton>
+        </Tooltip>
+      </Link>
+      <Link
+        href={{
+          query: {
+            subpage: 'leaderboard',
+          },
+        }}
+      >
+        <Tooltip title="Leaderboard" placement="top">
+          <NavIconButton active={subpage === 'leaderboard'}>
+            <LeaderboardIcon />
+          </NavIconButton>
+        </Tooltip>
+      </Link>
+      <Link
+        href={{
+          query: {
+            subpage: 'history',
+          },
+        }}
+      >
+        <Tooltip title="History" placement="top">
+          <NavIconButton active={subpage === 'history'}>
+            <HistoryIcon />
+          </NavIconButton>
+        </Tooltip>
+      </Link>
+    </Nav>
+  );
+};
+
+export default SubpageNav;

@@ -1,12 +1,12 @@
 import React, { MouseEvent } from 'react';
 import styled from '@emotion/styled';
 import ZoomToFit from '../common/ZoomToFit';
-import { Islands } from '../islands';
 import Background from '../islands/Background';
 import LevelPanel from '../levels/LevelPanel';
 import { useAccount } from '../../contexts/account';
 import { TargetLevel } from '../levels/types';
 import islands from '../islands/islands';
+import { SpecialGradients } from '../levels/special';
 
 const SizeContainer = styled(ZoomToFit)`
   position: absolute;
@@ -19,14 +19,12 @@ const SizeContainer = styled(ZoomToFit)`
 type Props = {
   targetLevel: TargetLevel;
   visibleIslandDetails: boolean;
-  onClick(): void;
   onLevelClick(level: TargetLevel): void;
   onLevelPaneToggleClick(event: MouseEvent): void;
 };
 const Map = ({
   targetLevel,
   visibleIslandDetails,
-  onClick,
   onLevelClick,
   onLevelPaneToggleClick,
 }: Props) => {
@@ -35,12 +33,13 @@ const Map = ({
   const { left, top } = targetLevel || { left: 0, top: 0 };
 
   return (
-    <Islands onClick={onClick}>
+    <>
+      <SpecialGradients />
       <SizeContainer
         style={{
           left: `calc(50% + ${-left}px)`,
           top: `${-top}px`,
-          marginTop: `${top ? 100 : 30}px`,
+          marginTop: `${top ? 148 : 78}px`,
         }}
       >
         {islands.map(({ name, centerTop, centerLeft, Component: Island }) => (
@@ -70,7 +69,7 @@ const Map = ({
         open={visibleIslandDetails}
         onToggleClick={onLevelPaneToggleClick}
       />
-    </Islands>
+    </>
   );
 };
 

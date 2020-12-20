@@ -1,30 +1,16 @@
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Islands } from '../components/islands';
-import Background from '../components/islands/Background';
 import { useState } from 'react';
-import LevelPanel from '../components/levels/LevelPanel';
 import { TargetLevel } from '../components/levels/types';
 import { WelcomeGuide } from '../components/guides';
 import GameLayout from '../layouts/GameLayout';
-import Profile from '../components/trophies/Profile';
-import AvailableTrophies from '../components/trophies/AvailableTrophies';
 import { VideoAds } from '../components/ads';
-import * as levels from '../components/islands/levels';
 import usePersistentState from '../hooks/usePersistentState';
 import GarenaModal from '../components/modals/GarenaModal';
-import islands from '../components/islands/islands';
-import { useAccount } from '../contexts/account';
-import ZoomToFit from '../components/common/ZoomToFit';
 import useCenterWindow from '../hooks/useCenterWindow';
-
-const SizeContainer = styled(ZoomToFit)`
-  position: absolute;
-  width: 820px;
-  height: 720px;
-  transition: 0.15s;
-  margin: 30px;
-`;
+import Map from '../components/map/Map';
+import MapOverview from '../components/map/MapOverview';
+import Profile from '../components/trophies/Profile';
 
 const Side = styled.div`
   position: relative;
@@ -55,9 +41,6 @@ const LeagueOfLegends: NextPage = () => {
   );
   useCenterWindow();
 
-  const { account } = useAccount();
-
-  const { left, top } = targetLevel || { left: 0, top: 0 };
   return (
     <GameLayout
       activeTool={activeTool}
@@ -67,79 +50,42 @@ const LeagueOfLegends: NextPage = () => {
         setActiveTool(activeTool === tool ? null : tool);
       }}
     >
-      <Islands
+      <Map
+        targetLevel={targetLevel}
+        visibleIslandDetails={visibleIslandDetails}
         onClick={() => {
           setActiveTool(null);
           setTargetLevel(null);
           setVisibleIslandDetails(false);
         }}
-      >
-        <SizeContainer
-          style={{
-            left: `calc(50% + ${-left}px)`,
-            top: `${-top}px`,
-            marginTop: `${top ? 100 : 30}px`,
-          }}
-        >
-          {islands.map(({ name, centerTop, centerLeft, Component: Island }) => (
-            <Island
-              key={name}
-              onLevelClick={(level) => {
-                setActiveTool(null);
-                setTargetLevel({
-                  islandName: name,
-                  level,
-                  top: centerTop,
-                  left: centerLeft,
-                });
-                setVisibleIslandDetails(true);
-              }}
-              targetLevel={targetLevel}
-              status={
-                account?.islands.find(
-                  (accountIsland) => accountIsland.name === name
-                )?.status || 'closed'
-              }
-              levels={account?.levels || []}
-            />
-          ))}
-          <Background />
-        </SizeContainer>
-      </Islands>
+        onLevelClick={(level) => {
+          setActiveTool(null);
+          setTargetLevel(level);
+          setVisibleIslandDetails(true);
+        }}
+        onLevelPaneToggleClick={(event) => {
+          event.stopPropagation();
+          setActiveTool(null);
+          if (visibleIslandDetails) {
+            setVisibleIslandDetails(false);
+            setTargetLevel(null);
+          } else {
+            setVisibleIslandDetails(true);
+          }
+        }}
+      />
       <Side>
         <Overview>
           <Profile />
-          <AvailableTrophies
-            onTrophyClick={(trophy) => {
-              const island = islands.find(
-                (island) => island.name === trophy.island
-              );
-              const level = levels[trophy.level];
+          <MapOverview
+            onTrophyClick={(targetLevel) => {
               setActiveTool(null);
-              setTargetLevel({
-                islandName: island.name,
-                level,
-                top: island.centerTop,
-                left: island.centerLeft,
-              });
+              setTargetLevel(targetLevel);
               setVisibleIslandDetails(true);
             }}
           />
           <VideoAds />
         </Overview>
-        <LevelPanel
-          level={targetLevel?.level}
-          open={visibleIslandDetails}
-          onToggleClick={() => {
-            setActiveTool(null);
-            if (visibleIslandDetails) {
-              setVisibleIslandDetails(false);
-              setTargetLevel(null);
-            } else {
-              setVisibleIslandDetails(true);
-            }
-          }}
-        />
       </Side>
       <WelcomeGuide
         visibleIslandDetails={visibleIslandDetails}

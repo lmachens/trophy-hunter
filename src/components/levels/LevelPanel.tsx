@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
 import styled from '@emotion/styled';
 import ChooseALevel from './ChooseALevel';
 import DetailsToggle from './DetailsToggle';
@@ -16,7 +16,7 @@ const Container = styled.aside<Open>`
   background: #2b2a30;
   width: 350px;
   transition: 0.4s;
-  left: ${(props) => (props.open ? '-350px' : '0px')};
+  right: ${(props) => (props.open ? '0px' : '-350px')};
   height: 100%;
   top: 0;
 `;
@@ -35,7 +35,7 @@ const Title = styled.h3`
 
 interface LevelPanelProps {
   level?: Level;
-  onToggleClick(): void;
+  onToggleClick(event: MouseEvent): void;
   open: boolean;
 }
 

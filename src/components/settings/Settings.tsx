@@ -43,7 +43,7 @@ const Settings: FC = () => {
   );
   const [trophyCompleted, setTrophyCompleted] = usePersistentState(
     'trophyCompleted',
-    false
+    true
   );
   const [changelogUpdates, setChangelogUpdates] = usePersistentState(
     'changelogUpdates',

@@ -77,7 +77,7 @@ const setTrophyProgress = (account: Account) => {
     'trophyNearCompletion',
     true
   );
-  const showTrophyCompleted = getLocalStorageItem('trophyCompleted', false);
+  const showTrophyCompleted = getLocalStorageItem('trophyCompleted', true);
 
   const nearCompletedTrophies = showTrophyNearCompletion
     ? trophiesProgress.filter(

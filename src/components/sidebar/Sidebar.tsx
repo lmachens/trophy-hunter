@@ -59,11 +59,6 @@ const Sidebar: FC<SidebarProps> = ({ activeTool, onToolClick }) => {
           <img src={`${process.env.PUBLIC_DIR}/teamfight-tactics.png`} />
         </SidebarLink>
       </Tooltip>
-      <Tooltip title="Coming soon! <3" placement="right">
-        <SidebarLink comingSoon>
-          <img src={`${process.env.PUBLIC_DIR}/legends-of-runeterra.png`} />
-        </SidebarLink>
-      </Tooltip>
       <Grow />
       <ToolButton
         icon={<img src={`${process.env.PUBLIC_DIR}/trophies.png`} />}

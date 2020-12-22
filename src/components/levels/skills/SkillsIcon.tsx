@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const SkillsIcon: FC = () => {
+const SkillsIcon: FC = (props) => {
   return (
     <svg
       width="60"
@@ -8,6 +8,7 @@ const SkillsIcon: FC = () => {
       viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M28.3857 44.6768L28.5339 41.0257L30.8945 38.9996L33.3857 41.1768L33.3857 44.5M28.3857 44.6768L27.8857 49L31.0322 46.5028L33.8857 49L33.3857 44.5M28.3857 44.6768L31.0322 42.5L33.3857 44.5"

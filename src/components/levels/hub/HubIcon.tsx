@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const HubIcon: FC = () => {
+const HubIcon: FC = (props) => {
   return (
     <svg
       width="60"
@@ -8,6 +8,7 @@ const HubIcon: FC = () => {
       viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M26.9904 12H31.0533H35.5224L45.2732 25.3939L46.0857 38.7879L40.804 47.8485L35.5224 51H26.9904L20.8962 47.8485L16 38.7879L16.8334 25.3939L26.9904 12Z"

@@ -8,6 +8,7 @@ import * as trophies from './index';
 const Container = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 14px;
 `;
 
 const Avatar = styled.img`

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const TeamworkIcon: FC = () => {
+const TeamworkIcon: FC = (props) => {
   return (
     <svg
       width="60"
@@ -8,6 +8,7 @@ const TeamworkIcon: FC = () => {
       viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M3 39L5.5 25H18.5L28 22L31.5 23.5V29.5L45.5 45L42 48.5L40.5 47L34 40L40 47.5L37.5 50L32.5 46L36.5 50L34 52L30.5 49.5L32.1 51.5L30.5 53.5L21.5 48L11 42L3 39Z"

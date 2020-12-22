@@ -7,6 +7,7 @@ import { ObjectivesIcon } from '../levels/objectives';
 import { SkillsIcon } from '../levels/skills';
 import { SpecialIcon } from '../levels/special';
 import { TeamworkIcon } from '../levels/teamwork';
+import { Tooltip } from '../tooltip';
 
 const icons = {
   hub: HubIcon,
@@ -24,8 +25,8 @@ const Container = styled.div`
   flex-wrap: wrap;
   svg {
     background: #2b2a30;
-    height: 22px;
-    width: 22px;
+    height: 20px;
+    width: 20px;
     padding: 1px;
     margin-top: 3px;
   }
@@ -43,7 +44,15 @@ const IslandIcons = ({ islands, className }: Props) => {
     <Container className={className}>
       {islands.map((island) => {
         const Icon = icons[island];
-        return <Icon key={island} />;
+        return (
+          <Tooltip
+            key={island}
+            text={`${island.charAt(0).toUpperCase() + island.slice(1)} Island`}
+            placement="top"
+          >
+            <Icon />
+          </Tooltip>
+        );
       })}
     </Container>
   );

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const EpicIcon: FC = () => {
+const EpicIcon: FC = (props) => {
   return (
     <svg
       width="60"
@@ -8,6 +8,7 @@ const EpicIcon: FC = () => {
       viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M22 29.1195L30.684 17L35.9471 24.8648L36.9997 48.2013L27.3946 57.8711L22 48.3302V29.1195Z"

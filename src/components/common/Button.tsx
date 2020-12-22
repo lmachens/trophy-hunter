@@ -1,8 +1,17 @@
+import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 
 type Props = {
   active?: boolean;
+  off?: boolean;
 };
+
+const offlineStyle = css`
+  color: #77777a;
+  background: #39383d;
+  cursor: default;
+`;
+
 const Button = styled.button<Props>`
   padding: 7px 16px;
   display: flex;
@@ -23,10 +32,9 @@ const Button = styled.button<Props>`
     background: #616165;
   }
 
+  ${(props) => props.off && offlineStyle};
   :disabled {
-    color: #77777a;
-    background: #39383d;
-    cursor: default;
+    ${offlineStyle};
   }
 `;
 

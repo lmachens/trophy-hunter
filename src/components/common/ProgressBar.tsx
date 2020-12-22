@@ -5,6 +5,7 @@ interface ProgressBarProps {
   progress: number;
   category: string;
   max?: number;
+  percentage?: boolean;
 }
 
 const Container = styled.div`
@@ -14,7 +15,7 @@ const Container = styled.div`
 
 const Progress = styled.div`
   width: 100%;
-  height: 8px;
+  height: 9px;
   border: 1px solid #eaeaea;
   background: #2b2a30;
   position: relative;
@@ -37,14 +38,22 @@ const Bar = styled.div<ProgressBarProps>`
   position: absolute;
 `;
 
-const ProgressBar: FC<ProgressBarProps> = ({ progress, max, category }) => {
+const ProgressBar: FC<ProgressBarProps> = ({
+  progress,
+  max,
+  category,
+  percentage,
+}) => {
   const fixedProgress = Math.min(100, Math.round(progress * 100));
+  const message = percentage
+    ? `${Math.floor(progress * 100)}%`
+    : `${Math.min(max, Math.round(progress * max))}/${max}`;
   return (
     <Container>
       <Progress>
         <Bar progress={fixedProgress} category={category} />
       </Progress>
-      {Math.min(max, Math.round(progress * max))}/{max}
+      {message}
     </Container>
   );
 };

@@ -7,14 +7,18 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import { getRankings } from '../../api/accounts';
 import PlayerCard, { Card } from './PlayerCard';
+import { Tooltip } from '../tooltip';
 
 const TopPlayers = styled.div`
   display: flex;
   flex-wrap: wrap;
+  column-gap: 12px;
 
-  > * + * {
-    margin-left: 12px;
-    flex: 1;
+  margin-top: -12px;
+  margin-bottom: 15px;
+
+  > * {
+    margin-top: 12px;
   }
 `;
 const MorePlayers = styled.div`
@@ -35,15 +39,13 @@ const Container = styled.div`
   nav {
     display: flex;
     flex-basis: 100%;
+    margin-bottom: 15px;
 
     * + * {
       margin-left: 15px;
     }
   }
 
-  ${TopPlayers} {
-    margin-top: 15px;
-  }
   ${MorePlayers} {
     margin-top: 12px;
   }
@@ -52,6 +54,8 @@ const Container = styled.div`
 const NotFirst = styled.div`
   background: #3f3e43;
   padding: 25px 12px;
+  flex: 3;
+
   ${Card} + ${Card} {
     margin-top: 20px;
   }
@@ -61,7 +65,7 @@ const Leaderboard = () => {
   const router = useRouter();
   const { season = '10' } = router.query;
   const activeSeason = typeof season === 'string' ? season : null;
-  const { data = [] } = useQuery('rankings', getRankings);
+  const { data = Array(20).fill(null) } = useQuery('rankings', getRankings);
 
   const [first, second, third, ...rest] = data;
 
@@ -81,7 +85,9 @@ const Leaderboard = () => {
             Season 10
           </Button>
         </Link>
-        <Button disabled>Season 11</Button>
+        <Tooltip text="Next season starts February 11" placement="top">
+          <Button off>Season 11</Button>
+        </Tooltip>
       </nav>
       <TopPlayers>
         <PlayerCard size="L" rank={1} ranking={first} />
@@ -93,7 +99,7 @@ const Leaderboard = () => {
       <MorePlayers>
         {rest.map((ranking, index) => (
           <PlayerCard
-            key={ranking.summonerName}
+            key={ranking?.summonerName || index}
             size="S"
             rank={index + 4}
             ranking={ranking}

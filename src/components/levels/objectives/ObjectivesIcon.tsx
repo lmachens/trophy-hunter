@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const ObjectivesIcon: FC = () => {
+const ObjectivesIcon: FC = (props) => {
   return (
     <svg
       width="60"
@@ -8,6 +8,7 @@ const ObjectivesIcon: FC = () => {
       viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0)">
         <path

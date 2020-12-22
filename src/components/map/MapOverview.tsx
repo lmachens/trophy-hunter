@@ -20,6 +20,7 @@ const Header = styled.header`
 
 const Title = styled.h2`
   flex-grow: 1;
+  margin-top: 0px;
 `;
 
 const Categories = styled.div`

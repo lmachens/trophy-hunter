@@ -29,6 +29,7 @@ const SubpageNav = () => {
         <div>
           <Link
             href={{
+              pathname: '/league-of-legends',
               query: {
                 subpage: 'map',
               },
@@ -45,6 +46,7 @@ const SubpageNav = () => {
         <div>
           <Link
             href={{
+              pathname: '/league-of-legends',
               query: {
                 subpage: 'leaderboard',
               },
@@ -57,20 +59,21 @@ const SubpageNav = () => {
           </Link>
         </div>
       </Tooltip>
-      <Tooltip title="History" placement="top">
+      <Tooltip title="History (Coming Soon)" placement="top">
         <div>
-          <Link
+          {/* <Link
             href={{
+              pathname: '/league-of-legends',
               query: {
                 subpage: 'history',
               },
             }}
             passHref
-          >
-            <NavIconButton as="a" active={subpage === 'history'}>
-              <HistoryIcon />
-            </NavIconButton>
-          </Link>
+          > */}
+          <NavIconButton disabled as="a" active={subpage === 'history'}>
+            <HistoryIcon />
+          </NavIconButton>
+          {/* </Link> */}
         </div>
       </Tooltip>
     </Nav>

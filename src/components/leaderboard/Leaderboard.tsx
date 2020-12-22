@@ -65,7 +65,7 @@ const Leaderboard = () => {
   const router = useRouter();
   const { season = '10' } = router.query;
   const activeSeason = typeof season === 'string' ? season : null;
-  const { data = Array(20).fill(null) } = useQuery('rankings', getRankings);
+  const { data = Array(50).fill(null) } = useQuery('rankings', getRankings);
 
   const [first, second, third, ...rest] = data;
 

@@ -1,6 +1,9 @@
 import { MongoClient, Db } from 'mongodb';
 import getConfig from 'next/config';
-import { createAccountsCollection } from '../../accounts/server/collection';
+import {
+  createAccountsCollection,
+  ensureIndexes,
+} from '../../accounts/server/collection';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -9,12 +12,13 @@ let mongoDatabase: Db = null;
 export const initMongoDatabase = async () => {
   if (!mongoDatabase) {
     const client = new MongoClient(serverRuntimeConfig.MONGO_URL, {
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
 
     await client.connect();
     mongoDatabase = client.db();
     await createAccountsCollection();
+    await ensureIndexes();
   }
 };
 

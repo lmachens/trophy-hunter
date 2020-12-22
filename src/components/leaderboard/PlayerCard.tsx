@@ -190,11 +190,11 @@ const PlayerCard = ({ size, rank, ranking }: Props) => {
         alt=""
       />
       <SummonerName isLoading={!ranking}>{ranking?.summonerName}</SummonerName>
-      {(size !== 'S' || ranking?.completed) && (
+      {(size !== 'S' || ranking?.trophiesCompleted) && (
         <TrophiesCount isLoading={!ranking}>
-          {ranking?.completed && (
+          {ranking?.trophiesCompleted && (
             <>
-              {ranking?.completed} <span>Trophies</span>
+              {ranking?.trophiesCompleted} <span>Trophies</span>
             </>
           )}
         </TrophiesCount>

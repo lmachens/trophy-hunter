@@ -20,6 +20,7 @@ export interface Account {
   lastGameIds: number[];
   favoriteTrophyNames: string[];
   lastMigrationAt?: Date;
+  trophiesCompleted: number;
 }
 
 export interface AccountIsland {
@@ -47,5 +48,5 @@ export type Ranking = {
   summonerName: string;
   profileIconId: number;
   islands: string[];
-  completed: number;
+  trophiesCompleted: number;
 };

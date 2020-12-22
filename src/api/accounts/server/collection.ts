@@ -5,6 +5,7 @@ import { Account } from '../types';
 export const createAccountsCollection = async () => {
   const db = await getDatabase();
   const collections = await db.listCollections().toArray();
+
   if (collections.some((collection) => collection.name === 'accounts')) {
     log('accounts Collection already exists');
     return;
@@ -76,8 +77,18 @@ export const createAccountsCollection = async () => {
           lastMigrationAt: {
             bsonType: 'date',
           },
+          trophiesCompleted: {
+            bsonType: 'int',
+          },
         },
-        required: ['islands', 'levels', 'trophies', 'authTokens'],
+        required: [
+          'islands',
+          'levels',
+          'trophies',
+          'authTokens',
+          'rank',
+          'trophiesCompleted',
+        ],
       },
     },
   });
@@ -85,4 +96,11 @@ export const createAccountsCollection = async () => {
 
 export const getAccountsCollection = () => {
   return getCollection<Account>('accounts');
+};
+
+export const ensureIndexes = () => {
+  log('Create indexes');
+  return getAccountsCollection().createIndexes([
+    { key: { trophiesCompleted: -1 } },
+  ]);
 };

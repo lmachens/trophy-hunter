@@ -237,6 +237,9 @@ export default applyMiddleware(
       });
 
       const lastGameIds = [matchId, ...account.lastGameIds.slice(0, 9)];
+      const trophiesCompleted = accountTrophies.filter(
+        (trophy) => trophy.status === 'completed'
+      ).length;
       await Accounts.updateOne(
         { _id: account._id },
         {
@@ -246,6 +249,7 @@ export default applyMiddleware(
             islands: accountIslands,
             games: account.games + 1,
             lastGameIds: lastGameIds,
+            trophiesCompleted,
           },
         }
       );

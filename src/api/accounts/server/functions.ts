@@ -15,27 +15,15 @@ export const getUnlockedIslandNames = (level) =>
 
 export const getRankings = async () => {
   const Accounts = await getAccountsCollection();
-  const rankings = await Accounts.aggregate<Ranking>([
-    {
-      $project: {
-        _id: 0,
-        summonerName: '$summoner.name',
-        profileIconId: '$summoner.profileIconId',
-        islands: '$islands.name',
-        completed: {
-          $size: {
-            $filter: {
-              input: '$trophies',
-              as: 'trophy',
-              cond: { $eq: ['$$trophy.status', 'completed'] },
-            },
-          },
-        },
-      },
-    },
-  ])
-    .sort({ completed: -1 })
+  const rankings = await Accounts.find()
+    .sort({ trophiesCompleted: -1 })
     .limit(50)
+    .map<Ranking>((account) => ({
+      summonerName: account.summoner.name,
+      profileIconId: account.summoner.profileIconId,
+      islands: account.islands.map((island) => island.name),
+      trophiesCompleted: account.trophiesCompleted,
+    }))
     .toArray();
 
   return rankings;

@@ -28,7 +28,6 @@ if (process.env.TARGET === 'OVERWOLF') {
   config.exportPathMap = () => {
     return {
       '/background': { page: '/background' },
-      '/loading-screen': { page: '/loading-screen' },
       '/league-of-legends': { page: '/league-of-legends' },
       '/notification': { page: '/notification' },
       '/not-supported': { page: '/not-supported' },

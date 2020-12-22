@@ -54,12 +54,9 @@ const numberOfTrophies = Object.keys(trophies).length;
 
 const LeaderboardOverview = () => {
   const { account } = useAccount();
-  const trophiesCount = useMemo(
-    () =>
-      account?.trophies.filter((trophy) => trophy.status === 'completed')
-        .length || 0,
-    [account]
-  );
+  const trophiesCount = useMemo(() => account?.trophiesCompleted || 0, [
+    account,
+  ]);
   const islandsUnlocked = useMemo(
     () => account?.islands.map((island) => island.name) || [],
     [account]

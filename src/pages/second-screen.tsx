@@ -12,7 +12,6 @@ import Head from 'next/head';
 import { log } from '../api/logs';
 import { VideoAds } from '../components/ads';
 import Profile from '../components/trophies/Profile';
-import { Islands } from '../components/islands';
 import islands from '../components/islands/islands';
 import { useAccount } from '../contexts/account';
 import { useCallback, useEffect } from 'react';
@@ -66,8 +65,9 @@ const Container = styled.div`
   }
 `;
 
-const SmallIslands = styled(Islands)`
-  margin: 0;
+const SmallIslands = styled.div`
+  flex: 1;
+  position: relative;
   margin-left: 12px;
   zoom: 0.48;
   pointer-events: none;
@@ -85,8 +85,13 @@ const List = styled.section`
 `;
 
 const Categories = styled.div`
-  > :not(:first-child) {
-    margin-left: 18px;
+  display: flex;
+  column-gap: 18px;
+  flex-wrap: wrap;
+  margin-top: -18px;
+
+  > * {
+    margin-top: 18px;
   }
 `;
 

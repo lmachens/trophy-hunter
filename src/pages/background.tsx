@@ -53,7 +53,6 @@ const Background: NextPage = () => {
           openWindow('not_supported');
           return;
         }
-        closeWindow('loading_screen');
         toggleInGameWindow();
       }
     };
@@ -123,7 +122,7 @@ const Background: NextPage = () => {
           const playingSupportedGame = await isPlayingSupportedGame();
           if (playingSupportedGame) {
             log(`Playing a supported game ${playingSupportedGame}`);
-            openWindow('loading_screen');
+            toggleInGameWindow(true);
             runLiveCheck(account);
           } else {
             log(`Not playing a supported game ${playingSupportedGame}`);
@@ -221,7 +220,6 @@ const Background: NextPage = () => {
     }
     if (leagueRunning === false) {
       log('League is not running');
-      closeWindow('loading_screen');
       closeWindow('in_game');
       closeWindow('second_screen');
       return;
@@ -234,7 +232,7 @@ const Background: NextPage = () => {
         if (autoLaunch) {
           if (playingSupportedGame) {
             log(`Playing a supported game ${playingSupportedGame}`);
-            openWindow('loading_screen');
+            toggleInGameWindow(true);
             runLiveCheck(account);
           } else {
             log(`Not playing a supported game ${playingSupportedGame}`);

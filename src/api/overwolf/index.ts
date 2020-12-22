@@ -92,7 +92,7 @@ export const closeWindow = (windowName: WindowName) => {
   });
 };
 
-export const toggleInGameWindow = async () => {
+export const toggleInGameWindow = async (forceRestore = false) => {
   const windowName = getLocalStorageItem<WindowName>(
     'prefered-window',
     'second_screen'
@@ -102,6 +102,7 @@ export const toggleInGameWindow = async () => {
     secondScreen ? windowName : 'in_game',
     (result) => {
       if (
+        forceRestore ||
         !result.success ||
         ['minimized', 'hidden', 'closed'].includes(result.window.stateEx)
       ) {
@@ -230,7 +231,6 @@ export const isAppUpdated = async () => {
 export type WindowName =
   | 'background'
   | 'desktop'
-  | 'loading_screen'
   | 'in_game'
   | 'second_screen'
   | 'notification'

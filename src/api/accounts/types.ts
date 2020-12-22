@@ -21,6 +21,7 @@ export interface Account {
   favoriteTrophyNames: string[];
   lastMigrationAt?: Date;
   trophiesCompleted: number;
+  rank?: number;
 }
 
 export interface AccountIsland {

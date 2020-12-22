@@ -69,7 +69,7 @@ const LeaderboardOverview = () => {
         <h4>Your Place</h4>
         <h4>Trophies</h4>
         <h4>Trophies left</h4>
-        <div>#75</div>
+        <div>#{account?.rank}</div>
         <div>{trophiesCount}</div>
         <div>{numberOfTrophies - trophiesCount}</div>
       </Stats>

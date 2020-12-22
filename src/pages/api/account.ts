@@ -30,6 +30,16 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(401).end('Unauthorized');
   }
+  account.rank =
+    (await Accounts.find({
+      $or: [
+        { trophiesCompleted: { $gt: account.trophiesCompleted } },
+        {
+          trophiesCompleted: account.trophiesCompleted,
+          'summoner.revisionDate': { $gt: account.summoner.revisionDate },
+        },
+      ],
+    }).count()) + 1;
   res.json(account);
 };
 

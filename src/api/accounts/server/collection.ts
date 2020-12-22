@@ -101,6 +101,6 @@ export const getAccountsCollection = () => {
 export const ensureIndexes = () => {
   log('Create indexes');
   return getAccountsCollection().createIndexes([
-    { key: { trophiesCompleted: -1 } },
+    { key: { trophiesCompleted: -1, 'summoner.revisionDate': -1 } },
   ]);
 };

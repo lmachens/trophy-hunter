@@ -16,7 +16,7 @@ export const getUnlockedIslandNames = (level) =>
 export const getRankings = async () => {
   const Accounts = await getAccountsCollection();
   const rankings = await Accounts.find()
-    .sort({ trophiesCompleted: -1 })
+    .sort({ trophiesCompleted: -1, 'summoner.revisionDate': -1 })
     .limit(50)
     .map<Ranking>((account) => ({
       summonerName: account.summoner.name,

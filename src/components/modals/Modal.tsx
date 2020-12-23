@@ -69,9 +69,9 @@ const Modal: FC<ModalProps> = ({
         {onShowAgainChange && (
           <DontShowAgain>
             <Checkbox
-              label="Show this again"
-              checked={showAgain}
-              onChange={(event) => onShowAgainChange(event.target.checked)}
+              label="Don't show this again"
+              checked={!showAgain}
+              onChange={(event) => onShowAgainChange(!event.target.checked)}
             />
             <small>*You can always change this in settings</small>
           </DontShowAgain>

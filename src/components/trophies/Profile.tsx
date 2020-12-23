@@ -33,7 +33,7 @@ const Profile: FC = () => {
         alt=""
       />
       <div>
-        <h4>{account?.summoner.name || 'Unknown Trophy Hunter'}</h4>
+        <h4>{account?.summoner.name || 'Start LoL to Sign-In'}</h4>
         <p>
           {account
             ? account.trophies.filter((trophy) => trophy.status === 'completed')

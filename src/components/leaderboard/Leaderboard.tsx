@@ -12,13 +12,13 @@ import { Tooltip } from '../tooltip';
 const TopPlayers = styled.div`
   display: flex;
   flex-wrap: wrap;
-  column-gap: 12px;
-
+  margin-left: -12px;
   margin-top: -12px;
   margin-bottom: 15px;
 
   > * {
     margin-top: 12px;
+    margin-left: 12px;
   }
 `;
 const MorePlayers = styled.div`

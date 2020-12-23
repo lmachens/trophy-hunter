@@ -86,11 +86,12 @@ const List = styled.section`
 
 const Categories = styled.div`
   display: flex;
-  column-gap: 18px;
+  margin-left: -18px;
   flex-wrap: wrap;
   margin-top: -18px;
 
   > * {
+    margin-left: 18px;
     margin-top: 18px;
   }
 `;

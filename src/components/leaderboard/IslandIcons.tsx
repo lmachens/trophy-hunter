@@ -9,14 +9,20 @@ import { SpecialIcon } from '../levels/special';
 import { TeamworkIcon } from '../levels/teamwork';
 import { Tooltip } from '../tooltip';
 
+type Disableable = {
+  disabled: boolean;
+};
+const createDisableableIcon = (Icon) => styled(Icon)<Disableable>`
+  opacity: ${(props) => (props.disabled ? '0.3' : '1')};
+`;
 const icons = {
-  hub: HubIcon,
-  combat: CombatIcon,
-  skills: SkillsIcon,
-  teamwork: TeamworkIcon,
-  objectives: ObjectivesIcon,
-  epic: EpicIcon,
-  special: SpecialIcon,
+  hub: createDisableableIcon(HubIcon),
+  combat: createDisableableIcon(CombatIcon),
+  skills: createDisableableIcon(SkillsIcon),
+  teamwork: createDisableableIcon(TeamworkIcon),
+  objectives: createDisableableIcon(ObjectivesIcon),
+  epic: createDisableableIcon(EpicIcon),
+  special: createDisableableIcon(SpecialIcon),
 };
 
 const Container = styled.div`
@@ -42,15 +48,14 @@ type Props = {
 const IslandIcons = ({ islands, className }: Props) => {
   return (
     <Container className={className}>
-      {islands.map((island) => {
-        const Icon = icons[island];
+      {Object.entries(icons).map(([island, Icon]) => {
         return (
           <Tooltip
             key={island}
             text={`${island.charAt(0).toUpperCase() + island.slice(1)} Island`}
             placement="top"
           >
-            <Icon />
+            <Icon disabled={!islands.includes(island)} />
           </Tooltip>
         );
       })}

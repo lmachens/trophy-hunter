@@ -85,7 +85,7 @@ const Leaderboard = () => {
             Season 10
           </Button>
         </Link>
-        <Tooltip text="Next season starts February 11" placement="top">
+        <Tooltip text="Next season starts February 8" placement="top">
           <Button off>Season 11</Button>
         </Tooltip>
       </nav>

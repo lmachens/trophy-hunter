@@ -3,6 +3,7 @@ import { FC } from 'react';
 import CloseIcon from '../icons/Close';
 import Backdrop from '../common/Backdrop';
 import Checkbox from '../common/Checkbox';
+import Button from '../common/Button';
 
 const Container = styled.div`
   width: 500px;
@@ -75,6 +76,7 @@ const Modal: FC<ModalProps> = ({
             <small>*You can always change this in settings</small>
           </DontShowAgain>
         )}
+        <Button onClick={onClose}>Continue</Button>
       </Container>
     </Backdrop>
   );

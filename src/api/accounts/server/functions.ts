@@ -21,7 +21,9 @@ export const getRankings = async () => {
     .map<Ranking>((account) => ({
       summonerName: account.summoner.name,
       profileIconId: account.summoner.profileIconId,
-      islands: account.islands.map((island) => island.name),
+      islands: account.islands
+        .filter((island) => island.status === 'done')
+        .map((island) => island.name),
       trophiesCompleted: account.trophiesCompleted,
     }))
     .toArray();

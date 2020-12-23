@@ -43,7 +43,7 @@ const Stats = styled.div`
   }
 `;
 
-const IslandsUnlocked = styled(IslandIcons)`
+const IslandsCompleted = styled(IslandIcons)`
   svg {
     height: 40px;
     width: 40px;
@@ -57,8 +57,11 @@ const LeaderboardOverview = () => {
   const trophiesCount = useMemo(() => account?.trophiesCompleted || 0, [
     account,
   ]);
-  const islandsUnlocked = useMemo(
-    () => account?.islands.map((island) => island.name) || [],
+  const islandsCompleted = useMemo(
+    () =>
+      account?.islands
+        .filter((island) => island.status === 'done')
+        .map((island) => island.name) || [],
     [account]
   );
 
@@ -83,8 +86,8 @@ const LeaderboardOverview = () => {
         />
       </label>
       <label>
-        Islands unlocked
-        <IslandsUnlocked islands={islandsUnlocked} />
+        Islands completed
+        <IslandsCompleted islands={islandsCompleted} />
       </label>
     </Container>
   );

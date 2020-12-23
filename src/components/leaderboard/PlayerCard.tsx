@@ -66,8 +66,8 @@ const Islands = styled.div`
   font-size: 16px;
 `;
 
-const IslandsUnlocked = styled(IslandIcons)`
-  grid-area: islands-unlocked;
+const IslandsCompleted = styled(IslandIcons)`
+  grid-area: islands-completed;
 `;
 
 type CardProps = {
@@ -82,7 +82,7 @@ const sizes = {
     grid-template-areas:
       'rank avatar summoner-name'
       'rank avatar trophies-count'
-      'rank avatar islands-unlocked';
+      'rank avatar islands-completed';
     grid-template-columns: auto auto 1fr;
     flex: 2.3;
     min-width: 350px;
@@ -105,7 +105,7 @@ const sizes = {
 
     grid-template-areas:
       'rank avatar summoner-name islands'
-      'rank avatar trophies-count islands-unlocked';
+      'rank avatar trophies-count islands-completed';
     grid-template-columns: auto auto 1fr 1fr;
     flex: 3;
     ${Rank} {
@@ -127,7 +127,7 @@ const sizes = {
 
     padding: 20px 16px;
 
-    grid-template-areas: 'rank avatar summoner-name trophies-count islands islands-unlocked';
+    grid-template-areas: 'rank avatar summoner-name trophies-count islands islands-completed';
     grid-template-columns: auto auto 1fr 1fr 1fr 1fr;
 
     ${SummonerName} {
@@ -200,9 +200,9 @@ const PlayerCard = ({ size, rank, ranking }: Props) => {
         </TrophiesCount>
       )}
       {size !== 'L' && (size !== 'S' || ranking) && (
-        <Islands>{ranking?.islands.length > 0 && 'Unlocked'}</Islands>
+        <Islands>{ranking?.islands.length > 0 && 'Completed'}</Islands>
       )}
-      <IslandsUnlocked islands={ranking?.islands || []} />
+      <IslandsCompleted islands={ranking?.islands || []} />
     </Card>
   );
 };

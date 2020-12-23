@@ -71,6 +71,7 @@ export const isLeagueClosed = (
 };
 
 export const openWindow = (windowName: WindowName) => {
+  log(`Open window ${windowName}`);
   return new Promise((resolve, reject) => {
     overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
       if (result.error) {
@@ -82,6 +83,7 @@ export const openWindow = (windowName: WindowName) => {
 };
 
 export const closeWindow = (windowName: WindowName) => {
+  log(`Close window ${windowName}`);
   return new Promise((resolve, reject) => {
     overwolf.windows.obtainDeclaredWindow(windowName, (result) => {
       if (result.error) {
@@ -97,6 +99,8 @@ export const toggleInGameWindow = async (forceRestore = false) => {
     'prefered-window',
     'second_screen'
   );
+  log(`toggleInGameWindow ${windowName}`);
+
   const secondScreen = await getMonitor(false);
   overwolf.windows.obtainDeclaredWindow(
     secondScreen ? windowName : 'in_game',
@@ -130,6 +134,7 @@ export const restoreCurrentWindow = (): void => {
 };
 
 export const flashUntilFocus = (windowName: string): void => {
+  log(`flashUntilFocus ${windowName}`);
   overwolf.windows.flash(
     windowName,
     // @ts-ignore

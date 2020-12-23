@@ -36,7 +36,7 @@ const VideoAds: FC<VideoAdsProps> = ({
   autoRefresh = false,
 }) => {
   const containerRef = useRef(null);
-  const adsVisible = useRef<boolean>(null);
+  const adsVisible = useRef<boolean>(undefined);
   const [owAd, setOwAd] = useState<OwAd>(null);
   const [timeoutStart, setTimeoutStart] = useState<number>(null);
 
@@ -46,7 +46,11 @@ const VideoAds: FC<VideoAdsProps> = ({
         return;
       }
       const showAd = () => {
-        if (adsVisible.current && !force) {
+        if (
+          adsVisible.current &&
+          !force &&
+          typeof adsVisible.current !== 'undefined'
+        ) {
           return;
         }
         log(`Show ad (ingame: ${ingame})`);
@@ -54,7 +58,11 @@ const VideoAds: FC<VideoAdsProps> = ({
         adsVisible.current = true;
       };
       const hideAd = () => {
-        if (!adsVisible.current && !force) {
+        if (
+          !adsVisible.current &&
+          !force &&
+          typeof adsVisible.current !== 'undefined'
+        ) {
           return;
         }
         log(`Hide ad (ingame: ${ingame})`);
@@ -69,7 +77,9 @@ const VideoAds: FC<VideoAdsProps> = ({
       }
 
       const runningGameInfo = await getRunningGameInfo();
-      if (isLeagueRunning(runningGameInfo)) {
+      const leagueIsRunning = isLeagueRunning(runningGameInfo);
+      log(`leagueIsRunning: ${leagueIsRunning} ingame: ${ingame}`);
+      if (leagueIsRunning) {
         if (ingame) {
           if (runningGameInfo.isInFocus) {
             showAd();

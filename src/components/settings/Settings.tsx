@@ -26,6 +26,10 @@ const Setting = styled.div`
   margin: 7px 0px;
   display: flex;
   justify-content: space-between;
+
+  > * {
+    margin-left: 4px;
+  }
 `;
 
 const SettingsLink = styled(SettingsButton.withComponent('a'))`

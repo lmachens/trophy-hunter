@@ -120,7 +120,26 @@ const Tooltip: FC<TooltipProps> = ({
   const showTarget = useCallback(
     (target) => {
       if (!containerNode.current) {
-        return;
+        const tooltip = document.createElement('div');
+        document.body.appendChild(tooltip);
+        bodyChildNode.current = tooltip;
+        ReactDOM.render(
+          <Container
+            ref={containerNode}
+            isVisible={visible || isVisible}
+            left={left}
+            top={top}
+            placement={placement}
+            className={className}
+            targetId={targetId}
+            pointerEvents={pointerEvents}
+            onClick={onClick}
+          >
+            {title && <Title>{title}</Title>}
+            {text && <div>{text}</div>}
+          </Container>,
+          bodyChildNode.current
+        );
       }
       const { x, y, width, height } = target.getBoundingClientRect();
 
@@ -129,37 +148,37 @@ const Tooltip: FC<TooltipProps> = ({
         offsetWidth: containerWidth,
       } = containerNode.current;
 
-      let left;
-      let top;
+      let newLeft;
+      let newTop;
       switch (placement) {
         case 'right':
-          left = x + width + offset;
-          top = y + height / 2 - containerHeight / 2;
+          newLeft = x + width + offset;
+          newTop = y + height / 2 - containerHeight / 2;
           break;
 
         case 'bottom':
-          left = x + width / 2 - containerWidth / 2;
-          top = y - offset - containerHeight;
+          newLeft = x + width / 2 - containerWidth / 2;
+          newTop = y - offset - containerHeight;
           break;
 
         case 'bottomRight':
-          left = x + width / 2 - containerWidth + 16;
-          top = y - offset - containerHeight;
+          newLeft = x + width / 2 - containerWidth + 16;
+          newTop = y - offset - containerHeight;
           break;
 
         case 'top':
-          left = x + width / 2 - containerWidth / 2;
-          top = y + height + offset;
+          newLeft = x + width / 2 - containerWidth / 2;
+          newTop = y + height + offset;
           break;
 
         case 'topLeft':
-          left = x + width / 2 - 22;
-          top = y + height + offset;
+          newLeft = x + width / 2 - 22;
+          newTop = y + height + offset;
           break;
       }
 
-      setLeft(left);
-      setTop(top);
+      setLeft(newLeft);
+      setTop(newTop);
       setIsVisible(true);
     },
     [containerNode.current]
@@ -188,16 +207,17 @@ const Tooltip: FC<TooltipProps> = ({
   }, [targetId]);
 
   useEffect(() => {
-    const tooltip = document.createElement('div');
-    document.body.appendChild(tooltip);
-    bodyChildNode.current = tooltip;
-
     return () => {
-      document.body.removeChild(tooltip);
+      if (bodyChildNode.current) {
+        document.body.removeChild(bodyChildNode.current);
+      }
     };
   }, []);
 
   useEffect(() => {
+    if (!bodyChildNode.current) {
+      return;
+    }
     ReactDOM.render(
       <Container
         ref={containerNode}

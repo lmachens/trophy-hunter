@@ -37,14 +37,29 @@ const Stats = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
+  font-size: 16px;
+  line-height: 21px;
 
-  > div {
-    margin-top: 4px;
+  > :nth-child(2) {
+    border-left: 1px solid #77777a;
+    padding-left: 16px;
+  }
+
+  > :not(:first-child) div {
+    margin-top: 8px;
   }
 `;
 
+const Rank = styled.div`
+  font-size: 35px;
+  line-height: normal;
+`;
+
 const IslandsCompleted = styled(IslandIcons)`
+  justify-content: space-between;
+
   svg {
+    background: none;
     height: 40px;
     width: 40px;
   }
@@ -69,12 +84,18 @@ const LeaderboardOverview = () => {
     <Container>
       <h3>Season 10</h3>
       <Stats>
-        <h4>Your Place</h4>
-        <h4>Trophies</h4>
-        <h4>Trophies left</h4>
-        <div>#{account?.rank}</div>
-        <div>{trophiesCount}</div>
-        <div>{numberOfTrophies - trophiesCount}</div>
+        <div>
+          <h4>Your Place</h4>
+          <Rank>#{account?.rank}</Rank>
+        </div>
+        <div>
+          <h4>Trophies</h4>
+          <div>{trophiesCount}</div>
+        </div>
+        <div>
+          <h4>Trophies left</h4>
+          <div>{numberOfTrophies - trophiesCount}</div>
+        </div>
       </Stats>
       <label>
         Trophies completion

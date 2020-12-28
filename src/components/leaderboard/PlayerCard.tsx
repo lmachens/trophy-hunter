@@ -46,7 +46,6 @@ const Avatar = styled.img<Loadable>`
 const SummonerName = styled.div<Loadable>`
   min-width: 100px;
   grid-area: summoner-name;
-  color: #77777a;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -58,6 +57,10 @@ const TrophiesCount = styled.div<Loadable>`
   grid-area: trophies-count;
   ${(props) => props.isLoading && loadingStyle}
   ${(props) => props.isLoading && 'max-width: 90%;'}
+
+  span {
+    color: #77777a;
+  }
 `;
 
 const Islands = styled.div`
@@ -84,6 +87,7 @@ const sizes = {
       'rank avatar trophies-count'
       'rank avatar islands-completed';
     grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto 1fr auto;
     flex: 2.3;
     min-width: 350px;
 
@@ -106,7 +110,7 @@ const sizes = {
     grid-template-areas:
       'rank avatar summoner-name islands'
       'rank avatar trophies-count islands-completed';
-    grid-template-columns: auto auto 1fr 1fr;
+    grid-template-columns: auto auto 1fr minmax(158px, 1fr);
     flex: 3;
     ${Rank} {
       font-size: 18px;
@@ -125,10 +129,10 @@ const sizes = {
   S: css`
     column-gap: 10px;
 
-    padding: 20px 16px;
+    padding: 20px 15px;
 
     grid-template-areas: 'rank avatar summoner-name trophies-count islands islands-completed';
-    grid-template-columns: auto auto 1fr 1fr 1fr 1fr;
+    grid-template-columns: auto auto 1fr 1fr auto auto;
 
     ${SummonerName} {
       color: inherit;
@@ -155,6 +159,11 @@ const sizes = {
     ${TrophiesCount} span {
       color: #77777a;
       margin-left: 0.5em;
+    }
+
+    ${IslandsCompleted} svg {
+      height: 28px;
+      width: 28px;
     }
   `,
 };
@@ -200,9 +209,9 @@ const PlayerCard = ({ size, rank, ranking }: Props) => {
         </TrophiesCount>
       )}
       {size !== 'L' && (size !== 'S' || ranking) && (
-        <Islands>{ranking?.islands.length > 0 && 'Completed'}</Islands>
+        <Islands>Completed</Islands>
       )}
-      <IslandsCompleted islands={ranking?.islands || []} />
+      {ranking?.islands && <IslandsCompleted islands={ranking.islands || []} />}
     </Card>
   );
 };

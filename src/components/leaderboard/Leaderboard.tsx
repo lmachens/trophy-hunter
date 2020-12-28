@@ -14,7 +14,6 @@ const TopPlayers = styled.div`
   flex-wrap: wrap;
   margin-left: -12px;
   margin-top: -12px;
-  margin-bottom: 15px;
 
   > * {
     margin-top: 12px;
@@ -22,7 +21,7 @@ const TopPlayers = styled.div`
   }
 `;
 const MorePlayers = styled.div`
-  overflow: auto;
+  overflow: scroll;
   > * + * {
     margin-top: 6px;
   }
@@ -48,6 +47,7 @@ const Container = styled.div`
 
   ${MorePlayers} {
     margin-top: 12px;
+    padding-right: 8px;
   }
 `;
 

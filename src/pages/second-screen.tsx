@@ -71,6 +71,7 @@ const SmallIslands = styled.div`
   margin-left: 12px;
   zoom: 0.48;
   pointer-events: none;
+  margin-top: -4px;
 `;
 
 const List = styled.section`

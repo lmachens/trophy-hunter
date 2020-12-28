@@ -14,6 +14,7 @@ type Disableable = {
 };
 const createDisableableIcon = (Icon) => styled(Icon)<Disableable>`
   opacity: ${(props) => (props.disabled ? '0.3' : '1')};
+  filter: ${(props) => (props.disabled ? 'grayscale(1)' : 'none')};
 `;
 const icons = {
   hub: createDisableableIcon(HubIcon),

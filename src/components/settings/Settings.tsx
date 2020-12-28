@@ -23,7 +23,7 @@ const Divider = styled.div`
 `;
 
 const Setting = styled.div`
-  margin: 7px 0px;
+  margin: 8px 0px;
   display: flex;
   justify-content: space-between;
 

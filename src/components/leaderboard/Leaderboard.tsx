@@ -21,7 +21,7 @@ const TopPlayers = styled.div`
   }
 `;
 const MorePlayers = styled.div`
-  overflow: scroll;
+  overflow-y: scroll;
   > * + * {
     margin-top: 6px;
   }

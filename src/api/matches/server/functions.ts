@@ -12,8 +12,6 @@ export const getHistoryMatches = async (accountId: string) => {
 };
 
 export const addHistoryMatch = async (match: HistoryMatch) => {
-  console.log(match);
-  console.log(JSON.stringify(match));
   const Matches = await getMatchesCollection();
   return await Matches.insertOne(match);
 };

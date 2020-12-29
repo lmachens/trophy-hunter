@@ -26,7 +26,7 @@ export const createAccountsCollection = async () => {
                 bsonType: 'string',
               },
               profileIconId: {
-                bsonType: 'int',
+                bsonType: 'number',
               },
               name: {
                 bsonType: 'string',
@@ -38,7 +38,7 @@ export const createAccountsCollection = async () => {
                 bsonType: 'string',
               },
               summonerLevel: {
-                bsonType: 'int',
+                bsonType: 'number',
               },
             },
           },
@@ -66,7 +66,7 @@ export const createAccountsCollection = async () => {
             },
           },
           games: {
-            bsonType: 'int',
+            bsonType: 'number',
           },
           lastGameIds: {
             bsonType: 'array',
@@ -78,7 +78,7 @@ export const createAccountsCollection = async () => {
             bsonType: 'date',
           },
           trophiesCompleted: {
-            bsonType: 'int',
+            bsonType: 'number',
           },
         },
         required: [
@@ -86,7 +86,6 @@ export const createAccountsCollection = async () => {
           'levels',
           'trophies',
           'authTokens',
-          'rank',
           'trophiesCompleted',
         ],
       },
@@ -98,8 +97,8 @@ export const getAccountsCollection = () => {
   return getCollection<Account>('accounts');
 };
 
-export const ensureIndexes = () => {
-  log('Create indexes');
+export const ensureAccountsIndexes = () => {
+  log('Create accounts indexes');
   return getAccountsCollection().createIndexes([
     { key: { trophiesCompleted: -1, 'summoner.revisionDate': -1 } },
   ]);

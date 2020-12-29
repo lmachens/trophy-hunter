@@ -152,6 +152,14 @@ export const SUPPORTED_QUEUE_IDS = [
   SR_BLIND_PICK,
   SR_RANKED_FLEX,
 ];
+
+export const queues = {
+  [SR_DRAFT_PICK]: 'Draft',
+  [SR_RANKED_SOLO]: 'Solo/Duo',
+  [SR_BLIND_PICK]: 'Blind',
+  [SR_RANKED_FLEX]: 'Flex',
+};
+
 if (getLocalStorageItem('dev', false)) {
   SUPPORTED_QUEUE_IDS.push(-1);
 }

@@ -59,9 +59,9 @@ const SubpageNav = () => {
           </Link>
         </div>
       </Tooltip>
-      <Tooltip title="History (Coming Soon)" placement="top">
+      <Tooltip title="History" placement="top">
         <div>
-          {/* <Link
+          <Link
             href={{
               pathname: '/league-of-legends',
               query: {
@@ -69,11 +69,11 @@ const SubpageNav = () => {
               },
             }}
             passHref
-          > */}
-          <NavIconButton disabled as="a" active={subpage === 'history'}>
-            <HistoryIcon />
-          </NavIconButton>
-          {/* </Link> */}
+          >
+            <NavIconButton disabled as="a" active={subpage === 'history'}>
+              <HistoryIcon />
+            </NavIconButton>
+          </Link>
         </div>
       </Tooltip>
     </Nav>

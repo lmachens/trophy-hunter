@@ -42,7 +42,7 @@ const Collection: FC = () => {
             completedTrophies.filter(
               (accountTrophy) =>
                 accountTrophy.progress === 1 &&
-                trophies[accountTrophy.name].category === 'welcome'
+                trophies[accountTrophy.name].category === 'hub'
             ).length
           }
         />

@@ -23,6 +23,7 @@ import {
   isLevelCompleted,
   isLevelNearlyCompleted,
 } from '../../api/accounts/server/functions';
+import { addHistoryMatch } from '../../api/matches/server/functions';
 
 const activeChecks: string[] = [];
 export default applyMiddleware(
@@ -253,6 +254,16 @@ export default applyMiddleware(
           },
         }
       );
+      await addHistoryMatch({
+        accountId: account._id,
+        gameId: match.gameId,
+        championId: participant.championId,
+        win: participant.stats.win,
+        queueId: match.queueId,
+        gameDuration: match.gameDuration,
+        gameCreatedAt: new Date(match.gameCreation),
+        trophyNames: completedTrophyNames,
+      });
 
       res.json({
         trophyNames: completedTrophyNames,

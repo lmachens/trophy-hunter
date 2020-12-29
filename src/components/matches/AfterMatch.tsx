@@ -53,6 +53,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     },
     onSuccess: () => {
       queryCache.invalidateQueries('account');
+      queryCache.invalidateQueries('matches');
       tryAgainTime = 0;
       flashUntilFocus('desktop');
     },

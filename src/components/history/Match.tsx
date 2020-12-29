@@ -9,6 +9,9 @@ import ArrowRight from '../icons/ArrowRight';
 import TrophyListItem from '../trophies/TrophyListItem';
 import TrophyList from '../trophies/TrophyList';
 import * as trophies from '../trophies';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 type Props = {
   match?: HistoryMatch;
@@ -123,7 +126,7 @@ const Match = ({ match }: Props) => {
         isLoading={!match}
         src={
           match?.championId
-            ? `${process.env.PUBLIC_DIR}/api/champions/${match.championId}/img`
+            ? `${publicRuntimeConfig.API_ENDPOINT}/api/champions/${match.championId}/img`
             : "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
         }
         alt=""

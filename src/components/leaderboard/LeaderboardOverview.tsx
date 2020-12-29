@@ -6,7 +6,6 @@ import IslandIcons from './IslandIcons';
 import * as trophies from '../trophies';
 
 const Container = styled.div`
-  flex-grow: 1;
   background: #2b2a30;
   padding: 15px;
 

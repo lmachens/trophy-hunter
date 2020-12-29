@@ -39,7 +39,6 @@ const GlobalStyles = () => (
         margin: 0;
         background: #2b2a30;
         color: #eaeaea;
-        font-family: Helvetica, Arial, sans-serif;
         user-select: none;
         font-family: 'Lato', sans-serif;
         line-height: 20px;

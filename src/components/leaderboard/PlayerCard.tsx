@@ -24,6 +24,7 @@ const Avatar = styled.img<Loadable>`
 `;
 
 const SummonerName = styled.div<Loadable>`
+  font-family: 'Lato', sans-serif;
   min-width: 100px;
   grid-area: summoner-name;
   overflow: hidden;

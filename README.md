@@ -25,7 +25,6 @@ Supported Games
 Coming soon
 
 - Team Fight Tactics
-- Legends of Runtera
 
 ## Development
 

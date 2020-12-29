@@ -3,33 +3,13 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { getRecentVersion } from '../../api/riot';
 import IslandIcons from './IslandIcons';
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import { Ranking } from '../../api/accounts';
+import { loadingStyle } from '../../styles/animations';
 
 type Loadable = {
   isLoading: boolean;
 };
-
-const waveLines = keyframes`
-    0% {
-        background-position: -468px 0;
-    }
-     100% {
-        background-position: 468px 0;
-    }
-`;
-const loadingStyle = css`
-  background: linear-gradient(
-    to right,
-    rgba(130, 130, 130, 0.2) 8%,
-    rgba(130, 130, 130, 0.3) 18%,
-    rgba(130, 130, 130, 0.2) 33%
-  );
-  background-size: 800px 100px;
-  min-height: 19px;
-  animation: ${waveLines} 2s infinite ease-out;
-  border: none;
-`;
 
 const Rank = styled.div`
   grid-area: rank;

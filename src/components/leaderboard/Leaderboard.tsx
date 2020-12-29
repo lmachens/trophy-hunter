@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useQuery } from 'react-query';
-import { getRankings } from '../../api/accounts';
+import { getRankings, Ranking } from '../../api/accounts';
 import PlayerCard, { Card } from './PlayerCard';
 import { Tooltip } from '../tooltip';
 
@@ -65,7 +65,10 @@ const Leaderboard = () => {
   const router = useRouter();
   const { season = '10' } = router.query;
   const activeSeason = typeof season === 'string' ? season : null;
-  const { data = Array(50).fill(null) } = useQuery('rankings', getRankings);
+  const { data = Array<Ranking>(50).fill(null) } = useQuery(
+    'rankings',
+    getRankings
+  );
 
   const [first, second, third, ...rest] = data;
 

@@ -123,7 +123,7 @@ const Match = ({ match }: Props) => {
         isLoading={!match}
         src={
           match?.championId
-            ? `/api/champions/${match.championId}/img`
+            ? `${process.env.PUBLIC_DIR}/api/champions/${match.championId}/img`
             : "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
         }
         alt=""

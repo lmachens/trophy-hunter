@@ -29,7 +29,7 @@ interface VideoAdsProps {
   autoRefresh?: boolean;
 }
 
-const SEVEN_MINUTES = 7 * 60 * 1000;
+const SEVEN_MINUTES = 5 * 60 * 1000;
 
 const VideoAds: FC<VideoAdsProps> = ({
   ingame = false,

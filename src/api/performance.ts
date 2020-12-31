@@ -60,3 +60,11 @@ export const trackLink = async (url) => {
 export const trackHotkey = async (name) => {
   await trackEvent('Settings', 'Hotkey used', name);
 };
+
+export const trackFilter = async (name) => {
+  await trackEvent('Filter', 'Filter changed', name);
+};
+
+export const trackFavorite = async (name) => {
+  await trackEvent('Favorite', 'Favorite changed', name);
+};

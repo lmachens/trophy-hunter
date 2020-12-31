@@ -12,6 +12,7 @@ import { toggleArrayElement } from '../../api/utils/arrays';
 import Flag from '../icons/Flag';
 import { Tooltip } from '../tooltip';
 import TrophyStats from './TrophyStats';
+import { trackFavorite } from '../../api/performance';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -125,6 +126,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
                 trophy.name
               ),
             });
+            trackFavorite(trophy.name);
           }}
         />
       )}

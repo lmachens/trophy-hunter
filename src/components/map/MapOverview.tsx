@@ -12,6 +12,7 @@ import { useAccount } from '../../contexts/account';
 import Checkbox from '../common/Checkbox';
 import IconButton from '../common/IconButton';
 import { GameChildProps } from '../../layouts/GameLayout';
+import { trackFilter } from '../../api/performance';
 
 const Header = styled.header`
   display: flex;
@@ -63,6 +64,7 @@ const MapOverview = ({ onQueryChange }: GameChildProps) => {
   const handleCategoryChange = (category) => () => {
     const newCategories = toggleArrayElement(categories, category);
     setCategories(newCategories);
+    trackFilter(`${category} changed`);
   };
 
   const trophies = availableTrophies.filter(
@@ -86,11 +88,16 @@ const MapOverview = ({ onQueryChange }: GameChildProps) => {
           <Categories>
             <Checkbox
               checked={categories.length === 7}
-              onChange={() =>
+              onChange={() => {
                 categories.length === 7
                   ? setCategories([])
-                  : setCategories(Object.keys(categoriesMap))
-              }
+                  : setCategories(Object.keys(categoriesMap));
+                trackFilter(
+                  categories.length === 7
+                    ? 'Select no categories'
+                    : 'Select all category'
+                );
+              }}
               label="Select all"
             />
 

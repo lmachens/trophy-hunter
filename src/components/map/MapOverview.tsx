@@ -126,7 +126,12 @@ const MapOverview = ({ onQueryChange }: GameChildProps) => {
         <Tooltip title="Favorites" placement="bottomRight">
           <IconButton
             active={onlyFavorites}
-            onClick={() => setOnlyFavorites(!onlyFavorites)}
+            onClick={() => {
+              setOnlyFavorites(!onlyFavorites);
+              trackFilter(
+                onlyFavorites ? 'Not only favorites' : 'Only favorites'
+              );
+            }}
             data-track-content
           >
             <FavoritesFilter />

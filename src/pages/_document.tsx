@@ -11,6 +11,10 @@ class MyDocument extends Document<EmotionCritical> {
             data-emotion-css={this.props.ids.join(' ')}
             dangerouslySetInnerHTML={{ __html: this.props.css }}
           />
+          <link
+            href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

@@ -11,6 +11,7 @@ import { OwAd } from '../../../typings/owAds';
 import { log } from '../../api/logs';
 
 const Container = styled.div`
+  position: relative;
   background: #2b2a30;
   height: 300px;
   min-height: 300px;

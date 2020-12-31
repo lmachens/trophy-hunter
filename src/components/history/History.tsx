@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import Match from './Match';
 import { getHistoryMatches, HistoryMatch } from '../../api/matches';
 import Squid from '../icons/Squid';
+import { trackLink } from '../../api/performance';
 
 const Container = styled.div`
   font-family: Roboto Mono;
@@ -72,6 +73,7 @@ const History = () => {
               href="https://discord.gg/NTZu8Px"
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackLink('https://discord.gg/NTZu8Px')}
             >
               Discord
             </a>{' '}

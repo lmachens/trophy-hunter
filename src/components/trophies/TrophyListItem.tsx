@@ -109,7 +109,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           text="This trophy doesn't have live-progress tracking"
           placement="bottomRight"
         >
-          <Flag />
+          <Flag onClick={(event) => event.stopPropagation()} />
         </Tooltip>
       )}
       {!disableFavorite && account && trophyProgress < 1 && (

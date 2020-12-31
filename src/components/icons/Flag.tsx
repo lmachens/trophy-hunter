@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, SVGProps } from 'react';
 import styled from '@emotion/styled';
 
 const SVG = styled.svg`
@@ -13,7 +13,7 @@ const Path = styled.path`
   fill: #1f1f1f;
 `;
 
-const Flag: FC = (props) => {
+const Flag: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <SVG
       width="20"

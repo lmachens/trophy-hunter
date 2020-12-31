@@ -120,6 +120,7 @@ const MapOverview = ({ onQueryChange }: GameChildProps) => {
           <IconButton
             active={onlyFavorites}
             onClick={() => setOnlyFavorites(!onlyFavorites)}
+            data-track-content
           >
             <FavoritesFilter />
           </IconButton>

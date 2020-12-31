@@ -4,6 +4,7 @@ import SettingsButton from './SettingsButton';
 import SettingsToggle from './SettingsToggle';
 import usePersistentState from '../../hooks/usePersistentState';
 import useHotkey from '../../hooks/useHotkey';
+import { trackLink, trackSettingsChanged } from '../../api/performance';
 
 const Row = styled.div`
   display: flex;
@@ -62,7 +63,14 @@ const Settings: FC = () => {
           <h3>General</h3>
           <Setting>
             Show / Hide hotkey
-            <SettingsLink href="overwolf://settings/games-overlay?hotkey=show_trophy_hunter&gameId=5426">
+            <SettingsLink
+              href="overwolf://settings/games-overlay?hotkey=show_trophy_hunter&gameId=5426"
+              onClick={() =>
+                trackLink(
+                  'overwolf://settings/games-overlay?hotkey=show_trophy_hunter&gameId=5426'
+                )
+              }
+            >
               {showTrophyHunterHotkey}
             </SettingsLink>
           </Setting>
@@ -70,14 +78,28 @@ const Settings: FC = () => {
             Auto Launch
             <SettingsToggle
               checked={autoLaunch}
-              onChange={(event) => setAutoLaunch(event.target.checked)}
+              onChange={(event) => {
+                setAutoLaunch(event.target.checked);
+                trackSettingsChanged(
+                  `Auto Launch [${
+                    event.target.checked ? 'checked' : 'unchecked'
+                  }]`
+                );
+              }}
             />
           </Setting>
           <Setting>
             Changelog Updates
             <SettingsToggle
               checked={changelogUpdates}
-              onChange={(event) => setChangelogUpdates(event.target.checked)}
+              onChange={(event) => {
+                setChangelogUpdates(event.target.checked);
+                trackSettingsChanged(
+                  `Changelog Updates [${
+                    event.target.checked ? 'checked' : 'unchecked'
+                  }]`
+                );
+              }}
             />
           </Setting>
         </Col>
@@ -88,16 +110,28 @@ const Settings: FC = () => {
             Trophy near completion
             <SettingsToggle
               checked={trophyNearCompletion}
-              onChange={(event) =>
-                setTrophyNearCompletion(event.target.checked)
-              }
+              onChange={(event) => {
+                setTrophyNearCompletion(event.target.checked);
+                trackSettingsChanged(
+                  `Trophy near completion [${
+                    event.target.checked ? 'checked' : 'unchecked'
+                  }]`
+                );
+              }}
             />
           </Setting>
           <Setting>
             Trophy completed
             <SettingsToggle
               checked={trophyCompleted}
-              onChange={(event) => setTrophyCompleted(event.target.checked)}
+              onChange={(event) => {
+                setTrophyCompleted(event.target.checked);
+                trackSettingsChanged(
+                  `Trophy completed [${
+                    event.target.checked ? 'checked' : 'unchecked'
+                  }]`
+                );
+              }}
             />
           </Setting>
         </Col>
@@ -106,13 +140,27 @@ const Settings: FC = () => {
           <h3>Second Screen</h3>
           <Setting>
             Next page hotkey
-            <SettingsLink href="overwolf://settings/games-overlay?hotkey=next_page_trophy_hunter&gameId=5426">
+            <SettingsLink
+              href="overwolf://settings/games-overlay?hotkey=next_page_trophy_hunter&gameId=5426"
+              onClick={() =>
+                trackLink(
+                  'overwolf://settings/games-overlay?hotkey=next_page_trophy_hunter&gameId=5426'
+                )
+              }
+            >
               {nextPageHotkey}
             </SettingsLink>
           </Setting>
           <Setting>
             Toggle monitor hotkey
-            <SettingsLink href="overwolf://settings/games-overlay?hotkey=toggle_monitor_trophy_hunter&gameId=5426">
+            <SettingsLink
+              href="overwolf://settings/games-overlay?hotkey=toggle_monitor_trophy_hunter&gameId=5426"
+              onClick={() =>
+                trackLink(
+                  'overwolf://settings/games-overlay?hotkey=toggle_monitor_trophy_hunter&gameId=5426'
+                )
+              }
+            >
               {toggleMonitorHotkey}
             </SettingsLink>
           </Setting>

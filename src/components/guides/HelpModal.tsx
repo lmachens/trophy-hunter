@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { trackLink } from '../../api/performance';
 import Modal from '../modals/Modal';
 
 interface HelpModalProps {
@@ -55,7 +56,12 @@ const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
       <details>
         <summary>Follow Us On Social</summary>
         <p>
-          <a href="https://discord.gg/NTZu8Px" target="_blank" rel="noreferrer">
+          <a
+            href="https://discord.gg/NTZu8Px"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => trackLink('https://discord.gg/NTZu8Px')}
+          >
             Discord
           </a>
           <br />
@@ -63,6 +69,9 @@ const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
             href="https://github.com/lmachens/trophy-hunter"
             target="_blank"
             rel="noreferrer"
+            onClick={() =>
+              trackLink('https://github.com/lmachens/trophy-hunter')
+            }
           >
             GitHub
           </a>
@@ -127,6 +136,11 @@ const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
             href="https://support.overwolf.com/support/solutions/articles/9000176827-how-to-get-your-overwolf-logs"
             target="_blank"
             rel="noreferrer"
+            onClick={() =>
+              trackLink(
+                'https://support.overwolf.com/support/solutions/articles/9000176827-how-to-get-your-overwolf-logs'
+              )
+            }
           >
             here
           </a>

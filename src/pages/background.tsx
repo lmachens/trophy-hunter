@@ -15,7 +15,7 @@ import overwolf, {
 import { postLogin } from '../api/accounts';
 import { parseJSON } from '../api/utils/json';
 import { useState, useEffect } from 'react';
-import { queryCache, useMutation } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
 import Head from 'next/head';
 import { log } from '../api/logs';
@@ -36,10 +36,11 @@ const Background: NextPage = () => {
   const [registeredFeatures, setRegisteredFeatures] = useState(false);
   const [autoLaunch] = usePersistentState('autoLaunch', true);
   const { account } = useAccount();
+  const queryClient = useQueryClient();
 
-  const [login] = useMutation(postLogin, {
+  const { mutate: login } = useMutation(postLogin, {
     onSuccess: () => {
-      queryCache.invalidateQueries('account');
+      queryClient.invalidateQueries('account');
     },
   });
 

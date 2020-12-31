@@ -5,7 +5,7 @@ import SandClock from '../icons/SandClock';
 import { Tooltip } from '../tooltip';
 import ModalButton from '../modals/ModalButton';
 import { postCheck } from '../../api/accounts';
-import { queryCache, useMutation } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import { flashUntilFocus } from '../../api/overwolf';
 import TrophiesModal from './TrophiesModal';
 import IslandsModal from './IslandsModal';
@@ -46,14 +46,15 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
     'checkGameId',
     null
   );
+  const queryClient = useQueryClient();
 
-  const [check, { data: match, status, reset }] = useMutation(postCheck, {
+  const { mutate: check, data: match, status, reset } = useMutation(postCheck, {
     onMutate: () => {
       setShowModal(true);
     },
     onSuccess: () => {
-      queryCache.invalidateQueries('account');
-      queryCache.invalidateQueries('matches');
+      queryClient.invalidateQueries('account');
+      queryClient.invalidateQueries('matches');
       tryAgainTime = 0;
       flashUntilFocus('desktop');
     },

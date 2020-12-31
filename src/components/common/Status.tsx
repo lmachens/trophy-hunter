@@ -5,7 +5,7 @@ import Alert from '../icons/Alert';
 import { Tooltip } from '../tooltip';
 
 const Status: FC = () => {
-  const [mutate, { data, isLoading, isError }] = useMutation(getStatus);
+  const { mutate, data, isLoading, isError } = useMutation(getStatus);
   const [timedout, setTimedout] = useState(false);
 
   useEffect(() => {

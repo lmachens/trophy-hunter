@@ -6,7 +6,7 @@ import FavoritesFilter from '../icons/FavoritesFilter';
 import Grow from '../common/Grow';
 import ProgressBar from '../common/ProgressBar';
 import { categoriesMap } from './categories';
-import { queryCache, useMutation } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import { patchAccount } from '../../api/accounts';
 import { toggleArrayElement } from '../../api/utils/arrays';
 import Flag from '../icons/Flag';
@@ -74,9 +74,11 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   }
 
   const { account } = useAccount();
-  const [patch] = useMutation(patchAccount, {
+  const queryClient = useQueryClient();
+
+  const { mutate: patch } = useMutation(patchAccount, {
     onSuccess: () => {
-      queryCache.invalidateQueries('account');
+      queryClient.invalidateQueries('account');
     },
   });
   const { progress: trophyProgress, progressDetails } =

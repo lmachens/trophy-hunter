@@ -1,3 +1,5 @@
+import Router from 'next/router';
+
 const baseUrl = 'https://performance.machens.koeln/';
 
 globalThis._paq = [
@@ -16,6 +18,17 @@ const scriptLoaded = new Promise((resolve) => {
   script.onload = resolve;
   document.body.append(script);
 });
+
+let isListeningRouteChangeComplete = false;
+export const listenRouteChangeComplete = () => {
+  if (isListeningRouteChangeComplete) {
+    return;
+  }
+  isListeningRouteChangeComplete = true;
+  Router.events.on('routeChangeComplete', (url) => {
+    trackPageView(url);
+  });
+};
 
 export const setUserId = async (id) => {
   globalThis._paq.push(['resetUserId']);

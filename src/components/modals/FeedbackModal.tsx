@@ -54,7 +54,7 @@ interface FeedbackModalProps {
 const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
   const [discordTag, setDiscordTag] = useState('');
   const [message, setMessage] = useState('');
-  const [mutate, { status }] = useMutation(postFeedback);
+  const { mutate, status } = useMutation(postFeedback);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

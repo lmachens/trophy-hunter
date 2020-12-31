@@ -73,7 +73,7 @@ const Leaderboard = () => {
   const [first, second, third, ...rest] = data;
 
   return (
-    <Container onClick={(event) => event.stopPropagation()}>
+    <Container>
       <nav>
         <Link
           href={{

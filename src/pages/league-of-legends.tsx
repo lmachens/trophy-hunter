@@ -69,7 +69,9 @@ const LeagueOfLegends: NextPage = () => {
       }}
       aside={<Aside onQueryChange={setQueryParam} />}
       onMainClick={() => {
-        setQueryParam({ tool: undefined, level: undefined });
+        if (router.query.tool || router.query.level) {
+          setQueryParam({ tool: undefined, level: undefined });
+        }
       }}
     >
       <Main onQueryChange={setQueryParam} />

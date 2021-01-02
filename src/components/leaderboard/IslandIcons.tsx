@@ -9,21 +9,14 @@ import { SpecialIcon } from '../levels/special';
 import { TeamworkIcon } from '../levels/teamwork';
 import { Tooltip } from '../tooltip';
 
-type Disableable = {
-  disabled: boolean;
-};
-const createDisableableIcon = (Icon) => styled(Icon)<Disableable>`
-  opacity: ${(props) => (props.disabled ? '0.3' : '1')};
-  filter: ${(props) => (props.disabled ? 'grayscale(1)' : 'none')};
-`;
 const icons = {
-  hub: createDisableableIcon(HubIcon),
-  combat: createDisableableIcon(CombatIcon),
-  skills: createDisableableIcon(SkillsIcon),
-  teamwork: createDisableableIcon(TeamworkIcon),
-  objectives: createDisableableIcon(ObjectivesIcon),
-  epic: createDisableableIcon(EpicIcon),
-  special: createDisableableIcon(SpecialIcon),
+  hub: HubIcon,
+  combat: CombatIcon,
+  skills: SkillsIcon,
+  teamwork: TeamworkIcon,
+  objectives: ObjectivesIcon,
+  epic: EpicIcon,
+  special: SpecialIcon,
 };
 
 const Container = styled.div`

@@ -1,6 +1,11 @@
 import { FC } from 'react';
 
-const SkillsIcon: FC = (props) => {
+type Props = {
+  disabled?: boolean;
+};
+const SkillsIcon: FC<Props> = ({ disabled = false, ...props }) => {
+  const color = !disabled ? '#FBFF2E' : '#77777A';
+
   return (
     <svg
       width="60"
@@ -12,12 +17,12 @@ const SkillsIcon: FC = (props) => {
     >
       <path
         d="M28.3857 44.6768L28.5339 41.0257L30.8945 38.9996L33.3857 41.1768L33.3857 44.5M28.3857 44.6768L27.8857 49L31.0322 46.5028L33.8857 49L33.3857 44.5M28.3857 44.6768L31.0322 42.5L33.3857 44.5"
-        stroke="#FBFF2E"
+        stroke={color}
       />
       <path d="M11.4996 27.5L30.9996 35L49.4996 27.5" stroke="#3F3E43" />
       <path
         d="M30.3857 20L30.3857 6.74414L31.3857 6.74414L31.3857 20L30.3857 20Z"
-        fill="#FBFF2E"
+        fill={color}
       />
       <path
         d="M29.9998 35L29.9995 15.4997L20.4738 19.4997L10.0829 27.9997L13.0005 28.9997L18.0005 30.4997L29.9998 35Z"
@@ -33,7 +38,7 @@ const SkillsIcon: FC = (props) => {
         width="20"
         height="1"
         transform="rotate(-90 30.3857 39)"
-        fill="#FBFF2E"
+        fill={color}
       />
       <rect
         x="30.3857"
@@ -41,7 +46,7 @@ const SkillsIcon: FC = (props) => {
         width="6"
         height="1"
         transform="rotate(-90 30.3857 56)"
-        fill="#FBFF2E"
+        fill={color}
       />
       <rect
         x="33.3857"
@@ -49,7 +54,7 @@ const SkillsIcon: FC = (props) => {
         width="6"
         height="1"
         transform="rotate(-90 33.3857 60)"
-        fill="#FBFF2E"
+        fill={color}
       />
       <rect
         x="27.3857"
@@ -57,12 +62,9 @@ const SkillsIcon: FC = (props) => {
         width="6"
         height="1"
         transform="rotate(-90 27.3857 60)"
-        fill="#FBFF2E"
+        fill={color}
       />
-      <path
-        d="M30.8857 2L33.9168 7.25L27.8547 7.25L30.8857 2Z"
-        fill="#FBFF2E"
-      />
+      <path d="M30.8857 2L33.9168 7.25L27.8547 7.25L30.8857 2Z" fill={color} />
     </svg>
   );
 };

@@ -62,8 +62,8 @@ const Container = styled.div<ContainerProps>`
   border: 1px solid #eaeaea;
   padding: 10px;
   min-width: 64px;
-  left: ${(props) => props.left}px;
-  top: ${(props) => props.top}px;
+  left: ${(props) => Math.max(0, props.left)}px;
+  top: ${(props) => Math.max(0, props.top)}px;
   pointer-events: ${(props) => (props.pointerEvents ? 'inherit' : 'none')};
   z-index: ${(props) => (props.targetId ? 90 : 100)};
   font-family: 'Roboto Mono', monospace;
@@ -78,6 +78,8 @@ const Container = styled.div<ContainerProps>`
     border: solid;
     border-color: transparent #eaeaea;
     ${(props) => arrows[props.placement]}
+    margin-left: ${(props) =>
+      props.placement !== 'right' ? Math.min(0, props.left) : 0}px;
   }
 `;
 

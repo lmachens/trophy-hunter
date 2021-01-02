@@ -67,12 +67,12 @@ const Container = styled.div`
 `;
 
 const SmallIslands = styled.div`
-  flex: 1;
   position: relative;
   margin-left: 12px;
   zoom: 0.48;
   pointer-events: none;
   margin-top: -4px;
+  height: 640px;
 `;
 
 const List = styled.section`

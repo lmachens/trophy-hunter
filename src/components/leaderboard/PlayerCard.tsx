@@ -113,7 +113,7 @@ const sizes = {
     padding: 20px 15px;
 
     grid-template-areas: 'rank avatar summoner-name trophies-count islands islands-completed';
-    grid-template-columns: auto auto 1fr 1fr auto auto;
+    grid-template-columns: auto auto 150px 130px auto auto 1fr;
 
     ${SummonerName} {
       color: inherit;

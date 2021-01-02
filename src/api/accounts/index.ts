@@ -1,6 +1,7 @@
 import { Account, Credential, Ranking } from './types';
 import { postJSON, getJSON, patchJSON } from '../utils/request';
 import { log } from '../logs';
+import { trackCheck } from '../performance';
 export * from './types';
 
 export const postLogin = (credential: Credential) => {
@@ -13,6 +14,7 @@ export const getAccount = () => {
 
 export const postCheck = (matchId: number) => {
   log(`postCheck ${matchId}`);
+  trackCheck(matchId);
   return postJSON<{
     trophyNames: string[];
     unlockedIslandNames: string[];

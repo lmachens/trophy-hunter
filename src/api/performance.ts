@@ -43,9 +43,9 @@ export const trackPageView = async (url) => {
   globalThis._paq.push(['trackPageView']);
 };
 
-export const trackEvent = async (category, action, name) => {
+export const trackEvent = async (...args) => {
   await scriptLoaded;
-  globalThis._paq.push(['trackEvent', category, action, name]);
+  globalThis._paq.push(['trackEvent', ...args]);
 };
 
 export const trackSettingsChanged = async (name) => {
@@ -67,4 +67,12 @@ export const trackFilter = async (name) => {
 
 export const trackFavorite = async (name) => {
   await trackEvent('Favorite', 'Favorite changed', name);
+};
+
+export const trackCheck = async (gameId) => {
+  await trackEvent('Check', 'Match check', gameId);
+};
+
+export const trackCopyLink = async () => {
+  await trackEvent('Social', 'Copied share link');
 };

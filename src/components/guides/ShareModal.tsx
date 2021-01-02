@@ -3,6 +3,7 @@ import SmallModal from '../modals/SmallModal';
 import styled from '@emotion/styled';
 import FancyButton from '../common/FancyButton';
 import { copyTextToClipboard } from '../../api/utils/clipboard';
+import { trackCopyLink } from '../../api/performance';
 
 const CopyContainer = styled.div`
   margin-top: 20px;
@@ -35,6 +36,7 @@ const ShareModal: FC<ShareModalProps> = ({ onClose }) => {
   const [copied, setCopied] = useState(false);
 
   const handleClick = () => {
+    trackCopyLink();
     if (copyTextToClipboard(URL)) {
       setCopied(true);
     }

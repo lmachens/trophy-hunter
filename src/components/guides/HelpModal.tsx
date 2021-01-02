@@ -21,29 +21,27 @@ const HelpModal: FC<HelpModalProps> = ({ onClose }) => {
       </p>
       <details>
         <summary>Main Features</summary>
-        <p>
-          <ul>
-            <li>
-              Over 200 different trophies to achieve, all with unique abilities
-              and skills.
-            </li>
-            <li>
-              Over 80 live progress trophies, so that you never miss a trophy
-              you hunt that’s near completion.
-            </li>
-            <li>Special trophies to add extra fun to your journey</li>
-            <li>
-              An epic island to challenge the best of the best. Are you up for a
-              challenge?
-            </li>
-            <li>Tons of gameplay, plus lots of challenges.</li>
-            <li>Suitable for both casual and hardcore players.</li>
-            <li>
-              Keeping it fair! We do not support challenges that change your
-              playstyle for the worse!!
-            </li>
-          </ul>
-        </p>
+        <ul>
+          <li>
+            Over 200 different trophies to achieve, all with unique abilities
+            and skills.
+          </li>
+          <li>
+            Over 80 live progress trophies, so that you never miss a trophy you
+            hunt that’s near completion.
+          </li>
+          <li>Special trophies to add extra fun to your journey</li>
+          <li>
+            An epic island to challenge the best of the best. Are you up for a
+            challenge?
+          </li>
+          <li>Tons of gameplay, plus lots of challenges.</li>
+          <li>Suitable for both casual and hardcore players.</li>
+          <li>
+            Keeping it fair! We do not support challenges that change your
+            playstyle for the worse!!
+          </li>
+        </ul>
       </details>
       <details>
         <summary>How it works</summary>

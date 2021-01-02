@@ -5,7 +5,8 @@ const FancyButton = styled.button`
     props.disabled
       ? '#77777a'
       : 'linear-gradient(158.54deg, #EF1ACD -1.09%, #EFB31A 109.64%);'};
-  padding: 4px;
+  padding: 4px 8px;
+  font-size: 16px;
   margin: 10px;
   border: none;
   outline: none;

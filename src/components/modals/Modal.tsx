@@ -3,7 +3,7 @@ import { FC } from 'react';
 import CloseIcon from '../icons/Close';
 import Backdrop from '../common/Backdrop';
 import Checkbox from '../common/Checkbox';
-import Button from '../common/Button';
+import FancyButton from '../common/FancyButton';
 
 const Container = styled.div`
   width: 500px;
@@ -20,7 +20,7 @@ const Title = styled.h3`
   text-align: left;
 `;
 
-const Body = styled.div`
+export const ModalBody = styled.div`
   padding: 10px 20px 20px 20px;
   margin: 10px;
   overflow: auto;
@@ -37,6 +37,9 @@ const Close = styled(CloseIcon)`
 `;
 
 const DontShowAgain = styled.aside`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #1f1f1f;
   color: #717174;
 
@@ -48,9 +51,10 @@ const DontShowAgain = styled.aside`
 
 interface ModalProps {
   onClose(): void;
-  title: string;
+  title?: string;
   onShowAgainChange?(showAgain: boolean): void;
   showAgain?: boolean;
+  className?: string;
 }
 
 const Modal: FC<ModalProps> = ({
@@ -59,24 +63,30 @@ const Modal: FC<ModalProps> = ({
   title,
   onShowAgainChange,
   showAgain,
+  className,
 }) => {
   return (
     <Backdrop>
-      <Container onClick={(event) => event.stopPropagation()}>
+      <Container
+        onClick={(event) => event.stopPropagation()}
+        className={className}
+      >
         <Close onClick={onClose} />
-        <Title>{title}</Title>
-        <Body>{children}</Body>
+        {title && <Title>{title}</Title>}
+        <ModalBody>{children}</ModalBody>
         {onShowAgainChange && (
           <DontShowAgain>
-            <Checkbox
-              label="Don't show this again"
-              checked={!showAgain}
-              onChange={(event) => onShowAgainChange(!event.target.checked)}
-            />
-            <small>*You can always change this in settings</small>
+            <div>
+              <Checkbox
+                label="Don't show this again"
+                checked={!showAgain}
+                onChange={(event) => onShowAgainChange(!event.target.checked)}
+              />
+              <small>*You can always change this in settings</small>
+            </div>
+            <FancyButton onClick={onClose}>Continue</FancyButton>
           </DontShowAgain>
         )}
-        <Button onClick={onClose}>Continue</Button>
       </Container>
     </Backdrop>
   );

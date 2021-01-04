@@ -227,7 +227,7 @@ export default applyMiddleware(
               accountLevel.island === level.island &&
               accountLevel.name !== level.name
           )
-          .find((level) => level.status !== 'completed');
+          .some((level) => level.status === 'active');
         if (!isIslandComplete) {
           return;
         }

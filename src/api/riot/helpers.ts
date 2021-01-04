@@ -226,16 +226,11 @@ export const getLaneOpponent = (
   participants: Participant[],
   participant: Participant
 ): Participant => {
-  const otherTeamParticipants = participants.filter(
+  const laneOpponents = participants.filter(
     (otherParticipant) =>
-      otherParticipant.participantId !== participant.participantId &&
-      otherParticipant.teamId === participant.teamId
-  );
-
-  const laneOpponents = otherTeamParticipants.filter(
-    (teammate) =>
-      teammate.timeline.lane === participant.timeline.lane &&
-      teammate.timeline.role === participant.timeline.role
+      otherParticipant.teamId !== participant.teamId &&
+      otherParticipant.timeline.lane === participant.timeline.lane &&
+      otherParticipant.timeline.role === participant.timeline.role
   );
 
   if (laneOpponents.length === 0) {

@@ -4,7 +4,7 @@ import { getMatchesCollection } from './collection';
 export const getHistoryMatches = async (accountId: string) => {
   const Matches = await getMatchesCollection();
   const matches = await Matches.find({ accountId })
-    .sort({ gameCreation: -1 })
+    .sort({ gameCreatedAt: -1 })
     .limit(20)
     .toArray();
 

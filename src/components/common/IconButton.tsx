@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 type Props = {
-  active: boolean;
+  active?: boolean;
 };
 const IconButton = styled.button<Props>`
   background: #3f3e43;

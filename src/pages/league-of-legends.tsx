@@ -11,6 +11,8 @@ import Leaderboard from '../components/leaderboard/Leaderboard';
 import LeaderboardOverview from '../components/leaderboard/LeaderboardOverview';
 import History from '../components/history/History';
 import HistoryOverview from '../components/history/HistoryOverview';
+import SeasonModal from '../components/modals/SeasonModal';
+import useVersion from '../hooks/useVersion';
 
 const subpages: {
   [subpage: string]: {
@@ -37,6 +39,12 @@ const LeagueOfLegends: NextPage = () => {
     'isGarenaUser',
     null
   );
+  const [sawSeason11Modal, setSawSeason11Modal] = usePersistentState(
+    'sawSeason11Modal',
+    false
+  );
+  const { season: currentSeason } = useVersion();
+
   const router = useRouter();
   const { subpage = 'map', tool } = router.query;
   useCenterWindow();
@@ -75,6 +83,9 @@ const LeagueOfLegends: NextPage = () => {
     >
       <Main onQueryChange={setQueryParam} />
       {isGarenaUser && <GarenaModal onClose={() => unsetIsGarenaUser()} />}
+      {currentSeason === '11' && !sawSeason11Modal && (
+        <SeasonModal onClose={() => setSawSeason11Modal(true)} />
+      )}
     </GameLayout>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import IconButton from './IconButton';
 import MapIcon from '../icons/Map';
 import LeaderboardIcon from '../icons/Leaderboard';
 import HistoryIcon from '../icons/History';
@@ -8,16 +7,10 @@ import styled from '@emotion/styled';
 import { Tooltip } from '../tooltip';
 import { useRouter } from 'next/router';
 import useVersion from '../../hooks/useVersion';
+import NavIconButton from './NavIconButton';
 
 const Nav = styled.nav`
   display: flex;
-`;
-
-const NavIconButton = styled(IconButton)`
-  width: 30px;
-  height: 30px;
-  border: ${(props) => (props.active ? '1px solid #EAEAEA' : 'none')};
-  background: ${(props) => (props.active ? '#616165' : '#3f3e43')};
 `;
 
 const SubpageNav = () => {

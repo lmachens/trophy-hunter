@@ -10,6 +10,7 @@ const WelcomeTooltip = styled(Tooltip)`
 
 const WelcomeGuide = () => {
   const { account } = useAccount();
+  const { level, targetLevel } = useTargetLevel();
 
   const showGuide =
     account?.levels.find((level) => level.name === 'welcome')?.status ===
@@ -17,7 +18,6 @@ const WelcomeGuide = () => {
   if (!showGuide) {
     return null;
   }
-  const { level, targetLevel } = useTargetLevel();
   return (
     <>
       {!level && (

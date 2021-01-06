@@ -1,4 +1,4 @@
-import { Account, Credential, Ranking } from './types';
+import { Account, Credential, Ranking, SeasonAccount } from './types';
 import { postJSON, getJSON, patchJSON } from '../utils/request';
 import { log } from '../logs';
 import { trackCheck } from '../performance';
@@ -25,6 +25,12 @@ export const patchAccount = (patch) => {
   return patchJSON<Account>('/api/account', patch);
 };
 
-export const getRankings = () => {
-  return getJSON<Ranking[]>('/api/rankings');
+export const getRankings = (season?: string) => {
+  return getJSON<Ranking[]>(
+    `/api/rankings${season ? `?season=${season}` : ''}`
+  );
+};
+
+export const getSeasonAccount = (season: string) => {
+  return getJSON<SeasonAccount>(`/api/season-account?season=${season}`);
 };

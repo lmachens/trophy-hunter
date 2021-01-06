@@ -24,6 +24,18 @@ export interface Account {
   rank?: number;
 }
 
+export interface SeasonAccount {
+  season: string;
+  summoner: Summoner;
+  islands: AccountIsland[];
+  levels: AccountLevel[];
+  trophies: AccountTrophy[];
+  games: number;
+  lastGameIds: number[];
+  trophiesCompleted: number;
+  rank?: number;
+}
+
 export interface AccountIsland {
   name: string;
   status: 'open' | 'done';

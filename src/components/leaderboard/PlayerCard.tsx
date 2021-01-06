@@ -180,18 +180,16 @@ const PlayerCard = ({ size, rank, ranking }: Props) => {
         alt=""
       />
       <SummonerName isLoading={!ranking}>{ranking?.summonerName}</SummonerName>
-      {(size !== 'S' || ranking?.trophiesCompleted) && (
+      {(size !== 'S' || ranking) && (
         <TrophiesCount isLoading={!ranking}>
-          {ranking?.trophiesCompleted && (
+          {ranking && (
             <>
               {ranking?.trophiesCompleted} <span>Trophies</span>
             </>
           )}
         </TrophiesCount>
       )}
-      {size !== 'L' && (size !== 'S' || ranking) && (
-        <Islands>Completed</Islands>
-      )}
+      {ranking && size !== 'L' && <Islands>Completed</Islands>}
       {ranking?.islands && <IslandsCompleted islands={ranking.islands || []} />}
     </Card>
   );

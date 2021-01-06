@@ -31,7 +31,7 @@ const ChangelogModal: FC<ChangelogModalProps> = ({ onClose }) => {
     true
   );
 
-  const version = useVersion();
+  const { appVersion } = useVersion();
 
   useEffect(() => {
     fetch('https://api.github.com/repos/lmachens/trophy-hunter/releases')
@@ -52,7 +52,7 @@ const ChangelogModal: FC<ChangelogModalProps> = ({ onClose }) => {
       }}
       showAgain={changelogUpdates}
     >
-      <p>Your version: {version}</p>
+      <p>Your version: {appVersion}</p>
       <Releases>
         {releases?.map((release) => (
           <React.Fragment key={release.id}>

@@ -7,6 +7,7 @@ import HistoryIcon from '../icons/History';
 import styled from '@emotion/styled';
 import { Tooltip } from '../tooltip';
 import { useRouter } from 'next/router';
+import useVersion from '../../hooks/useVersion';
 
 const Nav = styled.nav`
   display: flex;
@@ -21,6 +22,8 @@ const NavIconButton = styled(IconButton)`
 
 const SubpageNav = () => {
   const router = useRouter();
+  const { season: currentSeason } = useVersion();
+
   const { subpage = 'map' } = router.query;
 
   return (
@@ -49,6 +52,7 @@ const SubpageNav = () => {
               pathname: '/league-of-legends',
               query: {
                 subpage: 'leaderboard',
+                season: currentSeason,
               },
             }}
             passHref

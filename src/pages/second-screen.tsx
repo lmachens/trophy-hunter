@@ -4,7 +4,7 @@ import overwolf, {
   closeCurrentWindow,
   getCurrentWindow,
   getMonitor,
-  getVersion,
+  getAppVersion,
   openWindow,
   WindowName,
 } from '../api/overwolf';
@@ -41,7 +41,7 @@ import useDisplays from '../hooks/useDisplays';
 import useCenterWindow from '../hooks/useCenterWindow';
 import { trackHotkey } from '../api/performance';
 
-getVersion().then((version) => log(`Running v${version}`));
+getAppVersion().then((version) => log(`Running v${version}`));
 
 const Container = styled.div`
   display: flex;

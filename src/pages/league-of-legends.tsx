@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import { WelcomeGuide } from '../components/guides';
 import GameLayout, { GameChildProps } from '../layouts/GameLayout';
 import usePersistentState from '../hooks/usePersistentState';
 import GarenaModal from '../components/modals/GarenaModal';
@@ -75,7 +74,6 @@ const LeagueOfLegends: NextPage = () => {
       }}
     >
       <Main onQueryChange={setQueryParam} />
-      <WelcomeGuide />
       {isGarenaUser && <GarenaModal onClose={() => unsetIsGarenaUser()} />}
     </GameLayout>
   );

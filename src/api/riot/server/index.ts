@@ -128,3 +128,5 @@ export const getChampions = async () => {
     return null;
   }
 };
+
+export const currentSeason = '10';

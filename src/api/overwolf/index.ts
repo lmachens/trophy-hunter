@@ -225,7 +225,7 @@ export const getHotkey = (name: string) => {
   });
 };
 
-export const getVersion = () => {
+export const getAppVersion = () => {
   return new Promise<string>((resolve) => {
     overwolf.extensions.current.getManifest((manifest) =>
       resolve(`v${manifest.meta.version}`)
@@ -235,7 +235,7 @@ export const getVersion = () => {
 
 export const isAppUpdated = async () => {
   const lastVersion = getLocalStorageItem('lastVersion', '');
-  const version = await getVersion();
+  const version = await getAppVersion();
   const isUpdated = version !== lastVersion;
   setLocalStorageItem('lastVersion', version);
   return isUpdated;

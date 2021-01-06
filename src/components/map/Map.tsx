@@ -8,6 +8,7 @@ import islands from '../islands/islands';
 import { SpecialGradients } from '../levels/special';
 import useTargetLevel from '../../hooks/useTargetLevel';
 import { GameChildProps } from '../../layouts/GameLayout';
+import { WelcomeGuide } from '../guides';
 
 const SizeContainer = styled(ZoomToFit)`
   position: absolute;
@@ -61,6 +62,7 @@ const Map = ({ onQueryChange }: GameChildProps) => {
           });
         }}
       />
+      <WelcomeGuide />
     </>
   );
 };

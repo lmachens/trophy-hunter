@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import { getRankings, Ranking } from '../../api/accounts';
 import PlayerCard, { Card } from './PlayerCard';
+import useVersion from '../../hooks/useVersion';
 import { Tooltip } from '../tooltip';
 
 const TopPlayers = styled.div`
@@ -63,34 +64,44 @@ const NotFirst = styled.div`
 
 const Leaderboard = () => {
   const router = useRouter();
-  const { season = '10' } = router.query;
+  const { season: currentSeason } = useVersion();
+
+  const { season = currentSeason } = router.query;
   const activeSeason = typeof season === 'string' ? season : null;
   const { data = Array<Ranking>(50).fill(null) } = useQuery(
-    'rankings',
-    getRankings
+    `season-${season}`,
+    () => getRankings(activeSeason)
   );
 
   const [first, second, third, ...rest] = data;
-
+  const seasons = ['10'];
+  if (currentSeason === '11') {
+    seasons.push('11');
+  }
   return (
     <Container>
       <nav>
-        <Link
-          href={{
-            query: {
-              subpage: 'leaderboard',
-              season: '10',
-            },
-          }}
-          passHref
-        >
-          <Button as="a" active={activeSeason === season}>
-            Season 10
-          </Button>
-        </Link>
-        <Tooltip text="Next season starts January 8" placement="top">
-          <Button off>Season 11</Button>
-        </Tooltip>
+        {seasons.map((season) => (
+          <Link
+            key={season}
+            href={{
+              query: {
+                subpage: 'leaderboard',
+                season,
+              },
+            }}
+            passHref
+          >
+            <Button as="a" active={activeSeason === season}>
+              Season {season}
+            </Button>
+          </Link>
+        ))}
+        {currentSeason !== '11' && (
+          <Tooltip text="Next season starts January 8" placement="top">
+            <Button off>Season 11</Button>
+          </Tooltip>
+        )}
       </nav>
       <TopPlayers>
         <PlayerCard size="L" rank={1} ranking={first} />

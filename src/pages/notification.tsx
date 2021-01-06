@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import TrophyListItem from '../components/trophies/TrophyListItem';
-import overwolf, { closeCurrentWindow, getVersion } from '../api/overwolf';
+import overwolf, { closeCurrentWindow, getAppVersion } from '../api/overwolf';
 import { getLocalStorageItem, setLocalStorageItem } from '../api/utils/storage';
 import * as trophies from '../components/trophies';
 import Timer from '../components/common/Timer';
@@ -12,7 +12,7 @@ import NotificationTitle from '../components/notifications/NotificationTitle';
 import NotificationContainer from '../components/notifications/NotificationContainer';
 import { log } from '../api/logs';
 
-getVersion().then((version) => log(`Running v${version}`));
+getAppVersion().then((version) => log(`Running v${version}`));
 
 const ListItem = styled(TrophyListItem)`
   background-image: ${(props) =>

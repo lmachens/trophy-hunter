@@ -2,7 +2,9 @@ import { MongoClient, Db } from 'mongodb';
 import getConfig from 'next/config';
 import {
   createAccountsCollection,
+  createSeasonAccountsCollection,
   ensureAccountsIndexes,
+  ensureSeasonAccountsIndexes,
 } from '../../accounts/server/collection';
 import {
   createMatchesCollection,
@@ -23,6 +25,8 @@ export const initMongoDatabase = async () => {
     mongoDatabase = client.db();
     await createAccountsCollection();
     await ensureAccountsIndexes();
+    await createSeasonAccountsCollection();
+    await ensureSeasonAccountsIndexes();
     await createMatchesCollection();
     await ensureMatchesIndexes();
   }

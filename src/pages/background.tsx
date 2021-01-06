@@ -9,7 +9,7 @@ import overwolf, {
   isLeagueClosed,
   closeWindow,
   INTERESTED_IN_LAUNCHER_FEATURES,
-  getVersion,
+  getAppVersion,
   toggleInGameWindow,
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
@@ -27,7 +27,7 @@ import {
 import { useAccount } from '../contexts/account';
 import { trackHotkey } from '../api/performance';
 
-getVersion().then((version) => log(`Running v${version}`));
+getAppVersion().then((version) => log(`Running v${version}`));
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);

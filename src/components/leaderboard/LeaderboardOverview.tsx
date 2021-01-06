@@ -4,6 +4,10 @@ import { useAccount } from '../../contexts/account';
 import ProgressBar from '../common/ProgressBar';
 import IslandIcons from './IslandIcons';
 import * as trophies from '../trophies';
+import { useRouter } from 'next/router';
+import { getSeasonAccount } from '../../api/accounts';
+import { useQuery } from 'react-query';
+import useVersion from '../../hooks/useVersion';
 
 const Container = styled.div`
   background: #2b2a30;
@@ -67,7 +71,19 @@ const IslandsCompleted = styled(IslandIcons)`
 const numberOfTrophies = Object.keys(trophies).length;
 
 const LeaderboardOverview = () => {
-  const { account } = useAccount();
+  const router = useRouter();
+  const { season: currentSeason } = useVersion();
+
+  const { season = currentSeason } = router.query;
+  const activeSeason = typeof season === 'string' ? season : null;
+
+  const { data: seasonAccount } = useQuery(
+    `accountSeason-${activeSeason}`,
+    () => (season !== currentSeason ? getSeasonAccount(activeSeason) : null)
+  );
+  const { account: currentAccount } = useAccount();
+  const account = season !== currentSeason ? seasonAccount : currentAccount;
+
   const trophiesCount = useMemo(() => account?.trophiesCompleted || 0, [
     account,
   ]);
@@ -81,7 +97,7 @@ const LeaderboardOverview = () => {
 
   return (
     <Container>
-      <h3>Season 10</h3>
+      <h3>Season {season}</h3>
       <Stats>
         <div>
           <h4>Your Place</h4>

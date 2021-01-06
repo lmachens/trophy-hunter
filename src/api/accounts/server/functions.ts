@@ -1,7 +1,13 @@
 import { Level } from '../../../components/levels/types';
 import * as levels from '../../../components/islands/levels';
-import { getAccountsCollection } from './collection';
+import {
+  getAccountsCollection,
+  getSeasonAccountsCollection,
+} from './collection';
 import { Ranking } from '../types';
+import { Collection } from 'mongodb';
+import { Account } from '..';
+import { currentSeason } from '../../riot/server';
 
 export const isLevelNearlyCompleted = (
   level: Level,
@@ -13,9 +19,17 @@ export const isLevelCompleted = (level: Level, trophiesCompleted: number) =>
 export const getUnlockedIslandNames = (level) =>
   level.unlocksLevels.map((level) => levels[level.name].island);
 
-export const getRankings = async () => {
-  const Accounts = await getAccountsCollection();
-  const rankings = await Accounts.find()
+export const getRankings = async (season: string) => {
+  const Accounts = (await (season !== currentSeason
+    ? getSeasonAccountsCollection()
+    : getAccountsCollection())) as Collection<Account>;
+  const query: {
+    season?: string;
+  } = {};
+  if (season !== currentSeason) {
+    query.season = season;
+  }
+  const rankings = await Accounts.find(query)
     .sort({ trophiesCompleted: -1, 'summoner.revisionDate': -1 })
     .limit(50)
     .map<Ranking>((account) => ({

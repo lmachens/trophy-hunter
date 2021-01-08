@@ -5,13 +5,13 @@ const pesticide: Trophy = {
   name: 'pesticide',
   level: 'epic1',
   title: 'Pesticide',
-  description: 'Kill more than 400 minions in a match.',
+  description: 'Kill more than 380 minions in a match.',
   category: 'epic',
   checkProgress: ({ participant }) => {
     return (
       (participant.stats.totalMinionsKilled +
         participant.stats.neutralMinionsKilled) /
-      400
+      380
     );
   },
   checkLive: ({ allPlayers, account }) => {
@@ -19,7 +19,7 @@ const pesticide: Trophy = {
       (player) => player.summonerName === account.summoner.name
     );
 
-    return accountPlayer.scores.creepScore / 400;
+    return accountPlayer.scores.creepScore / 380;
   },
 };
 

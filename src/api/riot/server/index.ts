@@ -129,4 +129,4 @@ export const getChampions = async () => {
   }
 };
 
-export const currentSeason = '10';
+export const currentSeason = '11';

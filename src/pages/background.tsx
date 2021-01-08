@@ -27,7 +27,7 @@ import {
 import { useAccount } from '../contexts/account';
 import { trackHotkey } from '../api/performance';
 
-getAppVersion().then((version) => log(`Running v${version}`));
+getAppVersion().then((version) => log(`Running ${version}`));
 
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);

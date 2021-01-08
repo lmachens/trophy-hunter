@@ -41,7 +41,7 @@ import useDisplays from '../hooks/useDisplays';
 import useCenterWindow from '../hooks/useCenterWindow';
 import { trackHotkey } from '../api/performance';
 
-getAppVersion().then((version) => log(`Running v${version}`));
+getAppVersion().then((version) => log(`Running ${version}`));
 
 const Container = styled.div`
   display: flex;

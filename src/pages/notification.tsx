@@ -12,7 +12,7 @@ import NotificationTitle from '../components/notifications/NotificationTitle';
 import NotificationContainer from '../components/notifications/NotificationContainer';
 import { log } from '../api/logs';
 
-getAppVersion().then((version) => log(`Running v${version}`));
+getAppVersion().then((version) => log(`Running ${version}`));
 
 const ListItem = styled(TrophyListItem)`
   background-image: ${(props) =>

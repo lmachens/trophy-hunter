@@ -6,12 +6,12 @@ const darkness: Trophy = {
   name: 'darkness',
   level: 'hubEpic',
   title: 'Darkness',
-  description: 'Destroy at least twelve enemy wards.',
+  description: 'Destroy at least fifteen enemy wards.',
   category: 'epic',
-  maxProgress: 12,
+  maxProgress: 15,
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'darkness');
-    return participant.stats.wardsKilled / 12 + trophyProgress;
+    return participant.stats.wardsKilled / 15 + trophyProgress;
   },
 };
 

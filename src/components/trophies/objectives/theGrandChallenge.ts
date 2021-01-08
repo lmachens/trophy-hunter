@@ -6,7 +6,7 @@ const theGrandChallenge: Trophy = {
   level: 'objectives5',
   title: 'The Grand Challenge',
   description:
-    'Get a solo-kill and take an inhib-turret or an inhibitor in the 20 seconds after that.',
+    'Get a solo-kill and take an inhib-turret or an inhibitor in the 25 seconds after that.',
   category: 'objectives',
   checkProgress: ({ events, participant }) => {
     const buildingKills = events.filter(
@@ -29,7 +29,7 @@ const theGrandChallenge: Trophy = {
         buildingKills.some(
           (buildingKill) =>
             buildingKill.timestamp >= event.timestamp &&
-            event.timestamp + 20000 >= buildingKill.timestamp
+            event.timestamp + 25000 >= buildingKill.timestamp
         )
     );
 
@@ -53,7 +53,7 @@ const theGrandChallenge: Trophy = {
         buildingKills.some(
           (buildingKill) =>
             buildingKill.EventTime >= event.EventTime &&
-            event.EventTime + 20 >= buildingKill.EventTime
+            event.EventTime + 25 >= buildingKill.EventTime
         )
     );
     return validKills.length;

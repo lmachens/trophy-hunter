@@ -5,10 +5,10 @@ const sandsOfTime: Trophy = {
   name: 'sandsOfTime',
   level: 'epic1',
   title: 'Sands Of Time',
-  description: 'Be part of an epic game, that lasts for more than an hour.',
+  description: 'Be part of an epic game, that lasts for more than 50 minutes.',
   category: 'epic',
   checkProgress: ({ match }) => {
-    return Number(match.gameDuration >= 3600);
+    return Number(match.gameDuration >= 3000);
   },
 };
 

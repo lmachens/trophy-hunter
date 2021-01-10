@@ -223,17 +223,15 @@ export const isPlayingSupportedGame = async (): Promise<boolean | number> => {
     let launcherInfoTimeoutId = null;
     const getLauncherInfo = (hideError = false) => {
       overwolf.games.launchers.events.getInfo(LEAGUE_LAUNCHER_ID, (info) => {
-        if (info.error || info.status === 'error') {
+        if (info.error || info.status === 'error' || !info.res) {
           if (!hideError) {
-            error('[launchers getInfo]', info.error || info.reason);
+            error('[launchers getInfo]', info);
           }
           clearTimeout(launcherInfoTimeoutId);
           launcherInfoTimeoutId = setTimeout(() => getLauncherInfo(true), 5000);
           return;
         }
-        if (!info.res) {
-          return resolve(false);
-        }
+
         const { lobby_info: lobbyInfo, game_flow: gameFlow } = info.res;
         if (!gameFlow || !lobbyInfo) {
           return resolve(false);

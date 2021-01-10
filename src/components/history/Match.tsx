@@ -92,6 +92,11 @@ const MoreButton = styled.button`
   outline: none;
   border: none;
   color: #838386;
+  cursor: pointer;
+
+  :hover {
+    background: #77777a;
+  }
 
   svg {
     position: absolute;

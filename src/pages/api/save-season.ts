@@ -57,10 +57,19 @@ export default applyMiddleware(
                 status: 'active',
                 unlockedAt: now,
               })),
-              trophies: [],
+              trophies: [
+                {
+                  name: 'playstyle',
+                  island: 'hub',
+                  level: 'welcome',
+                  status: 'completed',
+                  progress: 1,
+                  progressDetails: null,
+                },
+              ],
               games: 0,
               favoriteTrophyNames: [],
-              trophiesCompleted: 0,
+              trophiesCompleted: 1,
             },
           }
         );

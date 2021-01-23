@@ -5,7 +5,7 @@ const thePhoenix: Trophy = {
   name: 'thePhoenix',
   level: 'epic2',
   title: 'The Phoenix',
-  description: 'Win a game eventhough you lost three inhibitors.',
+  description: 'Win a game even though you lost three inhibitors.',
   category: 'epic',
   checkProgress: ({ match, participant }) => {
     const opponentTeam = match.teams.find(

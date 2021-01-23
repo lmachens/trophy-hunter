@@ -6,7 +6,7 @@ const thornmail: Trophy = {
   level: 'epic2',
   title: 'Thornmail',
   description:
-    'It takes a lot to kill you. On Average you tank (damage taken + self mitigated damage) more than 40000 damage before going down.',
+    'It takes a lot to kill you. On average you tank (damage taken + self mitigated damage) more than 40000 damage before going down.',
   category: 'epic',
   checkProgress: ({ participant }) => {
     const damageTankedPerDeath =

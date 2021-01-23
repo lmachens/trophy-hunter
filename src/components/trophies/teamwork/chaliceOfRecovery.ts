@@ -23,7 +23,7 @@ const chaliceOfRecovery: Trophy = {
     );
 
     const teamMaxGoldDown = Math.min(...teamGoldDiffFrames);
-    return Number(teamMaxGoldDown > 4000 && team.win === 'Win');
+    return Number(teamMaxGoldDown <= -4000 && team.win === 'Win');
   },
 };
 

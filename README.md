@@ -45,6 +45,16 @@ Don't forget to replace the environment variables.
 npm install
 ```
 
+### Create self signed certificate for HTTPS
+
+```
+mkdir certs
+cd certs
+openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -subj "/C=US/CN=localhost-CA"
+```
+
+Make sure to trust the local CA.
+
 ### Run development
 
 ```

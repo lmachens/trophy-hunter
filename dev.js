@@ -10,8 +10,8 @@ const app = next({ dev, config });
 const handle = app.getRequestHandler();
 
 const options = {
-  key: fs.readFileSync('./certs/key.pem'),
-  cert: fs.readFileSync('./certs/cert.pem'),
+  key: fs.readFileSync('./certs/localhost.key'),
+  cert: fs.readFileSync('./certs/localhost.crt'),
 };
 
 app.prepare().then(() => {
@@ -22,6 +22,6 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl);
   }).listen(3000, (err) => {
     if (err) throw err;
-    console.log('> Ready on https://127.0.0.1:3000');
+    console.log('> Ready on https://localhost:3000');
   });
 });

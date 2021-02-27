@@ -43,6 +43,7 @@ type Props = {
   activeTool: 'settings' | 'collection';
   aside: ReactNode;
   children: ReactNode;
+  hideProfile?: boolean;
   onToolClick(tool: 'settings' | 'collection'): void;
   onMainClick(): void;
 };
@@ -51,6 +52,7 @@ const GameLayout = ({
   children,
   aside,
   activeTool,
+  hideProfile,
   onMainClick,
   onToolClick,
 }: Props) => {
@@ -66,7 +68,7 @@ const GameLayout = ({
       </Main>
       <Side>
         <ErrorBoundary grid>
-          <Profile />
+          {!hideProfile && <Profile />}
           {aside}
           <VideoAds />
         </ErrorBoundary>

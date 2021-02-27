@@ -20,7 +20,7 @@ const Content = styled.section`
   display: grid;
   grid-row-gap: 0.7em;
   overflow: auto;
-  max-height: 100%;
+  max-height: calc(100% - 48px);
 `;
 
 const CombatSummary = styled.summary`

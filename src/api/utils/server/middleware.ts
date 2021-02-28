@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Ajv from 'ajv';
 import { initMongoDatabase } from './db';
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
 
 type Handler = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 type Middleware = (handler: Handler) => Handler;
@@ -58,9 +61,10 @@ type HTTPMethod =
 export const withMethods = (...allowedMethods: HTTPMethod[]) => (
   handler: Handler
 ) => async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.headers.origin?.startsWith('https://content.overwolf.com')) {
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  }
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    `overwolf-extension://${serverRuntimeConfig.OVERWOLF_EXTENSION_ID}`
+  );
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === 'OPTIONS') {

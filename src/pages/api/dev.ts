@@ -15,8 +15,11 @@ import {
   getParticipantByAccount,
   getParticipantIdentity,
 } from '../../api/riot/helpers';
-import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
+import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
+
+const allTrophies = Object.values(trophies);
+const aramTrophies = allTrophies.filter((trophy) => trophy.aramSupport);
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -57,7 +60,9 @@ export default applyMiddleware(
     }
 
     const participant = getParticipantByAccount(match, account);
-    const checkedTrophies = Object.values(trophies).reduce(
+    const trophiesAboutToCheck =
+      match.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
+    const checkedTrophies = trophiesAboutToCheck.reduce(
       (current, trophy) => ({
         ...current,
         [trophy.name]: trophy.checkProgress({

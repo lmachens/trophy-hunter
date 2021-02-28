@@ -25,6 +25,7 @@ export interface Trophy {
   category: Category;
   maxProgress?: number;
   ProgressDetails?: FC<{ details: any }>;
+  aramSupport?: boolean;
   checkProgress(props: {
     match: Match;
     timeline: MatchTimeline;

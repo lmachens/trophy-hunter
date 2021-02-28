@@ -1,0 +1,19 @@
+### ARAM Test
+POST https://localhost:3000/api/dev
+Content-Type: application/json
+
+{
+    "summonerName": "sirlunchalot619",
+    "platformId": "EUW1",
+    "matchId": 5123274952
+}
+
+### Summoner's Rift Test
+POST https://localhost:3000/api/dev
+Content-Type: application/json
+
+{
+    "summonerName": "sirlunchalot619",
+    "platformId": "EUW1",
+    "matchId": 5061906845
+}

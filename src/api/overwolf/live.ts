@@ -43,6 +43,7 @@ const resetStates = () => {
   notifiedNear = [];
   notifiedCompleted = [];
 };
+resetStates();
 
 const setTrophyProgress = (account: Account) => {
   const trophiesProgress = activeTrophies.map((trophy) => {

@@ -8,6 +8,7 @@ const config = {
     JWT_SECRET: process.env.JWT_SECRET,
     DISCORD_WEBHOOK_URL: process.env.DISCORD_WEBHOOK_URL,
     RIOT_API_KEY: process.env.RIOT_API_KEY,
+    OVERWOLF_EXTENSION_ID: process.env.OVERWOLF_EXTENSION_ID,
   },
   publicRuntimeConfig: {
     API_ENDPOINT: process.env.API_ENDPOINT,

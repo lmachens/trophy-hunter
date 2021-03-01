@@ -8,7 +8,7 @@ const annihilation: Trophy = {
   name: 'annihilation',
   level: 'teamwork6',
   title: 'Annihilation',
-  description: 'Be involved in 5 kills in 25 seconds.',
+  description: `Be involved in 5 kills in 25 seconds.\nARAM: Achieve this twice in 1 game`,
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {

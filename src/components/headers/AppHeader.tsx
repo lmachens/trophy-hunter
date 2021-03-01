@@ -18,7 +18,6 @@ import ShareModal from '../guides/ShareModal';
 import SizeButton from './SizeButton';
 import ExitButton from './ExitButton';
 import MinimizeButton from './MinimizeButton';
-import HelpModal from '../guides/HelpModal';
 import ChangelogModal from '../guides/ChangelogModal';
 import { isAppUpdated } from '../../api/overwolf';
 import { getLocalStorageItem } from '../../api/utils/storage';
@@ -51,12 +50,7 @@ const InnerToolbar = styled.div`
   min-width: 440px;
 `;
 
-export type ModalName =
-  | 'feedback'
-  | 'question'
-  | 'share'
-  | 'help'
-  | 'changelog';
+export type ModalName = 'feedback' | 'question' | 'share' | 'changelog';
 const AppHeader: FC = () => {
   const { loading, account } = useAccount();
   const [modal, setModal] = useState<ModalName>(null);
@@ -123,7 +117,6 @@ const AppHeader: FC = () => {
           onSelect={(modal) => setModal(modal)}
         />
       )}
-      {modal === 'help' && <HelpModal onClose={closeModal} />}
       {modal === 'changelog' && <ChangelogModal onClose={closeModal} />}
     </>
   );

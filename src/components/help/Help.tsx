@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 const Container = styled.section`
   margin-top: 48px;
-  padding: 15px;
+  padding: 15px 30px;
 
   summary::-webkit-details-marker,
   li::marker {
@@ -21,6 +21,7 @@ const Content = styled.section`
   grid-row-gap: 0.7em;
   overflow: auto;
   max-height: calc(100% - 48px);
+  padding-right: 200px;
 `;
 
 const CombatSummary = styled.summary`

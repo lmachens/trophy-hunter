@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { copyTextToClipboard } from '../../api/utils/clipboard';
 import { trackCopyLink } from '../../api/performance';
@@ -19,12 +19,20 @@ const CopyContainer = styled.div`
   ${FancyButton} {
     margin: 0;
     padding: 8px 16px;
+    min-width: 6.5em;
   }
 `;
 
 const URL = 'https://th.gl';
 const CopyLink = () => {
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (copied) {
+      const timeoutId = setTimeout(() => setCopied(false), 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [copied]);
 
   const handleClick = () => {
     trackCopyLink();

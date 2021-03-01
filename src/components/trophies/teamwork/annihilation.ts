@@ -2,12 +2,6 @@ import { Trophy, Event } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
 import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
-import { MatchEvents } from '../../../api/riot/types';
-
-const getAnnihilations = (killsAndAssists: MatchEvents) =>
-  zip(killsAndAssists, killsAndAssists.slice(4)).filter(
-    (event) => event[1] && event[0].timestamp + 15000 >= event[1].timestamp
-  ).length;
 
 const annihilation: Trophy = {
   island: 'teamwork',
@@ -23,20 +17,16 @@ const annihilation: Trophy = {
       participant.participantId
     );
 
-    const annihilations = getAnnihilations(killsAndAssists);
+    const annihilations = zip(killsAndAssists, killsAndAssists.slice(4)).filter(
+      (event) => event[1] && event[0].timestamp + 15000 >= event[1].timestamp
+    ).length;
 
     if (match.queueId === ARAM_HOWLING_ABYSS) {
-      if (annihilations < 1) {
-        return 0;
-      }
-      const moreKillsAndAssists = killsAndAssists.slice(5);
-      const secondAnnihilations = getAnnihilations(moreKillsAndAssists);
-      return secondAnnihilations;
-    } else {
-      return annihilations;
+      return annihilations / 2;
     }
+    return annihilations;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
     const killsAndAssists = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -47,6 +37,9 @@ const annihilation: Trophy = {
       ([a, b]: [Event, Event]) => b && a.EventTime + 15 >= b.EventTime
     ).length;
 
+    if (gameData.gameMode === 'ARAM') {
+      return annihilations / 2;
+    }
     return annihilations;
   },
 };

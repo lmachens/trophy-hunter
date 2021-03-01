@@ -192,7 +192,7 @@ export interface Event {
 export type Events = Event[];
 
 export interface GameData {
-  gameMode: string;
+  gameMode: 'CLASSIC' | 'ARAM';
   gameTime: number;
   mapName: string;
   mapNumber: number;

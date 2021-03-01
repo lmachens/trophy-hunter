@@ -26,6 +26,7 @@ import {
 import { addHistoryMatch } from '../../api/matches/server/functions';
 
 const activeChecks: string[] = [];
+
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { authToken } = req.cookies;
@@ -115,6 +116,7 @@ export default applyMiddleware(
 
         const level = levels[accountLevel.name] as Level;
         let levelTrophiesCompleted = 0;
+        // Filter level trophies ARAM/SR
         level.trophies.forEach((trophy) => {
           let accountTrophy: AccountTrophy = accountTrophies.find(
             (accountTrophy) => accountTrophy.name === trophy.name

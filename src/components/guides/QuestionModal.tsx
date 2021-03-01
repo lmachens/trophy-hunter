@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React, { FC } from 'react';
 import { ModalName } from '../headers/AppHeader';
 import SmallModal from '../modals/SmallModal';
+import Link from 'next/link';
 
 const List = styled.ul`
   margin: 0;
@@ -10,6 +11,10 @@ const List = styled.ul`
   background: #77777a;
   text-align: right;
   min-width: 100px;
+
+  a {
+    text-decoration: none;
+  }
 
   li {
     padding: 8px 10px;
@@ -34,7 +39,19 @@ const QuestionModal: FC<QuestionModalProps> = ({ onClose, onSelect }) => {
   return (
     <SmallModal onClose={onClose} targetId="question">
       <List>
-        <li onClick={() => onSelect('help')}>Q&A</li>
+        <Link
+          href={{
+            pathname: '/league-of-legends',
+            query: {
+              subpage: 'help',
+            },
+          }}
+          passHref
+        >
+          <a onClick={onClose}>
+            <li>Q&A</li>
+          </a>
+        </Link>
         <li onClick={() => onSelect('changelog')}>Changelog</li>
       </List>
     </SmallModal>

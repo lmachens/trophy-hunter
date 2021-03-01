@@ -13,11 +13,14 @@ import History from '../components/history/History';
 import HistoryOverview from '../components/history/HistoryOverview';
 import SeasonModal from '../components/modals/SeasonModal';
 import useVersion from '../hooks/useVersion';
+import Help from '../components/help/Help';
+import SpreadTheLove from '../components/help/SpreadTheLove';
 
 const subpages: {
   [subpage: string]: {
     Main: (props: GameChildProps) => JSX.Element;
     Aside: (props: GameChildProps) => JSX.Element;
+    hideProfile?: boolean;
   };
 } = {
   map: {
@@ -31,6 +34,11 @@ const subpages: {
   history: {
     Main: History,
     Aside: HistoryOverview,
+  },
+  help: {
+    Main: Help,
+    Aside: SpreadTheLove,
+    hideProfile: true,
   },
 };
 
@@ -63,7 +71,7 @@ const LeagueOfLegends: NextPage = () => {
   };
 
   const activeSubpage = typeof subpage === 'string' ? subpage : null;
-  const { Main, Aside } = subpages[activeSubpage] || subpages.map;
+  const { Main, Aside, hideProfile } = subpages[activeSubpage] || subpages.map;
 
   return (
     <GameLayout
@@ -80,6 +88,7 @@ const LeagueOfLegends: NextPage = () => {
           setQueryParam({ tool: undefined, level: undefined });
         }
       }}
+      hideProfile={hideProfile}
     >
       <Main onQueryChange={setQueryParam} />
       {isGarenaUser && <GarenaModal onClose={() => unsetIsGarenaUser()} />}

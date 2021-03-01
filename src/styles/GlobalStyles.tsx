@@ -31,6 +31,14 @@ const GlobalStyles = () => (
         background: #888;
       }
 
+      :root {
+        --combat-color: #ff9330;
+        --skills-color: #fbff2e;
+        --teamplay-color: #07ef1e;
+        --objectives-color: #0f8cff;
+        --epic-color: #c956ff;
+      }
+
       html {
         font-size: 14px;
       }

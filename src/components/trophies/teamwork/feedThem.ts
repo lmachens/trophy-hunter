@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const feedThem: Trophy = {
@@ -5,9 +6,10 @@ const feedThem: Trophy = {
   name: 'feedThem',
   level: 'hubTeamwork',
   title: 'Feed Them',
-  description: 'Assist each of your teammates for a kill.',
+  description: `Assist each of your teammates for a kill.\nARAM: Assist 3 kills to each teammate`,
   category: 'teamwork',
-  checkProgress: ({ participant, events }) => {
+  aramSupport: true,
+  checkProgress: ({ match, participant, events }) => {
     const assists = events.reduce<{ [teammateId: number]: number }>(
       (assists, event) => {
         if (
@@ -24,14 +26,15 @@ const feedThem: Trophy = {
       },
       {}
     );
-
+    if (match.queueId === ARAM_HOWLING_ABYSS) {
+      const validAssists = Object.values(assists).filter(
+        (assist) => assist >= 3
+      ).length;
+      return validAssists / 4;
+    }
     return Object.keys(assists).length / 4;
   },
-  checkLive: ({ events, account, trophyData }) => {
-    if (!events.length || trophyData.feedThem) {
-      return 0;
-    }
-
+  checkLive: ({ gameData, events, account }) => {
     const assists = events.reduce<{ [teammate: string]: number }>(
       (assists, event) => {
         if (
@@ -48,11 +51,15 @@ const feedThem: Trophy = {
       },
       {}
     );
-    const progress = Object.keys(assists).length / 4;
-    if (progress === 1) {
-      trophyData.feedThem = true;
+
+    if (gameData.gameMode === 'ARAM') {
+      const validAssists = Object.values(assists).filter(
+        (assist) => assist >= 3
+      ).length;
+      return validAssists / 4;
     }
-    return progress;
+
+    return Object.keys(assists).length / 4;
   },
 };
 

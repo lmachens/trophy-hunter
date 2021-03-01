@@ -40,12 +40,8 @@ const bloodBrothers: Trophy = {
     }
     return duoKills / 7;
   },
-  checkLive: ({ events, account, trophyData }) => {
-    if (!events.length || trophyData.bloodBrothers) {
-      return 0;
-    }
-
-    const duoKills = events.reduce<{ [teammate: string]: number }>(
+  checkLive: ({ events, account, gameData }) => {
+    const duoKillsEvents = events.reduce<{ [teammate: string]: number }>(
       (duoKills, event) => {
         if (
           event.EventName !== 'ChampionKill' ||
@@ -66,11 +62,11 @@ const bloodBrothers: Trophy = {
       },
       {}
     );
-    const progress = Math.min(1, Math.max(...Object.values(duoKills)) / 7);
-    if (progress === 1) {
-      trophyData.bloodBrothers = true;
+    const duoKills = Math.max(...Object.values(duoKillsEvents), 0);
+    if (gameData.gameMode === 'ARAM') {
+      return duoKills / 5;
     }
-    return progress;
+    return duoKills / 7;
   },
 };
 

@@ -8,7 +8,7 @@ const annihilation: Trophy = {
   name: 'annihilation',
   level: 'teamwork6',
   title: 'Annihilation',
-  description: 'Be involved in 5 kills in 15 seconds.',
+  description: 'Be involved in 5 kills in 25 seconds.',
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
@@ -18,7 +18,7 @@ const annihilation: Trophy = {
     );
 
     const annihilations = zip(killsAndAssists, killsAndAssists.slice(4)).filter(
-      (event) => event[1] && event[0].timestamp + 15000 >= event[1].timestamp
+      (event) => event[1] && event[0].timestamp + 25000 >= event[1].timestamp
     ).length;
 
     if (match.queueId === ARAM_HOWLING_ABYSS) {
@@ -34,7 +34,7 @@ const annihilation: Trophy = {
           event.Assisters.includes(account.summoner.name))
     );
     const annihilations = zip(killsAndAssists, killsAndAssists.slice(4)).filter(
-      ([a, b]: [Event, Event]) => b && a.EventTime + 15 >= b.EventTime
+      ([a, b]: [Event, Event]) => b && a.EventTime + 25 >= b.EventTime
     ).length;
 
     if (gameData.gameMode === 'ARAM') {

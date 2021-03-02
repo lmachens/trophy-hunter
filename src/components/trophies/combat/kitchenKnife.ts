@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const kitchenKnife: Trophy = {
@@ -5,10 +6,12 @@ const kitchenKnife: Trophy = {
   name: 'kitchenKnife',
   level: 'hubCombat',
   title: 'Kitchen Knife',
-  description: 'Deal more than 30000 total damage to champions.',
+  description: `Deal more than 30000 total damage to champions.\nARAM: 35000 damage`,
   category: 'combat',
-  checkProgress: ({ participant }) => {
-    return participant.stats.totalDamageDealtToChampions / 30000;
+  aramSupport: true,
+  checkProgress: ({ participant, match }) => {
+    const requiredDamage = match.queueId === ARAM_HOWLING_ABYSS ? 35000 : 30000;
+    return participant.stats.totalDamageDealtToChampions / requiredDamage;
   },
 };
 

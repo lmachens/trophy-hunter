@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const mafiaBoss: Trophy = {
@@ -5,18 +6,19 @@ const mafiaBoss: Trophy = {
   name: 'mafiaBoss',
   level: 'epic1',
   title: 'Mafia Boss',
-  description:
-    "Don't get your hands dirty, but achieve at least 30 assists in a match.",
+  description: `Don't get your hands dirty, but achieve at least 30 assists in a match.\nARAM: 40 assists`,
   category: 'epic',
-  checkProgress: ({ participant }) => {
-    return participant.stats.assists / 30;
+  aramSupport: true,
+  checkProgress: ({ participant, match }) => {
+    const requiredAssists = match.queueId === ARAM_HOWLING_ABYSS ? 30 : 40;
+    return participant.stats.assists / requiredAssists;
   },
-  checkLive: ({ allPlayers, account }) => {
+  checkLive: ({ allPlayers, account, gameData }) => {
     const accountPlayer = allPlayers.find(
       (player) => player.summonerName === account.summoner.name
     );
-
-    return accountPlayer.scores.assists / 30;
+    const requiredAssists = gameData.gameMode === 'ARAM' ? 30 : 40;
+    return accountPlayer.scores.assists / requiredAssists;
   },
 };
 

@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const noxianArmy: Trophy = {
@@ -5,28 +6,35 @@ const noxianArmy: Trophy = {
   name: 'noxianArmy',
   level: 'teamwork3',
   title: 'Noxian Army',
-  description:
-    "Have at least eight kills, eight assists and don't die more than 6 times.",
+  description: `Have at least eight kills, eight assists and don't die more than 6 times.\nARAM: 10 kills, 10 assists, 5 deaths`,
   category: 'teamwork',
-  checkProgress: ({ participant }) => {
+  aramSupport: true,
+  checkProgress: ({ participant, match }) => {
+    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 10 : 8;
+    const requiredDeaths = match.queueId === ARAM_HOWLING_ABYSS ? 10 : 8;
+    const requiredAssists = match.queueId === ARAM_HOWLING_ABYSS ? 5 : 6;
     return Number(
-      participant.stats.kills >= 8 &&
-        participant.stats.deaths <= 6 &&
-        participant.stats.assists >= 8
+      participant.stats.kills >= requiredKills &&
+        participant.stats.deaths <= requiredDeaths &&
+        participant.stats.assists >= requiredAssists
     );
   },
-  checkLive: ({ allPlayers, account }) => {
+  checkLive: ({ allPlayers, account, gameData }) => {
     const accountPlayer = allPlayers.find(
       (player) => player.summonerName === account.summoner.name
     );
 
-    if (accountPlayer.scores.deaths > 6) {
+    const requiredKills = gameData.gameMode === 'ARAM' ? 10 : 8;
+    const requiredDeaths = gameData.gameMode === 'ARAM' ? 10 : 8;
+    const requiredAssists = gameData.gameMode === 'ARAM' ? 5 : 6;
+
+    if (accountPlayer.scores.deaths > requiredDeaths) {
       return 0;
     }
 
     return (
-      (Math.min(1, accountPlayer.scores.kills / 8) +
-        Math.min(1, accountPlayer.scores.assists / 8)) /
+      (Math.min(1, accountPlayer.scores.kills / requiredKills) +
+        Math.min(1, accountPlayer.scores.assists / requiredAssists)) /
       2.1
     );
   },

@@ -1,16 +1,17 @@
 import { Trophy } from '../types';
 import { getParticipantAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 
 const pentaAssist: Trophy = {
   island: 'teamwork',
   name: 'pentaAssist',
   level: 'teamwork7',
   title: 'Penta Assist',
-  description:
-    'Achieve five assists with no more than ten seconds between two successive assists.',
+  description: `Achieve five assists with no more than ten seconds between two successive assists.\nARAM: Achieve two penta assists`,
   category: 'teamwork',
-  checkProgress: ({ events, participant }) => {
+  aramSupport: true,
+  checkProgress: ({ events, participant, match }) => {
     const assists = getParticipantAssists(events, participant.participantId);
 
     const participantMultiAssistEvents = zip(
@@ -43,9 +44,10 @@ const pentaAssist: Trophy = {
       );
     }).length;
 
-    return pentaAssists;
+    const requiredPentaAsissts = match.queueId === ARAM_HOWLING_ABYSS ? 2 : 1;
+    return pentaAssists / requiredPentaAsissts;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
     const assists = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -82,7 +84,8 @@ const pentaAssist: Trophy = {
       );
     }).length;
 
-    return pentaAssists;
+    const requiredPentaAsissts = gameData.gameMode === 'ARAM' ? 2 : 1;
+    return pentaAssists / requiredPentaAsissts;
   },
 };
 

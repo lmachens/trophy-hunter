@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const maniac: Trophy = {
@@ -5,17 +6,21 @@ const maniac: Trophy = {
   name: 'maniac',
   level: 'skills2',
   title: 'Maniac',
-  description: 'Score at least 10 kills in a match.',
+  description: `Score at least 10 kills in a match.\nARAM: 12 kills`,
   category: 'skills',
-  checkProgress: ({ participant }) => {
-    return participant.stats.kills / 10;
+  aramSupport: true,
+  checkProgress: ({ participant, match }) => {
+    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 12 : 10;
+
+    return participant.stats.kills / requiredKills;
   },
-  checkLive: ({ allPlayers, account }) => {
+  checkLive: ({ allPlayers, account, gameData }) => {
     const accountPlayer = allPlayers.find(
       (player) => player.summonerName === account.summoner.name
     );
 
-    return accountPlayer.scores.kills / 10;
+    const requiredKills = gameData.gameMode === 'ARAM' ? 12 : 10;
+    return accountPlayer.scores.kills / requiredKills;
   },
 };
 

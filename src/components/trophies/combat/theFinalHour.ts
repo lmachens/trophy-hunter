@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const theFinalHour: Trophy = {
@@ -5,8 +6,9 @@ const theFinalHour: Trophy = {
   name: 'theFinalHour',
   level: 'combat5',
   title: 'The Final Hour',
-  description: 'Get at least ten kills in the last ten minutes of the game.',
+  description: `Get at least ten kills in the last ten minutes of the game.\nARAM: 14 kills`,
   category: 'combat',
+  aramSupport: true,
   checkProgress: ({ match, events, participant }) => {
     const killsAtEndgame = events.filter(
       (event) =>
@@ -15,7 +17,8 @@ const theFinalHour: Trophy = {
         event.timestamp >= match.gameDuration * 1000 - 600000
     ).length;
 
-    return killsAtEndgame / 10;
+    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 14 : 10;
+    return killsAtEndgame / requiredKills;
   },
 };
 

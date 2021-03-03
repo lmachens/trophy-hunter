@@ -18,6 +18,7 @@ export { default as jungleOfTraps } from './jungleOfTraps';
 export { default as lastResort } from './lastResort';
 export { default as lifeAndDeath } from './lifeAndDeath';
 export { default as lightBringer } from './lightBringer';
+export { default as locusts } from './locusts';
 export { default as mercenary } from './mercenary';
 export { default as ninjas } from './ninjas';
 export { default as noxianArmy } from './noxianArmy';

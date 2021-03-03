@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const bloodBrothers: Trophy = {
@@ -6,10 +7,11 @@ const bloodBrothers: Trophy = {
   level: 'teamwork2',
   title: 'Blood Brothers',
   description:
-    'You and a teammate score 7 kills with only the two of you involved.',
+    'You and a teammate score 7 kills with only the two of you involved.\nARAM: 5 kills',
   category: 'teamwork',
-  checkProgress: ({ events, participant }) => {
-    const duoKills = events.reduce<{ [teammateId: number]: number }>(
+  aramSupport: true,
+  checkProgress: ({ events, participant, match }) => {
+    const duoKillsEvents = events.reduce<{ [teammateId: number]: number }>(
       (duoKills, event) => {
         if (
           event.type !== 'CHAMPION_KILL' ||
@@ -32,14 +34,14 @@ const bloodBrothers: Trophy = {
       },
       {}
     );
-    return Math.max(...Object.values(duoKills), 0) / 7;
-  },
-  checkLive: ({ events, account, trophyData }) => {
-    if (!events.length || trophyData.bloodBrothers) {
-      return 0;
+    const duoKills = Math.max(...Object.values(duoKillsEvents), 0);
+    if (match.queueId === ARAM_HOWLING_ABYSS) {
+      return duoKills / 5;
     }
-
-    const duoKills = events.reduce<{ [teammate: string]: number }>(
+    return duoKills / 7;
+  },
+  checkLive: ({ events, account, gameData }) => {
+    const duoKillsEvents = events.reduce<{ [teammate: string]: number }>(
       (duoKills, event) => {
         if (
           event.EventName !== 'ChampionKill' ||
@@ -60,11 +62,11 @@ const bloodBrothers: Trophy = {
       },
       {}
     );
-    const progress = Math.min(1, Math.max(...Object.values(duoKills)) / 7);
-    if (progress === 1) {
-      trophyData.bloodBrothers = true;
+    const duoKills = Math.max(...Object.values(duoKillsEvents), 0);
+    if (gameData.gameMode === 'ARAM') {
+      return duoKills / 5;
     }
-    return progress;
+    return duoKills / 7;
   },
 };
 

@@ -1,16 +1,17 @@
 import { Trophy } from '../types';
 import { getParticipantAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 
 const quadraAssist: Trophy = {
   island: 'teamwork',
   name: 'quadraAssist',
   level: 'teamwork4',
   title: 'Quadra Assist',
-  description:
-    'Achieve four assists with no more than ten seconds between two successive assists.',
+  description: `Achieve four assists with no more than ten seconds between two successive assists.\nARAM: Two quadra assists`,
   category: 'teamwork',
-  checkProgress: ({ events, participant }) => {
+  aramSupport: true,
+  checkProgress: ({ events, participant, match }) => {
     const assists = getParticipantAssists(events, participant.participantId);
 
     const participantMultiAssistEvents = zip(
@@ -34,9 +35,10 @@ const quadraAssist: Trophy = {
       return firstTwoKillsSpree && secondTwoKillsSpree && thirdTwoKillsSpree;
     }).length;
 
-    return quadraAssists;
+    const requiredQuadraKills = match.queueId === ARAM_HOWLING_ABYSS ? 2 : 1;
+    return quadraAssists / requiredQuadraKills;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
     const assists = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -64,7 +66,8 @@ const quadraAssist: Trophy = {
       return firstTwoKillsSpree && secondTwoKillsSpree && thirdTwoKillsSpree;
     }).length;
 
-    return quadraAssists;
+    const requiredQuadraKills = gameData.gameMode === 'ARAM' ? 2 : 1;
+    return quadraAssists / requiredQuadraKills;
   },
 };
 

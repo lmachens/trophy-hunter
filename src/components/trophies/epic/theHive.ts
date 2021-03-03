@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const theHive: Trophy = {
@@ -5,10 +6,10 @@ const theHive: Trophy = {
   name: 'theHive',
   level: 'epic2',
   title: 'The Hive',
-  description:
-    'Your team kills every enemy champion with all of your team being involved.',
+  description: `Your team kills every enemy champion with all of your team being involved.\nARAM: 12 kills with all of your team involved`,
   category: 'epic',
-  checkProgress: ({ events, participant }) => {
+  aramSupport: true,
+  checkProgress: ({ events, participant, match }) => {
     const hiveKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&
@@ -17,13 +18,17 @@ const theHive: Trophy = {
         ) &&
         event.assistingParticipantIds.length >= 4
     );
+    if (match.queueId === ARAM_HOWLING_ABYSS) {
+      return hiveKills.length / 12;
+    }
+
     const victimIds = hiveKills.map((event) => event.victimId);
     const uniqueVictims = victimIds.filter(
       (victimId, index, current) => current.indexOf(victimId) === index
     ).length;
     return uniqueVictims / 5;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
     const hiveKills = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -32,6 +37,9 @@ const theHive: Trophy = {
         ) &&
         event.Assisters.length >= 4
     );
+    if (gameData.gameMode === 'ARAM') {
+      return hiveKills.length / 12;
+    }
     const victimNames = hiveKills.map((event) => event.VictimName);
     const uniqueVictims = victimNames.filter(
       (victimName, index, current) => current.indexOf(victimName) === index

@@ -25,6 +25,7 @@ export interface Trophy {
   category: Category;
   maxProgress?: number;
   ProgressDetails?: FC<{ details: any }>;
+  aramSupport?: boolean;
   checkProgress(props: {
     match: Match;
     timeline: MatchTimeline;
@@ -191,7 +192,7 @@ export interface Event {
 export type Events = Event[];
 
 export interface GameData {
-  gameMode: string;
+  gameMode: 'CLASSIC' | 'ARAM';
   gameTime: number;
   mapName: string;
   mapNumber: number;

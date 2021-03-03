@@ -13,6 +13,7 @@ import Flag from '../icons/Flag';
 import { Tooltip } from '../tooltip';
 import TrophyStats from './TrophyStats';
 import { trackFavorite } from '../../api/performance';
+import Aram from '../icons/Aram';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -27,6 +28,14 @@ const ListItem = styled.div<ListItemProps>`
 
   &:hover {
     background-color: #3e3d42;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  p {
+    white-space: break-spaces;
   }
 `;
 
@@ -107,6 +116,14 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <trophy.ProgressDetails details={progressDetails} />
         )}
       </Grow>
+      {trophy.aramSupport && (
+        <Tooltip
+          text="This trophy is also achievable in ARAM"
+          placement="bottomRight"
+        >
+          <Aram />
+        </Tooltip>
+      )}
       {!trophy.checkLive && (
         <Tooltip
           text="This trophy doesn't have live-progress tracking"

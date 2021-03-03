@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const keyTargets: Trophy = {
@@ -5,9 +6,9 @@ const keyTargets: Trophy = {
   name: 'keyTargets',
   level: 'combat1',
   title: 'Key Targets',
-  description:
-    'Achieve three kills on the opponent with the highest amount of gold in the game at that point (gold checked at full minutes).',
+  description: `Achieve three kills on the opponent with the highest amount of gold in the game at that point (gold checked at full minutes).\nARAM: Four kills`,
   category: 'combat',
+  aramSupport: true,
   checkProgress: ({ match, timeline, participant }) => {
     const opponentIds = match.participants
       .filter(
@@ -39,7 +40,8 @@ const keyTargets: Trophy = {
       0
     );
 
-    return keyTargetKills / 3;
+    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 4 : 3;
+    return keyTargetKills / requiredKills;
   },
 };
 

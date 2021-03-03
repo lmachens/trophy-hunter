@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const theCannon: Trophy = {
@@ -5,10 +6,10 @@ const theCannon: Trophy = {
   name: 'theCannon',
   level: 'objectives3',
   title: 'The Cannon',
-  description:
-    'Participate in a first turret kill before ten minutes into the game.',
+  description: `Participate in a first turret kill before ten minutes into the game.\nARAM: Five minutes`,
   category: 'objectives',
-  checkProgress: ({ participant, events }) => {
+  aramSupport: true,
+  checkProgress: ({ participant, events, match }) => {
     const firstTurretDeath = events.find(
       (event) =>
         event.type === 'BUILDING_KILL' &&
@@ -17,22 +18,23 @@ const theCannon: Trophy = {
     if (!firstTurretDeath) {
       return 0;
     }
-    const isEarly = firstTurretDeath.timestamp < 10 * 60 * 1000;
+    const requiredMinutes = match.queueId === ARAM_HOWLING_ABYSS ? 5 : 10;
+    const isEarly = firstTurretDeath.timestamp < requiredMinutes * 60 * 1000;
     const isKiller = firstTurretDeath.killerId === participant.participantId;
     const isAssistant = firstTurretDeath.assistingParticipantIds.some(
       (id) => id === participant.participantId
     );
     return Number(isEarly && (isKiller || isAssistant));
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
     const firstTurretDeath = events.find(
       (event) => event.EventName === 'TurretKilled'
     );
     if (!firstTurretDeath) {
       return 0;
     }
-
-    const isEarly = firstTurretDeath.EventTime < 10 * 60;
+    const requiredMinutes = gameData.gameMode === 'ARAM' ? 5 : 10;
+    const isEarly = firstTurretDeath.EventTime < requiredMinutes * 60;
     const isKiller = firstTurretDeath.KillerName === account.summoner.name;
     const isAssistant = firstTurretDeath.Assisters.some(
       (assister) => assister === account.summoner.name

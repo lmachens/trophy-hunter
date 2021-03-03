@@ -1,15 +1,18 @@
 import { Trophy } from '../types';
 import { getParticipantKillsAndAssists } from '../../../api/riot/helpers';
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 
 const teamEffort: Trophy = {
   island: 'teamwork',
   name: 'teamEffort',
   level: 'teamwork1',
   title: 'Team Effort',
-  description:
-    'Be part of at least three kills with everyone of your team involved.',
+  description: `Be part of at least three kills with everyone of your team involved.\nARAM: Ten kills`,
   category: 'teamwork',
-  checkProgress: ({ events, participant }) => {
+  aramSupport: true,
+  checkProgress: ({ events, participant, match }) => {
+    const requiredTeamKills = match.queueId === ARAM_HOWLING_ABYSS ? 3 : 10;
+
     const killsAndAssists = getParticipantKillsAndAssists(
       events,
       participant.participantId
@@ -19,9 +22,11 @@ const teamEffort: Trophy = {
       (event) => event.assistingParticipantIds.length >= 4
     ).length;
 
-    return teamEffortKills / 3;
+    return teamEffortKills / requiredTeamKills;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
+    const requiredTeamKills = gameData.gameMode === 'ARAM' ? 3 : 10;
+
     const teamEffortKills = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -30,7 +35,7 @@ const teamEffort: Trophy = {
         event.Assisters.length >= 4
     ).length;
 
-    return teamEffortKills / 3;
+    return teamEffortKills / requiredTeamKills;
   },
 };
 

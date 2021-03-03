@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const stomp: Trophy = {
@@ -5,10 +6,15 @@ const stomp: Trophy = {
   name: 'stomp',
   level: 'objectives4',
   title: 'Stomp',
-  description: 'Win a game in less than 22 minutes.',
+  description: `Win a game in less than 22 minutes.\nARAM: 16 minutes`,
   category: 'objectives',
+  aramSupport: true,
   checkProgress: ({ match, participant }) => {
-    return Number(match.gameDuration < 22 * 60 && participant.stats.win);
+    const requiredDuration = match.queueId === ARAM_HOWLING_ABYSS ? 16 : 22;
+
+    return Number(
+      match.gameDuration < requiredDuration * 60 && participant.stats.win
+    );
   },
 };
 

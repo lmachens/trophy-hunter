@@ -41,7 +41,7 @@ const ARAMModal: FC<ARAMModalProps> = ({ onClose }) => {
           Some trophies can now be completed in ARAM mode as well, look for the
           ARAM icon and GLHF :)
         </Text>
-        <img src="/aram.png" alt="ARAM example" />
+        <img src={`${process.env.PUBLIC_DIR}/aram.png`} alt="ARAM example" />
         <FancyButton onClick={onClose}>Got it</FancyButton>
       </Container>
     </Modal>

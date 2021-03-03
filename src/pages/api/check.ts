@@ -16,7 +16,7 @@ import {
   getParticipantIdentity,
   getParticipantByAccount,
 } from '../../api/riot/helpers';
-import { SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
+import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
 import {
   getUnlockedIslandNames,
@@ -117,7 +117,13 @@ export default applyMiddleware(
         const level = levels[accountLevel.name] as Level;
         let levelTrophiesCompleted = 0;
         // Filter level trophies ARAM/SR
-        level.trophies.forEach((trophy) => {
+
+        const trophiesToCheck =
+          match.queueId === ARAM_HOWLING_ABYSS
+            ? level.trophies.filter((trophy) => trophy.aramSupport)
+            : level.trophies;
+
+        trophiesToCheck.forEach((trophy) => {
           let accountTrophy: AccountTrophy = accountTrophies.find(
             (accountTrophy) => accountTrophy.name === trophy.name
           );

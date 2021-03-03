@@ -11,10 +11,9 @@ import Leaderboard from '../components/leaderboard/Leaderboard';
 import LeaderboardOverview from '../components/leaderboard/LeaderboardOverview';
 import History from '../components/history/History';
 import HistoryOverview from '../components/history/HistoryOverview';
-import SeasonModal from '../components/modals/SeasonModal';
-import useVersion from '../hooks/useVersion';
 import Help from '../components/help/Help';
 import SpreadTheLove from '../components/help/SpreadTheLove';
+import ARAMModal from '../components/modals/ARAMModal';
 
 const subpages: {
   [subpage: string]: {
@@ -47,11 +46,10 @@ const LeagueOfLegends: NextPage = () => {
     'isGarenaUser',
     null
   );
-  const [sawSeason11Modal, setSawSeason11Modal] = usePersistentState(
-    'sawSeason11Modal',
+  const [sawARAMModal, setSawARAMModal] = usePersistentState(
+    'sawARAMModal',
     false
   );
-  const { season: currentSeason } = useVersion();
 
   const router = useRouter();
   const { subpage = 'map', tool } = router.query;
@@ -92,9 +90,7 @@ const LeagueOfLegends: NextPage = () => {
     >
       <Main onQueryChange={setQueryParam} />
       {isGarenaUser && <GarenaModal onClose={() => unsetIsGarenaUser()} />}
-      {currentSeason === '11' && !sawSeason11Modal && (
-        <SeasonModal onClose={() => setSawSeason11Modal(true)} />
-      )}
+      {!sawARAMModal && <ARAMModal onClose={() => setSawARAMModal(true)} />}
     </GameLayout>
   );
 };

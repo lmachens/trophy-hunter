@@ -172,7 +172,7 @@ const handleInfoUpdates2 = (
   }
 };
 
-const getActiveTrophies = () => {
+const getActiveTrophies = (gameMode: 'CLASSIC' | 'ARAM') => {
   const activeLevels = live.account.levels.filter(
     (level) => level.status === 'active'
   );
@@ -185,7 +185,9 @@ const getActiveTrophies = () => {
         const accountTrophy = live.account.trophies.find(
           (accountTrophy) => accountTrophy.name === trophy.name
         );
-
+        if (gameMode === 'ARAM') {
+          return accountTrophy?.status !== 'completed' && trophy.aramSupport;
+        }
         return accountTrophy?.status !== 'completed';
       }),
     ];
@@ -203,7 +205,7 @@ export const runLiveCheck = async (account: Account): Promise<void> => {
     await setLeagueFeatures(INTERESTED_IN_LEAGUE_FEATURES);
     setLocalStorageItem(PROGRESS, 1);
 
-    activeTrophies = getActiveTrophies();
+    activeTrophies = getActiveTrophies(live.gameData.gameMode);
     log(
       `Can achieve ${activeTrophies.length} trophies`,
       activeTrophies.map((trophy) => trophy.name)

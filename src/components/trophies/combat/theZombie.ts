@@ -3,15 +3,19 @@ import {
   getParticipantKills,
   getParticipantDeaths,
 } from '../../../api/riot/helpers';
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 
 const theZombie: Trophy = {
   island: 'hub',
   name: 'theZombie',
   level: 'combat5',
   title: 'The Zombie',
-  description: 'Score at least two kills being dead (ten seconds after death).',
+  description: `Score at least two kills being dead (ten seconds after death).\nARAM: Three kills`,
   category: 'combat',
-  checkProgress: ({ events, participant }) => {
+  aramSupport: true,
+  checkProgress: ({ events, participant, match }) => {
+    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 3 : 2;
+
     const deaths = getParticipantDeaths(events, participant.participantId);
     const kills = getParticipantKills(events, participant.participantId);
     const zombieKills = kills.filter((kill) =>
@@ -22,9 +26,10 @@ const theZombie: Trophy = {
       )
     ).length;
 
-    return zombieKills / 2;
+    return zombieKills / requiredKills;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
+    const requiredKills = gameData.gameMode === 'ARAM' ? 3 : 2;
     const kills = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -44,7 +49,7 @@ const theZombie: Trophy = {
       )
     ).length;
 
-    return zombieKills / 2;
+    return zombieKills / requiredKills;
   },
 };
 

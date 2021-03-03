@@ -1,3 +1,4 @@
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 import { Trophy } from '../types';
 
 const teamPlayer: Trophy = {
@@ -5,19 +6,22 @@ const teamPlayer: Trophy = {
   name: 'teamPlayer',
   level: 'teamwork1',
   title: 'Team Player',
-  description: 'Score at least ten assists.',
+  description: `Score at least ten assists.\nARAM: 20 assists`,
   category: 'teamwork',
-  checkProgress: ({ participant }) => {
-    return participant.stats.assists / 10;
+  aramSupport: true,
+  checkProgress: ({ participant, match }) => {
+    const requiredAssists = match.queueId === ARAM_HOWLING_ABYSS ? 20 : 10;
+    return participant.stats.assists / requiredAssists;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
+    const requiredAssists = gameData.gameMode === 'ARAM' ? 20 : 10;
     const assists = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
         event.Assisters.includes(account.summoner.name)
     );
 
-    return assists.length / 10;
+    return assists.length / requiredAssists;
   },
 };
 

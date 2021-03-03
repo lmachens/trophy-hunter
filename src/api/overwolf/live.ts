@@ -31,7 +31,7 @@ const resetStates = () => {
   unsetLocalStorageItem(PROGRESS);
   unsetLocalStorageItem(LIVE);
   unsetLocalStorageItem(TROPHY_PROGRESS);
-  activeTrophies = [];
+  activeTrophies = null;
   live = {
     activePlayer: null,
     allPlayers: null,
@@ -40,8 +40,8 @@ const resetStates = () => {
     trophyData: {},
     account: null,
   };
-  notifiedNear = [];
-  notifiedCompleted = [];
+  notifiedNear = null;
+  notifiedCompleted = null;
 };
 resetStates();
 
@@ -129,28 +129,26 @@ const setTrophyProgress = (account: Account) => {
   openWindow('notification');
 };
 
-const handleInfoUpdates2 = (
-  infoUpdate: overwolf.games.events.InfoUpdates2Event
-) => {
-  if (infoUpdate.feature !== 'live_client_data') {
-    return;
-  }
+const handleLiveClientData = (liveClientData: {
+  active_player?: string;
+  all_players?: string;
+  events?: string;
+  game_data?: string;
+}) => {
   try {
-    const activePlayer = parseJSON(
-      infoUpdate.info.live_client_data.active_player
-    );
+    const activePlayer = parseJSON(liveClientData.active_player);
     if (activePlayer) {
       live.activePlayer = activePlayer;
     }
-    const allPlayers = parseJSON(infoUpdate.info.live_client_data.all_players);
+    const allPlayers = parseJSON(liveClientData.all_players);
     if (allPlayers) {
       live.allPlayers = allPlayers;
     }
-    const events = parseJSON(infoUpdate.info.live_client_data.events) || {};
+    const events = parseJSON(liveClientData.events) || {};
     if (events?.Events) {
       live.events = events.Events;
     }
-    const gameData = parseJSON(infoUpdate.info.live_client_data.game_data);
+    const gameData = parseJSON(liveClientData.game_data);
     if (gameData) {
       const isNewGameTime = gameData.gameTime !== live.gameData?.gameTime;
       live.gameData = gameData;
@@ -164,12 +162,29 @@ const handleInfoUpdates2 = (
         live.trophyData
       ) {
         setLocalStorageItem(LIVE, live);
+        if (!activeTrophies) {
+          activeTrophies = getActiveTrophies(live.gameData.gameMode);
+          log(
+            `Can achieve ${activeTrophies.length} trophies`,
+            activeTrophies.map((trophy) => trophy.name)
+          );
+        }
         setTrophyProgress(live.account);
       }
     }
   } catch (error) {
-    error('[handleInfoUpdates2]', error);
+    console.error(error);
+    error('[handleInfoUpdates2]', error.message);
   }
+};
+
+const handleInfoUpdates2 = (
+  infoUpdate: overwolf.games.events.InfoUpdates2Event
+) => {
+  if (infoUpdate.feature !== 'live_client_data') {
+    return;
+  }
+  handleLiveClientData(infoUpdate.info.live_client_data);
 };
 
 const getActiveTrophies = (gameMode: 'CLASSIC' | 'ARAM') => {
@@ -204,16 +219,15 @@ export const runLiveCheck = async (account: Account): Promise<void> => {
     await waitFor(1000);
     await setLeagueFeatures(INTERESTED_IN_LEAGUE_FEATURES);
     setLocalStorageItem(PROGRESS, 1);
-
-    activeTrophies = getActiveTrophies(live.gameData.gameMode);
-    log(
-      `Can achieve ${activeTrophies.length} trophies`,
-      activeTrophies.map((trophy) => trophy.name)
-    );
-
+    overwolf.games.events.getInfo((event) => {
+      if (event.res.live_client_data) {
+        handleLiveClientData(event.res.live_client_data);
+      }
+    });
     overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdates2);
   } catch (err) {
-    error('[runLiveCheck]', err);
+    console.error(err);
+    error('[runLiveCheck]', err.message);
   }
 };
 

@@ -25,7 +25,7 @@ import Special from '../components/filters/Special';
 import Epic from '../components/filters/Epic';
 import Origin from '../components/filters/Origin';
 import usePersistentState from '../hooks/usePersistentState';
-import { TROPHY_PROGRESS } from '../api/overwolf/live';
+import { LIVE, TROPHY_PROGRESS } from '../api/overwolf/live';
 import TrophyListItem from '../components/trophies/TrophyListItem';
 import Status from '../components/common/Status';
 import Grow from '../components/common/Grow';
@@ -40,6 +40,8 @@ import Monitor from '../components/icons/Monitor';
 import useDisplays from '../hooks/useDisplays';
 import useCenterWindow from '../hooks/useCenterWindow';
 import { trackHotkey } from '../api/performance';
+import { getLocalStorageItem } from '../api/utils/storage';
+import { SpecialGradients } from '../components/levels/special';
 
 getAppVersion().then((version) => log(`Running ${version}`));
 
@@ -123,14 +125,19 @@ const SecondScreen: NextPage = () => {
 
   const filters = filterIndex === -1 ? [] : allFilters[filterIndex];
 
-  const trophies = availableTrophies.filter(
+  const live = getLocalStorageItem(LIVE, null);
+  const activeTrophies =
+    live?.gameData.gameMode === 'ARAM'
+      ? availableTrophies.filter((trophy) => trophy.aramSupport)
+      : availableTrophies;
+  const trophies = activeTrophies.filter(
     (trophy) =>
       filters.includes(trophy.category) ||
       (filters.includes('favorites') &&
         account.favoriteTrophyNames.includes(trophy.name))
   );
 
-  const hasFavorites = availableTrophies.some((trophy) =>
+  const hasFavorites = activeTrophies.some((trophy) =>
     account.favoriteTrophyNames.includes(trophy.name)
   );
   const getNextIndex = useCallback(
@@ -149,7 +156,7 @@ const SecondScreen: NextPage = () => {
             return newFilterIndex;
           }
         } else {
-          const hasItems = availableTrophies.some(
+          const hasItems = activeTrophies.some(
             (trophy) => trophy.category === allFilters[newFilterIndex]
           );
           if (hasItems) {
@@ -161,7 +168,7 @@ const SecondScreen: NextPage = () => {
 
       return index;
     },
-    [hasFavorites, availableTrophies]
+    [hasFavorites, activeTrophies]
   );
 
   useEffect(() => {
@@ -240,34 +247,28 @@ const SecondScreen: NextPage = () => {
             <Combat
               selected={filterIndex === allFilters.indexOf('combat')}
               disabled={
-                !availableTrophies.some(
-                  (trophy) => trophy.category === 'combat'
-                )
+                !activeTrophies.some((trophy) => trophy.category === 'combat')
               }
               onClick={() => setFilterIndex(allFilters.indexOf('combat'))}
             />
             <Skills
               selected={filterIndex === allFilters.indexOf('skills')}
               disabled={
-                !availableTrophies.some(
-                  (trophy) => trophy.category === 'skills'
-                )
+                !activeTrophies.some((trophy) => trophy.category === 'skills')
               }
               onClick={() => setFilterIndex(allFilters.indexOf('skills'))}
             />
             <Teamwork
               selected={filterIndex === allFilters.indexOf('teamwork')}
               disabled={
-                !availableTrophies.some(
-                  (trophy) => trophy.category === 'teamwork'
-                )
+                !activeTrophies.some((trophy) => trophy.category === 'teamwork')
               }
               onClick={() => setFilterIndex(allFilters.indexOf('teamwork'))}
             />
             <Objectives
               selected={filterIndex === allFilters.indexOf('objectives')}
               disabled={
-                !availableTrophies.some(
+                !activeTrophies.some(
                   (trophy) => trophy.category === 'objectives'
                 )
               }
@@ -276,23 +277,21 @@ const SecondScreen: NextPage = () => {
             <Special
               selected={filterIndex === allFilters.indexOf('special')}
               disabled={
-                !availableTrophies.some(
-                  (trophy) => trophy.category === 'special'
-                )
+                !activeTrophies.some((trophy) => trophy.category === 'special')
               }
               onClick={() => setFilterIndex(allFilters.indexOf('special'))}
             />
             <Epic
               selected={filterIndex === allFilters.indexOf('epic')}
               disabled={
-                !availableTrophies.some((trophy) => trophy.category === 'epic')
+                !activeTrophies.some((trophy) => trophy.category === 'epic')
               }
               onClick={() => setFilterIndex(allFilters.indexOf('epic'))}
             />
             <Origin
               selected={filterIndex === allFilters.indexOf('hub')}
               disabled={
-                !availableTrophies.some((trophy) => trophy.category === 'hub')
+                !activeTrophies.some((trophy) => trophy.category === 'hub')
               }
               onClick={() => setFilterIndex(allFilters.indexOf('hub'))}
             />
@@ -310,6 +309,7 @@ const SecondScreen: NextPage = () => {
         </main>
         <aside>
           <Profile />
+          <SpecialGradients />
           <SmallIslands>
             {islands.map(({ name, Component: Island }) => (
               <Island

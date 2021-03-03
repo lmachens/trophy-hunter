@@ -1,16 +1,19 @@
 import { Trophy } from '../types';
 import { getParticipantAssists } from '../../../api/riot/helpers';
 import { zip } from '../../../api/utils/arrays';
+import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
 
 const tripleAssist: Trophy = {
   island: 'teamwork',
   name: 'tripleAssist',
   level: 'teamwork1',
   title: 'Triple Assist',
-  description:
-    'Achieve three assists with no more than ten seconds between two successive assists.',
+  description: `Achieve three assists with no more than ten seconds between two successive assists.\nARAM: Two triple assists`,
   category: 'teamwork',
-  checkProgress: ({ events, participant }) => {
+  aramSupport: true,
+  checkProgress: ({ events, participant, match }) => {
+    const requiredTripleAssists = match.queueId === ARAM_HOWLING_ABYSS ? 2 : 1;
+
     const assists = getParticipantAssists(events, participant.participantId);
 
     const participantMultiAssistEvents = zip(
@@ -30,9 +33,11 @@ const tripleAssist: Trophy = {
       return firstTwoKillsSpree && secondTwoKillsSpree;
     }).length;
 
-    return tripleAssists;
+    return tripleAssists / requiredTripleAssists;
   },
-  checkLive: ({ events, account }) => {
+  checkLive: ({ events, account, gameData }) => {
+    const requiredTripleAssists = gameData.gameMode === 'ARAM' ? 2 : 1;
+
     const assists = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
@@ -56,7 +61,7 @@ const tripleAssist: Trophy = {
       return firstTwoKillsSpree && secondTwoKillsSpree;
     }).length;
 
-    return tripleAssists;
+    return tripleAssists / requiredTripleAssists;
   },
 };
 

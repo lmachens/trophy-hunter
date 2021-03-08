@@ -19,7 +19,7 @@ const sinisterBlades: Trophy = {
         event.EventName === 'Multikill' &&
         event.KillerName === account.summoner.name
     ).length;
-    const requiredDoubleKills = gameData.gameMode === 'ARAM' ? 5 : 4;
+    const requiredDoubleKills = gameData.gameMode === 'ARAM' ? 7 : 4;
     return multikills / requiredDoubleKills;
   },
 };

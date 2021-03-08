@@ -46,6 +46,9 @@ const resetStates = () => {
 resetStates();
 
 const setTrophyProgress = (account: Account) => {
+  if (activeTrophies.length === 0) {
+    return;
+  }
   const trophiesProgress = activeTrophies.map((trophy) => {
     try {
       return {
@@ -59,8 +62,8 @@ const setTrophyProgress = (account: Account) => {
             0
         ),
       };
-    } catch (error) {
-      console.error(`checkLive error in ${trophy.name}`, error.message);
+    } catch (err) {
+      error(`checkLive error in ${trophy.name}: ${err.message}`, err.stack);
       return {
         trophyName: trophy.name,
         progress: 0,
@@ -172,9 +175,9 @@ const handleLiveClientData = (liveClientData: {
         setTrophyProgress(live.account);
       }
     }
-  } catch (error) {
-    console.error(error);
-    error('[handleInfoUpdates2]', error.message);
+  } catch (e) {
+    console.error(e);
+    error('[handleInfoUpdates2]', e.message);
   }
 };
 
@@ -191,7 +194,10 @@ const getActiveTrophies = (gameMode: 'CLASSIC' | 'ARAM') => {
   const activeLevels = live.account.levels.filter(
     (level) => level.status === 'active'
   );
-
+  if (activeLevels.length === 0) {
+    log('[getActiveTrophies] no active levels', live.account.levels);
+    return [];
+  }
   return activeLevels.reduce<Trophy[]>((trophies, accountLevel) => {
     const level = levels[accountLevel.name] as Level;
     return [
@@ -226,8 +232,7 @@ export const runLiveCheck = async (account: Account): Promise<void> => {
     });
     overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdates2);
   } catch (err) {
-    console.error(err);
-    error('[runLiveCheck]', err.message);
+    error(`[runLiveCheck] ${err.message}`, err.stack);
   }
 };
 

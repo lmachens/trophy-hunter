@@ -302,7 +302,7 @@ const SecondScreen: NextPage = () => {
                 trophy={trophy}
                 key={trophy.name}
                 borderless
-                progress={trophyProgress[trophy.name]}
+                progress={trophyProgress ? trophyProgress[trophy.name] : 0}
               />
             ))}
           </List>

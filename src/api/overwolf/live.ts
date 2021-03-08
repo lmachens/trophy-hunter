@@ -23,7 +23,14 @@ export const LIVE = 'LIVE';
 export const TROPHY_PROGRESS = 'TROPHY_PROGRESS';
 
 let activeTrophies: Trophy[] = [];
-let live: Live = null;
+let live: Live = {
+  activePlayer: null,
+  allPlayers: null,
+  events: null,
+  gameData: null,
+  trophyData: {},
+  account: null,
+};
 let notifiedNear: string[] = [];
 let notifiedCompleted: string[] = [];
 

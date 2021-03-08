@@ -202,7 +202,8 @@ const Background: NextPage = () => {
                   setRegisteredFeatures(true);
                 }
               } else {
-                setTimeout(getSummonerInfo, 1000);
+                log('[getSummonerInfo] not found', response);
+                setTimeout(getSummonerInfo, 2000);
               }
             }
           );

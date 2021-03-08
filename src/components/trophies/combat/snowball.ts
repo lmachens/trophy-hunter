@@ -6,11 +6,11 @@ const snowball: Trophy = {
   name: 'snowball',
   level: 'combat4',
   title: 'Snowball',
-  description: `Achieve five kills before twelve minutes.\nARAM: Ten kills`,
+  description: `Achieve five kills before twelve minutes.\nARAM: Seven kills`,
   category: 'combat',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
-    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 10 : 12;
+    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 7 : 5;
     const snowballKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&
@@ -21,7 +21,7 @@ const snowball: Trophy = {
     return snowballKills / requiredKills;
   },
   checkLive: ({ events, account, gameData }) => {
-    const requiredKills = gameData.gameMode === 'ARAM' ? 10 : 12;
+    const requiredKills = gameData.gameMode === 'ARAM' ? 7 : 5;
 
     const snowballKills = events.filter(
       (event) =>

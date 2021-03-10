@@ -226,6 +226,9 @@ const Background: NextPage = () => {
     if (leagueRunning === false) {
       log('League is not running');
 
+      closeWindow('in_game');
+      closeWindow('second_screen');
+
       const live = getLocalStorageItem(LIVE, null);
       if (
         live?.matchId &&
@@ -233,10 +236,9 @@ const Background: NextPage = () => {
       ) {
         log(`Check game ${live.matchId}`);
         localStorage.setItem('checkGameId', live.matchId);
+        openWindow('desktop');
       }
 
-      closeWindow('in_game');
-      closeWindow('second_screen');
       return;
     }
 

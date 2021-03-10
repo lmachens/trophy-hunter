@@ -2466,7 +2466,7 @@ declare namespace overwolf.games.events {
       game_data?: string;
     };
     game_info?: {
-      matchStarted: string;
+      matchStarted: 'true' | 'false';
       matchId: string;
     };
   }

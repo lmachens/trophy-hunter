@@ -120,12 +120,13 @@ const SecondScreen: NextPage = () => {
   const nextPageHotkey = useHotkey('next_page_trophy_hunter');
   const showHideHotkey = useHotkey('show_trophy_hunter');
   const toggleMonitorHotkey = useHotkey('toggle_monitor_trophy_hunter');
+  const [live] = usePersistentState(LIVE, null);
+
   const displays = useDisplays();
   useCenterWindow();
 
   const filters = filterIndex === -1 ? [] : allFilters[filterIndex];
 
-  const live = getLocalStorageItem(LIVE, null);
   const activeTrophies =
     live?.gameData.gameMode === 'ARAM'
       ? availableTrophies.filter((trophy) => trophy.aramSupport)

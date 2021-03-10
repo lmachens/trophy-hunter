@@ -14,7 +14,7 @@ import { VideoAds } from '../components/ads';
 import Profile from '../components/trophies/Profile';
 import islands from '../components/islands/islands';
 import { useAccount } from '../contexts/account';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Favorites from '../components/filters/Favorites';
 import useAvailableTrophies from '../contexts/account/useAvailableTrophies';
 import Combat from '../components/filters/Combat';
@@ -121,16 +121,13 @@ const SecondScreen: NextPage = () => {
   const showHideHotkey = useHotkey('show_trophy_hunter');
   const toggleMonitorHotkey = useHotkey('toggle_monitor_trophy_hunter');
   const [live] = usePersistentState(LIVE, null);
+  const [activeTrophies, setActiveTrophies] = useState([]);
 
   const displays = useDisplays();
   useCenterWindow();
 
   const filters = filterIndex === -1 ? [] : allFilters[filterIndex];
 
-  const activeTrophies =
-    live?.gameData.gameMode === 'ARAM'
-      ? availableTrophies.filter((trophy) => trophy.aramSupport)
-      : availableTrophies;
   const trophies = activeTrophies.filter(
     (trophy) =>
       filters.includes(trophy.category) ||
@@ -171,6 +168,14 @@ const SecondScreen: NextPage = () => {
     },
     [hasFavorites, activeTrophies]
   );
+
+  useEffect(() => {
+    setActiveTrophies(
+      live?.gameData.gameMode === 'ARAM'
+        ? availableTrophies.filter((trophy) => trophy.aramSupport)
+        : availableTrophies
+    );
+  }, [live?.gameData.gameMode]);
 
   useEffect(() => {
     const updateMonitorPosition = async () => {

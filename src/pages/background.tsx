@@ -13,7 +13,6 @@ import overwolf, {
   toggleInGameWindow,
 } from '../api/overwolf';
 import { postLogin } from '../api/accounts';
-import { parseJSON } from '../api/utils/json';
 import { useState, useEffect } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import usePersistentState from '../hooks/usePersistentState';
@@ -21,11 +20,13 @@ import Head from 'next/head';
 import { log } from '../api/logs';
 import {
   isPlayingSupportedGame,
+  LIVE,
   runLiveCheck,
   stopLiveCheck,
 } from '../api/overwolf/live';
 import { useAccount } from '../contexts/account';
 import { trackHotkey } from '../api/performance';
+import { getLocalStorageItem } from '../api/utils/storage';
 
 getAppVersion().then((version) => log(`Running ${version}`));
 
@@ -224,6 +225,16 @@ const Background: NextPage = () => {
     }
     if (leagueRunning === false) {
       log('League is not running');
+
+      const live = getLocalStorageItem(LIVE, null);
+      if (
+        live?.matchId &&
+        localStorage.getItem('checkGameId') !== live.matchId
+      ) {
+        log(`Check game ${live.matchId}`);
+        localStorage.setItem('checkGameId', live.matchId);
+      }
+
       closeWindow('in_game');
       closeWindow('second_screen');
       return;
@@ -247,38 +258,6 @@ const Background: NextPage = () => {
       return stopLiveCheck;
     }
   }, [leagueRunning, registeredFeatures, autoLaunch, account?._id]);
-
-  useEffect(() => {
-    if (!playingSupportedGame) {
-      return;
-    }
-
-    const handleInfoUpdate = (infoUpdate) => {
-      if (infoUpdate.launcherClassId !== LEAGUE_LAUNCHER_ID) {
-        return;
-      }
-      if (infoUpdate.feature === 'end_game' && infoUpdate.info.end_game_lol) {
-        const endGameStats = parseJSON(
-          infoUpdate.info.end_game_lol.lol_end_game_stats
-        );
-        if (
-          endGameStats &&
-          localStorage.getItem('checkGameId') !== endGameStats.gameId.toString()
-        ) {
-          log(`Check game ${endGameStats.gameId}`);
-          localStorage.setItem('checkGameId', endGameStats.gameId);
-        }
-      }
-    };
-
-    overwolf.games.launchers.events.onInfoUpdates.addListener(handleInfoUpdate);
-
-    return () => {
-      overwolf.games.launchers.events.onInfoUpdates.removeListener(
-        handleInfoUpdate
-      );
-    };
-  }, [playingSupportedGame]);
 
   return (
     <Head>

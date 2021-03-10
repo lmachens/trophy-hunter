@@ -48,6 +48,7 @@ export interface Live {
   gameData: GameData;
   trophyData: TrophyData;
   account: Account;
+  matchId: string;
 }
 
 export interface Ability {

@@ -30,6 +30,7 @@ let live: Live = {
   gameData: null,
   trophyData: {},
   account: null,
+  matchId: null,
 };
 let notifiedNear: string[] = [];
 let notifiedCompleted: string[] = [];
@@ -46,6 +47,7 @@ const resetStates = () => {
     gameData: null,
     trophyData: {},
     account: null,
+    matchId: null,
   };
   notifiedNear = [];
   notifiedCompleted = [];
@@ -188,13 +190,24 @@ const handleLiveClientData = (liveClientData: {
   }
 };
 
+const handleGameInfo = (gameInfo: {
+  matchStarted: 'true' | 'false';
+  matchId: string;
+}) => {
+  if (gameInfo.matchId) {
+    live.matchId = gameInfo.matchId;
+  }
+};
+
 const handleInfoUpdates2 = (
   infoUpdate: overwolf.games.events.InfoUpdates2Event
 ) => {
-  if (infoUpdate.feature !== 'live_client_data') {
-    return;
+  if (infoUpdate.feature === 'live_client_data') {
+    handleLiveClientData(infoUpdate.info.live_client_data);
   }
-  handleLiveClientData(infoUpdate.info.live_client_data);
+  if (infoUpdate.feature === 'matchState') {
+    handleGameInfo(infoUpdate.info.game_info);
+  }
 };
 
 const getActiveTrophies = (gameMode: 'CLASSIC' | 'ARAM') => {
@@ -235,6 +248,9 @@ export const runLiveCheck = async (account: Account): Promise<void> => {
     overwolf.games.events.getInfo((event) => {
       if (event.res.live_client_data) {
         handleLiveClientData(event.res.live_client_data);
+      }
+      if (event.res.game_info) {
+        handleGameInfo(event.res.game_info);
       }
     });
     overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdates2);

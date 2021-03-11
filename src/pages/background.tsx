@@ -33,7 +33,6 @@ getAppVersion().then((version) => log(`Running ${version}`));
 const Background: NextPage = () => {
   const [leagueRunning, setLeagueRunning] = useState(null);
   const [leagueLauncherRunning, setLeagueLauncherRunning] = useState(null);
-  const [playingSupportedGame, setPlayingSupportedGame] = useState(null);
   const [registeredFeatures, setRegisteredFeatures] = useState(false);
   const [autoLaunch] = usePersistentState('autoLaunch', true);
   const { account } = useAccount();
@@ -127,7 +126,7 @@ const Background: NextPage = () => {
           if (playingSupportedGame) {
             log(`Playing a supported game ${playingSupportedGame}`);
             toggleInGameWindow(true);
-            runLiveCheck(account);
+            runLiveCheck(account, playingSupportedGame);
           } else {
             log(`Not playing a supported game ${playingSupportedGame}`);
             openWindow('not_supported');
@@ -245,12 +244,11 @@ const Background: NextPage = () => {
     if (leagueRunning) {
       log('League is running');
       isPlayingSupportedGame().then((playingSupportedGame) => {
-        setPlayingSupportedGame(playingSupportedGame);
         if (autoLaunch) {
           if (playingSupportedGame) {
             log(`Playing a supported game ${playingSupportedGame}`);
             toggleInGameWindow(true);
-            runLiveCheck(account);
+            runLiveCheck(account, playingSupportedGame);
           } else {
             log(`Not playing a supported game ${playingSupportedGame}`);
             openWindow('not_supported');

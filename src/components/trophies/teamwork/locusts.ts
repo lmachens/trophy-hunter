@@ -1,5 +1,5 @@
 import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
-import { getAllKills } from '../../../api/riot/helpers';
+import { getAllKills, getTeam } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const locusts: Trophy = {
@@ -11,12 +11,15 @@ const locusts: Trophy = {
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ participant, events, match }) => {
+    const teamIds = getTeam(match, participant.teamId).map(
+      (teammate) => teammate.participantId
+    );
+
     const locustsKillEvents = getAllKills(events).filter(
       (event) =>
         event.assistingParticipantIds.length >= 4 &&
-        event.teamId === participant.teamId
+        teamIds.includes(event.killerId)
     );
-
     const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 12 : 10;
     return locustsKillEvents.length / requiredKills;
   },

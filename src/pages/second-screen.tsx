@@ -7,6 +7,7 @@ import overwolf, {
   getAppVersion,
   openWindow,
   WindowName,
+  ARAM_HOWLING_ABYSS,
 } from '../api/overwolf';
 import Head from 'next/head';
 import { log } from '../api/logs';
@@ -14,7 +15,7 @@ import { VideoAds } from '../components/ads';
 import Profile from '../components/trophies/Profile';
 import islands from '../components/islands/islands';
 import { useAccount } from '../contexts/account';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Favorites from '../components/filters/Favorites';
 import useAvailableTrophies from '../contexts/account/useAvailableTrophies';
 import Combat from '../components/filters/Combat';
@@ -25,7 +26,7 @@ import Special from '../components/filters/Special';
 import Epic from '../components/filters/Epic';
 import Origin from '../components/filters/Origin';
 import usePersistentState from '../hooks/usePersistentState';
-import { LIVE, TROPHY_PROGRESS } from '../api/overwolf/live';
+import { isPlayingSupportedGame, TROPHY_PROGRESS } from '../api/overwolf/live';
 import TrophyListItem from '../components/trophies/TrophyListItem';
 import Status from '../components/common/Status';
 import Grow from '../components/common/Grow';
@@ -40,7 +41,6 @@ import Monitor from '../components/icons/Monitor';
 import useDisplays from '../hooks/useDisplays';
 import useCenterWindow from '../hooks/useCenterWindow';
 import { trackHotkey } from '../api/performance';
-import { getLocalStorageItem } from '../api/utils/storage';
 import { SpecialGradients } from '../components/levels/special';
 
 getAppVersion().then((version) => log(`Running ${version}`));
@@ -120,16 +120,13 @@ const SecondScreen: NextPage = () => {
   const nextPageHotkey = useHotkey('next_page_trophy_hunter');
   const showHideHotkey = useHotkey('show_trophy_hunter');
   const toggleMonitorHotkey = useHotkey('toggle_monitor_trophy_hunter');
+  const [activeTrophies, setActiveTrophies] = useState([]);
+
   const displays = useDisplays();
   useCenterWindow();
 
   const filters = filterIndex === -1 ? [] : allFilters[filterIndex];
 
-  const live = getLocalStorageItem(LIVE, null);
-  const activeTrophies =
-    live?.gameData.gameMode === 'ARAM'
-      ? availableTrophies.filter((trophy) => trophy.aramSupport)
-      : availableTrophies;
   const trophies = activeTrophies.filter(
     (trophy) =>
       filters.includes(trophy.category) ||
@@ -170,6 +167,21 @@ const SecondScreen: NextPage = () => {
     },
     [hasFavorites, activeTrophies]
   );
+
+  useEffect(() => {
+    if (!availableTrophies?.length) {
+      return;
+    }
+    isPlayingSupportedGame().then((playingSupportedGame) => {
+      if (playingSupportedGame) {
+        setActiveTrophies(
+          playingSupportedGame === ARAM_HOWLING_ABYSS
+            ? availableTrophies.filter((trophy) => trophy.aramSupport)
+            : availableTrophies
+        );
+      }
+    });
+  }, [availableTrophies]);
 
   useEffect(() => {
     const updateMonitorPosition = async () => {

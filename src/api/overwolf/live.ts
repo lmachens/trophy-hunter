@@ -4,6 +4,7 @@ import {
   openWindow,
   setLeagueFeatures,
   SUPPORTED_QUEUE_IDS,
+  ARAM_HOWLING_ABYSS,
 } from '.';
 import { Live, Trophy } from '../../components/trophies/types';
 import { Account } from '../accounts';
@@ -30,6 +31,8 @@ let live: Live = {
   gameData: null,
   trophyData: {},
   account: null,
+  matchId: null,
+  queueId: null,
 };
 let notifiedNear: string[] = [];
 let notifiedCompleted: string[] = [];
@@ -46,6 +49,8 @@ const resetStates = () => {
     gameData: null,
     trophyData: {},
     account: null,
+    matchId: null,
+    queueId: null,
   };
   notifiedNear = [];
   notifiedCompleted = [];
@@ -173,7 +178,7 @@ const handleLiveClientData = (liveClientData: {
       ) {
         setLocalStorageItem(LIVE, live);
         if (!activeTrophies) {
-          activeTrophies = getActiveTrophies(live.gameData.gameMode);
+          activeTrophies = getActiveTrophies(live.queueId);
           log(
             `Can achieve ${activeTrophies.length} trophies`,
             activeTrophies.map((trophy) => trophy.name)
@@ -188,16 +193,27 @@ const handleLiveClientData = (liveClientData: {
   }
 };
 
+const handleGameInfo = (gameInfo: {
+  matchStarted: 'true' | 'false';
+  matchId: string;
+}) => {
+  if (gameInfo.matchId) {
+    live.matchId = gameInfo.matchId;
+  }
+};
+
 const handleInfoUpdates2 = (
   infoUpdate: overwolf.games.events.InfoUpdates2Event
 ) => {
-  if (infoUpdate.feature !== 'live_client_data') {
-    return;
+  if (infoUpdate.feature === 'live_client_data') {
+    handleLiveClientData(infoUpdate.info.live_client_data);
   }
-  handleLiveClientData(infoUpdate.info.live_client_data);
+  if (infoUpdate.feature === 'matchState') {
+    handleGameInfo(infoUpdate.info.game_info);
+  }
 };
 
-const getActiveTrophies = (gameMode: 'CLASSIC' | 'ARAM') => {
+const getActiveTrophies = (queueId: number) => {
   const activeLevels = live.account.levels.filter(
     (level) => level.status === 'active'
   );
@@ -213,7 +229,7 @@ const getActiveTrophies = (gameMode: 'CLASSIC' | 'ARAM') => {
         const accountTrophy = live.account.trophies.find(
           (accountTrophy) => accountTrophy.name === trophy.name
         );
-        if (gameMode === 'ARAM') {
+        if (queueId === ARAM_HOWLING_ABYSS) {
           return accountTrophy?.status !== 'completed' && trophy.aramSupport;
         }
         return accountTrophy?.status !== 'completed';
@@ -222,12 +238,16 @@ const getActiveTrophies = (gameMode: 'CLASSIC' | 'ARAM') => {
   }, []);
 };
 
-export const runLiveCheck = async (account: Account): Promise<void> => {
+export const runLiveCheck = async (
+  account: Account,
+  queueId: number
+): Promise<void> => {
   try {
     log('Run live check');
     setLocalStorageItem(PROGRESS, 0);
     resetStates();
     live.account = account;
+    live.queueId = queueId;
     setLocalStorageItem(PROGRESS, 0.5);
     await waitFor(1000);
     await setLeagueFeatures(INTERESTED_IN_LEAGUE_FEATURES);
@@ -235,6 +255,9 @@ export const runLiveCheck = async (account: Account): Promise<void> => {
     overwolf.games.events.getInfo((event) => {
       if (event.res.live_client_data) {
         handleLiveClientData(event.res.live_client_data);
+      }
+      if (event.res.game_info) {
+        handleGameInfo(event.res.game_info);
       }
     });
     overwolf.games.events.onInfoUpdates2.addListener(handleInfoUpdates2);
@@ -247,7 +270,7 @@ export const stopLiveCheck = (): void => {
   overwolf.games.events.onInfoUpdates2.removeListener(handleInfoUpdates2);
 };
 
-export const isPlayingSupportedGame = async (): Promise<boolean | number> => {
+export const isPlayingSupportedGame = async (): Promise<false | number> => {
   return new Promise((resolve) => {
     let launcherInfoTimeoutId = null;
     const getLauncherInfo = (hideError = false) => {

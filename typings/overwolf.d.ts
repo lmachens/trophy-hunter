@@ -2465,6 +2465,10 @@ declare namespace overwolf.games.events {
       events?: string;
       game_data?: string;
     };
+    game_info?: {
+      matchStarted: 'true' | 'false';
+      matchId: string;
+    };
   }
 
   interface InfoUpdates2Event<

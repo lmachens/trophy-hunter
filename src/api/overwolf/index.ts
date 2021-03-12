@@ -29,7 +29,7 @@ export const INTERESTED_IN_LAUNCHER_FEATURES = [
   'lobby_info',
   'end_game',
 ];
-export const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data'];
+export const INTERESTED_IN_LEAGUE_FEATURES = ['live_client_data', 'matchState'];
 
 export const isLeagueLauncherRunning = (
   launchers: overwolf.games.launchers.LauncherInfo[]

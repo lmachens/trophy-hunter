@@ -13,6 +13,7 @@ import Checkbox from '../common/Checkbox';
 import IconButton from '../common/IconButton';
 import { GameChildProps } from '../../layouts/GameLayout';
 import { trackFilter } from '../../api/performance';
+import Empty from '../icons/Empty';
 
 const Header = styled.header`
   display: flex;
@@ -52,6 +53,15 @@ const IconContainer = styled.div`
   margin-right: 4px;
 `;
 
+const EmptyContainer = styled.div`
+  background: #2b2a30;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  align-content: center;
+  font-family: Roboto Mono;
+`;
+
 const MapOverview = ({ onQueryChange }: GameChildProps) => {
   const { account } = useAccount();
   const availableTrophies = useAvailableTrophies();
@@ -75,7 +85,7 @@ const MapOverview = ({ onQueryChange }: GameChildProps) => {
   return (
     <>
       <Header>
-        <Title>Available Trophies</Title>
+        <Title>{onlyFavorites ? 'Favorite' : 'Available'} Trophies</Title>
         <Tooltip title="Categories" placement="bottomRight">
           <IconButton
             active={categories.length < 7}
@@ -139,6 +149,13 @@ const MapOverview = ({ onQueryChange }: GameChildProps) => {
         </Tooltip>
       </Header>
       <TrophyList>
+        {onlyFavorites && trophies.length === 0 && (
+          <EmptyContainer>
+            <Empty />
+            <h2>Nothing here yet</h2>
+            <p>Select trophies and add them to favorites</p>
+          </EmptyContainer>
+        )}
         {trophies.map((trophy) => (
           <TrophyListItem
             trophy={trophy}

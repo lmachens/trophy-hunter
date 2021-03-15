@@ -17,3 +17,7 @@ Content-Type: application/json
     "platformId": "EUW1",
     "matchId": 5061906845
 }
+
+### Fix
+
+GET https://localhost:3000/api/fix

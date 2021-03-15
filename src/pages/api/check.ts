@@ -223,8 +223,20 @@ export default applyMiddleware(
           }))
         );
 
-        const newTrophies = newLevels.reduce(
-          (curr, level) => [...curr, ...level.trophies],
+        const newTrophies = newLevels.reduce<AccountTrophy[]>(
+          (curr, level) => [
+            ...curr,
+            ...level.trophies.map(
+              (trophy): AccountTrophy => ({
+                name: trophy.name,
+                island: trophy.island,
+                level: trophy.level,
+                status: 'active',
+                progress: 0,
+                progressDetails: null,
+              })
+            ),
+          ],
           []
         );
         accountTrophies.push(...newTrophies);

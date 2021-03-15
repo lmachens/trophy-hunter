@@ -48,7 +48,7 @@ interface TrophyListItemProps
 }
 
 const Progress = styled.div`
-  margin: 6px 10px 6px 6px;
+  margin: 0px 10px 6px 6px;
   flex-shrink: 0;
   width: 12px;
 `;

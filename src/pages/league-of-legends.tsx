@@ -14,6 +14,7 @@ import HistoryOverview from '../components/history/HistoryOverview';
 import Help from '../components/help/Help';
 import SpreadTheLove from '../components/help/SpreadTheLove';
 import ARAMModal from '../components/modals/ARAMModal';
+import EnableOverlayModal from '../components/modals/EnableOverlayModal';
 
 const subpages: {
   [subpage: string]: {
@@ -42,10 +43,6 @@ const subpages: {
 };
 
 const LeagueOfLegends: NextPage = () => {
-  const [isGarenaUser, , unsetIsGarenaUser] = usePersistentState(
-    'isGarenaUser',
-    null
-  );
   const [sawARAMModal, setSawARAMModal] = usePersistentState(
     'sawARAMModal',
     false
@@ -89,8 +86,9 @@ const LeagueOfLegends: NextPage = () => {
       hideProfile={hideProfile}
     >
       <Main onQueryChange={setQueryParam} />
-      {isGarenaUser && <GarenaModal onClose={() => unsetIsGarenaUser()} />}
+      <GarenaModal />
       {!sawARAMModal && <ARAMModal onClose={() => setSawARAMModal(true)} />}
+      <EnableOverlayModal />
     </GameLayout>
   );
 };

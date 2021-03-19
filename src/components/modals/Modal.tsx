@@ -50,7 +50,7 @@ const DontShowAgain = styled.aside`
 `;
 
 interface ModalProps {
-  onClose(): void;
+  onClose?(): void;
   title?: string;
   onShowAgainChange?(showAgain: boolean): void;
   showAgain?: boolean;
@@ -71,7 +71,7 @@ const Modal: FC<ModalProps> = ({
         onClick={(event) => event.stopPropagation()}
         className={className}
       >
-        <Close onClick={onClose} />
+        {onClose && <Close onClick={onClose} />}
         {title && <Title>{title}</Title>}
         <ModalBody>{children}</ModalBody>
         {onShowAgainChange && (

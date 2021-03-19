@@ -1,7 +1,7 @@
-import { FC } from 'react';
 import Modal from './Modal';
 import styled from '@emotion/styled';
 import Squid from '../icons/Squid';
+import usePersistentState from '../../hooks/usePersistentState';
 
 const Container = styled.div`
   display: grid;
@@ -13,13 +13,15 @@ const Text = styled.p`
   text-align: center;
 `;
 
-interface GarenaModalProps {
-  onClose(): void;
-}
+const GarenaModal = () => {
+  const [isGarenaUser] = usePersistentState('isGarenaUser', null);
 
-const GarenaModal: FC<GarenaModalProps> = ({ onClose }) => {
+  if (!isGarenaUser) {
+    return null;
+  }
+
   return (
-    <Modal onClose={onClose} title="Garena is not supported">
+    <Modal title="Garena is not supported">
       <Container>
         <Text>
           We are very sorry, but Garena is not supported. There are technical

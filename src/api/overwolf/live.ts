@@ -23,7 +23,7 @@ export const PROGRESS = 'PROGRESS';
 export const LIVE = 'LIVE';
 export const TROPHY_PROGRESS = 'TROPHY_PROGRESS';
 
-let activeTrophies: Trophy[] = [];
+let activeTrophies: Trophy[] = null;
 let live: Live = {
   activePlayer: null,
   allPlayers: null,
@@ -41,7 +41,7 @@ const resetStates = () => {
   unsetLocalStorageItem(PROGRESS);
   unsetLocalStorageItem(LIVE);
   unsetLocalStorageItem(TROPHY_PROGRESS);
-  activeTrophies = [];
+  activeTrophies = null;
   live = {
     activePlayer: null,
     allPlayers: null,

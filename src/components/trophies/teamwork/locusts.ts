@@ -35,6 +35,7 @@ const locusts: Trophy = {
     const locustsKillEvents = events.filter(
       (event) =>
         event.EventName === 'ChampionKill' &&
+        event.Assisters?.length >= 4 &&
         teamNames.includes(event.KillerName)
     );
     const requiredKills = gameData.gameMode === 'ARAM' ? 12 : 10;

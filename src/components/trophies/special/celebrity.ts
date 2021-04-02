@@ -5,7 +5,7 @@ const celebrity: Trophy = {
   island: 'special',
   name: 'celebrity',
   level: 'special4',
-  title: 'celebrity',
+  title: 'Celebrity',
   description: 'Play 100 matches with another trophy hunter.',
   category: 'special',
   maxProgress: 100,

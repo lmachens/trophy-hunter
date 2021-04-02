@@ -1,3 +1,4 @@
+import { getParticipantSoloKills } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const assassinsCreed: Trophy = {
@@ -8,12 +9,8 @@ const assassinsCreed: Trophy = {
   description: 'Achieve seven solo kills.',
   category: 'combat',
   checkProgress: ({ events, participant }) => {
-    const soloKills = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.killerId === participant.participantId &&
-        event.assistingParticipantIds.length === 0
-    ).length;
+    const soloKills = getParticipantSoloKills(events, participant.participantId)
+      .length;
     return soloKills / 7;
   },
   checkLive: ({ events, account }) => {

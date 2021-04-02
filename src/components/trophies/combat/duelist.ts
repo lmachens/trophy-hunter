@@ -1,3 +1,4 @@
+import { getParticipantSoloKills } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const duelist: Trophy = {
@@ -8,12 +9,8 @@ const duelist: Trophy = {
   description: 'Achieve three solo kills.',
   category: 'combat',
   checkProgress: ({ events, participant }) => {
-    const soloKills = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.killerId === participant.participantId &&
-        event.assistingParticipantIds.length === 0
-    ).length;
+    const soloKills = getParticipantSoloKills(events, participant.participantId)
+      .length;
     return soloKills / 3;
   },
   checkLive: ({ events, account }) => {

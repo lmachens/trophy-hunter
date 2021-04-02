@@ -189,6 +189,18 @@ export const getParticipantKills = (
   );
 };
 
+export const getParticipantSoloKills = (
+  events: MatchEvents,
+  participantId: number
+): MatchEvents => {
+  return events.filter(
+    (event) =>
+      event.type === 'CHAMPION_KILL' &&
+      event.killerId === participantId &&
+      event.assistingParticipantIds.length === 0
+  );
+};
+
 export const getParticipantKillsAndAssists = (
   events: MatchEvents,
   participantId: number

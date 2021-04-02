@@ -1,3 +1,4 @@
+import { getParticipantSoloKills } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
 
 const theGrandChallenge: Trophy = {
@@ -9,9 +10,14 @@ const theGrandChallenge: Trophy = {
     'Get a solo-kill and take an inhib-turret or an inhibitor in the 25 seconds after that.',
   category: 'objectives',
   checkProgress: ({ events, participant }) => {
+    const soloKills = getParticipantSoloKills(
+      events,
+      participant.participantId
+    );
+
     const buildingKills = events.filter(
       (event) =>
-        event.type === 'CHAMPION_KILL' &&
+        event.type === 'BUILDING_KILL' &&
         (event.killerId === participant.participantId ||
           event.assistingParticipantIds.some(
             (id) => id === participant.participantId
@@ -21,21 +27,24 @@ const theGrandChallenge: Trophy = {
             event.towerType === 'BASE_TOWER'))
     );
 
-    const validKills = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.killerId === participant.participantId &&
-        event.assistingParticipantIds.length === 0 &&
-        buildingKills.some(
-          (buildingKill) =>
-            buildingKill.timestamp >= event.timestamp &&
-            event.timestamp + 25000 >= buildingKill.timestamp
-        )
+    const validKills = soloKills.filter((event) =>
+      buildingKills.some(
+        (buildingKill) =>
+          buildingKill.timestamp >= event.timestamp &&
+          event.timestamp + 25000 >= buildingKill.timestamp
+      )
     );
 
     return validKills.length;
   },
   checkLive: ({ events, account }) => {
+    const soloKills = events.filter(
+      (event) =>
+        event.EventName === 'ChampionKill' &&
+        event.KillerName === account.summoner.name &&
+        event.Assisters.length === 0
+    );
+
     const buildingKills = events.filter(
       (event) =>
         (event.EventName === 'TurretKilled' ||
@@ -45,16 +54,12 @@ const theGrandChallenge: Trophy = {
             (assister) => assister === account.summoner.name
           ))
     );
-    const validKills = events.filter(
-      (event) =>
-        event.EventName === 'ChampionKill' &&
-        event.KillerName === account.summoner.name &&
-        event.Assisters.length === 0 &&
-        buildingKills.some(
-          (buildingKill) =>
-            buildingKill.EventTime >= event.EventTime &&
-            event.EventTime + 25 >= buildingKill.EventTime
-        )
+    const validKills = soloKills.filter((event) =>
+      buildingKills.some(
+        (buildingKill) =>
+          buildingKill.EventTime >= event.EventTime &&
+          event.EventTime + 25 >= buildingKill.EventTime
+      )
     );
     return validKills.length;
   },

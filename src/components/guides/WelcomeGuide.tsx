@@ -33,7 +33,7 @@ const WelcomeGuide = () => {
         targetLevel?.level.name === 'welcome' && (
           <Tooltip
             title="It’s all about you :)"
-            text="This is your time to conquer the world! Play one game of Summoner’s Rift with the trophy hunter app to begin your journey, once that’s done we will recommend which paths you should begin with based on your personal skills!"
+            text="This is your time to conquer the world! Play one game of Summoner’s Rift or ARAM with the trophy hunter app to begin your journey!"
             placement="top"
             targetId="playstyle"
           />

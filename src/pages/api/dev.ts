@@ -18,11 +18,9 @@ import {
   getAllEvents,
   getParticipantByAccount,
   getParticipantIdentity,
-  getTeammates,
 } from '../../api/riot/helpers';
 import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
-import { getAccountsCollection } from '../../api/accounts/server/collection';
 
 const allTrophies = Object.values(trophies);
 const aramTrophies = allTrophies.filter((trophy) => trophy.aramSupport);

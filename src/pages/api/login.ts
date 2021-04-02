@@ -10,6 +10,7 @@ import {
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import { ONE_YEAR } from '../../api/utils/dates';
 import { getSummoner } from '../../api/riot/server';
+import { partialNewAccount } from '../../api/accounts/server';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -47,33 +48,7 @@ export default applyMiddleware(
             expiresAt: expiresAt,
           },
         },
-        $setOnInsert: {
-          islands: [
-            {
-              name: 'hub',
-              status: 'open',
-            },
-          ],
-          levels: [
-            'welcome',
-            'hubCombat',
-            'hubEpic',
-            'hubObjectives',
-            'hubSkills',
-            'hubSpecial',
-            'hubTeamwork',
-          ].map((name) => ({
-            name,
-            island: 'hub',
-            status: 'active',
-            unlockedAt: now,
-          })),
-          trophies: [],
-          games: 0,
-          lastGameIds: [],
-          favoriteTrophyNames: [],
-          trophiesCompleted: 0,
-        },
+        $setOnInsert: partialNewAccount,
       },
       {
         upsert: true,

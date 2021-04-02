@@ -6,8 +6,9 @@ import {
 } from './collection';
 import { Ranking } from '../types';
 import { Collection } from 'mongodb';
-import { Account } from '..';
+import { Account, AccountTrophy } from '..';
 import { currentSeason } from '../../riot/server';
+import { Trophy } from '../../../components/trophies/types';
 
 export const isLevelNearlyCompleted = (
   level: Level,
@@ -44,3 +45,12 @@ export const getRankings = async (season: string) => {
 
   return rankings;
 };
+
+export const trophyToAccountTrophy = (trophy: Trophy): AccountTrophy => ({
+  name: trophy.name,
+  island: trophy.island,
+  level: trophy.level,
+  status: 'active',
+  progress: 0,
+  progressDetails: null,
+});

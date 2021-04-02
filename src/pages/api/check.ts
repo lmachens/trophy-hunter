@@ -25,6 +25,7 @@ import {
   getUnlockedIslandNames,
   isLevelCompleted,
   isLevelNearlyCompleted,
+  trophyToAccountTrophy,
 } from '../../api/accounts/server/functions';
 import { addHistoryMatch } from '../../api/matches/server/functions';
 
@@ -232,16 +233,7 @@ export default applyMiddleware(
         const newTrophies = newLevels.reduce<AccountTrophy[]>(
           (curr, level) => [
             ...curr,
-            ...level.trophies.map(
-              (trophy): AccountTrophy => ({
-                name: trophy.name,
-                island: trophy.island,
-                level: trophy.level,
-                status: 'active',
-                progress: 0,
-                progressDetails: null,
-              })
-            ),
+            ...level.trophies.map(trophyToAccountTrophy),
           ],
           []
         );

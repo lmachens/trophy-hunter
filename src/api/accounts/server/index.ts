@@ -1,5 +1,51 @@
+import { AccountLevel, AccountTrophy } from '..';
+import {
+  hubCombat,
+  hubEpic,
+  hubObjectives,
+  hubSkills,
+  hubSpecial,
+  hubTeamwork,
+  welcome,
+} from '../../../components/islands/levels';
 import { Account } from '../types';
+import { trophyToAccountTrophy } from './functions';
 
+const levels = [
+  welcome,
+  hubCombat,
+  hubEpic,
+  hubObjectives,
+  hubSkills,
+  hubSpecial,
+  hubTeamwork,
+];
+export const startingAccountLevels: AccountLevel[] = levels.map((level) => ({
+  name: level.name,
+  island: 'hub',
+  status: 'active',
+  unlockedAt: Date.now(),
+}));
+
+export const startingTrophies = levels.reduce<AccountTrophy[]>(
+  (curr, level) => [...curr, ...level.trophies.map(trophyToAccountTrophy)],
+  []
+);
+
+export const partialNewAccount: Omit<Account, 'summoner' | 'authTokens'> = {
+  islands: [
+    {
+      name: 'hub',
+      status: 'open',
+    },
+  ],
+  levels: startingAccountLevels,
+  trophies: startingTrophies,
+  games: 0,
+  lastGameIds: [],
+  favoriteTrophyNames: [],
+  trophiesCompleted: 0,
+};
 export const newAccount: Account = {
   summoner: {
     platformId: 'global',
@@ -11,29 +57,5 @@ export const newAccount: Account = {
     summonerLevel: 0,
   },
   authTokens: [],
-  islands: [
-    {
-      name: 'hub',
-      status: 'open',
-    },
-  ],
-  levels: [
-    'welcome',
-    'hubCombat',
-    'hubEpic',
-    'hubObjectives',
-    'hubSkills',
-    'hubSpecial',
-    'hubTeamwork',
-  ].map((name) => ({
-    name,
-    island: 'hub',
-    status: 'active',
-    unlockedAt: Date.now(),
-  })),
-  trophies: [],
-  games: 0,
-  lastGameIds: [],
-  favoriteTrophyNames: [],
-  trophiesCompleted: 0,
+  ...partialNewAccount,
 };

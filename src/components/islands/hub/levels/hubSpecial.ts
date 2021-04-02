@@ -2,6 +2,7 @@ import { Level } from '../../../levels/types';
 import { SpecialIcon, SpecialMarker } from '../../../levels/special';
 import { special1 } from '../../special/levels';
 import { greenhorn } from '../../../trophies';
+import friendly from '../../../trophies/special/friendly';
 
 const hubSpecial: Level = {
   island: 'hub',
@@ -9,7 +10,7 @@ const hubSpecial: Level = {
   title: 'Special',
   Icon: SpecialIcon,
   Marker: SpecialMarker,
-  trophies: [greenhorn],
+  trophies: [greenhorn, friendly],
   unlocksLevels: [special1],
 };
 

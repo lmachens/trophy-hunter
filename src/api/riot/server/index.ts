@@ -1,6 +1,8 @@
 import getConfig from 'next/config';
+import { getAccountsCollection } from '../../accounts/server/collection';
 import { getJSON } from '../../utils/request';
-import { Summoner, Match, MatchTimeline } from '../types';
+import { getTeammates } from '../helpers';
+import { Summoner, Match, MatchTimeline, Participant } from '../types';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -73,6 +75,28 @@ export const getMatchAndTimeline = ({ platformId, matchId }) =>
       matchId,
     }),
   ]);
+
+export const getTeammateAccounts = async (
+  match: Match,
+  participant: Participant
+) => {
+  const teammates = getTeammates(match, participant);
+  const teammateSummonerNames = match.participantIdentities
+    .filter((participantIdentity) =>
+      teammates.some(
+        (teammate) =>
+          teammate.participantId === participantIdentity.participantId
+      )
+    )
+    .map((participantIdentity) => participantIdentity.player.summonerName);
+
+  const Accounts = await getAccountsCollection();
+  const teammateAccounts = await Accounts.find({
+    'summoner.platformId': match.platformId,
+    'summoner.name': { $in: teammateSummonerNames },
+  }).toArray();
+  return teammateAccounts;
+};
 
 const cachedVersion = {
   timestamp: 0,

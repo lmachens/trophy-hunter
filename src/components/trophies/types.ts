@@ -32,6 +32,7 @@ export interface Trophy {
     account: Account;
     events: MatchEvent[];
     participant: Participant;
+    teammateAccounts: Account[];
   }):
     | {
         progress: number;

@@ -6,7 +6,11 @@ import {
   withSchema,
   withDatabase,
 } from '../../api/utils/server/middleware';
-import { getSummoner, getMatchAndTimeline } from '../../api/riot/server';
+import {
+  getSummoner,
+  getMatchAndTimeline,
+  getTeammateAccounts,
+} from '../../api/riot/server';
 import * as trophies from '../../components/trophies';
 import { newAccount } from '../../api/accounts/server';
 import { Account } from '../../api/accounts';
@@ -14,9 +18,11 @@ import {
   getAllEvents,
   getParticipantByAccount,
   getParticipantIdentity,
+  getTeammates,
 } from '../../api/riot/helpers';
 import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
+import { getAccountsCollection } from '../../api/accounts/server/collection';
 
 const allTrophies = Object.values(trophies);
 const aramTrophies = allTrophies.filter((trophy) => trophy.aramSupport);
@@ -60,6 +66,8 @@ export default applyMiddleware(
     }
 
     const participant = getParticipantByAccount(match, account);
+    const teammateAccounts = await getTeammateAccounts(match, participant);
+
     const trophiesAboutToCheck =
       match.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
     const checkedTrophies = trophiesAboutToCheck.reduce(
@@ -71,6 +79,7 @@ export default applyMiddleware(
           account,
           events,
           participant,
+          teammateAccounts,
         }),
       }),
       {}

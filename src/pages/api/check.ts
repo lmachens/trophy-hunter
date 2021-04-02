@@ -9,7 +9,10 @@ import {
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
-import { getMatchAndTimeline } from '../../api/riot/server';
+import {
+  getMatchAndTimeline,
+  getTeammateAccounts,
+} from '../../api/riot/server';
 import { AccountIsland, AccountLevel, AccountTrophy } from '../../api/accounts';
 import {
   getAllEvents,
@@ -105,6 +108,8 @@ export default applyMiddleware(
       }
       const participant = getParticipantByAccount(match, account);
 
+      const teammateAccounts = await getTeammateAccounts(match, participant);
+
       const accountLevels = [...account.levels];
       const accountIslands = [...account.islands];
       const accountTrophies = [...account.trophies];
@@ -149,6 +154,7 @@ export default applyMiddleware(
             account,
             events,
             participant,
+            teammateAccounts,
           });
           const { progress, details } =
             typeof result === 'number'

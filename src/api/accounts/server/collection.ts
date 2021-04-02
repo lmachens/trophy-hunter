@@ -105,6 +105,7 @@ export const ensureAccountsIndexes = () => {
   log('Create accounts indexes');
   return getAccountsCollection().createIndexes([
     { key: { trophiesCompleted: -1, 'summoner.revisionDate': -1 } },
+    { key: { 'summoner.platformId': 1, 'summoner.name': 1 } },
   ]);
 };
 

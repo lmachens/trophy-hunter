@@ -9,6 +9,7 @@ const master: Trophy = {
   description: 'Play 200 matches with the trophy hunter app.',
   category: 'special',
   maxProgress: 200,
+  aramSupport: true,
   checkProgress: ({ account }) => {
     const trophyProgress = getTrophyProgress(account, 'master');
     return 1 / 200 + trophyProgress;

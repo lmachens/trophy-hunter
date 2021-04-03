@@ -9,6 +9,7 @@ const friendly: Trophy = {
   description: 'Play 2 matches with another trophy hunter.',
   category: 'special',
   maxProgress: 2,
+  aramSupport: true,
   checkProgress: ({ account, teammateAccounts }) => {
     const trophyProgress = getTrophyProgress(account, 'friendly');
     const playedWithTrophyHunter = teammateAccounts.length > 0;

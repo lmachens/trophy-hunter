@@ -9,6 +9,7 @@ const experienced: Trophy = {
   description: 'Play 50 matches with the trophy hunter app.',
   category: 'special',
   maxProgress: 50,
+  aramSupport: true,
   checkProgress: ({ account }) => {
     const trophyProgress = getTrophyProgress(account, 'experienced');
     return 1 / 50 + trophyProgress;

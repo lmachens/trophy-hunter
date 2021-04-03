@@ -15,6 +15,7 @@ const oneTrickPony: Trophy = {
   category: 'special',
   maxProgress: 5,
   ProgressDetails: OneTrickPonyDetails,
+  aramSupport: true,
   checkProgress: ({ account, participant }) => {
     if (!participant.stats.win) {
       return 0;

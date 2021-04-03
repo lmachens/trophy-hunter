@@ -9,6 +9,7 @@ const celebrity: Trophy = {
   description: 'Play 100 matches with another trophy hunter.',
   category: 'special',
   maxProgress: 100,
+  aramSupport: true,
   checkProgress: ({ account, teammateAccounts }) => {
     const trophyProgress = getTrophyProgress(account, 'celebrity');
     const playedWithTrophyHunter = teammateAccounts.length > 0;

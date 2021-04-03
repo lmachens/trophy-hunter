@@ -9,6 +9,7 @@ const prominent: Trophy = {
   description: 'Play 20 matches with another trophy hunter.',
   category: 'special',
   maxProgress: 20,
+  aramSupport: true,
   checkProgress: ({ account, teammateAccounts }) => {
     const trophyProgress = getTrophyProgress(account, 'prominent');
     const playedWithTrophyHunter = teammateAccounts.length > 0;

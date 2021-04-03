@@ -9,6 +9,7 @@ const greenhorn: Trophy = {
   description: 'Play ten matches with the trophy hunter app.',
   category: 'special',
   maxProgress: 10,
+  aramSupport: true,
   checkProgress: ({ account }) => {
     const trophyProgress = getTrophyProgress(account, 'greenhorn');
     return 1 / 10 + trophyProgress;

@@ -160,6 +160,7 @@ export const queues = {
   [SR_RANKED_SOLO]: 'Solo/Duo',
   [SR_BLIND_PICK]: 'Blind',
   [SR_RANKED_FLEX]: 'Flex',
+  [ARAM_HOWLING_ABYSS]: 'ARAM',
 };
 
 if (getLocalStorageItem('dev', false)) {

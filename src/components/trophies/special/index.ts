@@ -10,4 +10,5 @@ export { default as master } from './master';
 export { default as oneTrickPony } from './oneTrickPony';
 export { default as popular } from './popular';
 export { default as prominent } from './prominent';
+export { default as valentines } from './valentines';
 export { default as wisdom } from './wisdom';

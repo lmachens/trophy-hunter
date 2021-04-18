@@ -42,6 +42,7 @@ import useDisplays from '../hooks/useDisplays';
 import useCenterWindow from '../hooks/useCenterWindow';
 import { trackHotkey } from '../api/performance';
 import { SpecialGradients } from '../components/levels/special';
+import SearchingSquid from '../components/icons/SearchingSquid';
 
 getAppVersion().then((version) => log(`Running ${version}`));
 
@@ -97,6 +98,19 @@ const Categories = styled.div`
   > * {
     margin-left: 18px;
     margin-top: 18px;
+  }
+`;
+
+const Center = styled.div`
+  display: grid;
+  place-content: center;
+  place-items: center;
+  flex: 1;
+
+  p {
+    margin-top: 20px;
+    font-size: 18px;
+    text-transform: uppercase;
   }
 `;
 
@@ -308,16 +322,24 @@ const SecondScreen: NextPage = () => {
               onClick={() => setFilterIndex(allFilters.indexOf('hub'))}
             />
           </Categories>
-          <List>
-            {trophies.map((trophy) => (
-              <TrophyListItem
-                trophy={trophy}
-                key={trophy.name}
-                borderless
-                progress={trophyProgress ? trophyProgress[trophy.name] : 0}
-              />
-            ))}
-          </List>
+          {trophies.length !== 0 && (
+            <List>
+              {trophies.map((trophy) => (
+                <TrophyListItem
+                  trophy={trophy}
+                  key={trophy.name}
+                  borderless
+                  progress={trophyProgress ? trophyProgress[trophy.name] : 0}
+                />
+              ))}
+            </List>
+          )}
+          {trophies.length === 0 && (
+            <Center>
+              <SearchingSquid />
+              <p>No trophies to show</p>
+            </Center>
+          )}
         </main>
         <aside>
           <Profile />

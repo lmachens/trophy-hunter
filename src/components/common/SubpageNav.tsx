@@ -8,25 +8,51 @@ import { Tooltip } from '../tooltip';
 import { useRouter } from 'next/router';
 import useVersion from '../../hooks/useVersion';
 import NavIconButton from './NavIconButton';
+import { useAccount } from '../../contexts/account';
+import FancyButton from './FancyButton';
 
 const Nav = styled.nav`
   display: flex;
 `;
 
+const BackButton = styled(FancyButton)`
+  margin: 0;
+  text-decoration: none;
+
+  :active {
+    text-decoration: none;
+  }
+`;
+
 const SubpageNav = () => {
   const router = useRouter();
   const { season: currentSeason } = useVersion();
+  const { isPersonalAccount } = useAccount();
 
   const { subpage = 'map' } = router.query;
 
   return (
     <Nav onClick={(event) => event.stopPropagation()}>
+      {isPersonalAccount && (
+        <Link
+          href={{
+            pathname: '/league-of-legends',
+            query: {
+              subpage: 'map',
+            },
+          }}
+          passHref
+        >
+          <BackButton as="a">Back to my profile</BackButton>
+        </Link>
+      )}
       <Tooltip title="Map" placement="top">
         <div>
           <Link
             href={{
               pathname: '/league-of-legends',
               query: {
+                ...router.query,
                 subpage: 'map',
               },
             }}
@@ -44,6 +70,7 @@ const SubpageNav = () => {
             href={{
               pathname: '/league-of-legends',
               query: {
+                ...router.query,
                 subpage: 'leaderboard',
                 season: currentSeason,
               },
@@ -62,6 +89,7 @@ const SubpageNav = () => {
             href={{
               pathname: '/league-of-legends',
               query: {
+                ...router.query,
                 subpage: 'history',
               },
             }}

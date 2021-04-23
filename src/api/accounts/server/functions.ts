@@ -35,6 +35,7 @@ export const getRankings = async (season: string) => {
     .limit(50)
     .map<Ranking>((account) => ({
       summonerName: account.summoner.name,
+      platformId: account.summoner.platformId,
       profileIconId: account.summoner.profileIconId,
       islands: account.islands
         .filter((island) => island.status === 'done')

@@ -10,6 +10,7 @@ import Profile from '../components/trophies/Profile';
 import { ReactNode } from 'react';
 import SubpageNav from '../components/common/SubpageNav';
 import { ParsedUrlQuery } from 'querystring';
+import { Account } from '../api/accounts';
 
 const Container = styled.div`
   display: flex;
@@ -41,11 +42,11 @@ const Side = styled.aside`
 `;
 
 type Props = {
-  activeTool: 'settings' | 'collection';
+  activeTool: string;
   aside: ReactNode;
   children: ReactNode;
   hideProfile?: boolean;
-  onToolClick(tool: 'settings' | 'collection'): void;
+  onToolClick(tool: string): void;
   onMainClick(): void;
 };
 
@@ -85,6 +86,7 @@ const GameLayout = ({
 };
 
 export type GameChildProps = {
+  account: Account;
   onQueryChange(query: ParsedUrlQuery): void;
 };
 

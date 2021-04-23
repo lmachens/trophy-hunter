@@ -59,6 +59,7 @@ export interface AccountTrophy {
 
 export type Ranking = {
   summonerName: string;
+  platformId: string;
   profileIconId: number;
   islands: string[];
   trophiesCompleted: number;

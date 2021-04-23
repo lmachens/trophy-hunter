@@ -8,7 +8,6 @@ import TrophyList from '../trophies/TrophyList';
 import { Tooltip } from '../tooltip';
 import { categoriesMap } from '../trophies/categories';
 import { toggleArrayElement } from '../../api/utils/arrays';
-import { useAccount } from '../../contexts/account';
 import Checkbox from '../common/Checkbox';
 import IconButton from '../common/IconButton';
 import { GameChildProps } from '../../layouts/GameLayout';
@@ -62,8 +61,7 @@ const EmptyContainer = styled.div`
   font-family: Roboto Mono;
 `;
 
-const MapOverview = ({ onQueryChange }: GameChildProps) => {
-  const { account } = useAccount();
+const MapOverview = ({ account, onQueryChange }: GameChildProps) => {
   const availableTrophies = useAvailableTrophies();
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [categories, setCategories] = useState<string[]>(

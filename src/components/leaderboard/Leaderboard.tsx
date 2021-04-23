@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useQuery } from 'react-query';
 import { getRankings, Ranking } from '../../api/accounts';
-import PlayerCard, { Card } from './PlayerCard';
+import PlayerCard from './PlayerCard';
 import useVersion from '../../hooks/useVersion';
 import { Tooltip } from '../tooltip';
 
@@ -54,12 +54,7 @@ const Container = styled.div`
 
 const NotFirst = styled.div`
   background: #3f3e43;
-  padding: 25px 12px;
   flex: 3;
-
-  ${Card} + ${Card} {
-    margin-top: 20px;
-  }
 `;
 
 const Leaderboard = () => {
@@ -86,6 +81,7 @@ const Leaderboard = () => {
             key={season}
             href={{
               query: {
+                ...router.query,
                 subpage: 'leaderboard',
                 season,
               },

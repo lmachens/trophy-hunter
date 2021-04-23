@@ -5,6 +5,7 @@ import Match from './Match';
 import { getHistoryMatches, HistoryMatch } from '../../api/matches';
 import Squid from '../icons/Squid';
 import { trackLink } from '../../api/performance';
+import { GameChildProps } from '../../layouts/GameLayout';
 
 const Container = styled.div`
   font-family: Roboto Mono;
@@ -45,10 +46,17 @@ const NoMatches = styled.div`
   }
 `;
 
-const History = () => {
+const History = ({ account }: GameChildProps) => {
   const { data: matches = Array<HistoryMatch>(20).fill(null) } = useQuery(
-    'matches',
-    getHistoryMatches
+    ['matches', account?._id],
+    () =>
+      getHistoryMatches({
+        summonerName: account.summoner.name,
+        platformId: account.summoner.platformId,
+      }),
+    {
+      enabled: !!account,
+    }
   );
 
   return (

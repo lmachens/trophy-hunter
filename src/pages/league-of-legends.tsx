@@ -15,6 +15,7 @@ import Help from '../components/help/Help';
 import SpreadTheLove from '../components/help/SpreadTheLove';
 import ARAMModal from '../components/modals/ARAMModal';
 import EnableOverlayModal from '../components/modals/EnableOverlayModal';
+import { useAccount } from '../contexts/account';
 
 const subpages: {
   [subpage: string]: {
@@ -42,17 +43,27 @@ const subpages: {
   },
 };
 
+const normalizeQuery = (query: ParsedUrlQuery) => {
+  return Object.entries(query).reduce<NodeJS.Dict<string>>(
+    (prev, [key, value]) => ({
+      ...prev,
+      [key]: Array.isArray(value) ? value[0] : value,
+    }),
+    {}
+  );
+};
+
 const LeagueOfLegends: NextPage = () => {
+  const router = useRouter();
+  const { subpage = 'map', tool } = normalizeQuery(router.query);
+  const { account } = useAccount();
+
+  useCenterWindow();
+
   const [sawARAMModal, setSawARAMModal] = usePersistentState(
     'sawARAMModal',
     false
   );
-
-  const router = useRouter();
-  const { subpage = 'map', tool } = router.query;
-  useCenterWindow();
-
-  const activeTool = tool === 'settings' || tool === 'collection' ? tool : null;
 
   const setQueryParam = (query: ParsedUrlQuery) => {
     const newQuery = { ...router.query, ...query };
@@ -65,19 +76,18 @@ const LeagueOfLegends: NextPage = () => {
     });
   };
 
-  const activeSubpage = typeof subpage === 'string' ? subpage : null;
-  const { Main, Aside, hideProfile } = subpages[activeSubpage] || subpages.map;
+  const { Main, Aside, hideProfile } = subpages[subpage];
 
   return (
     <GameLayout
-      activeTool={activeTool}
-      onToolClick={(tool) => {
+      activeTool={tool}
+      onToolClick={(newTool) => {
         setQueryParam({
-          tool: activeTool === tool ? undefined : tool,
+          tool: newTool === tool ? undefined : newTool,
           level: undefined,
         });
       }}
-      aside={<Aside onQueryChange={setQueryParam} />}
+      aside={<Aside account={account} onQueryChange={setQueryParam} />}
       onMainClick={() => {
         if (router.query.tool || router.query.level) {
           setQueryParam({ tool: undefined, level: undefined });
@@ -85,7 +95,7 @@ const LeagueOfLegends: NextPage = () => {
       }}
       hideProfile={hideProfile}
     >
-      <Main onQueryChange={setQueryParam} />
+      <Main account={account} onQueryChange={setQueryParam} />
       <GarenaModal />
       {!sawARAMModal && <ARAMModal onClose={() => setSawARAMModal(true)} />}
       <EnableOverlayModal />

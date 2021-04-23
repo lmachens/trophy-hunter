@@ -42,8 +42,8 @@ const SidebarLink = styled.a<SidebarLinkProps>`
 `;
 
 interface SidebarProps {
-  activeTool: 'settings' | 'collection';
-  onToolClick(tool: 'settings' | 'collection'): void;
+  activeTool: string;
+  onToolClick(tool: string): void;
 }
 
 const Sidebar: FC<SidebarProps> = ({ activeTool, onToolClick }) => {

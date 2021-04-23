@@ -6,6 +6,7 @@ import IslandIcons from './IslandIcons';
 import { css } from '@emotion/react';
 import { Ranking } from '../../api/accounts';
 import { loadingStyle } from '../../styles/animations';
+import Link from 'next/link';
 
 type Loadable = {
   isLoading: boolean;
@@ -62,7 +63,7 @@ const sizes = {
   L: css`
     column-gap: 15px;
 
-    padding: 25px;
+    padding: 24px;
     grid-template-areas:
       'rank avatar summoner-name'
       'rank avatar trophies-count'
@@ -87,6 +88,7 @@ const sizes = {
   `,
   M: css`
     column-gap: 10px;
+    padding: 17px 12px;
 
     grid-template-areas:
       'rank avatar summoner-name islands'
@@ -149,12 +151,21 @@ const sizes = {
   `,
 };
 
-export const Card = styled.div<CardProps>`
+const CardLink = styled.a<CardProps>`
   background: #3f3e43;
   display: grid;
   font-size: 16px;
   align-items: center;
   row-gap: 6px;
+  text-decoration: none;
+
+  :active {
+    text-decoration: none;
+  }
+
+  :hover {
+    background: #616165;
+  }
 
   ${(props) => sizes[props.size]};
 `;
@@ -168,30 +179,39 @@ const PlayerCard = ({ size, rank, ranking }: Props) => {
   const { data: version } = useQuery('version', getRecentVersion);
 
   return (
-    <Card size={size}>
-      <Rank>#{rank}</Rank>
-      <Avatar
-        isLoading={!ranking}
-        src={
-          version && ranking?.profileIconId
-            ? `https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/profileicon/${ranking?.profileIconId}.png`
-            : "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
-        }
-        alt=""
-      />
-      <SummonerName isLoading={!ranking}>{ranking?.summonerName}</SummonerName>
-      {(size !== 'S' || ranking) && (
-        <TrophiesCount isLoading={!ranking}>
-          {ranking && (
-            <>
-              {ranking?.trophiesCompleted} <span>Trophies</span>
-            </>
-          )}
-        </TrophiesCount>
-      )}
-      {ranking && size !== 'L' && <Islands>Completed</Islands>}
-      {ranking?.islands && <IslandsCompleted islands={ranking.islands || []} />}
-    </Card>
+    <Link
+      href={`/league-of-legends?subpage=map&summonerName=${ranking?.summonerName}&platformId=${ranking?.platformId}`}
+      passHref
+    >
+      <CardLink size={size}>
+        <Rank>#{rank}</Rank>
+        <Avatar
+          isLoading={!ranking}
+          src={
+            version && ranking?.profileIconId
+              ? `https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/profileicon/${ranking?.profileIconId}.png`
+              : "data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
+          }
+          alt=""
+        />
+        <SummonerName isLoading={!ranking}>
+          {ranking?.summonerName}
+        </SummonerName>
+        {(size !== 'S' || ranking) && (
+          <TrophiesCount isLoading={!ranking}>
+            {ranking && (
+              <>
+                {ranking?.trophiesCompleted} <span>Trophies</span>
+              </>
+            )}
+          </TrophiesCount>
+        )}
+        {ranking && size !== 'L' && <Islands>Completed</Islands>}
+        {ranking?.islands && (
+          <IslandsCompleted islands={ranking.islands || []} />
+        )}
+      </CardLink>
+    </Link>
   );
 };
 

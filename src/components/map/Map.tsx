@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import ZoomToFit from '../common/ZoomToFit';
 import Background from '../islands/Background';
 import LevelPanel from '../levels/LevelPanel';
-import { useAccount } from '../../contexts/account';
 import islands from '../islands/islands';
 import { SpecialGradients } from '../levels/special';
 import useTargetLevel from '../../hooks/useTargetLevel';
@@ -18,8 +17,7 @@ const SizeContainer = styled(ZoomToFit)`
   margin: 30px;
 `;
 
-const Map = ({ onQueryChange }: GameChildProps) => {
-  const { account } = useAccount();
+const Map = ({ account, onQueryChange }: GameChildProps) => {
   const { level, targetLevel } = useTargetLevel();
 
   const { left, top } = targetLevel || { left: 0, top: 0 };

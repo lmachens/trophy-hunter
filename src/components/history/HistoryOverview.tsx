@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useAccount } from '../../contexts/account';
 import * as combatTrophies from '../trophies/combat';
 import * as epicTrophies from '../trophies/epic';
 import * as hubTrophies from '../trophies/hub';
@@ -10,6 +9,7 @@ import * as specialTrophies from '../trophies/special';
 import * as teamworkTrophies from '../trophies/teamwork';
 import * as trophies from '../trophies';
 import TrophyProgress from './TrophyProgress';
+import { GameChildProps } from '../../layouts/GameLayout';
 
 const progressList = [
   {
@@ -79,8 +79,7 @@ const ProgressContainer = styled.div`
   }
 `;
 
-const HistoryOverview = () => {
-  const { account } = useAccount();
+const HistoryOverview = ({ account }: GameChildProps) => {
   const completedTrophies =
     account?.trophies.filter((accountTrophy) => accountTrophy.progress === 1) ||
     [];

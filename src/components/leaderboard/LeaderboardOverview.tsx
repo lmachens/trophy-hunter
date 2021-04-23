@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import React, { useMemo } from 'react';
-import { useAccount } from '../../contexts/account';
 import ProgressBar from '../common/ProgressBar';
 import IslandIcons from './IslandIcons';
 import * as trophies from '../trophies';
@@ -8,6 +7,7 @@ import { useRouter } from 'next/router';
 import { getSeasonAccount } from '../../api/accounts';
 import { useQuery } from 'react-query';
 import useVersion from '../../hooks/useVersion';
+import { GameChildProps } from '../../layouts/GameLayout';
 
 const Container = styled.div`
   background: #2b2a30;
@@ -70,7 +70,7 @@ const IslandsCompleted = styled(IslandIcons)`
 
 const numberOfTrophies = Object.keys(trophies).length;
 
-const LeaderboardOverview = () => {
+const LeaderboardOverview = ({ account: currentAccount }: GameChildProps) => {
   const router = useRouter();
   const { season: currentSeason } = useVersion();
 
@@ -81,7 +81,6 @@ const LeaderboardOverview = () => {
     `accountSeason-${activeSeason}`,
     () => (season !== currentSeason ? getSeasonAccount(activeSeason) : null)
   );
-  const { account: currentAccount } = useAccount();
   const account = season !== currentSeason ? seasonAccount : currentAccount;
 
   const trophiesCount = useMemo(() => account?.trophiesCompleted || 0, [

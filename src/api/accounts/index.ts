@@ -12,6 +12,12 @@ export const getAccount = () => {
   return getJSON<Account>('/api/account');
 };
 
+export const getPublicAccount = ({ summonerName, platformId }: Credential) => {
+  return getJSON<Account>(
+    `/api/public-account?summonerName=${summonerName}&platformId=${platformId}`
+  );
+};
+
 export const postCheck = (matchId: number) => {
   log(`postCheck ${matchId}`);
   trackCheck(matchId);

@@ -1,3 +1,4 @@
+import { FilterQuery } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import { getHistoryMatches } from '../../api/matches/server/functions';
@@ -12,15 +13,25 @@ import {
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { summonerName, platformId } = normalizeQuery(req.query);
+    let query: FilterQuery<Account> = {
+      'summoner.name': summonerName,
+      'summoner.platformId': platformId,
+    };
     if (!summonerName || !platformId) {
+      const { authToken } = req.cookies;
+      query = {
+        authTokens: {
+          $elemMatch: {
+            token: authToken,
+            expiresAt: { $gt: new Date() },
+          },
+        },
+      };
       return res.status(400).end('Invalid query');
     }
 
     const Accounts = await getAccountsCollection();
-    const account = await Accounts.findOne({
-      'summoner.name': summonerName,
-      'summoner.platformId': platformId,
-    });
+    const account = await Accounts.findOne(query);
     if (!account) {
       return res.status(404).end('Not found');
     }

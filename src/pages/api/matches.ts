@@ -19,6 +19,9 @@ export default applyMiddleware(
     };
     if (!summonerName || !platformId) {
       const { authToken } = req.cookies;
+      if (!authToken) {
+        return res.status(401).end('Unauthorized');
+      }
       query = {
         authTokens: {
           $elemMatch: {
@@ -27,7 +30,6 @@ export default applyMiddleware(
           },
         },
       };
-      return res.status(400).end('Invalid query');
     }
 
     const Accounts = await getAccountsCollection();

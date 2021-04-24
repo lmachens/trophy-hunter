@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import GameLayout, { GameChildProps } from '../layouts/GameLayout';
-import usePersistentState from '../hooks/usePersistentState';
 import GarenaModal from '../components/modals/GarenaModal';
 import useCenterWindow from '../hooks/useCenterWindow';
 import Map from '../components/map/Map';
@@ -13,7 +12,6 @@ import History from '../components/history/History';
 import HistoryOverview from '../components/history/HistoryOverview';
 import Help from '../components/help/Help';
 import SpreadTheLove from '../components/help/SpreadTheLove';
-import ARAMModal from '../components/modals/ARAMModal';
 import EnableOverlayModal from '../components/modals/EnableOverlayModal';
 import { useAccount } from '../contexts/account';
 
@@ -60,11 +58,6 @@ const LeagueOfLegends: NextPage = () => {
 
   useCenterWindow();
 
-  const [sawARAMModal, setSawARAMModal] = usePersistentState(
-    'sawARAMModal',
-    false
-  );
-
   const setQueryParam = (query: ParsedUrlQuery) => {
     const newQuery = { ...router.query, ...query };
     Object.keys(newQuery).forEach(
@@ -97,7 +90,6 @@ const LeagueOfLegends: NextPage = () => {
     >
       <Main account={account} onQueryChange={setQueryParam} />
       <GarenaModal />
-      {!sawARAMModal && <ARAMModal onClose={() => setSawARAMModal(true)} />}
       <EnableOverlayModal />
     </GameLayout>
   );

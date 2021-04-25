@@ -13,7 +13,6 @@ import {
 } from '../../api/riot/server';
 import * as trophies from '../../components/trophies';
 import { newAccount } from '../../api/accounts/server';
-import { Account } from '../../api/accounts';
 import {
   getAllEvents,
   getParticipantByAccount,
@@ -21,6 +20,7 @@ import {
 } from '../../api/riot/helpers';
 import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
+import { getAccountsCollection } from '../../api/accounts/server/collection';
 
 const allTrophies = Object.values(trophies);
 const aramTrophies = allTrophies.filter((trophy) => trophy.aramSupport);
@@ -49,7 +49,11 @@ export default applyMiddleware(
 
     const events = getAllEvents(timeline);
 
-    const account: Account = {
+    const Accounts = await getAccountsCollection();
+    const account = (await Accounts.findOne({
+      'summoner.name': summoner.name,
+      'summoner.platformId': summoner.platformId,
+    })) || {
       ...newAccount,
       summoner: summoner,
     };

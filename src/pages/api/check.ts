@@ -166,8 +166,9 @@ export default applyMiddleware(
           }
           accountTrophy.progress = Math.min(1, progress);
           accountTrophy.progressDetails = details;
-          if (progress >= 0.99) {
+          if (progress >= 0.999) {
             // Sometimes it is not exactly 1
+            accountTrophy.progress = 1;
             accountTrophy.status = 'completed';
             levelTrophiesCompleted++;
             completedTrophyNames.push(accountTrophy.name);

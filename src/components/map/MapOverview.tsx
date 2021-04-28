@@ -10,9 +10,9 @@ import { categoriesMap } from '../trophies/categories';
 import { toggleArrayElement } from '../../api/utils/arrays';
 import Checkbox from '../common/Checkbox';
 import IconButton from '../common/IconButton';
-import { GameChildProps } from '../../layouts/GameLayout';
 import { trackFilter } from '../../api/performance';
 import Empty from '../icons/Empty';
+import { useTargetAccount } from '../../contexts/account';
 
 const Header = styled.header`
   display: flex;
@@ -61,8 +61,9 @@ const EmptyContainer = styled.div`
   font-family: Roboto Mono;
 `;
 
-const MapOverview = ({ account, onQueryChange }: GameChildProps) => {
-  const availableTrophies = useAvailableTrophies();
+const MapOverview = () => {
+  const account = useTargetAccount();
+  const availableTrophies = useAvailableTrophies(account);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [categories, setCategories] = useState<string[]>(
     Object.keys(categoriesMap)
@@ -156,12 +157,10 @@ const MapOverview = ({ account, onQueryChange }: GameChildProps) => {
         )}
         {trophies.map((trophy) => (
           <TrophyListItem
+            account={account}
             trophy={trophy}
             key={trophy.name}
             borderless
-            onClick={() =>
-              onQueryChange({ tool: undefined, level: trophy.level })
-            }
           />
         ))}
       </TrophyList>

@@ -8,6 +8,7 @@ import { SpecialGradients } from '../levels/special';
 import useTargetLevel from '../../hooks/useTargetLevel';
 import { GameChildProps } from '../../layouts/GameLayout';
 import { WelcomeGuide } from '../guides';
+import { useTargetAccount } from '../../contexts/account';
 
 const SizeContainer = styled(ZoomToFit)`
   position: absolute;
@@ -17,7 +18,8 @@ const SizeContainer = styled(ZoomToFit)`
   margin: 30px;
 `;
 
-const Map = ({ account, onQueryChange }: GameChildProps) => {
+const Map = ({ onQueryChange }: GameChildProps) => {
+  const account = useTargetAccount();
   const { level, targetLevel } = useTargetLevel();
 
   const { left, top } = targetLevel || { left: 0, top: 0 };
@@ -50,6 +52,7 @@ const Map = ({ account, onQueryChange }: GameChildProps) => {
         <Background />
       </SizeContainer>
       <LevelPanel
+        account={account}
         level={targetLevel?.level}
         open={Boolean(level)}
         onToggleClick={(event) => {

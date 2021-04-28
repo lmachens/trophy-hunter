@@ -4,7 +4,6 @@ import { Account } from '../../api/accounts';
 interface AccountContextValue {
   account: Account;
   loading: boolean;
-  isPersonalAccount?: boolean;
 }
 
 const AccountContext = createContext<AccountContextValue>({

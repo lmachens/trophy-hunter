@@ -13,7 +13,7 @@ import HistoryOverview from '../components/history/HistoryOverview';
 import Help from '../components/help/Help';
 import SpreadTheLove from '../components/help/SpreadTheLove';
 import EnableOverlayModal from '../components/modals/EnableOverlayModal';
-import { useAccount } from '../contexts/account';
+import Profile from '../components/trophies/Profile';
 
 const subpages: {
   [subpage: string]: {
@@ -39,6 +39,10 @@ const subpages: {
     Aside: SpreadTheLove,
     hideProfile: true,
   },
+  profile: {
+    Main: Map,
+    Aside: HistoryOverview,
+  },
 };
 
 const normalizeQuery = (query: ParsedUrlQuery) => {
@@ -54,8 +58,6 @@ const normalizeQuery = (query: ParsedUrlQuery) => {
 const LeagueOfLegends: NextPage = () => {
   const router = useRouter();
   const { subpage = 'map', tool } = normalizeQuery(router.query);
-  const { account } = useAccount();
-
   useCenterWindow();
 
   const setQueryParam = (query: ParsedUrlQuery) => {
@@ -80,15 +82,19 @@ const LeagueOfLegends: NextPage = () => {
           level: undefined,
         });
       }}
-      aside={<Aside account={account} onQueryChange={setQueryParam} />}
+      aside={
+        <>
+          {!hideProfile && <Profile />}
+          <Aside onQueryChange={setQueryParam} />
+        </>
+      }
       onMainClick={() => {
         if (router.query.tool || router.query.level) {
           setQueryParam({ tool: undefined, level: undefined });
         }
       }}
-      hideProfile={hideProfile}
     >
-      <Main account={account} onQueryChange={setQueryParam} />
+      <Main onQueryChange={setQueryParam} />
       <GarenaModal />
       <EnableOverlayModal />
     </GameLayout>

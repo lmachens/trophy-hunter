@@ -1,25 +1,27 @@
-import { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes, useState } from 'react';
 import styled from '@emotion/styled';
 import { Trophy } from './types';
-import { useTrophyProgress, useAccount } from '../../contexts/account';
+import { useAccount, useTrophyProgress } from '../../contexts/account';
 import FavoritesFilter from '../icons/FavoritesFilter';
 import Grow from '../common/Grow';
 import ProgressBar from '../common/ProgressBar';
 import { categoriesMap } from './categories';
 import { useQueryClient, useMutation } from 'react-query';
-import { patchAccount } from '../../api/accounts';
+import { Account, patchAccount } from '../../api/accounts';
 import { toggleArrayElement } from '../../api/utils/arrays';
 import Flag from '../icons/Flag';
 import { Tooltip } from '../tooltip';
 import TrophyStats from './TrophyStats';
 import { trackFavorite } from '../../api/performance';
 import Aram from '../icons/Aram';
+import TrophyModal from '../modals/TrophyModal';
 
 interface ListItemProps {
   borderless?: boolean;
   island?: string;
 }
 const ListItem = styled.div<ListItemProps>`
+  cursor: pointer;
   background-color: #2b2a30;
   padding: 10px;
   margin-bottom: 4px;
@@ -42,6 +44,7 @@ const ListItem = styled.div<ListItemProps>`
 interface TrophyListItemProps
   extends ListItemProps,
     HTMLAttributes<HTMLDivElement> {
+  account: Account;
   trophy: Trophy;
   disableFavorite?: boolean;
   progress?: number;
@@ -73,6 +76,7 @@ const Title = styled.h3`
 `;
 
 const TrophyListItem: FC<TrophyListItemProps> = ({
+  account,
   trophy,
   borderless,
   progress,
@@ -82,9 +86,10 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   if (!trophy) {
     return null;
   }
+  const { account: ownAccount } = useAccount();
 
-  const { account } = useAccount();
   const queryClient = useQueryClient();
+  const [showModal, setShowModal] = useState(false);
 
   const { mutate: patch } = useMutation(patchAccount, {
     onSuccess: () => {
@@ -94,10 +99,14 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   const { progress: trophyProgress, progressDetails } =
     typeof progress !== 'undefined'
       ? { progress, progressDetails: null }
-      : useTrophyProgress(trophy);
+      : useTrophyProgress(account, trophy);
   const ProgressIcon = categoriesMap[trophy.category].Icon;
   return (
-    <ListItem borderless={borderless} {...props}>
+    <ListItem
+      borderless={borderless}
+      {...props}
+      onClick={() => setShowModal(true)}
+    >
       <Progress>
         <ProgressIcon progress={trophyProgress} />
       </Progress>
@@ -132,20 +141,25 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <Flag onClick={(event) => event.stopPropagation()} />
         </Tooltip>
       )}
-      {!disableFavorite && account && trophyProgress < 1 && (
-        <Favorite
-          active={account.favoriteTrophyNames.includes(trophy.name)}
-          onClick={(event) => {
-            event.stopPropagation();
-            patch({
-              favoriteTrophyNames: toggleArrayElement(
-                account.favoriteTrophyNames,
-                trophy.name
-              ),
-            });
-            trackFavorite(trophy.name);
-          }}
-        />
+      {!disableFavorite &&
+        account?._id === ownAccount?._id &&
+        trophyProgress < 1 && (
+          <Favorite
+            active={account.favoriteTrophyNames.includes(trophy.name)}
+            onClick={(event) => {
+              event.stopPropagation();
+              patch({
+                favoriteTrophyNames: toggleArrayElement(
+                  account.favoriteTrophyNames,
+                  trophy.name
+                ),
+              });
+              trackFavorite(trophy.name);
+            }}
+          />
+        )}
+      {showModal && (
+        <TrophyModal trophy={trophy} onClose={() => setShowModal(false)} />
       )}
     </ListItem>
   );

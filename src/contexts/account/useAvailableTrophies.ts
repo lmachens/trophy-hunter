@@ -1,12 +1,10 @@
-import useAccount from './useAccount';
 import * as levels from '../../components/islands/levels';
 import { Level } from '../../components/levels/types';
 import { useMemo } from 'react';
 import { Trophy } from '../../components/trophies/types';
+import { Account } from '../../api/accounts';
 
-const useAvailableTrophies = () => {
-  const { account } = useAccount();
-
+const useAvailableTrophies = (account: Account) => {
   const availableTrophies = useMemo(() => {
     if (!account) {
       return [];

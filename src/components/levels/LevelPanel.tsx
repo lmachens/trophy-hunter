@@ -6,6 +6,7 @@ import { Level } from './types';
 import TrophyListItem from '../trophies/TrophyListItem';
 import TrophyList from '../trophies/TrophyList';
 import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
+import { Account } from '../../api/accounts';
 
 type Open = { open: boolean };
 
@@ -34,13 +35,19 @@ const Title = styled.h3`
 `;
 
 interface LevelPanelProps {
+  account: Account;
   level?: Level;
-  onToggleClick(event: MouseEvent): void;
   open: boolean;
+  onToggleClick(event: MouseEvent): void;
 }
 
-const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
-  const availableTrophies = useAvailableTrophies();
+const LevelPanel: FC<LevelPanelProps> = ({
+  account,
+  level,
+  open,
+  onToggleClick,
+}) => {
+  const availableTrophies = useAvailableTrophies(account);
 
   let content;
   if (open && !level) {
@@ -54,6 +61,7 @@ const LevelPanel: FC<LevelPanelProps> = ({ level, open, onToggleClick }) => {
           {level.trophies.map((trophy) => (
             <TrophyListItem
               key={trophy.name}
+              account={account}
               trophy={trophy}
               disableFavorite={
                 !availableTrophies.some(

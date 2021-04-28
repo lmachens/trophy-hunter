@@ -126,7 +126,7 @@ const SecondScreen: NextPage = () => {
     'second_screen'
   );
   const levels = account?.levels || [];
-  const availableTrophies = useAvailableTrophies();
+  const availableTrophies = useAvailableTrophies(account);
   const [trophyProgress] = usePersistentState<{ [trophyName: string]: number }>(
     TROPHY_PROGRESS,
     {}
@@ -342,7 +342,7 @@ const SecondScreen: NextPage = () => {
           )}
         </main>
         <aside>
-          <Profile />
+          <Profile account={account} />
           <SpecialGradients />
           <SmallIslands>
             {islands.map(({ name, Component: Island }) => (

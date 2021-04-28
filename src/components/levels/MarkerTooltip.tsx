@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 import { Tooltip } from '../tooltip';
 import { Level } from './types';
 import styled from '@emotion/styled';
-import { useAccount } from '../../contexts/account';
+import { useTargetAccount } from '../../contexts/account';
 import { categoriesMap } from '../trophies/categories';
 
 interface MarkerTooltipProps {
@@ -20,7 +20,7 @@ const Trophies = styled.div`
 `;
 
 const MarkerTooltip: FC<MarkerTooltipProps> = ({ children, level }) => {
-  const { account } = useAccount();
+  const account = useTargetAccount();
 
   const trophies = level.trophies.map((trophy) => {
     const accountTrophy = account?.trophies.find(

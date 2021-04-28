@@ -6,11 +6,9 @@ import { Settings } from '../components/settings';
 import Collection from '../components/tools/collection';
 import ErrorBoundary from '../components/common/ErrorBoundary';
 import { VideoAds } from '../components/ads';
-import Profile from '../components/trophies/Profile';
 import { ReactNode } from 'react';
 import SubpageNav from '../components/common/SubpageNav';
 import { ParsedUrlQuery } from 'querystring';
-import { Account } from '../api/accounts';
 
 const Container = styled.div`
   display: flex;
@@ -45,7 +43,6 @@ type Props = {
   activeTool: string;
   aside: ReactNode;
   children: ReactNode;
-  hideProfile?: boolean;
   onToolClick(tool: string): void;
   onMainClick(): void;
 };
@@ -54,7 +51,6 @@ const GameLayout = ({
   children,
   aside,
   activeTool,
-  hideProfile,
   onMainClick,
   onToolClick,
 }: Props) => {
@@ -70,7 +66,6 @@ const GameLayout = ({
       </Main>
       <Side>
         <ErrorBoundary grid>
-          {!hideProfile && <Profile />}
           {aside}
           <VideoAds />
         </ErrorBoundary>
@@ -86,7 +81,6 @@ const GameLayout = ({
 };
 
 export type GameChildProps = {
-  account: Account;
   onQueryChange(query: ParsedUrlQuery): void;
 };
 

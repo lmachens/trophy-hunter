@@ -1,8 +1,7 @@
-import { FC } from 'react';
 import styled from '@emotion/styled';
-import { useAccount } from '../../contexts/account';
 import { useQuery } from 'react-query';
 import { getRecentVersion } from '../../api/riot';
+import { useTargetAccount } from '../../contexts/account';
 import * as trophies from './index';
 
 const Container = styled.div`
@@ -18,8 +17,8 @@ const Avatar = styled.img`
   border: 1px solid #eaeaea;
 `;
 
-const Profile: FC = () => {
-  const { account } = useAccount();
+const Profile = () => {
+  const account = useTargetAccount();
   const { data: version } = useQuery('version', getRecentVersion);
 
   return (

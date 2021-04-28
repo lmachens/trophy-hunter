@@ -180,7 +180,7 @@ const PlayerCard = ({ size, rank, ranking }: Props) => {
 
   return (
     <Link
-      href={`/league-of-legends?subpage=map&summonerName=${ranking?.summonerName}&platformId=${ranking?.platformId}`}
+      href={`/league-of-legends?subpage=profile&summonerName=${ranking?.summonerName}&platformId=${ranking?.platformId}`}
       passHref
     >
       <CardLink size={size}>

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { getSeasonAccount } from '../../api/accounts';
 import { useQuery } from 'react-query';
 import useVersion from '../../hooks/useVersion';
-import { GameChildProps } from '../../layouts/GameLayout';
+import { useAccount } from '../../contexts/account';
 
 const Container = styled.div`
   background: #2b2a30;
@@ -70,7 +70,8 @@ const IslandsCompleted = styled(IslandIcons)`
 
 const numberOfTrophies = Object.keys(trophies).length;
 
-const LeaderboardOverview = ({ account: currentAccount }: GameChildProps) => {
+const LeaderboardOverview = () => {
+  const { account: ownAccount } = useAccount();
   const router = useRouter();
   const { season: currentSeason } = useVersion();
 
@@ -81,7 +82,7 @@ const LeaderboardOverview = ({ account: currentAccount }: GameChildProps) => {
     `accountSeason-${activeSeason}`,
     () => (season !== currentSeason ? getSeasonAccount(activeSeason) : null)
   );
-  const account = season !== currentSeason ? seasonAccount : currentAccount;
+  const account = season !== currentSeason ? seasonAccount : ownAccount;
 
   const trophiesCount = useMemo(() => account?.trophiesCompleted || 0, [
     account,

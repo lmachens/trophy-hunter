@@ -8,7 +8,6 @@ import { Tooltip } from '../tooltip';
 import { useRouter } from 'next/router';
 import useVersion from '../../hooks/useVersion';
 import NavIconButton from './NavIconButton';
-import { useAccount } from '../../contexts/account';
 import FancyButton from './FancyButton';
 
 const Nav = styled.nav`
@@ -27,80 +26,82 @@ const BackButton = styled(FancyButton)`
 const SubpageNav = () => {
   const router = useRouter();
   const { season: currentSeason } = useVersion();
-  const { isPersonalAccount } = useAccount();
 
   const { subpage = 'map' } = router.query;
 
   return (
     <Nav onClick={(event) => event.stopPropagation()}>
-      {isPersonalAccount && (
+      {subpage === 'profile' ? (
         <Link
           href={{
             pathname: '/league-of-legends',
             query: {
-              subpage: 'map',
+              subpage: 'leaderboard',
             },
           }}
           passHref
         >
-          <BackButton as="a">Back to my profile</BackButton>
+          <BackButton as="a">Back to leaderboard</BackButton>
         </Link>
+      ) : (
+        <>
+          <Tooltip title="Map" placement="top">
+            <div>
+              <Link
+                href={{
+                  pathname: '/league-of-legends',
+                  query: {
+                    ...router.query,
+                    subpage: 'map',
+                  },
+                }}
+                passHref
+              >
+                <NavIconButton as="a" active={subpage === 'map'}>
+                  <MapIcon />
+                </NavIconButton>
+              </Link>
+            </div>
+          </Tooltip>
+          <Tooltip title="Leaderboard" placement="top">
+            <div>
+              <Link
+                href={{
+                  pathname: '/league-of-legends',
+                  query: {
+                    ...router.query,
+                    subpage: 'leaderboard',
+                    season: currentSeason,
+                  },
+                }}
+                passHref
+              >
+                <NavIconButton as="a" active={subpage === 'leaderboard'}>
+                  <LeaderboardIcon />
+                </NavIconButton>
+              </Link>
+            </div>
+          </Tooltip>
+          <Tooltip title="History" placement="top">
+            <div>
+              <Link
+                href={{
+                  pathname: '/league-of-legends',
+                  query: {
+                    ...router.query,
+                    subpage: 'history',
+                  },
+                }}
+                passHref
+              >
+                <NavIconButton disabled as="a" active={subpage === 'history'}>
+                  <HistoryIcon />
+                </NavIconButton>
+              </Link>
+            </div>
+          </Tooltip>
+        </>
       )}
-      <Tooltip title="Map" placement="top">
-        <div>
-          <Link
-            href={{
-              pathname: '/league-of-legends',
-              query: {
-                ...router.query,
-                subpage: 'map',
-              },
-            }}
-            passHref
-          >
-            <NavIconButton as="a" active={subpage === 'map'}>
-              <MapIcon />
-            </NavIconButton>
-          </Link>
-        </div>
-      </Tooltip>
-      <Tooltip title="Leaderboard" placement="top">
-        <div>
-          <Link
-            href={{
-              pathname: '/league-of-legends',
-              query: {
-                ...router.query,
-                subpage: 'leaderboard',
-                season: currentSeason,
-              },
-            }}
-            passHref
-          >
-            <NavIconButton as="a" active={subpage === 'leaderboard'}>
-              <LeaderboardIcon />
-            </NavIconButton>
-          </Link>
-        </div>
-      </Tooltip>
-      <Tooltip title="History" placement="top">
-        <div>
-          <Link
-            href={{
-              pathname: '/league-of-legends',
-              query: {
-                ...router.query,
-                subpage: 'history',
-              },
-            }}
-            passHref
-          >
-            <NavIconButton disabled as="a" active={subpage === 'history'}>
-              <HistoryIcon />
-            </NavIconButton>
-          </Link>
-        </div>
-      </Tooltip>
     </Nav>
   );
 };

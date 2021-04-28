@@ -9,7 +9,7 @@ import * as specialTrophies from '../trophies/special';
 import * as teamworkTrophies from '../trophies/teamwork';
 import * as trophies from '../trophies';
 import TrophyProgress from './TrophyProgress';
-import { GameChildProps } from '../../layouts/GameLayout';
+import { useTargetAccount } from '../../contexts/account';
 
 const progressList = [
   {
@@ -79,7 +79,9 @@ const ProgressContainer = styled.div`
   }
 `;
 
-const HistoryOverview = ({ account }: GameChildProps) => {
+const HistoryOverview = () => {
+  const account = useTargetAccount();
+
   const completedTrophies =
     account?.trophies.filter((accountTrophy) => accountTrophy.progress === 1) ||
     [];

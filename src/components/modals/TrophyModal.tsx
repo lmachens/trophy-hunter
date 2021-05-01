@@ -34,10 +34,12 @@ const Text = styled.p`
 
 const Stats = styled.p`
   display: grid;
+  grid-template-columns: auto auto 3em;
   grid-auto-flow: column;
-  gap: 0.5em;
+  gap: 0.7em;
   justify-content: center;
   align-items: center;
+  text-align: left;
   img {
     width: 2em;
     height: 2em;

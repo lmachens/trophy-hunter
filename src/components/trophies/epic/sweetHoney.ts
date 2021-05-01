@@ -6,11 +6,11 @@ const sweetHoney: Trophy = {
   name: 'sweetHoney',
   level: 'hubEpic',
   title: 'Sweet Honey',
-  description: 'Farm at least 175 minions at 20 minutes.',
+  description: 'Farm at least 165 minions at 20 minutes.',
   category: 'epic',
   checkProgress: ({ participant, timeline }) => {
     const minions = getMinionsAtMin(timeline, 20, participant.participantId);
-    return minions / 175;
+    return minions / 165;
   },
   checkLive: ({ allPlayers, gameData, account }) => {
     if (gameData.gameTime > 1200) {
@@ -21,7 +21,7 @@ const sweetHoney: Trophy = {
       (player) => player.summonerName === account.summoner.name
     );
 
-    const process = Math.min(1, accountPlayer.scores.creepScore / 175);
+    const process = Math.min(1, accountPlayer.scores.creepScore / 165);
     return process;
   },
 };

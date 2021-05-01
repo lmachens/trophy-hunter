@@ -28,6 +28,7 @@ import {
   trophyToAccountTrophy,
 } from '../../api/accounts/server/functions';
 import { addHistoryMatch } from '../../api/matches/server/functions';
+import { updateTrophyStats } from '../../api/stats/server';
 
 const activeChecks: string[] = [];
 
@@ -161,18 +162,28 @@ export default applyMiddleware(
             typeof result === 'number'
               ? { progress: result, details: null }
               : result;
-          if (progress < 1 && !trophy.maxProgress) {
-            return;
-          }
-          accountTrophy.progress = Math.min(1, progress);
-          accountTrophy.progressDetails = details;
           if (progress >= 0.999) {
             // Sometimes it is not exactly 1
             accountTrophy.progress = 1;
             accountTrophy.status = 'completed';
             levelTrophiesCompleted++;
             completedTrophyNames.push(accountTrophy.name);
+            updateTrophyStats({
+              trophyName: trophy.name,
+              mapId: match.mapId,
+              championId: participant.championId,
+              obtained: true,
+            });
+          } else if (trophy.maxProgress) {
+            accountTrophy.progress = Math.min(1, progress);
+            accountTrophy.progressDetails = details;
           }
+          updateTrophyStats({
+            trophyName: trophy.name,
+            mapId: match.mapId,
+            championId: participant.championId,
+            obtained: false,
+          });
         });
         const levelINearlyCompleted = isLevelNearlyCompleted(
           level,
@@ -273,6 +284,12 @@ export default applyMiddleware(
           },
         }
       );
+
+      res.json({
+        trophyNames: completedTrophyNames,
+        unlockedIslandNames: unlockedIslandNames,
+      });
+
       await addHistoryMatch({
         accountId: account._id,
         gameId: match.gameId,
@@ -282,11 +299,6 @@ export default applyMiddleware(
         gameDuration: match.gameDuration,
         gameCreatedAt: new Date(match.gameCreation),
         trophyNames: completedTrophyNames,
-      });
-
-      res.json({
-        trophyNames: completedTrophyNames,
-        unlockedIslandNames: unlockedIslandNames,
       });
     } finally {
       activeChecks.splice(activeChecks.indexOf(authToken), 1);

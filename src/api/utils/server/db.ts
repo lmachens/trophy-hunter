@@ -10,6 +10,10 @@ import {
   createMatchesCollection,
   ensureMatchesIndexes,
 } from '../../matches/server/collection';
+import {
+  createTrophyStatsCollection,
+  ensureTrophyStatsIndexes,
+} from '../../stats/server/collection';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -29,6 +33,8 @@ export const initMongoDatabase = async () => {
     await ensureSeasonAccountsIndexes();
     await createMatchesCollection();
     await ensureMatchesIndexes();
+    await createTrophyStatsCollection();
+    await ensureTrophyStatsIndexes();
   }
 };
 

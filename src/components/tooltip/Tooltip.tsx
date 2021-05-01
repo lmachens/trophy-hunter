@@ -65,7 +65,7 @@ const Container = styled.div<ContainerProps>`
   left: ${(props) => Math.max(0, props.left)}px;
   top: ${(props) => Math.max(0, props.top)}px;
   pointer-events: ${(props) => (props.pointerEvents ? 'inherit' : 'none')};
-  z-index: ${(props) => (props.targetId ? 90 : 100)};
+  z-index: ${(props) => (props.targetId ? 390 : 400)};
   font-family: 'Roboto Mono', monospace;
   max-width: 320px;
   transition: opacity 0.15s;

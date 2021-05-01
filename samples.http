@@ -23,11 +23,13 @@ POST https://localhost:3000/api/dev
 Content-Type: application/json
 
 {
-    "summonerName": "sirlunchalot619",
-    "platformId": "EUW1",
-    "matchId": 5061906845
+    "summonerName": "alice xP",
+    "platformId": "EUN1",
+    "matchId": 2687365610
 }
 
+### Trophy Stats
+GET https://localhost:3000/api/trophy-stats/test
 
 ### Fix
 

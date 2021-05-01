@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 const Backdrop = styled.div`
+  cursor: default;
   position: fixed;
   top: 0;
   left: 0;

@@ -9,6 +9,7 @@ import Squid from '../icons/Squid';
 import TrophyListItem from '../trophies/TrophyListItem';
 import LottieContainer from './LottieContainer';
 import FancyButton from '../common/FancyButton';
+import { useAccount } from '../../contexts/account';
 
 const ListItem = styled(TrophyListItem)`
   &:hover {
@@ -41,6 +42,7 @@ interface TrophiesModalProps {
   trophyNames: string[];
 }
 const TrophiesModal: FC<TrophiesModalProps> = ({ onClose, trophyNames }) => {
+  const { account } = useAccount();
   return (
     <CenteredModal onClose={onClose}>
       <Title>
@@ -50,7 +52,11 @@ const TrophiesModal: FC<TrophiesModalProps> = ({ onClose, trophyNames }) => {
       </Title>
       <TrophyList>
         {trophyNames.map((trophyName) => (
-          <ListItem trophy={trophies[trophyName]} key={trophyName} />
+          <ListItem
+            account={account}
+            trophy={trophies[trophyName]}
+            key={trophyName}
+          />
         ))}
         {trophyNames.length === 0 && (
           <NoTropiesContainer>

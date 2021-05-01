@@ -1,5 +1,6 @@
 import { getAccountsCollection } from '../../accounts/server/collection';
-import { StatsObj } from '../types';
+import { StatsObj, TrophyStatsAggregationObj } from '../types';
+import { getTrophyStatsCollection } from './collection';
 
 type Stats = {
   _id: string;
@@ -32,4 +33,81 @@ export const getStatsObj = async () => {
     {}
   );
   return statsObj;
+};
+
+export const getTrophyStats = async (trophyName: string) => {
+  const TrophyStats = await getTrophyStatsCollection();
+  return TrophyStats.aggregate<TrophyStatsAggregationObj>([
+    {
+      $match: {
+        trophyName: trophyName,
+      },
+    },
+    {
+      $sort: {
+        count: -1,
+      },
+    },
+    {
+      $group: {
+        _id: '$trophyName',
+        totalChecks: {
+          $sum: '$checks',
+        },
+        totalCount: {
+          $sum: '$count',
+        },
+        top: {
+          $push: {
+            championId: '$championId',
+            mapId: '$mapId',
+            checks: '$checks',
+            count: '$count',
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        trophyName: '$_id',
+        totalChecks: 1,
+        totalCount: 1,
+        top: {
+          $slice: ['$top', 5],
+        },
+      },
+    },
+  ]).toArray();
+};
+
+type UpdateTrophyStatsProps = {
+  trophyName: string;
+  mapId: number;
+  championId: number;
+  obtained: boolean;
+};
+export const updateTrophyStats = async ({
+  trophyName,
+  mapId,
+  championId,
+  obtained,
+}: UpdateTrophyStatsProps) => {
+  const TrophyStats = await getTrophyStatsCollection();
+  return TrophyStats.updateOne(
+    {
+      trophyName,
+      mapId,
+      championId,
+    },
+    {
+      $inc: {
+        checks: 1,
+        count: +obtained,
+      },
+    },
+    {
+      upsert: true,
+    }
+  );
 };

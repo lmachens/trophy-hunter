@@ -75,7 +75,7 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
     <Modal onClose={onClose}>
       <Container>
         <Title>
-          {trophy.name} <TrophyStats trophyName={trophy.name} />
+          {trophy.title} <TrophyStats trophyName={trophy.name} />
         </Title>
         <Text>{trophy.description}</Text>
         <section>

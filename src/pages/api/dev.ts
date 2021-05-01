@@ -11,7 +11,10 @@ import {
   getMatchAndTimeline,
   getTeammateAccounts,
 } from '../../api/riot/server';
-import * as trophies from '../../components/trophies';
+import {
+  allTrophies,
+  aramTrophies,
+} from '../../components/trophies/trophiesByMap';
 import { newAccount } from '../../api/accounts/server';
 import {
   getAllEvents,
@@ -21,9 +24,6 @@ import {
 import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
-
-const allTrophies = Object.values(trophies);
-const aramTrophies = allTrophies.filter((trophy) => trophy.aramSupport);
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {

@@ -29,6 +29,11 @@ import {
 } from '../../api/accounts/server/functions';
 import { addHistoryMatch } from '../../api/matches/server/functions';
 import { updateTrophyStats } from '../../api/stats/server';
+import {
+  allTrophies,
+  aramTrophies,
+} from '../../components/trophies/trophiesByMap';
+import { getTrophyProgress } from '../../api/accounts/helpers';
 
 const activeChecks: string[] = [];
 
@@ -162,29 +167,18 @@ export default applyMiddleware(
             typeof result === 'number'
               ? { progress: result, details: null }
               : result;
+          if (progress < 1 && !trophy.maxProgress) {
+            return;
+          }
+          accountTrophy.progress = Math.min(1, progress);
+          accountTrophy.progressDetails = details;
           if (progress >= 0.999) {
             // Sometimes it is not exactly 1
             accountTrophy.progress = 1;
             accountTrophy.status = 'completed';
             levelTrophiesCompleted++;
             completedTrophyNames.push(accountTrophy.name);
-            updateTrophyStats({
-              trophyName: trophy.name,
-              mapId: match.mapId,
-              championId: participant.championId,
-              obtained: true,
-            });
-            return;
-          } else if (trophy.maxProgress) {
-            accountTrophy.progress = Math.min(1, progress);
-            accountTrophy.progressDetails = details;
           }
-          updateTrophyStats({
-            trophyName: trophy.name,
-            mapId: match.mapId,
-            championId: participant.championId,
-            obtained: false,
-          });
         });
         const levelINearlyCompleted = isLevelNearlyCompleted(
           level,
@@ -300,6 +294,34 @@ export default applyMiddleware(
         gameDuration: match.gameDuration,
         gameCreatedAt: new Date(match.gameCreation),
         trophyNames: completedTrophyNames,
+      });
+
+      const trophiesAboutToCheck =
+        match.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
+      trophiesAboutToCheck.forEach((trophy) => {
+        const progress = trophy.checkProgress({
+          match,
+          timeline,
+          account,
+          events,
+          participant,
+          teammateAccounts,
+        });
+        let obtained = false;
+        if (trophy.maxProgress) {
+          const prevProgress = getTrophyProgress(account, trophy.name);
+          if (progress > prevProgress) {
+            obtained = true;
+          }
+        } else if (progress >= 0.999) {
+          obtained = true;
+        }
+        updateTrophyStats({
+          trophyName: trophy.name,
+          mapId: match.mapId,
+          championId: participant.championId,
+          obtained,
+        });
       });
     } finally {
       activeChecks.splice(activeChecks.indexOf(authToken), 1);

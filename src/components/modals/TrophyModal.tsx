@@ -10,6 +10,7 @@ import Squid from '../icons/Squid';
 import getConfig from 'next/config';
 import { getRecentVersion } from '../../api/riot';
 import { Tooltip } from '../tooltip';
+import { MAP_LABELS } from '../../api/riot/helpers';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -43,6 +44,12 @@ const Stats = styled.p`
   img {
     width: 2em;
     height: 2em;
+  }
+
+  span {
+    height: 100%;
+    display: grid;
+    place-content: center;
   }
 `;
 
@@ -81,7 +88,7 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
           {trophyStats && (
             <>
               <p>
-                Successful in{' '}
+                {trophy.maxProgress ? 'Progress' : 'Unlocked'} in{' '}
                 <Percentage
                   value={trophyStats.totalCount}
                   max={trophyStats.totalChecks}
@@ -91,7 +98,7 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
               <h4>Top combination</h4>
               {trophyStats.top.map(({ championId, mapId, count, checks }) => (
                 <Stats key={`${mapId}-${championId}`}>
-                  <Tooltip text="Map" placement="top">
+                  <Tooltip text={MAP_LABELS[mapId]} placement="top">
                     <img
                       src={`https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/map/map${mapId}.png`}
                     />
@@ -101,7 +108,12 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
                       src={`${publicRuntimeConfig.API_ENDPOINT}/api/champions/${championId}/img`}
                     />
                   </Tooltip>
-                  <Tooltip text="Success Rate" placement="top">
+                  <Tooltip
+                    text={`${
+                      trophy.maxProgress ? 'Progress' : 'Unlocked'
+                    } Rate`}
+                    placement="top"
+                  >
                     <Percentage value={count} max={checks} />
                   </Tooltip>
                 </Stats>

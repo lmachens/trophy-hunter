@@ -14,6 +14,13 @@ import {
   FOURTY_FIVE_MINUTES,
 } from '../utils/dates';
 
+export const SUMMONERS_RIFT_MAP_ID = 11;
+export const HOWLING_ABYSS_MAP_ID = 12;
+export const MAP_LABELS = {
+  [SUMMONERS_RIFT_MAP_ID]: "Summoner's Rift",
+  [HOWLING_ABYSS_MAP_ID]: 'ARAM',
+};
+
 export const eventTimeToTimestamp = (eventTime: number): number => {
   return eventTime * 1000;
 };

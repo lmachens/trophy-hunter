@@ -10,6 +10,7 @@ import TrophyListItem from '../trophies/TrophyListItem';
 import TrophyList from '../trophies/TrophyList';
 import * as trophies from '../trophies';
 import getConfig from 'next/config';
+import { useAccount } from '../../contexts/account';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -123,6 +124,7 @@ const ListItem = styled(TrophyListItem)`
 `;
 
 const Match = ({ match }: Props) => {
+  const { account } = useAccount();
   const [open, setOpen] = useState(false);
 
   return (
@@ -169,6 +171,7 @@ const Match = ({ match }: Props) => {
         <Details>
           {match.trophyNames.map((trophyName) => (
             <ListItem
+              account={account}
               trophy={trophies[trophyName]}
               key={trophyName}
               disableFavorite

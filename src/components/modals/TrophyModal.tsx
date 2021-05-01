@@ -5,10 +5,11 @@ import { Trophy } from '../trophies/types';
 import TrophyStats from '../trophies/TrophyStats';
 import { useQuery } from 'react-query';
 import { getTrophyStats } from '../../api/stats';
-import Percantage from '../common/Percantage';
+import Percentage from '../common/Percentage';
 import Squid from '../icons/Squid';
 import getConfig from 'next/config';
 import { getRecentVersion } from '../../api/riot';
+import { Tooltip } from '../tooltip';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -79,7 +80,7 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
             <>
               <p>
                 Successful in{' '}
-                <Percantage
+                <Percentage
                   value={trophyStats.totalCount}
                   max={trophyStats.totalChecks}
                 />{' '}
@@ -88,13 +89,19 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
               <h4>Top combination</h4>
               {trophyStats.top.map(({ championId, mapId, count, checks }) => (
                 <Stats key={`${mapId}-${championId}`}>
-                  <img
-                    src={`https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/map/map${mapId}.png`}
-                  />
-                  <img
-                    src={`${publicRuntimeConfig.API_ENDPOINT}/api/champions/${championId}/img`}
-                  />
-                  <Percantage value={count} max={checks} />
+                  <Tooltip text="Map" placement="top">
+                    <img
+                      src={`https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/map/map${mapId}.png`}
+                    />
+                  </Tooltip>
+                  <Tooltip text="Champion" placement="top">
+                    <img
+                      src={`${publicRuntimeConfig.API_ENDPOINT}/api/champions/${championId}/img`}
+                    />
+                  </Tooltip>
+                  <Tooltip text="Success Rate" placement="top">
+                    <Percentage value={count} max={checks} />
+                  </Tooltip>
                 </Stats>
               ))}
             </>

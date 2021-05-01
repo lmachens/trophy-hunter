@@ -5,7 +5,7 @@ type PercentageProps = {
   value: number;
 };
 function Percentage({ max, value, ...rest }: PercentageProps) {
-  return <span {...rest}>{Math.floor((value / max) * 100)}%</span>;
+  return <span {...rest}>{((value / max) * 100).toFixed(2)}%</span>;
 }
 
 export default Percentage;

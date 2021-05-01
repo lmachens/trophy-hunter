@@ -35,7 +35,7 @@ const Text = styled.p`
 
 const Stats = styled.p`
   display: grid;
-  grid-template-columns: auto auto 3em;
+  grid-template-columns: auto auto 4em;
   grid-auto-flow: column;
   gap: 0.7em;
   justify-content: center;
@@ -48,8 +48,8 @@ const Stats = styled.p`
 
   span {
     height: 100%;
-    display: grid;
-    place-content: center;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -70,6 +70,7 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
   );
   const { data: version } = useQuery('version', getRecentVersion);
 
+  const unlockedOrProgress = trophy.maxProgress ? 'Progress' : 'Unlocked';
   return (
     <Modal onClose={onClose}>
       <Container>
@@ -88,36 +89,36 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
           {trophyStats && (
             <>
               <p>
-                {trophy.maxProgress ? 'Progress' : 'Unlocked'} in{' '}
+                {unlockedOrProgress} in{' '}
                 <Percentage
                   value={trophyStats.totalCount}
                   max={trophyStats.totalChecks}
                 />{' '}
                 of all matches.
               </p>
-              <h4>Top combination</h4>
-              {trophyStats.top.map(({ championId, mapId, count, checks }) => (
-                <Stats key={`${mapId}-${championId}`}>
-                  <Tooltip text={MAP_LABELS[mapId]} placement="top">
-                    <img
-                      src={`https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/map/map${mapId}.png`}
-                    />
-                  </Tooltip>
-                  <Tooltip text="Champion" placement="top">
-                    <img
-                      src={`${publicRuntimeConfig.API_ENDPOINT}/api/champions/${championId}/img`}
-                    />
-                  </Tooltip>
-                  <Tooltip
-                    text={`${
-                      trophy.maxProgress ? 'Progress' : 'Unlocked'
-                    } Rate`}
-                    placement="top"
-                  >
-                    <Percentage value={count} max={checks} />
-                  </Tooltip>
-                </Stats>
-              ))}
+              <h4>Top champions</h4>
+              {trophyStats.top
+                .sort((a, b) => b.count / b.checks - a.count / a.checks)
+                .map(({ championId, mapId, count, checks }) => (
+                  <Stats key={`${mapId}-${championId}`}>
+                    <Tooltip text={MAP_LABELS[mapId]} placement="top">
+                      <img
+                        src={`https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/map/map${mapId}.png`}
+                      />
+                    </Tooltip>
+                    <Tooltip text="Champion" placement="top">
+                      <img
+                        src={`${publicRuntimeConfig.API_ENDPOINT}/api/champions/${championId}/img`}
+                      />
+                    </Tooltip>
+                    <Tooltip
+                      text={`${unlockedOrProgress} in ${count} out of ${checks} matches`}
+                      placement="top"
+                    >
+                      <Percentage value={count} max={checks} />
+                    </Tooltip>
+                  </Stats>
+                ))}
             </>
           )}
         </section>

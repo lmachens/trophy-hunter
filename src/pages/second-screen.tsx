@@ -326,6 +326,7 @@ const SecondScreen: NextPage = () => {
             <List>
               {trophies.map((trophy) => (
                 <TrophyListItem
+                  account={account}
                   trophy={trophy}
                   key={trophy.name}
                   borderless
@@ -342,7 +343,7 @@ const SecondScreen: NextPage = () => {
           )}
         </main>
         <aside>
-          <Profile account={account} />
+          <Profile />
           <SpecialGradients />
           <SmallIslands>
             {islands.map(({ name, Component: Island }) => (

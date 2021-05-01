@@ -11,6 +11,7 @@ import NotificationHeader from '../components/notifications/NotificationHeader';
 import NotificationTitle from '../components/notifications/NotificationTitle';
 import NotificationContainer from '../components/notifications/NotificationContainer';
 import { log } from '../api/logs';
+import { useAccount } from '../contexts/account';
 
 getAppVersion().then((version) => log(`Running ${version}`));
 
@@ -23,6 +24,7 @@ const ListItem = styled(TrophyListItem)`
 `;
 
 const Notification: NextPage = () => {
+  const { account } = useAccount();
   const [notification, setNotification] = useState<{
     trophyName: string;
     progress: number;
@@ -68,7 +70,11 @@ const Notification: NextPage = () => {
         </NotificationTitle>
         <Timer onDone={loadNotification} />
       </NotificationHeader>
-      <ListItem trophy={trophy} progress={notification.progress} />
+      <ListItem
+        account={account}
+        trophy={trophy}
+        progress={notification.progress}
+      />
     </NotificationContainer>
   );
 };

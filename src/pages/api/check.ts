@@ -174,6 +174,7 @@ export default applyMiddleware(
               championId: participant.championId,
               obtained: true,
             });
+            return;
           } else if (trophy.maxProgress) {
             accountTrophy.progress = Math.min(1, progress);
             accountTrophy.progressDetails = details;

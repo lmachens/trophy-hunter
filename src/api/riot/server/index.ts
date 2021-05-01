@@ -120,6 +120,7 @@ export const getRecentVersion = async () => {
 
 interface Champion {
   key: string;
+  name: string;
   image: {
     full: string;
   };

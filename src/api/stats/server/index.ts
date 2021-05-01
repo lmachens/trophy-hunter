@@ -1,4 +1,5 @@
 import { getAccountsCollection } from '../../accounts/server/collection';
+import { getChampions } from '../../riot/server';
 import { StatsObj, TrophyStatsAggregationObj } from '../types';
 import { getTrophyStatsCollection } from './collection';
 
@@ -36,6 +37,8 @@ export const getStatsObj = async () => {
 };
 
 export const getTrophyStats = async (trophyName: string) => {
+  const champions = await getChampions();
+
   const TrophyStats = await getTrophyStatsCollection();
   return TrophyStats.aggregate<TrophyStatsAggregationObj>([
     {
@@ -78,7 +81,18 @@ export const getTrophyStats = async (trophyName: string) => {
         },
       },
     },
-  ]).toArray();
+  ])
+    .map((result) => ({
+      ...result,
+      top: result.top.map((top) => ({
+        ...top,
+        championName:
+          champions.find(
+            (champion) => champion.key === top.championId.toString()
+          )?.name || 'Unknown',
+      })),
+    }))
+    .toArray();
 };
 
 type UpdateTrophyStatsProps = {

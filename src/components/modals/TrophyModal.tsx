@@ -99,14 +99,14 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
               <h4>Top champions</h4>
               {trophyStats.top
                 .sort((a, b) => b.count / b.checks - a.count / a.checks)
-                .map(({ championId, mapId, count, checks }) => (
+                .map(({ championId, championName, mapId, count, checks }) => (
                   <Stats key={`${mapId}-${championId}`}>
                     <Tooltip text={MAP_LABELS[mapId]} placement="top">
                       <img
                         src={`https://ddragon.leagueoflegends.com/cdn/${version.riot}/img/map/map${mapId}.png`}
                       />
                     </Tooltip>
-                    <Tooltip text="Champion" placement="top">
+                    <Tooltip text={championName} placement="top">
                       <img
                         src={`${publicRuntimeConfig.API_ENDPOINT}/api/champions/${championId}/img`}
                       />

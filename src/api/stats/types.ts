@@ -19,6 +19,7 @@ export type TrophyStatsAggregationObj = {
   totalCount: number;
   top: {
     championId: number;
+    championName: string;
     mapId: number;
     checks: number;
     count: number;

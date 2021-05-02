@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Component } from 'react';
 import { error as logError } from '../../api/logs';
+import { closeCurrentWindow } from '../../api/overwolf';
 import FancyButton from './FancyButton';
 
 const grid = css`
@@ -12,6 +13,7 @@ const grid = css`
 
 interface Props {
   grid?: boolean;
+  autoClose?: boolean;
 }
 const Container = styled.div`
   flex-grow: 1;
@@ -28,6 +30,11 @@ class ErrorBoundary extends Component<Props> {
 
   componentDidCatch(error, errorInfo): void {
     logError(error, errorInfo);
+    if (this.props.autoClose) {
+      setTimeout(() => {
+        closeCurrentWindow();
+      }, 2000);
+    }
   }
 
   render() {
@@ -36,7 +43,11 @@ class ErrorBoundary extends Component<Props> {
       return (
         <Container grid={this.props.grid}>
           Something went wrong 😒.
-          <FancyButton onClick={() => location.reload()}>Reload</FancyButton>
+          {this.props.autoClose ? (
+            <span> Closing window...</span>
+          ) : (
+            <FancyButton onClick={() => location.reload()}>Reload</FancyButton>
+          )}
         </Container>
       );
     }

@@ -5,12 +5,13 @@ import Head from 'next/head';
 import { AccountProvider } from '../contexts/account';
 import GlobalStyles from '../styles/GlobalStyles';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import ErrorBoundary from '../components/common/ErrorBoundary';
 
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <ErrorBoundary autoClose>
       <Head>
         <title>Trophy Hunter</title>
       </Head>
@@ -22,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </AccountProvider>
         </QueryClientProvider>
       </CacheProvider>
-    </>
+    </ErrorBoundary>
   );
 }
 

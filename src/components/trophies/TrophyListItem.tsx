@@ -44,7 +44,7 @@ const ListItem = styled.div<ListItemProps>`
 interface TrophyListItemProps
   extends ListItemProps,
     HTMLAttributes<HTMLDivElement> {
-  account: Account;
+  account?: Account;
   trophy: Trophy;
   disableFavorite?: boolean;
   progress?: number;
@@ -142,6 +142,7 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
         </Tooltip>
       )}
       {!disableFavorite &&
+        account &&
         account?._id === ownAccount?._id &&
         trophyProgress < 1 && (
           <Favorite

@@ -7,3 +7,5 @@ export const FOURTY_FIVE_MINUTES = 45 * 60 * 1000;
 export const THREE_MINUTES = 3 * 60 * 1000;
 
 export const minutesToSeconds = (minutes: number): number => minutes * 60;
+export const minutesToMilliseconds = (minutes: number): number =>
+  minutes * 60 * 1000;

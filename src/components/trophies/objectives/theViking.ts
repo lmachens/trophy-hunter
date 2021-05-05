@@ -1,12 +1,17 @@
 import { Trophy } from '../types';
+import {
+  minutesToSeconds,
+  minutesToMilliseconds,
+} from '../../../api/utils/dates';
+
+const REQUIRED_MINUTES = 11;
 
 const theViking: Trophy = {
   island: 'hub',
   name: 'theViking',
   level: 'hubObjectives',
   title: 'The Viking',
-  description:
-    'Get a solo kill before 10 minutes and take down or assist first tower.',
+  description: `Get a solo kill before ${REQUIRED_MINUTES} minutes and take down or assist first tower.`,
   category: 'objectives',
   checkProgress: ({ events, participant }) => {
     const hasSoloKillBefore10 = events.some(
@@ -14,7 +19,7 @@ const theViking: Trophy = {
         event.type === 'CHAMPION_KILL' &&
         event.killerId === participant.participantId &&
         event.assistingParticipantIds.length === 0 &&
-        event.timestamp <= 600000
+        event.timestamp <= minutesToMilliseconds(REQUIRED_MINUTES)
     );
 
     if (
@@ -26,7 +31,11 @@ const theViking: Trophy = {
     return 1;
   },
   checkLive: ({ events, gameData, account, trophyData }) => {
-    if (!events.length || gameData.gameTime >= 600 || trophyData.theViking) {
+    if (
+      !events.length ||
+      gameData.gameTime >= minutesToSeconds(REQUIRED_MINUTES) ||
+      trophyData.theViking
+    ) {
       return 0;
     }
 

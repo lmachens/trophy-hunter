@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
-import getConfig from 'next/config';
+import { apiEndoint } from '../../../api/utils/runtime';
 
-const { publicRuntimeConfig } = getConfig();
 const Champion = styled.img`
   width: 30px;
   height: 30px;
@@ -19,7 +18,7 @@ const OneTrickPonyDetails: FC<{ details: any }> = ({ details }) => {
             key={index}
             src={
               details?.length > index
-                ? `${publicRuntimeConfig.API_ENDPOINT}/api/champions/${details[index]}/img`
+                ? `${apiEndoint}/api/champions/${details[index]}/img`
                 : `${process.env.PUBLIC_DIR}/unknown.png`
             }
           />

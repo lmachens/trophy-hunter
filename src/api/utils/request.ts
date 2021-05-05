@@ -1,7 +1,5 @@
 import fetch from 'isomorphic-unfetch';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
+import { apiEndoint } from './runtime';
 
 interface JSONRequestInit extends RequestInit {
   data?: unknown;
@@ -24,11 +22,7 @@ export const requestJSON = async <T>(
 
   const fetchInput =
     typeof input === 'string' && input.startsWith('/api')
-      ? `${
-          localStorage.getItem('apiEndpoint') ||
-          publicRuntimeConfig.API_ENDPOINT ||
-          ''
-        }${input}`
+      ? `${apiEndoint}${input}`
       : input;
 
   const response = await fetch(fetchInput, options);

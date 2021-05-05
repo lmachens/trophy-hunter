@@ -7,12 +7,10 @@ import { useQuery } from 'react-query';
 import { getTrophyStats } from '../../api/stats';
 import Percentage from '../common/Percentage';
 import Squid from '../icons/Squid';
-import getConfig from 'next/config';
 import { getRecentVersion } from '../../api/riot';
 import { Tooltip } from '../tooltip';
 import { MAP_LABELS } from '../../api/riot/helpers';
-
-const { publicRuntimeConfig } = getConfig();
+import { apiEndoint } from '../../api/utils/runtime';
 
 const Container = styled.div`
   display: grid;
@@ -108,7 +106,7 @@ const TrophyModal = ({ trophy, onClose }: TrophyModalProps) => {
                     </Tooltip>
                     <Tooltip text={championName} placement="top">
                       <img
-                        src={`${publicRuntimeConfig.API_ENDPOINT}/api/champions/${championId}/img`}
+                        src={`${apiEndoint}/api/champions/${championId}/img`}
                       />
                     </Tooltip>
                     <Tooltip

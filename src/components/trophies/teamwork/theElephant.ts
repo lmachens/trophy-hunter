@@ -1,16 +1,23 @@
 import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
+import { minutesToSeconds } from '../../../api/utils/dates';
 import { Trophy } from '../types';
+
+const SUMMONERS_RIFT_MINUTES = 19;
+const ARAM_MINUTES = 9;
 
 const theElephant: Trophy = {
   island: 'hub',
   name: 'theElephant',
   level: 'hubTeamwork',
   title: 'The Elephant',
-  description: `Do not die for more than 20 minutes.\nARAM: Ten minutes`,
+  description: `Do not die for more than ${SUMMONERS_RIFT_MINUTES} minutes.\nARAM: ${ARAM_MINUTES} minutes`,
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ match, participant }) => {
-    const requiredTimelimit = match.queueId === ARAM_HOWLING_ABYSS ? 600 : 1200;
+    const requiredTimelimit =
+      match.queueId === ARAM_HOWLING_ABYSS
+        ? minutesToSeconds(ARAM_MINUTES)
+        : minutesToSeconds(SUMMONERS_RIFT_MINUTES);
     if (
       !participant.stats.longestTimeSpentLiving &&
       match.gameDuration >= requiredTimelimit
@@ -25,7 +32,10 @@ const theElephant: Trophy = {
         event.EventName === 'ChampionKill' &&
         event.VictimName === account.summoner.name
     );
-    const requiredTimelimit = gameData.gameMode === 'ARAM' ? 600 : 1200;
+    const requiredTimelimit =
+      gameData.gameMode === 'ARAM'
+        ? minutesToSeconds(ARAM_MINUTES)
+        : minutesToSeconds(SUMMONERS_RIFT_MINUTES);
     const lastDeath = deaths[deaths.length - 1];
     if (!lastDeath && gameData.gameTime > requiredTimelimit) {
       return 1;

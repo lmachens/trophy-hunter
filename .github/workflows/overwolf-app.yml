@@ -22,7 +22,7 @@ jobs:
       - run: npm ci
       - name: Build Overwolf App
         env:
-          API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
+          NEXT_PUBLIC_API_ENDPOINT: ${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
         run: npm run build:overwolf
       - name: Archive Release
         uses: thedoctor0/zip-release@master

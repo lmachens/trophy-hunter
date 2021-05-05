@@ -10,9 +10,6 @@ const config = {
     RIOT_API_KEY: process.env.RIOT_API_KEY,
     OVERWOLF_EXTENSION_ID: process.env.OVERWOLF_EXTENSION_ID,
   },
-  publicRuntimeConfig: {
-    API_ENDPOINT: process.env.API_ENDPOINT,
-  },
   env: {
     PUBLIC_DIR: '',
   },

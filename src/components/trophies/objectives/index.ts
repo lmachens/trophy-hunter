@@ -1,6 +1,7 @@
 export { default as baronNashor } from './baronNashor';
 export { default as deepSea } from './deepSea';
 export { default as demolitionPear } from './demolitionPear';
+export { default as dragonHunter } from './dragonHunter';
 export { default as dragonLord } from './dragonLord';
 export { default as dragonSlayer } from './dragonSlayer';
 export { default as earlyBird } from './earlyBird';

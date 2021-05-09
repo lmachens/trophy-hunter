@@ -1,14 +1,18 @@
-import { getTeam } from '../../../api/riot/helpers';
 import { Trophy } from '../types';
+import { getTrophyProgress } from '../../../api/accounts/helpers';
+import { getTeam } from '../../../api/riot/helpers';
 
-const dragonSlayer: Trophy = {
-  island: 'combat',
-  name: 'dragonSlayer',
-  level: 'objectives1',
-  title: 'Dragon Slayer',
-  description: 'Kill four dragons (team achievement).',
+const REQUIRED_DRAGONS = 5;
+
+const dragonHunter: Trophy = {
+  island: 'hub',
+  name: 'dragonHunter',
+  level: 'hubObjectives',
+  title: 'Dragon Hunter',
+  description: `Kill ${REQUIRED_DRAGONS} dragons (team achievement).`,
   category: 'objectives',
-  checkProgress: ({ match, events, participant }) => {
+  maxProgress: REQUIRED_DRAGONS,
+  checkProgress: ({ match, events, participant, account }) => {
     const teamIds = getTeam(match, participant.teamId).map(
       (teammate) => teammate.participantId
     );
@@ -20,7 +24,8 @@ const dragonSlayer: Trophy = {
         teamIds.includes(event.killerId)
     ).length;
 
-    return dragonKills / 4;
+    const trophyProgress = getTrophyProgress(account, 'energized');
+    return dragonKills / REQUIRED_DRAGONS + trophyProgress;
   },
   checkLive: ({ events, allPlayers, account }) => {
     const accountPlayer = allPlayers.find(
@@ -36,8 +41,9 @@ const dragonSlayer: Trophy = {
         event.EventName === 'DragonKill' && teamNames.includes(event.KillerName)
     ).length;
 
-    return dragonKills / 4;
+    const trophyProgress = getTrophyProgress(account, 'energized');
+    return dragonKills / REQUIRED_DRAGONS + trophyProgress;
   },
 };
 
-export default dragonSlayer;
+export default dragonHunter;

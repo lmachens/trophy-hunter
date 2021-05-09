@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { Tooltip } from '../tooltip';
 import Settings from '../icons/Settings';
 import ToolButton from '../tools/ToolButton';
 import Grow from '../common/Grow';
@@ -54,11 +53,6 @@ const Sidebar: FC<SidebarProps> = ({ activeTool, onToolClick }) => {
           <img src={`${process.env.PUBLIC_DIR}/league-of-legends.png`} />
         </SidebarLink>
       </Link>
-      <Tooltip title="Coming soon! <3" placement="right">
-        <SidebarLink comingSoon>
-          <img src={`${process.env.PUBLIC_DIR}/teamfight-tactics.png`} />
-        </SidebarLink>
-      </Tooltip>
       <Grow />
       <ToolButton
         icon={<img src={`${process.env.PUBLIC_DIR}/trophies.png`} />}

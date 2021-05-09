@@ -29,7 +29,8 @@ const NotSupported: NextPage = () => {
       </NotificationHeader>
       <Message>
         <h3>
-          Trophy Hunter is currently supporting Summoner&apos;s Rift Modes only.
+          Trophy Hunter is currently supporting Summoner&apos;s Rift and ARAM
+          only.
         </h3>
       </Message>
     </NotificationContainer>

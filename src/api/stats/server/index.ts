@@ -12,6 +12,11 @@ type Stats = {
 export const getStatsObj = async () => {
   const Accounts = await getAccountsCollection();
   const stats = await Accounts.aggregate<Stats>([
+    {
+      $match: {
+        trophies: { $elemMatch: { name: 'playstyle', status: 'completed' } },
+      },
+    },
     { $unwind: '$trophies' },
     {
       $group: {

@@ -34,3 +34,4 @@ export { default as thePolice } from './thePolice';
 export { default as theSpartan } from './theSpartan';
 export { default as theTiger } from './theTiger';
 export { default as unstoppable } from './unstoppable';
+export { default as warrior } from './warrior';

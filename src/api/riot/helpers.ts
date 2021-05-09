@@ -333,3 +333,10 @@ export const calcTotalGoldFrames = (
     return result;
   });
 };
+
+export const calcKDA = (participant: Participant) => {
+  return (
+    (participant.stats.kills + participant.stats.assists) /
+    participant.stats.deaths
+  );
+};

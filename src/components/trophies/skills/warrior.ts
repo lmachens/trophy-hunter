@@ -17,8 +17,8 @@ const warrior: Trophy = {
       (player) => player.summonerName === account.summoner.name
     );
     const kda =
-      (player.scores.kills + player.scores.assists) / player.scores.deaths;
-    return Math.min(kda, 0.9);
+      (player.scores.kills + player.scores.assists) / player.scores.deaths || 0;
+    return Math.min(kda / 1.5, 0.9);
   },
 };
 

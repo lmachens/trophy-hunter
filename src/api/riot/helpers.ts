@@ -337,6 +337,6 @@ export const calcTotalGoldFrames = (
 export const calcKDA = (participant: Participant) => {
   return (
     (participant.stats.kills + participant.stats.assists) /
-    participant.stats.deaths
+      participant.stats.deaths || 0
   );
 };

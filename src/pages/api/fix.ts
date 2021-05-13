@@ -6,7 +6,7 @@ import {
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import { AccountTrophy } from '../../api/accounts';
-import { neverGiveUp } from '../../components/trophies';
+import { diversity, neverGiveUp } from '../../components/trophies';
 import { trophyToAccountTrophy } from '../../api/accounts/server/functions';
 
 export default applyMiddleware(
@@ -26,6 +26,20 @@ export default applyMiddleware(
         newTrophies.push(trophyToAccountTrophy(neverGiveUp));
         if (hubEpic.status === 'completed') {
           hubEpic.status = 'unlocked';
+        }
+      }
+
+      const hubSpecial = account.levels.find(
+        (level) => level.name === 'hubSpecial'
+      );
+      if (
+        hubSpecial &&
+        !account.trophies.some((trophy) => trophy.name === diversity.name)
+      ) {
+        changed = true;
+        newTrophies.push(trophyToAccountTrophy(diversity));
+        if (hubSpecial.status === 'completed') {
+          hubSpecial.status = 'unlocked';
         }
       }
 

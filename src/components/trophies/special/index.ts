@@ -1,6 +1,7 @@
 export { default as adventurer } from './adventurer';
 export { default as ancient } from './ancient';
 export { default as celebrity } from './celebrity';
+export { default as diversity } from './diversity';
 export { default as experienced } from './experienced';
 export { default as famous } from './famous';
 export { default as forTheVoid } from './forTheVoid';

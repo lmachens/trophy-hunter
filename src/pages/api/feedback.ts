@@ -9,8 +9,8 @@ import {
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
-    const { discordTag, message } = req.body;
-    await sendToDiscord({ discordTag, message });
+    const { discordTag, message, summonerName, platformId } = req.body;
+    await sendToDiscord({ discordTag, message, summonerName, platformId });
     res.json({});
   },
   withError,
@@ -19,6 +19,12 @@ export default applyMiddleware(
     type: 'object',
     properties: {
       discordTag: {
+        type: 'string',
+      },
+      summonerName: {
+        type: 'string',
+      },
+      platformId: {
         type: 'string',
       },
       message: {

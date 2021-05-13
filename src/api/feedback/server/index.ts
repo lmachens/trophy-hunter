@@ -8,12 +8,18 @@ export const sendToDiscord = (feedback: Feedback) => {
     embeds: [
       {
         title: 'Discord Tag',
-        description: feedback.discordTag || ''
+        description: feedback.discordTag || '',
       },
       {
         title: 'Message',
-        description: feedback.message
-      }
-    ]
+        description: feedback.message,
+      },
+      {
+        title: 'Summoner',
+        description: feedback.summonerName
+          ? `${feedback.summonerName} (${feedback.platformId})`
+          : 'Unknown',
+      },
+    ],
   });
 };

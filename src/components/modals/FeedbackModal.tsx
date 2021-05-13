@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { useMutation } from 'react-query';
 import { postFeedback } from '../../api/feedback';
 import Airplane from '../icons/Airplane';
+import { useAccount } from '../../contexts/account';
 
 const Form = styled.form`
   display: flex;
@@ -52,6 +53,7 @@ interface FeedbackModalProps {
 }
 
 const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
+  const { account } = useAccount();
   const [discordTag, setDiscordTag] = useState('');
   const [message, setMessage] = useState('');
   const { mutate, status } = useMutation(postFeedback);
@@ -63,6 +65,8 @@ const FeedbackModal: FC<FeedbackModalProps> = ({ onClose }) => {
       await mutate({
         discordTag,
         message,
+        summonerName: account?.summoner.name,
+        platformId: account?.summoner.platformId,
       });
     } catch (error) {
       console.error(error);

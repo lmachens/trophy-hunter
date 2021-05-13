@@ -6,7 +6,7 @@ import {
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import { AccountTrophy } from '../../api/accounts';
-import { dragonHunter, warrior } from '../../components/trophies';
+import { neverGiveUp } from '../../components/trophies';
 import { trophyToAccountTrophy } from '../../api/accounts/server/functions';
 
 export default applyMiddleware(
@@ -17,30 +17,15 @@ export default applyMiddleware(
       const newTrophies: AccountTrophy[] = [];
 
       let changed = false;
-      const hubObjectives = account.levels.find(
-        (level) => level.name === 'hubObjectives'
-      );
+      const hubEpic = account.levels.find((level) => level.name === 'hubEpic');
       if (
-        hubObjectives &&
-        !account.trophies.some((trophy) => trophy.name === dragonHunter.name)
+        hubEpic &&
+        !account.trophies.some((trophy) => trophy.name === neverGiveUp.name)
       ) {
         changed = true;
-        newTrophies.push(trophyToAccountTrophy(dragonHunter));
-        if (hubObjectives.status === 'completed') {
-          hubObjectives.status = 'unlocked';
-        }
-      }
-      const hubSkills = account.levels.find(
-        (level) => level.name === 'hubSkills'
-      );
-      if (
-        hubSkills &&
-        !account.trophies.some((trophy) => trophy.name === warrior.name)
-      ) {
-        changed = true;
-        newTrophies.push(trophyToAccountTrophy(warrior));
-        if (hubSkills.status === 'completed') {
-          hubSkills.status = 'unlocked';
+        newTrophies.push(trophyToAccountTrophy(neverGiveUp));
+        if (hubEpic.status === 'completed') {
+          hubEpic.status = 'unlocked';
         }
       }
 

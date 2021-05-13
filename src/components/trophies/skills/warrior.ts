@@ -2,7 +2,7 @@ import { Trophy } from '../types';
 import { calcKDA } from '../../../api/riot/helpers';
 
 const warrior: Trophy = {
-  island: 'skills',
+  island: 'hub',
   name: 'warrior',
   level: 'hubSkills',
   title: 'Warrior',

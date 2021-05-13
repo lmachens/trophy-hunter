@@ -6,7 +6,7 @@ const mafiaBoss: Trophy = {
   name: 'mafiaBoss',
   level: 'epic1',
   title: 'Mafia Boss',
-  description: `Don't get your hands dirty, but achieve at least 30 assists in a match.\nARAM: 40 assists`,
+  description: `Achieve at least 30 assists in a match.\nARAM: 40 assists`,
   category: 'epic',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {

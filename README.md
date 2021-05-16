@@ -22,10 +22,6 @@ Supported Games
 
 - League of Legends
 
-Coming soon
-
-- Team Fight Tactics
-
 ## Development
 
 Please follow the instructions on [Overwolf Developer](http://developers.overwolf.com/documentation/odk-2-0-introduction/creating-your-first-app/) to get white listed and sign up on [Riot Developer](https://developer.riotgames.com/) for the Riot API key. Without these requirements, you can only use core features in your Browser.

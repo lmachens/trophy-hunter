@@ -299,7 +299,7 @@ export default applyMiddleware(
       const trophiesAboutToCheck =
         match.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
       trophiesAboutToCheck.forEach((trophy) => {
-        const progress = trophy.checkProgress({
+        const result = trophy.checkProgress({
           match,
           timeline,
           account,
@@ -307,6 +307,9 @@ export default applyMiddleware(
           participant,
           teammateAccounts,
         });
+        const { progress } =
+          typeof result === 'number' ? { progress: result } : result;
+
         let obtained = false;
         if (trophy.maxProgress) {
           const prevProgress = getTrophyProgress(account, trophy.name);

@@ -6,7 +6,7 @@ import {
 } from '../../api/utils/server/middleware';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
 import { AccountTrophy } from '../../api/accounts';
-import { diversity, neverGiveUp } from '../../components/trophies';
+import { unchanged } from '../../components/trophies';
 import { trophyToAccountTrophy } from '../../api/accounts/server/functions';
 
 export default applyMiddleware(
@@ -17,29 +17,17 @@ export default applyMiddleware(
       const newTrophies: AccountTrophy[] = [];
 
       let changed = false;
-      const hubEpic = account.levels.find((level) => level.name === 'hubEpic');
-      if (
-        hubEpic &&
-        !account.trophies.some((trophy) => trophy.name === neverGiveUp.name)
-      ) {
-        changed = true;
-        newTrophies.push(trophyToAccountTrophy(neverGiveUp));
-        if (hubEpic.status === 'completed') {
-          hubEpic.status = 'unlocked';
-        }
-      }
-
-      const hubSpecial = account.levels.find(
-        (level) => level.name === 'hubSpecial'
+      const special1 = account.levels.find(
+        (level) => level.name === 'special1'
       );
       if (
-        hubSpecial &&
-        !account.trophies.some((trophy) => trophy.name === diversity.name)
+        special1 &&
+        !account.trophies.some((trophy) => trophy.name === unchanged.name)
       ) {
         changed = true;
-        newTrophies.push(trophyToAccountTrophy(diversity));
-        if (hubSpecial.status === 'completed') {
-          hubSpecial.status = 'unlocked';
+        newTrophies.push(trophyToAccountTrophy(unchanged));
+        if (special1.status === 'completed') {
+          special1.status = 'unlocked';
         }
       }
 

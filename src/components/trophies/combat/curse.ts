@@ -1,7 +1,7 @@
 import { minutesToSeconds } from '../../../api/utils/dates';
 import { Trophy } from '../types';
 
-const REQUIRED_MINUTES = 45;
+const REQUIRED_MINUTES = 40;
 
 const curse: Trophy = {
   island: 'combat',

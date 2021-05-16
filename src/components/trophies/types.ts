@@ -24,7 +24,7 @@ export interface Trophy {
   island: Category;
   category: Category;
   maxProgress?: number;
-  ProgressDetails?: FC<{ details: any }>;
+  ProgressDetails?: FC<{ details: any; maxProgress?: number }>;
   aramSupport?: boolean;
   checkProgress(props: {
     match: Match;

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import styled from '@emotion/styled';
 import { apiEndoint } from '../../../api/utils/runtime';
 
@@ -8,10 +7,14 @@ const Champion = styled.img`
   margin-right: 4px;
 `;
 
-const DiversityDetails: FC<{ details: any }> = ({ details }) => {
+type LastChampionsProps = {
+  details: any;
+  maxProgress: number;
+};
+const LastChampions = ({ details, maxProgress }: LastChampionsProps) => {
   return (
     <div>
-      {Array(3)
+      {Array(maxProgress)
         .fill(null)
         .map((_, index) => (
           <Champion
@@ -27,4 +30,4 @@ const DiversityDetails: FC<{ details: any }> = ({ details }) => {
   );
 };
 
-export default DiversityDetails;
+export default LastChampions;

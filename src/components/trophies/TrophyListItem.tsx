@@ -122,7 +122,10 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           />
         )}
         {trophy.ProgressDetails && (
-          <trophy.ProgressDetails details={progressDetails} />
+          <trophy.ProgressDetails
+            details={progressDetails}
+            maxProgress={trophy.maxProgress}
+          />
         )}
       </Grow>
       {trophy.aramSupport && (

@@ -1,9 +1,6 @@
 import { Trophy } from '../types';
-import {
-  getTrophyProgress,
-  getTrophyProgressDetails,
-} from '../../../api/accounts/helpers';
-import OneTrickPonyDetails from './OneTrickPonyDetails';
+import { getTrophyProgressDetails } from '../../../api/accounts/helpers';
+import LastChampions from './LastChampions';
 
 const oneTrickPony: Trophy = {
   island: 'special',
@@ -14,26 +11,27 @@ const oneTrickPony: Trophy = {
     'Play the same champion in the last five matches and win all of them.',
   category: 'special',
   maxProgress: 5,
-  ProgressDetails: OneTrickPonyDetails,
+  ProgressDetails: LastChampions,
   aramSupport: true,
   checkProgress: ({ account, participant }) => {
     if (!participant.stats.win) {
-      return 0;
+      return {
+        progress: 0,
+        details: [],
+      };
     }
-    const trophyProgress = getTrophyProgress(account, 'oneTrickPony');
     const trophyProgressDetails = getTrophyProgressDetails(
       account,
       'oneTrickPony'
     );
-    const playedSameChampion = trophyProgressDetails.every(
-      (championId) => championId === participant.championId
-    );
-    if (!playedSameChampion) {
-      return 0;
-    }
-    trophyProgressDetails.push(participant.championId);
+    const playedSameChampion = [
+      ...trophyProgressDetails.filter(
+        (championId) => championId === participant.championId
+      ),
+      participant.championId,
+    ];
     return {
-      progress: 1 / 5 + trophyProgress,
+      progress: playedSameChampion.length / 5,
       details: trophyProgressDetails,
     };
   },

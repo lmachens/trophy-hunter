@@ -3,7 +3,7 @@ import {
   getTrophyProgress,
   getTrophyProgressDetails,
 } from '../../../api/accounts/helpers';
-import DiversityDetails from './DiversityDetails';
+import LastChampions from './LastChampions';
 
 const diversity: Trophy = {
   island: 'hub',
@@ -13,7 +13,7 @@ const diversity: Trophy = {
   description: 'Play three different champions.',
   category: 'special',
   maxProgress: 3,
-  ProgressDetails: DiversityDetails,
+  ProgressDetails: LastChampions,
   aramSupport: true,
   checkProgress: ({ account, participant }) => {
     const trophyProgress = getTrophyProgress(account, 'diversity');

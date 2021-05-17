@@ -94,7 +94,7 @@ export default applyMiddleware(
           .end(`Game mode ${match.queueId} is not supported`);
       }
 
-      if (match.gameDuration < 600) {
+      if (match.gameDuration < 300) {
         return res.json({
           trophyNames: [],
           unlockedIslandNames: [],

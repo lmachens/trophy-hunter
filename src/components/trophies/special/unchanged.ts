@@ -26,7 +26,7 @@ const unchanged: Trophy = {
 
     return {
       progress: playedSameChampion.length / 3,
-      details: trophyProgressDetails,
+      details: playedSameChampion,
     };
   },
 };

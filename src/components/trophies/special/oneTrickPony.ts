@@ -32,7 +32,7 @@ const oneTrickPony: Trophy = {
     ];
     return {
       progress: playedSameChampion.length / 5,
-      details: trophyProgressDetails,
+      details: playedSameChampion,
     };
   },
 };

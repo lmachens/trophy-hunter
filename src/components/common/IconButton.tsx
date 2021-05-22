@@ -15,11 +15,14 @@ const IconButton = styled.button<Props>`
   cursor: pointer;
   border: none;
   padding: 0;
-  fill: ${(props) => (props.active ? '#EAEAEA' : '#77777A')};
   outline: none;
 
   &:hover {
     background: #616165;
+  }
+
+  svg {
+    fill: ${(props) => (props.active ? '#EAEAEA' : '#77777A')};
   }
 `;
 

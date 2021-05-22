@@ -5,7 +5,6 @@ import DetailsToggle from './DetailsToggle';
 import { Level } from './types';
 import TrophyListItem from '../trophies/TrophyListItem';
 import TrophyList from '../trophies/TrophyList';
-import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
 import { Account } from '../../api/accounts';
 
 type Open = { open: boolean };
@@ -47,8 +46,6 @@ const LevelPanel: FC<LevelPanelProps> = ({
   open,
   onToggleClick,
 }) => {
-  const availableTrophies = useAvailableTrophies(account);
-
   let content;
   if (open && !level) {
     content = <ChooseALevel />;
@@ -63,11 +60,6 @@ const LevelPanel: FC<LevelPanelProps> = ({
               key={trophy.name}
               account={account}
               trophy={trophy}
-              disableFavorite={
-                !availableTrophies.some(
-                  (availableTrophy) => availableTrophy.name === trophy.name
-                )
-              }
               data-tooltip-id={trophy.name}
             />
           ))}

@@ -24,11 +24,8 @@ export const postCheck = (matchId: number) => {
   return postJSON<{
     trophyNames: string[];
     unlockedIslandNames: string[];
+    missionTrophyNames: string[];
   }>('/api/check', { matchId });
-};
-
-export const patchAccount = (patch) => {
-  return patchJSON<Account>('/api/account', patch);
 };
 
 export const getRankings = (season?: string) => {

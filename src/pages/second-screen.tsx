@@ -16,7 +16,6 @@ import Profile from '../components/trophies/Profile';
 import islands from '../components/islands/islands';
 import { useAccount } from '../contexts/account';
 import { useCallback, useEffect, useState } from 'react';
-import Favorites from '../components/filters/Favorites';
 import useAvailableTrophies from '../contexts/account/useAvailableTrophies';
 import Combat from '../components/filters/Combat';
 import Skills from '../components/filters/Skills';
@@ -114,7 +113,7 @@ const Center = styled.div`
   }
 `;
 
-const allFilters = ['favorites', ...islands.map((island) => island.name)];
+const allFilters = [...islands.map((island) => island.name)];
 const SecondScreen: NextPage = () => {
   const { account } = useAccount();
   const [filterIndex, setFilterIndex] = usePersistentState(
@@ -141,45 +140,27 @@ const SecondScreen: NextPage = () => {
 
   const filters = filterIndex === -1 ? [] : allFilters[filterIndex];
 
-  const trophies = activeTrophies.filter(
-    (trophy) =>
-      filters.includes(trophy.category) ||
-      (filters.includes('favorites') &&
-        account.favoriteTrophyNames.includes(trophy.name))
+  const trophies = activeTrophies.filter((trophy) =>
+    filters.includes(trophy.category)
   );
 
-  const hasFavorites = activeTrophies.some((trophy) =>
-    account.favoriteTrophyNames.includes(trophy.name)
-  );
   const getNextIndex = useCallback(
     (index) => {
       let nextFilterIndex = (index + 1) % allFilters.length;
-      if (nextFilterIndex === allFilters.indexOf('favorites')) {
-        if (hasFavorites) {
-          return nextFilterIndex;
-        }
-        nextFilterIndex++;
-      }
       while (nextFilterIndex < allFilters.length * 2) {
         const newFilterIndex = nextFilterIndex % allFilters.length;
-        if (newFilterIndex === allFilters.indexOf('favorites')) {
-          if (hasFavorites) {
-            return newFilterIndex;
-          }
-        } else {
-          const hasItems = activeTrophies.some(
-            (trophy) => trophy.category === allFilters[newFilterIndex]
-          );
-          if (hasItems) {
-            return newFilterIndex;
-          }
+        const hasItems = activeTrophies.some(
+          (trophy) => trophy.category === allFilters[newFilterIndex]
+        );
+        if (hasItems) {
+          return newFilterIndex;
         }
         nextFilterIndex++;
       }
 
       return index;
     },
-    [hasFavorites, activeTrophies]
+    [activeTrophies]
   );
 
   useEffect(() => {
@@ -265,11 +246,6 @@ const SecondScreen: NextPage = () => {
         </Header>
         <main>
           <Categories>
-            <Favorites
-              selected={filterIndex === allFilters.indexOf('favorites')}
-              disabled={!hasFavorites}
-              onClick={() => setFilterIndex(allFilters.indexOf('favorites'))}
-            />
             <Combat
               selected={filterIndex === allFilters.indexOf('combat')}
               disabled={

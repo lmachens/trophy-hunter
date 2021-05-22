@@ -75,13 +75,30 @@ export const createAccountsCollection = async () => {
           lastGameIds: {
             bsonType: 'array',
           },
-          favoriteTrophyNames: {
-            bsonType: 'array',
-          },
           lastMigrationAt: {
             bsonType: 'date',
           },
           trophiesCompleted: {
+            bsonType: 'number',
+          },
+          missions: {
+            bsonType: 'array',
+            items: {
+              bsonType: 'object',
+              properties: {
+                missionId: {
+                  bsonType: 'string',
+                },
+                completedTrophyNames: {
+                  bsonType: 'array',
+                  items: {
+                    bsonType: 'string',
+                  },
+                },
+              },
+            },
+          },
+          missionTrophiesCompleted: {
             bsonType: 'number',
           },
         },
@@ -91,6 +108,8 @@ export const createAccountsCollection = async () => {
           'trophies',
           'authTokens',
           'trophiesCompleted',
+          'missions',
+          'missionTrophiesCompleted',
         ],
       },
     },

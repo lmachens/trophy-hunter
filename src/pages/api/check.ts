@@ -34,6 +34,7 @@ import {
   aramTrophies,
 } from '../../components/trophies/trophiesByMap';
 import { getTrophyProgress } from '../../api/accounts/helpers';
+import { getMissionsCollection } from '../../api/missions/server/collection';
 
 const activeChecks: string[] = [];
 
@@ -266,6 +267,53 @@ export default applyMiddleware(
       const trophiesCompleted = accountTrophies.filter(
         (trophy) => trophy.status === 'completed'
       ).length;
+
+      const activeMission = await getMissionsCollection().findOne({
+        active: true,
+      });
+
+      let accountMission = account.missions.find(
+        (mission) => mission.missionId === activeMission._id
+      );
+      if (!accountMission) {
+        accountMission = {
+          missionId: activeMission._id,
+          completedTrophyNames: [],
+        };
+        account.missions.push(accountMission);
+      }
+      const missionTrophyNames: string[] = [];
+      activeMission.trophyNames.forEach((trophyName) => {
+        if (accountMission.completedTrophyNames.includes(trophyName)) {
+          return;
+        }
+        const trophy = allTrophies.find((trophy) => trophy.name === trophyName);
+        const result = trophy.checkProgress({
+          match,
+          timeline,
+          account,
+          events,
+          participant,
+          teammateAccounts,
+        });
+        const { progress } =
+          typeof result === 'number' ? { progress: result } : result;
+        if (progress >= 0.999) {
+          missionTrophyNames.push(trophyName);
+        }
+      });
+      await Accounts.updateOne(
+        { _id: account._id },
+        {
+          $set: {
+            missions: account.missions,
+          },
+          $inc: {
+            missionTrophiesCompleted: missionTrophyNames.length,
+          },
+        }
+      );
+
       await Accounts.updateOne(
         { _id: account._id },
         {
@@ -283,6 +331,7 @@ export default applyMiddleware(
       res.json({
         trophyNames: completedTrophyNames,
         unlockedIslandNames: unlockedIslandNames,
+        missionTrophyNames,
       });
 
       await addHistoryMatch({

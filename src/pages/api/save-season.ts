@@ -68,7 +68,6 @@ export default applyMiddleware(
                 },
               ],
               games: 0,
-              favoriteTrophyNames: [],
               trophiesCompleted: 1,
             },
           }

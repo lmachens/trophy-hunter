@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import IslandFilter from '../icons/IslandFilter';
-import FavoritesFilter from '../icons/FavoritesFilter';
+import MissionStar from '../icons/MissionStar';
 import TrophyListItem from '../trophies/TrophyListItem';
 import useAvailableTrophies from '../../contexts/account/useAvailableTrophies';
 import TrophyList from '../trophies/TrophyList';
@@ -13,6 +13,7 @@ import IconButton from '../common/IconButton';
 import { trackFilter } from '../../api/performance';
 import Empty from '../icons/Empty';
 import { useTargetAccount } from '../../contexts/account';
+import { useMission } from '../../contexts/account/useMission';
 
 const Header = styled.header`
   display: flex;
@@ -64,11 +65,13 @@ const EmptyContainer = styled.div`
 const MapOverview = () => {
   const account = useTargetAccount();
   const availableTrophies = useAvailableTrophies(account);
-  const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [onlyMissions, setOnlyMissions] = useState(false);
   const [categories, setCategories] = useState<string[]>(
     Object.keys(categoriesMap)
   );
   const [showCategories, setShowCategories] = useState(false);
+  const mission = useMission();
+  const missionTrophyNames = mission?.trophyNames || [];
 
   const handleCategoryChange = (category) => () => {
     const newCategories = toggleArrayElement(categories, category);
@@ -79,12 +82,12 @@ const MapOverview = () => {
   const trophies = availableTrophies.filter(
     (trophy) =>
       categories.includes(trophy.category) &&
-      (!onlyFavorites || account.favoriteTrophyNames.includes(trophy.name))
+      (!onlyMissions || missionTrophyNames.includes(trophy.name))
   );
   return (
     <>
       <Header>
-        <Title>{onlyFavorites ? 'Favorite' : 'Available'} Trophies</Title>
+        <Title>{onlyMissions ? 'Missions' : 'Available'} Trophies</Title>
         <Tooltip title="Categories" placement="bottomRight">
           <IconButton
             active={categories.length < 7}
@@ -132,27 +135,25 @@ const MapOverview = () => {
             <Backdrop onClick={() => setShowCategories(false)} />
           </Categories>
         )}
-        <Tooltip title="Favorites" placement="bottomRight">
+        <Tooltip title="Mission trophies" placement="bottomRight">
           <IconButton
-            active={onlyFavorites}
+            active={onlyMissions}
             onClick={() => {
-              setOnlyFavorites(!onlyFavorites);
-              trackFilter(
-                onlyFavorites ? 'Not only favorites' : 'Only favorites'
-              );
+              setOnlyMissions(!onlyMissions);
+              trackFilter(onlyMissions ? 'Not only missions' : 'Only missions');
             }}
             data-track-content
           >
-            <FavoritesFilter />
+            <MissionStar />
           </IconButton>
         </Tooltip>
       </Header>
       <TrophyList>
-        {onlyFavorites && trophies.length === 0 && (
+        {onlyMissions && trophies.length === 0 && (
           <EmptyContainer>
             <Empty />
             <h2>Nothing here yet</h2>
-            <p>Select trophies and add them to favorites</p>
+            <p>You completed all missions</p>
           </EmptyContainer>
         )}
         {trophies.map((trophy) => (

@@ -43,8 +43,9 @@ export const partialNewAccount: Omit<Account, 'summoner' | 'authTokens'> = {
   trophies: startingTrophies,
   games: 0,
   lastGameIds: [],
-  favoriteTrophyNames: [],
   trophiesCompleted: 0,
+  missions: [],
+  missionTrophiesCompleted: 0,
 };
 export const newAccount: Account = {
   summoner: {

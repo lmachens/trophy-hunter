@@ -1,3 +1,4 @@
+import { ObjectId } from 'bson';
 import { Category } from '../../components/trophies/types';
 import { Summoner } from '../riot/types';
 
@@ -18,9 +19,13 @@ export interface Account {
   trophies: AccountTrophy[];
   games: number;
   lastGameIds: number[];
-  favoriteTrophyNames: string[];
   lastMigrationAt?: Date;
   trophiesCompleted: number;
+  missions: {
+    missionId: ObjectId;
+    completedTrophyNames: string[];
+  }[];
+  missionTrophiesCompleted: number;
   rank?: number;
 }
 

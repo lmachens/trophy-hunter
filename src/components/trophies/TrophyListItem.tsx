@@ -1,20 +1,18 @@
 import { FC, HTMLAttributes, useState } from 'react';
 import styled from '@emotion/styled';
 import { Trophy } from './types';
-import { useAccount, useTrophyProgress } from '../../contexts/account';
-import FavoritesFilter from '../icons/FavoritesFilter';
+import { useTrophyProgress } from '../../contexts/account';
+import MissionStar from '../icons/MissionStar';
 import Grow from '../common/Grow';
 import ProgressBar from '../common/ProgressBar';
 import { categoriesMap } from './categories';
-import { useQueryClient, useMutation } from 'react-query';
-import { Account, patchAccount } from '../../api/accounts';
-import { toggleArrayElement } from '../../api/utils/arrays';
+import { Account } from '../../api/accounts';
 import Flag from '../icons/Flag';
 import { Tooltip } from '../tooltip';
 import TrophyStats from './TrophyStats';
-import { trackFavorite } from '../../api/performance';
 import Aram from '../icons/Aram';
 import TrophyModal from '../modals/TrophyModal';
+import { useMission } from '../../contexts/account/useMission';
 
 interface ListItemProps {
   borderless?: boolean;
@@ -46,7 +44,6 @@ interface TrophyListItemProps
     HTMLAttributes<HTMLDivElement> {
   account?: Account;
   trophy: Trophy;
-  disableFavorite?: boolean;
   progress?: number;
 }
 
@@ -54,19 +51,6 @@ const Progress = styled.div`
   margin: 0px 10px 6px 6px;
   flex-shrink: 0;
   width: 12px;
-`;
-
-interface FavoriteProps {
-  active: boolean;
-}
-
-const Favorite = styled((props) => (
-  <FavoritesFilter {...props} active={undefined} />
-))`
-  flex-shrink: 0;
-  fill: ${(props: FavoriteProps) => (props.active ? '#77777A' : '#1F1F1F')};
-  stroke: #77777a;
-  cursor: pointer;
 `;
 
 const Title = styled.h3`
@@ -80,22 +64,15 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
   trophy,
   borderless,
   progress,
-  disableFavorite,
   ...props
 }) => {
   if (!trophy) {
     return null;
   }
-  const { account: ownAccount } = useAccount();
-
-  const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
+  const mission = useMission();
+  const missionTrophyNames = mission?.trophyNames || [];
 
-  const { mutate: patch } = useMutation(patchAccount, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('account');
-    },
-  });
   const { progress: trophyProgress, progressDetails } =
     typeof progress !== 'undefined'
       ? { progress, progressDetails: null }
@@ -144,24 +121,14 @@ const TrophyListItem: FC<TrophyListItemProps> = ({
           <Flag onClick={(event) => event.stopPropagation()} />
         </Tooltip>
       )}
-      {!disableFavorite &&
-        account &&
-        account?._id === ownAccount?._id &&
-        trophyProgress < 1 && (
-          <Favorite
-            active={account.favoriteTrophyNames.includes(trophy.name)}
-            onClick={(event) => {
-              event.stopPropagation();
-              patch({
-                favoriteTrophyNames: toggleArrayElement(
-                  account.favoriteTrophyNames,
-                  trophy.name
-                ),
-              });
-              trackFavorite(trophy.name);
-            }}
-          />
-        )}
+      {missionTrophyNames.includes(trophy.name) && (
+        <Tooltip
+          text="This trophy is part of this weeks mission. Mission trophies are shuffled every Sunday and are not part of the trophies count."
+          placement="bottomRight"
+        >
+          <MissionStar />
+        </Tooltip>
+      )}
       {showModal && (
         <TrophyModal trophy={trophy} onClose={() => setShowModal(false)} />
       )}

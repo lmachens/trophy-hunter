@@ -14,9 +14,7 @@ export default applyMiddleware(
     });
 
     res.setHeader('Cache-Control', 'max-age=180');
-    res.json({
-      activeMission,
-    });
+    res.json(activeMission);
   },
   withError,
   withMethods('GET'),

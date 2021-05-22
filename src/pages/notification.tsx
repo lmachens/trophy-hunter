@@ -68,11 +68,7 @@ const Notification: NextPage = () => {
         </NotificationTitle>
         <Timer onDone={loadNotification} />
       </NotificationHeader>
-      <ListItem
-        trophy={trophy}
-        progress={notification.progress}
-        disableFavorite
-      />
+      <ListItem trophy={trophy} progress={notification.progress} />
     </NotificationContainer>
   );
 };

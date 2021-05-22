@@ -13,8 +13,8 @@ export const generateRandomMission = (
     let randomIndex: number = Math.floor(Math.random() * allTrophies.length);
     let randomTrophy = allTrophies[randomIndex];
     while (
-      randomTrophy.maxProgress &&
-      randomTrophyNames.includes(randomTrophy.name) &&
+      randomTrophy.maxProgress ||
+      randomTrophyNames.includes(randomTrophy.name) ||
       excludeTrophies.includes(randomTrophy.name)
     ) {
       randomIndex = Math.floor(Math.random() * allTrophies.length);

@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useQuery } from 'react-query';
 import { getRecentVersion } from '../../api/riot';
 import { useTargetAccount } from '../../contexts/account';
+import { Tooltip } from '../tooltip';
 import * as trophies from './index';
 
 const Container = styled.div`
@@ -34,11 +35,21 @@ const Profile = () => {
       <div>
         <h4>{account?.summoner.name || 'Start LoL to Sign-In'}</h4>
         <p>
-          {account
-            ? account.trophies.filter((trophy) => trophy.status === 'completed')
-                .length
-            : 0}
-          /{Object.keys(trophies).length} Trophies
+          <span>
+            {account
+              ? account.trophies.filter(
+                  (trophy) => trophy.status === 'completed'
+                ).length
+              : 0}
+            /{Object.keys(trophies).length} Trophies
+          </span>{' '}
+          |{' '}
+          <Tooltip
+            text="Missions are random trophies which are shuffled every Sunday. They are not part of the trophies count."
+            placement="top"
+          >
+            <span>{account?.missionTrophiesCompleted || 0} Missions</span>
+          </Tooltip>
         </p>
       </div>
     </Container>

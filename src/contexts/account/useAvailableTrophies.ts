@@ -3,13 +3,18 @@ import { Level } from '../../components/levels/types';
 import { useMemo } from 'react';
 import { Trophy } from '../../components/trophies/types';
 import { Account } from '../../api/accounts';
+import { allTrophies } from '../../components/trophies/trophiesByMap';
+import { useMission } from './useMission';
 
 const useAvailableTrophies = (account: Account) => {
+  const mission = useMission();
+  const missionTrophyNames = mission?.trophyNames || [];
+
   const availableTrophies = useMemo(() => {
     if (!account) {
       return [];
     }
-    return account.levels
+    const availableTrophies = account.levels
       .sort((a, b) => b.unlockedAt - a.unlockedAt)
       .reduce<Trophy[]>((availableTrophies, activeLevel) => {
         const level: Level = levels[activeLevel.name];
@@ -24,7 +29,21 @@ const useAvailableTrophies = (account: Account) => {
         });
         return [...availableTrophies, ...trophies];
       }, []);
-  }, [account]);
+    missionTrophyNames.forEach((missionTrophyName) => {
+      if (
+        availableTrophies.every(
+          (availableTrophy) => availableTrophy.name !== missionTrophyName
+        )
+      ) {
+        const trophy = allTrophies.find(
+          (trophy) => trophy.name === missionTrophyName
+        );
+        availableTrophies.push(trophy);
+      }
+    });
+
+    return availableTrophies;
+  }, [account, missionTrophyNames]);
 
   return availableTrophies;
 };

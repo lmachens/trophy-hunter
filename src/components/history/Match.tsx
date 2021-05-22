@@ -172,7 +172,6 @@ const Match = ({ match }: Props) => {
               account={account}
               trophy={trophies[trophyName]}
               key={trophyName}
-              disableFavorite
             />
           ))}
         </Details>

@@ -65,10 +65,6 @@ export const trackFilter = async (name) => {
   await trackEvent('Filter', 'Filter changed', name);
 };
 
-export const trackFavorite = async (name) => {
-  await trackEvent('Favorite', 'Favorite changed', name);
-};
-
 export const trackCheck = async (gameId) => {
   await trackEvent('Check', 'Match check', gameId);
 };

@@ -146,7 +146,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
               reset();
             }
           }}
-          trophyNames={match.trophyNames}
+          trophyNames={[...match.trophyNames, ...match.missionTrophyNames]}
         />
       )}
       {showModal && match && showUnlockedIslandNames && (

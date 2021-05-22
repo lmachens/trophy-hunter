@@ -6,10 +6,15 @@ import {
   ensureAccountsIndexes,
   ensureSeasonAccountsIndexes,
 } from '../../accounts/server/collection';
+import { ensureCronsIndexes, runCrons } from '../../cron/server/collection';
 import {
   createMatchesCollection,
   ensureMatchesIndexes,
 } from '../../matches/server/collection';
+import {
+  createMissionsCollection,
+  startMissionsCron,
+} from '../../missions/server/collection';
 import {
   createTrophyStatsCollection,
   ensureTrophyStatsIndexes,
@@ -35,6 +40,10 @@ export const initMongoDatabase = async () => {
     await ensureMatchesIndexes();
     await createTrophyStatsCollection();
     await ensureTrophyStatsIndexes();
+    await createMissionsCollection();
+    await ensureCronsIndexes();
+    await runCrons();
+    await startMissionsCron();
   }
 };
 

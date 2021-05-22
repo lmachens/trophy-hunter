@@ -83,11 +83,15 @@ export const withMethods = (...allowedMethods: HTTPMethod[]) => (
   await handler(req, res);
 };
 
+let databasePromise: Promise<void>;
 export const withDatabase = (handler: Handler) => async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  await initMongoDatabase();
+  if (!databasePromise) {
+    databasePromise = initMongoDatabase();
+  }
+  await databasePromise;
 
   return await handler(req, res);
 };

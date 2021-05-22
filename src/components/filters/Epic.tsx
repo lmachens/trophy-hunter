@@ -29,19 +29,27 @@ const Epic = (props: Omit<FilterProps, 'title'>) => {
         />
         <Path
           d="M51.9473 32.8647L46.6843 42.9214L47.4738 58.522L52.9999 56.2012L51.9473 32.8647Z"
-          fill={props.selected ? '#B34EE3' : '#636365'}
+          fill={
+            props.disabled ? '#A2A2A7' : props.selected ? '#B34EE3' : '#636365'
+          }
         />
         <Path
           d="M40.1052 37.1196H38V56.3303L42.0789 45.629L40.1052 37.1196Z"
-          fill={props.selected ? '#B34EE3' : '#636365'}
+          fill={
+            props.disabled ? '#77777A' : props.selected ? '#B34EE3' : '#636365'
+          }
         />
         <Path
           d="M42.0791 37.1196H40.1055L42.0791 45.6291L44.1844 43.0504L42.0791 37.1196Z"
-          fill={props.selected ? '#D884FF' : '#B5B5B7'}
+          fill={
+            props.disabled ? '#77777A' : props.selected ? '#D884FF' : '#B5B5B7'
+          }
         />
         <Path
           d="M43.3949 62.2609V65.9999L52.9999 56.2012L47.4738 58.5219L43.3949 62.2609Z"
-          fill={props.selected ? '#9F44CA' : '#535355'}
+          fill={
+            props.disabled ? '#77777A' : props.selected ? '#9F44CA' : '#535355'
+          }
         />
         <rect
           x="25"

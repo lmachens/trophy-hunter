@@ -37,16 +37,10 @@ const theElephant: Trophy = {
         ? minutesToSeconds(ARAM_MINUTES)
         : minutesToSeconds(SUMMONERS_RIFT_MINUTES);
     const lastDeath = deaths[deaths.length - 1];
-    if (!lastDeath && gameData.gameTime > requiredTimelimit) {
-      return 1;
+    if (!lastDeath) {
+      return gameData.gameTime / requiredTimelimit;
     }
-    if (
-      lastDeath &&
-      gameData.gameTime - lastDeath.EventTime > requiredTimelimit
-    ) {
-      return 1;
-    }
-    return 0;
+    return (gameData.gameTime - lastDeath.EventTime) / requiredTimelimit;
   },
 };
 

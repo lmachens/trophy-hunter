@@ -61,18 +61,23 @@ const setTrophyProgress = (account: Account) => {
   if (activeTrophies.length === 0) {
     return;
   }
+
   const trophiesProgress = activeTrophies.map((trophy) => {
     try {
+      if (notifiedCompleted.includes(trophy.name)) {
+        return {
+          trophyName: trophy.name,
+          progress: 1,
+        };
+      }
+      const liveProgress = trophy.checkLive?.(live);
+      const accountProgress = account.trophies.find(
+        (accountTrophy) => accountTrophy.name === trophy.name
+      )?.progress;
+
       return {
         trophyName: trophy.name,
-        progress: Math.min(
-          1,
-          trophy.checkLive?.(live) ||
-            account.trophies.find(
-              (accountTrophy) => accountTrophy.name === trophy.name
-            )?.progress ||
-            0
-        ),
+        progress: Math.min(1, liveProgress || accountProgress || 0),
       };
     } catch (err) {
       error(`checkLive error in ${trophy.name}: ${err.message}`, err.stack);
@@ -83,10 +88,16 @@ const setTrophyProgress = (account: Account) => {
     }
   });
 
-  const progressByTrophyName = trophiesProgress.reduce((acc, cur) => ({
-    ...acc,
-    [cur.trophyName]: cur.progress,
-  }));
+  const progressByTrophyName = trophiesProgress.reduce<{
+    [trophyName: string]: number;
+  }>(
+    (acc, cur) => ({
+      ...acc,
+      [cur.trophyName]: cur.progress,
+    }),
+    {}
+  );
+
   setLocalStorageItem(TROPHY_PROGRESS, progressByTrophyName);
 
   const showTrophyNearCompletion = getLocalStorageItem(
@@ -115,12 +126,6 @@ const setTrophyProgress = (account: Account) => {
       )
     : [];
   completedTrophies.forEach((completedTrophy) => {
-    const activeTrophyIndex = activeTrophies.findIndex(
-      (activeTrophy) => activeTrophy.name === completedTrophy.trophyName
-    );
-    if (activeTrophyIndex > -1) {
-      activeTrophies.splice(activeTrophyIndex, 1);
-    }
     notifiedCompleted.push(completedTrophy.trophyName);
   });
 

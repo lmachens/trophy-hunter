@@ -300,6 +300,7 @@ export default applyMiddleware(
           typeof result === 'number' ? { progress: result } : result;
         if (progress >= 0.999) {
           missionTrophyNames.push(trophyName);
+          accountMission.completedTrophyNames.push(trophyName);
         }
       });
       await Accounts.updateOne(

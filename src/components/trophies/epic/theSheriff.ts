@@ -1,5 +1,6 @@
 import { Trophy } from '../types';
 import {
+  getParticipantKillsAndAssists,
   getParticipantKills,
   getParticipantDeaths,
 } from '../../../api/riot/helpers';
@@ -12,9 +13,11 @@ const theSheriff: Trophy = {
   description: 'Take part in six shutdown kills.',
   category: 'epic',
   checkProgress: ({ events, participant }) => {
-    const kills = getParticipantKills(events, participant.participantId);
-
-    const shutDowns = kills.filter((kill) => {
+    const killsAndAssists = getParticipantKillsAndAssists(
+      events,
+      participant.participantId
+    );
+    const shutDowns = killsAndAssists.filter((kill) => {
       const killEvents = getParticipantKills(events, kill.victimId);
       const deathEvents = getParticipantDeaths(events, kill.victimId);
 
@@ -23,13 +26,13 @@ const theSheriff: Trophy = {
           victimDeath.timestamp < kill.timestamp ? victimDeath.timestamp : 0
         )
       );
-      const shutDownScore = killEvents.filter(
+      const killingSpree = killEvents.filter(
         (victimKill) =>
           victimKill.timestamp > victimLastDeath &&
           victimKill.timestamp < kill.timestamp
       ).length;
 
-      return shutDownScore >= 3;
+      return killingSpree >= 3;
     }).length;
 
     return shutDowns / 6;

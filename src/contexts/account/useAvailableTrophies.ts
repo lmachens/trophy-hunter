@@ -29,11 +29,19 @@ const useAvailableTrophies = (account: Account) => {
         });
         return [...availableTrophies, ...trophies];
       }, []);
+    const accountMission = account.missions.find(
+      (accountMission) =>
+        accountMission.missionId.toString() === mission._id.toString()
+    );
+    const accountMissionTrophyNames =
+      accountMission?.completedTrophyNames || [];
+
     missionTrophyNames.forEach((missionTrophyName) => {
       if (
-        availableTrophies.every(
-          (availableTrophy) => availableTrophy.name !== missionTrophyName
-        )
+        !availableTrophies.some(
+          (availableTrophy) => availableTrophy.name === missionTrophyName
+        ) &&
+        !accountMissionTrophyNames.includes(missionTrophyName)
       ) {
         const trophy = allTrophies.find(
           (trophy) => trophy.name === missionTrophyName

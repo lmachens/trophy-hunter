@@ -273,7 +273,8 @@ export default applyMiddleware(
       });
 
       let accountMission = account.missions.find(
-        (mission) => mission.missionId === activeMission._id
+        (mission) =>
+          mission.missionId.toString() === activeMission._id.toString()
       );
       if (!accountMission) {
         accountMission = {
@@ -303,17 +304,19 @@ export default applyMiddleware(
           accountMission.completedTrophyNames.push(trophyName);
         }
       });
-      await Accounts.updateOne(
-        { _id: account._id },
-        {
-          $set: {
-            missions: account.missions,
-          },
-          $inc: {
-            missionTrophiesCompleted: missionTrophyNames.length,
-          },
-        }
-      );
+      if (missionTrophyNames.length > 0) {
+        await Accounts.updateOne(
+          { _id: account._id },
+          {
+            $set: {
+              missions: account.missions,
+            },
+            $inc: {
+              missionTrophiesCompleted: missionTrophyNames.length,
+            },
+          }
+        );
+      }
 
       await Accounts.updateOne(
         { _id: account._id },

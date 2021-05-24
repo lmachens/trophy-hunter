@@ -24,7 +24,8 @@ const Button = styled.button<Props>`
   outline: none;
   font-size: 18px;
   text-transform: uppercase;
-  border: ${(props) => (props.active ? '1px solid #EAEAEA' : 'none')};
+  border: ${(props) =>
+    props.active ? '1px solid #EAEAEA' : '1px solid transparent'};
   background: ${(props) => (props.active ? '#616165' : '#3f3e43')};
   text-decoration: none;
 

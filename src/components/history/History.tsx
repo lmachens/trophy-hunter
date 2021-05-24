@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
-import React from 'react';
-import { useQuery } from 'react-query';
+import React, { useState } from 'react';
+import { useInfiniteQuery } from 'react-query';
 import Match from './Match';
 import { getHistoryMatches, HistoryMatch } from '../../api/matches';
 import Squid from '../icons/Squid';
 import { trackLink } from '../../api/performance';
 import { useAccount } from '../../contexts/account';
+import Button from '../common/Button';
 
 const Container = styled.div`
   font-family: Roboto Mono;
@@ -47,49 +48,92 @@ const NoMatches = styled.div`
 `;
 
 const History = () => {
+  const [onlyWithTrophies, setOnlyWithTrophies] = useState<boolean>(false);
+
   const { account } = useAccount();
-  const { data: matches = Array<HistoryMatch>(20).fill(null) } = useQuery(
-    ['matches', account?._id],
-    () =>
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery(
+    ['matches', account?._id, onlyWithTrophies],
+    ({ pageParam = 0 }) =>
       getHistoryMatches({
         summonerName: account.summoner.name,
         platformId: account.summoner.platformId,
+        onlyWithTrophies,
+        page: pageParam,
       }),
     {
       enabled: !!account,
+      getNextPageParam: (result) =>
+        result.hasMore ? result.currentPage + 1 : null,
     }
   );
 
   return (
     <Container>
-      <h3>Showing last 20 matches</h3>
-      {matches.length > 0 && (
-        <Matches>
-          {matches.map((match, index) => (
-            <Match key={match?.gameId || index} match={match} />
-          ))}
-        </Matches>
-      )}
-      {matches.length === 0 && (
-        <NoMatches>
-          <Squid />
-          <p>No matches found</p>
-          <div>
-            Matches are automatically recorded.
-            <br />
-            Please contact us on{' '}
-            <a
-              href="https://discord.gg/NTZu8Px"
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => trackLink('https://discord.gg/NTZu8Px')}
-            >
-              Discord
-            </a>{' '}
-            for further assistance.
-          </div>
-        </NoMatches>
-      )}
+      <div>
+        <Button
+          active={onlyWithTrophies}
+          onClick={() => setOnlyWithTrophies(!onlyWithTrophies)}
+        >
+          Only with trophies
+        </Button>
+      </div>
+      <Matches>
+        {status === 'success' && (
+          <>
+            {data.pages.length > 0 && (
+              <>
+                {data.pages.map((result, i) => (
+                  <React.Fragment key={i}>
+                    {result.data.map((match, index) => (
+                      <Match key={match?.gameId || index} match={match} />
+                    ))}
+                  </React.Fragment>
+                ))}
+                <Button
+                  onClick={() => fetchNextPage()}
+                  disabled={!hasNextPage || isFetchingNextPage}
+                >
+                  {isFetchingNextPage
+                    ? 'Loading more...'
+                    : hasNextPage
+                    ? 'Load More'
+                    : 'Nothing more to load'}
+                </Button>
+              </>
+            )}
+            {!data.pages[0] && (
+              <NoMatches>
+                <Squid />
+                <p>No matches found</p>
+                <div>
+                  Matches are automatically recorded.
+                  <br />
+                  Please contact us on{' '}
+                  <a
+                    href="https://discord.gg/NTZu8Px"
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackLink('https://discord.gg/NTZu8Px')}
+                  >
+                    Discord
+                  </a>{' '}
+                  for further assistance.
+                </div>
+              </NoMatches>
+            )}
+          </>
+        )}
+        {status === 'loading' &&
+          Array<HistoryMatch>(10)
+            .fill(null)
+            .map((match, index) => <Match key={index} match={match} />)}
+      </Matches>
     </Container>
   );
 };

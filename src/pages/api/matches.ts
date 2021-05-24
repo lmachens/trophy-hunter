@@ -12,7 +12,17 @@ import {
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
-    const { summonerName, platformId } = normalizeQuery(req.query);
+    const {
+      summonerName,
+      platformId,
+      onlyWithTrophies: onlyWithTrophiesString,
+      page: pageString,
+    } = normalizeQuery(req.query);
+    const onlyWithTrophies = onlyWithTrophiesString
+      ? onlyWithTrophiesString === 'true'
+      : false;
+    const page = pageString ? +pageString : 0;
+
     let query: FilterQuery<Account> = {
       'summoner.name': summonerName,
       'summoner.platformId': platformId,
@@ -38,10 +48,10 @@ export default applyMiddleware(
       return res.status(404).end('Not found');
     }
 
-    const matches = await getHistoryMatches(account._id);
+    const result = await getHistoryMatches(account._id, onlyWithTrophies, page);
 
     res.setHeader('Cache-Control', 'max-age=180');
-    res.json(matches);
+    res.json(result);
   },
   withDatabase,
   withError,

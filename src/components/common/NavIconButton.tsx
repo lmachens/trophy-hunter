@@ -6,6 +6,10 @@ const NavIconButton = styled(IconButton)`
   height: 30px;
   border: ${(props) => (props.active ? '1px solid #EAEAEA' : 'none')};
   background: ${(props) => (props.active ? '#616165' : '#3f3e43')};
+
+  svg {
+    fill: none;
+  }
 `;
 
 export default NavIconButton;

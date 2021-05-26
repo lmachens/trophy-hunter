@@ -6,7 +6,7 @@ const theGoblin: Trophy = {
   name: 'theGoblin',
   level: 'skills6',
   title: 'The Goblin',
-  description: 'Have most own & enemy jungle cs three times in a row.',
+  description: 'Have most jungle cs three times in a row.',
   category: 'skills',
   maxProgress: 3,
   checkProgress: ({ match, participant, account }) => {

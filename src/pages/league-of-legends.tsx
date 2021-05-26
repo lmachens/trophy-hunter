@@ -67,6 +67,7 @@ const LeagueOfLegends: NextPage = () => {
     );
 
     router.push({
+      pathname: '/league-of-legends',
       query: newQuery,
     });
   };

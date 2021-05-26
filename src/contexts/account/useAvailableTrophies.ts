@@ -11,7 +11,7 @@ const useAvailableTrophies = (account: Account) => {
   const missionTrophyNames = mission?.trophyNames || [];
 
   const availableTrophies = useMemo(() => {
-    if (!account) {
+    if (!account || !mission) {
       return [];
     }
     const availableTrophies = account.levels
@@ -51,7 +51,7 @@ const useAvailableTrophies = (account: Account) => {
     });
 
     return availableTrophies;
-  }, [account, missionTrophyNames]);
+  }, [account, missionTrophyNames, mission]);
 
   return availableTrophies;
 };

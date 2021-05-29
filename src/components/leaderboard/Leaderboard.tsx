@@ -9,6 +9,7 @@ import { getRankings, Ranking } from '../../api/accounts';
 import PlayerCard from './PlayerCard';
 import useVersion from '../../hooks/useVersion';
 import { normalizeQuery } from '../../api/utils/router';
+import SummonerSearch from './SummonerSearch';
 
 const TopPlayers = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ const Container = styled.div`
     flex-basis: 100%;
     margin-bottom: 15px;
 
-    * + * {
+    > * + * {
       margin-left: 15px;
     }
   }
@@ -83,6 +84,7 @@ const Leaderboard = () => {
   return (
     <Container>
       <nav>
+        <SummonerSearch season={season} />
         {seasons.map((season) => (
           <Link
             key={season}

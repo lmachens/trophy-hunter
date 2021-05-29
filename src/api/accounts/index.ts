@@ -51,3 +51,15 @@ export const getRankings = ({
 export const getSeasonAccount = (season: string) => {
   return getJSON<SeasonAccount>(`/api/season-account?season=${season}`);
 };
+
+export const rankingBySummonerName = ({
+  season,
+  summonerName,
+}: {
+  season: string;
+  summonerName: string;
+}) => {
+  return getJSON<Ranking[]>(
+    `/api/rankings?season=${season}&summonerName=${summonerName}`
+  );
+};

@@ -172,8 +172,8 @@ const CardLink = styled.a<CardProps>`
 
 type Props = {
   size: 'L' | 'M' | 'S';
-  rank: number;
   ranking: Ranking;
+  rank?: number;
 };
 const PlayerCard = ({ size, rank, ranking }: Props) => {
   const { data: version } = useQuery('version', getRecentVersion);
@@ -184,7 +184,7 @@ const PlayerCard = ({ size, rank, ranking }: Props) => {
       passHref
     >
       <CardLink size={size}>
-        <Rank>#{rank}</Rank>
+        {rank && <Rank>#{rank}</Rank>}
         <Avatar
           isLoading={!ranking}
           src={

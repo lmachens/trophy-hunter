@@ -62,6 +62,39 @@ export const getRankings = async (season: string, page: number) => {
   };
 };
 
+export const searchRankingBySummonerName = async (
+  season: string,
+  summonerName: string
+) => {
+  const Accounts = (await (season !== currentSeason
+    ? getSeasonAccountsCollection()
+    : getAccountsCollection())) as Collection<Account>;
+  const query: {
+    season?: string;
+    'summoner.name': RegExp;
+  } = {
+    'summoner.name': new RegExp(summonerName, 'i'),
+  };
+  if (season !== currentSeason) {
+    query.season = season;
+  }
+  return await Accounts.find(query)
+    .limit(5)
+    .sort({
+      trophiesCompleted: -1,
+      'summoner.revisionDate': -1,
+    })
+    .map<Ranking>((account) => ({
+      summonerName: account.summoner.name,
+      platformId: account.summoner.platformId,
+      profileIconId: account.summoner.profileIconId,
+      islands: account.islands
+        .filter((island) => island.status === 'done')
+        .map((island) => island.name),
+      trophiesCompleted: account.trophiesCompleted,
+    }))
+    .toArray();
+};
 export const trophyToAccountTrophy = (trophy: Trophy): AccountTrophy => ({
   name: trophy.name,
   island: trophy.island,

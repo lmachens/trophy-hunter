@@ -5,7 +5,7 @@ import {
   getSeasonAccountsCollection,
 } from './collection';
 import { Ranking } from '../types';
-import { Collection } from 'mongodb';
+import { Collection, FilterQuery } from 'mongodb';
 import { Account, AccountTrophy } from '..';
 import { currentSeason } from '../../riot/server';
 import { Trophy } from '../../../components/trophies/types';
@@ -25,9 +25,7 @@ export const getRankings = async (season: string, page: number) => {
   const Accounts = (await (season !== currentSeason
     ? getSeasonAccountsCollection()
     : getAccountsCollection())) as Collection<Account>;
-  const query: {
-    season?: string;
-  } = {};
+  const query: FilterQuery<Account> = { trophiesCompleted: { $gt: 0 } };
   if (season !== currentSeason) {
     query.season = season;
   }
@@ -69,11 +67,9 @@ export const searchRankingBySummonerName = async (
   const Accounts = (await (season !== currentSeason
     ? getSeasonAccountsCollection()
     : getAccountsCollection())) as Collection<Account>;
-  const query: {
-    season?: string;
-    'summoner.name': RegExp;
-  } = {
+  const query: FilterQuery<Account> = {
     'summoner.name': new RegExp(summonerName, 'i'),
+    trophiesCompleted: { $gt: 0 },
   };
   if (season !== currentSeason) {
     query.season = season;

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Ranking, rankingBySummonerName } from '../../api/accounts';
 import PlayerCard from './PlayerCard';
 import styled from '@emotion/styled';
+import useOutsideClick from '../../hooks/useOutsideClick';
 
 const Container = styled.section`
   position: relative;
@@ -33,8 +34,11 @@ type SummonerSearchType = {
   season: string;
 };
 const SummonerSearch = ({ season }: SummonerSearchType): JSX.Element => {
+  const resultRef = useRef<HTMLDivElement>(null);
+
   const [summonerName, setSummonerName] = useState('');
   const [rankings, setRankings] = useState<Ranking[]>([]);
+  useOutsideClick(resultRef, () => setSummonerName(''));
 
   useEffect(() => {
     if (!summonerName) {
@@ -58,7 +62,7 @@ const SummonerSearch = ({ season }: SummonerSearchType): JSX.Element => {
         placeholder="Search summoner"
       />
       {rankings.length > 0 && (
-        <Result>
+        <Result ref={resultRef}>
           {rankings.map((ranking) => (
             <PlayerCard
               key={`${ranking.summonerName}-${ranking.platformId}`}

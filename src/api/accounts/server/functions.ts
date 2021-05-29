@@ -20,7 +20,8 @@ export const isLevelCompleted = (level: Level, trophiesCompleted: number) =>
 export const getUnlockedIslandNames = (level) =>
   level.unlocksLevels.map((level) => levels[level.name].island);
 
-export const getRankings = async (season: string) => {
+const RANKING_LIMIT = 30;
+export const getRankings = async (season: string, page: number) => {
   const Accounts = (await (season !== currentSeason
     ? getSeasonAccountsCollection()
     : getAccountsCollection())) as Collection<Account>;
@@ -30,9 +31,15 @@ export const getRankings = async (season: string) => {
   if (season !== currentSeason) {
     query.season = season;
   }
-  const rankings = await Accounts.find(query)
-    .sort({ trophiesCompleted: -1, 'summoner.revisionDate': -1 })
-    .limit(50)
+  const cursor = await Accounts.find(query).sort({
+    trophiesCompleted: -1,
+    'summoner.revisionDate': -1,
+  });
+  const count = await cursor.count();
+  const pages = Math.round(count / RANKING_LIMIT);
+  const data = await cursor
+    .skip(page * RANKING_LIMIT)
+    .limit(RANKING_LIMIT)
     .map<Ranking>((account) => ({
       summonerName: account.summoner.name,
       platformId: account.summoner.platformId,
@@ -44,7 +51,15 @@ export const getRankings = async (season: string) => {
     }))
     .toArray();
 
-  return rankings;
+  const hasMore = count - (page + 1) * RANKING_LIMIT > 0;
+  return {
+    data,
+    currentPage: page,
+    pages,
+    count,
+    limit: RANKING_LIMIT,
+    hasMore,
+  };
 };
 
 export const trophyToAccountTrophy = (trophy: Trophy): AccountTrophy => ({

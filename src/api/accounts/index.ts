@@ -28,9 +28,23 @@ export const postCheck = (matchId: number) => {
   }>('/api/check', { matchId });
 };
 
-export const getRankings = (season?: string) => {
-  return getJSON<Ranking[]>(
-    `/api/rankings${season ? `?season=${season}` : ''}`
+type GetRankingsResult = {
+  data: Ranking[];
+  currentPage: number;
+  pages: number;
+  count: number;
+  limit: number;
+  hasMore: boolean;
+};
+export const getRankings = ({
+  season,
+  page,
+}: {
+  season: string;
+  page: number;
+}) => {
+  return getJSON<GetRankingsResult>(
+    `/api/rankings?season=${season}&page=${page}`
   );
 };
 

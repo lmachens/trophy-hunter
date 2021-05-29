@@ -4,11 +4,11 @@ import Button from '../common/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { getRankings, Ranking } from '../../api/accounts';
 import PlayerCard from './PlayerCard';
 import useVersion from '../../hooks/useVersion';
-import { Tooltip } from '../tooltip';
+import { normalizeQuery } from '../../api/utils/router';
 
 const TopPlayers = styled.div`
   display: flex;
@@ -22,6 +22,7 @@ const TopPlayers = styled.div`
   }
 `;
 const MorePlayers = styled.div`
+  display: grid;
   overflow-y: scroll;
   > * + * {
     margin-top: 6px;
@@ -61,18 +62,24 @@ const Leaderboard = () => {
   const router = useRouter();
   const { season: currentSeason } = useVersion();
 
-  const { season = currentSeason } = router.query;
+  const { season = currentSeason } = normalizeQuery(router.query);
   const activeSeason = typeof season === 'string' ? season : null;
-  const { data = Array<Ranking>(50).fill(null) } = useQuery(
-    `season-${season}`,
-    () => getRankings(activeSeason)
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery(
+      ['season', activeSeason],
+      ({ pageParam = 0 }) =>
+        getRankings({
+          season: activeSeason,
+          page: pageParam,
+        }),
+      {
+        getNextPageParam: (result) =>
+          result.hasMore ? result.currentPage + 1 : null,
+      }
+    );
 
-  const [first, second, third, ...rest] = data;
-  const seasons = ['10'];
-  if (currentSeason === '11') {
-    seasons.push('11');
-  }
+  const [first, second, third] = data?.pages[0]?.data || [];
+  const seasons = ['10', '11'];
   return (
     <Container>
       <nav>
@@ -93,11 +100,6 @@ const Leaderboard = () => {
             </Button>
           </Link>
         ))}
-        {currentSeason !== '11' && (
-          <Tooltip text="Next season starts January 8" placement="top">
-            <Button off>Season 11</Button>
-          </Tooltip>
-        )}
       </nav>
       <TopPlayers>
         <PlayerCard size="L" rank={1} ranking={first} />
@@ -107,14 +109,53 @@ const Leaderboard = () => {
         </NotFirst>
       </TopPlayers>
       <MorePlayers>
-        {rest.map((ranking, index) => (
-          <PlayerCard
-            key={ranking?.summonerName || index}
-            size="S"
-            rank={index + 4}
-            ranking={ranking}
-          />
-        ))}
+        {status === 'success' && (
+          <>
+            {data.pages.length > 0 && (
+              <>
+                {data.pages.map((result, i) => (
+                  <React.Fragment key={i}>
+                    {result.data.map((ranking, index) => {
+                      const rank = i * result.limit + index + 1;
+                      if (rank <= 3) {
+                        return <React.Fragment key={rank} />;
+                      }
+                      return (
+                        <PlayerCard
+                          key={ranking?.summonerName || rank}
+                          size="S"
+                          rank={rank}
+                          ranking={ranking}
+                        />
+                      );
+                    })}
+                  </React.Fragment>
+                ))}
+                <Button
+                  onClick={() => fetchNextPage()}
+                  disabled={!hasNextPage || isFetchingNextPage}
+                >
+                  {isFetchingNextPage
+                    ? 'Loading more...'
+                    : hasNextPage
+                    ? 'Load More'
+                    : 'Nothing more to load'}
+                </Button>
+              </>
+            )}
+          </>
+        )}
+        {status === 'loading' &&
+          Array<Ranking>(10)
+            .fill(null)
+            .map((ranking, index) => (
+              <PlayerCard
+                key={ranking?.summonerName || index}
+                size="S"
+                rank={index + 4}
+                ranking={ranking}
+              />
+            ))}
       </MorePlayers>
     </Container>
   );

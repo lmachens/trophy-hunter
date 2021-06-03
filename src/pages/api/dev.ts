@@ -24,6 +24,7 @@ import {
 import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
+import { getMissionsCollection } from '../../api/missions/server/collection';
 
 export default applyMiddleware(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -70,6 +71,46 @@ export default applyMiddleware(
     const participant = getParticipantByAccount(match, account);
     const teammateAccounts = await getTeammateAccounts(match, participant);
 
+    const activeMission = await getMissionsCollection().findOne({
+      active: true,
+    });
+
+    let accountMission = account.missions.find(
+      (mission) => mission.missionId.toString() === activeMission._id.toString()
+    );
+    if (!accountMission) {
+      accountMission = {
+        missionId: activeMission._id,
+        completedTrophyNames: [],
+      };
+      account.missions.push(accountMission);
+    }
+    const missionTrophyNames: string[] = [];
+    activeMission.trophyNames.forEach((trophyName) => {
+      if (accountMission.completedTrophyNames.includes(trophyName)) {
+        return;
+      }
+      const trophy = allTrophies.find((trophy) => trophy.name === trophyName);
+      const result = trophy.checkProgress({
+        match,
+        timeline,
+        account,
+        events,
+        participant,
+        teammateAccounts,
+        missionTrophiesCompleted: 0,
+      });
+      const { progress } =
+        typeof result === 'number' ? { progress: result } : result;
+      if (progress >= 0.999) {
+        missionTrophyNames.push(trophyName);
+        accountMission.completedTrophyNames.push(trophyName);
+      }
+    });
+    if (missionTrophyNames.length > 0) {
+      account.missionTrophiesCompleted += missionTrophyNames.length;
+    }
+
     const trophiesAboutToCheck =
       match.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
     const checkedTrophies = trophiesAboutToCheck.reduce(
@@ -82,6 +123,7 @@ export default applyMiddleware(
           events,
           participant,
           teammateAccounts,
+          missionTrophiesCompleted: missionTrophyNames.length,
         }),
       }),
       {}

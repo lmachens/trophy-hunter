@@ -122,6 +122,56 @@ export default applyMiddleware(
       const accountIslands = [...account.islands];
       const accountTrophies = [...account.trophies];
 
+      const activeMission = await getMissionsCollection().findOne({
+        active: true,
+      });
+
+      let accountMission = account.missions.find(
+        (mission) =>
+          mission.missionId.toString() === activeMission._id.toString()
+      );
+      if (!accountMission) {
+        accountMission = {
+          missionId: activeMission._id,
+          completedTrophyNames: [],
+        };
+        account.missions.push(accountMission);
+      }
+      const missionTrophyNames: string[] = [];
+      activeMission.trophyNames.forEach((trophyName) => {
+        if (accountMission.completedTrophyNames.includes(trophyName)) {
+          return;
+        }
+        const trophy = allTrophies.find((trophy) => trophy.name === trophyName);
+        const result = trophy.checkProgress({
+          match,
+          timeline,
+          account,
+          events,
+          participant,
+          teammateAccounts,
+          missionTrophiesCompleted: 0,
+        });
+        const { progress } =
+          typeof result === 'number' ? { progress: result } : result;
+        if (progress >= 0.999) {
+          missionTrophyNames.push(trophyName);
+          accountMission.completedTrophyNames.push(trophyName);
+        }
+      });
+      if (missionTrophyNames.length > 0) {
+        account.missionTrophiesCompleted += missionTrophyNames.length;
+        await Accounts.updateOne(
+          { _id: account._id },
+          {
+            $set: {
+              missions: account.missions,
+              missionTrophiesCompleted: account.missionTrophiesCompleted,
+            },
+          }
+        );
+      }
+
       accountLevels.forEach((accountLevel) => {
         if (accountLevel.status === 'completed') {
           return;
@@ -163,6 +213,7 @@ export default applyMiddleware(
             events,
             participant,
             teammateAccounts,
+            missionTrophiesCompleted: missionTrophyNames.length,
           });
           const { progress, details } =
             typeof result === 'number'
@@ -268,56 +319,6 @@ export default applyMiddleware(
         (trophy) => trophy.status === 'completed'
       ).length;
 
-      const activeMission = await getMissionsCollection().findOne({
-        active: true,
-      });
-
-      let accountMission = account.missions.find(
-        (mission) =>
-          mission.missionId.toString() === activeMission._id.toString()
-      );
-      if (!accountMission) {
-        accountMission = {
-          missionId: activeMission._id,
-          completedTrophyNames: [],
-        };
-        account.missions.push(accountMission);
-      }
-      const missionTrophyNames: string[] = [];
-      activeMission.trophyNames.forEach((trophyName) => {
-        if (accountMission.completedTrophyNames.includes(trophyName)) {
-          return;
-        }
-        const trophy = allTrophies.find((trophy) => trophy.name === trophyName);
-        const result = trophy.checkProgress({
-          match,
-          timeline,
-          account,
-          events,
-          participant,
-          teammateAccounts,
-        });
-        const { progress } =
-          typeof result === 'number' ? { progress: result } : result;
-        if (progress >= 0.999) {
-          missionTrophyNames.push(trophyName);
-          accountMission.completedTrophyNames.push(trophyName);
-        }
-      });
-      if (missionTrophyNames.length > 0) {
-        await Accounts.updateOne(
-          { _id: account._id },
-          {
-            $set: {
-              missions: account.missions,
-            },
-            $inc: {
-              missionTrophiesCompleted: missionTrophyNames.length,
-            },
-          }
-        );
-      }
-
       await Accounts.updateOne(
         { _id: account._id },
         {
@@ -359,6 +360,7 @@ export default applyMiddleware(
           events,
           participant,
           teammateAccounts,
+          missionTrophiesCompleted: missionTrophyNames.length,
         });
         const { progress } =
           typeof result === 'number' ? { progress: result } : result;

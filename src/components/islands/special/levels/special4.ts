@@ -1,6 +1,6 @@
 import { Level } from '../../../levels/types';
 import { SpecialIcon, SpecialMarker } from '../../../levels/special';
-import { ancient, oneTrickPony, celebrity } from '../../../trophies';
+import { ancient, oneTrickPony, celebrity, major } from '../../../trophies';
 
 const special4: Level = {
   island: 'special',
@@ -8,7 +8,7 @@ const special4: Level = {
   title: 'Special island Lvl. 4',
   Icon: SpecialIcon,
   Marker: SpecialMarker,
-  trophies: [ancient, oneTrickPony, celebrity],
+  trophies: [ancient, oneTrickPony, celebrity, major],
   unlocksLevels: [],
 };
 

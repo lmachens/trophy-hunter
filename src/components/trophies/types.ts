@@ -33,6 +33,7 @@ export interface Trophy {
     events: MatchEvent[];
     participant: Participant;
     teammateAccounts: Account[];
+    missionTrophiesCompleted: number;
   }):
     | {
         progress: number;

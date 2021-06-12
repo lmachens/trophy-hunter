@@ -10,9 +10,9 @@ const visionGame: Trophy = {
   category: 'teamwork',
   checkProgress: ({ participant }) => {
     return Number(
-      participant.stats.visionWardsBoughtInGame >= 4 &&
-        participant.stats.wardsPlaced >= 20 &&
-        participant.stats.wardsKilled >= 4
+      participant.visionWardsBoughtInGame >= 4 &&
+        participant.wardsPlaced >= 20 &&
+        participant.wardsKilled >= 4
     );
   },
 };

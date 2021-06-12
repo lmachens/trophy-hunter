@@ -11,7 +11,7 @@ const mercenary: Trophy = {
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ match, events, participant }) => {
-    const teamParticipantIds = match.participants
+    const teamParticipantIds = match.info.participants
       .filter((other) => other.teamId === participant.teamId)
       .map((teammate) => teammate.participantId);
 
@@ -26,7 +26,7 @@ const mercenary: Trophy = {
         teamParticipantIds.includes(event.killerId)
     ).length;
 
-    const ratio = match.queueId === ARAM_HOWLING_ABYSS ? 0.75 : 0.66;
+    const ratio = match.info.queueId === ARAM_HOWLING_ABYSS ? 0.75 : 0.66;
     return Number(killsAndAssists / teamkills >= ratio);
   },
 };

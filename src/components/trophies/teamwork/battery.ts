@@ -9,15 +9,15 @@ const battery: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, participant }) => {
     const maxTotalHeal = Math.max(
-      ...match.participants.map((other) => other.stats.totalHeal)
+      ...match.info.participants.map((other) => other.totalHeal)
     );
     const maxTotalDamageTaken = Math.max(
-      ...match.participants.map((other) => other.stats.totalDamageTaken)
+      ...match.info.participants.map((other) => other.totalDamageTaken)
     );
 
     return Number(
-      participant.stats.totalHeal >= maxTotalHeal &&
-        participant.stats.totalDamageTaken >= maxTotalDamageTaken
+      participant.totalHeal >= maxTotalHeal &&
+        participant.totalDamageTaken >= maxTotalDamageTaken
     );
   },
 };

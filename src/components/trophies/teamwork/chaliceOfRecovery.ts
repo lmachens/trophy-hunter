@@ -10,8 +10,10 @@ const chaliceOfRecovery: Trophy = {
   description: 'Win a match where your team was 4000 gold behind.',
   category: 'teamwork',
   checkProgress: ({ match, timeline, participant }) => {
-    const team = match.teams.find((team) => team.teamId === participant.teamId);
-    const opponent = match.teams.find(
+    const team = match.info.teams.find(
+      (team) => team.teamId === participant.teamId
+    );
+    const opponent = match.info.teams.find(
       (team) => team.teamId !== participant.teamId
     );
 
@@ -23,7 +25,7 @@ const chaliceOfRecovery: Trophy = {
     );
 
     const teamMaxGoldDown = Math.min(...teamGoldDiffFrames);
-    return Number(teamMaxGoldDown <= -4000 && team.win === 'Win');
+    return Number(teamMaxGoldDown <= -4000 && team.win);
   },
 };
 

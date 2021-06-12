@@ -10,13 +10,13 @@ const noxianArmy: Trophy = {
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {
-    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 10 : 8;
-    const requiredDeaths = match.queueId === ARAM_HOWLING_ABYSS ? 10 : 8;
-    const requiredAssists = match.queueId === ARAM_HOWLING_ABYSS ? 5 : 6;
+    const requiredKills = match.info.queueId === ARAM_HOWLING_ABYSS ? 10 : 8;
+    const requiredDeaths = match.info.queueId === ARAM_HOWLING_ABYSS ? 10 : 8;
+    const requiredAssists = match.info.queueId === ARAM_HOWLING_ABYSS ? 5 : 6;
     return Number(
-      participant.stats.kills >= requiredKills &&
-        participant.stats.deaths <= requiredDeaths &&
-        participant.stats.assists >= requiredAssists
+      participant.kills >= requiredKills &&
+        participant.deaths <= requiredDeaths &&
+        participant.assists >= requiredAssists
     );
   },
   checkLive: ({ allPlayers, account, gameData }) => {

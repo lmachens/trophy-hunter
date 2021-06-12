@@ -12,7 +12,7 @@ const enrage: Trophy = {
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'enrage');
 
-    return participant.stats.killingSprees / 3 + trophyProgress;
+    return participant.killingSprees / 3 + trophyProgress;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (trophyData.enrage || events.length === 0) {

@@ -11,10 +11,10 @@ const theCat: Trophy = {
   maxProgress: 3,
   checkProgress: ({ match, account, participant }) => {
     const minDeaths = Math.min(
-      ...match.participants.map((participant) => participant.stats.deaths)
+      ...match.info.participants.map((participant) => participant.deaths)
     );
 
-    const hasMinDeaths = Number(participant.stats.deaths <= minDeaths);
+    const hasMinDeaths = Number(participant.deaths <= minDeaths);
     if (!hasMinDeaths) {
       return 0;
     }

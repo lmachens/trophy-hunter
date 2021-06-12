@@ -10,7 +10,7 @@ const snowball: Trophy = {
   category: 'combat',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
-    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 7 : 5;
+    const requiredKills = match.info.queueId === ARAM_HOWLING_ABYSS ? 7 : 5;
     const snowballKills = events.filter(
       (event) =>
         event.type === 'CHAMPION_KILL' &&

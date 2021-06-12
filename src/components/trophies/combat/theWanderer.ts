@@ -10,7 +10,7 @@ const theWanderer: Trophy = {
     'Participate in a kill on each opponent pre 15 minutes as a botlaner.',
   category: 'combat',
   checkProgress: ({ events, participant }) => {
-    if (participant.timeline.lane !== 'BOTTOM') {
+    if (participant.lane !== 'BOTTOM') {
       return 0;
     }
     const killsAndAssists = getParticipantKillsAndAssists(

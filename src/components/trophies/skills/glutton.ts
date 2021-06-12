@@ -10,21 +10,19 @@ const glutton: Trophy = {
   category: 'skills',
   checkProgress: ({ match, participant }) => {
     const maxKills = Math.max(
-      ...match.participants.map((participant) => participant.stats.kills)
+      ...match.info.participants.map((participant) => participant.kills)
     );
 
     const maxTotalMinionsKilled = Math.max(
-      ...match.participants.map(
+      ...match.info.participants.map(
         (participant) =>
-          participant.stats.totalMinionsKilled +
-          participant.stats.neutralMinionsKilled
+          participant.totalMinionsKilled + participant.neutralMinionsKilled
       )
     );
 
     return Number(
-      participant.stats.kills >= maxKills &&
-        participant.stats.totalMinionsKilled +
-          participant.stats.neutralMinionsKilled >=
+      participant.kills >= maxKills &&
+        participant.totalMinionsKilled + participant.neutralMinionsKilled >=
           maxTotalMinionsKilled
     );
   },

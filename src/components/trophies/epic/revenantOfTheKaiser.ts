@@ -16,6 +16,7 @@ const revenantOfTheKaiser: Trophy = {
 
     const elderDragonKills = events.filter(
       (event) =>
+        event.type === 'ELITE_MONSTER_KILL' &&
         event.monsterSubType === 'ELDER_DRAGON' &&
         teamIds.includes(event.killerId)
     );

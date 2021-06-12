@@ -10,8 +10,9 @@ const sinisterBlades: Trophy = {
   category: 'combat',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {
-    const requiredDoubleKills = match.queueId === ARAM_HOWLING_ABYSS ? 7 : 4;
-    return participant.stats.doubleKills / requiredDoubleKills;
+    const requiredDoubleKills =
+      match.info.queueId === ARAM_HOWLING_ABYSS ? 7 : 4;
+    return participant.doubleKills / requiredDoubleKills;
   },
   checkLive: ({ events, account, gameData }) => {
     const multikills = events.filter(

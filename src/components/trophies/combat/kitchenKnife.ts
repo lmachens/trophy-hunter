@@ -10,8 +10,9 @@ const kitchenKnife: Trophy = {
   category: 'combat',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {
-    const requiredDamage = match.queueId === ARAM_HOWLING_ABYSS ? 35000 : 30000;
-    return participant.stats.totalDamageDealtToChampions / requiredDamage;
+    const requiredDamage =
+      match.info.queueId === ARAM_HOWLING_ABYSS ? 35000 : 30000;
+    return participant.totalDamageDealtToChampions / requiredDamage;
   },
 };
 

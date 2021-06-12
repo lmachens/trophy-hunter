@@ -6,13 +6,13 @@ const sigurd: Trophy = {
   level: 'objectives4',
   title: 'Sigurd',
   description:
-    'Kill the first dragon, at least four more and at least one baron (team achievement).',
+    'Kill the first dragon, at least four more and at least one baron.',
   category: 'objectives',
-  checkProgress: ({ match, participant }) => {
-    const team = match.teams.find((team) => team.teamId === participant.teamId);
-
+  checkProgress: ({ participant }) => {
     return Number(
-      team.firstDragon && team.baronKills >= 1 && team.dragonKills >= 5
+      participant.firstDragon &&
+        participant.baronKills >= 1 &&
+        participant.dragonKills >= 5
     );
   },
   checkLive: ({ events, allPlayers, account }) => {

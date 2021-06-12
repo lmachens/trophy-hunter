@@ -10,8 +10,8 @@ const mafiaBoss: Trophy = {
   category: 'epic',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {
-    const requiredAssists = match.queueId === ARAM_HOWLING_ABYSS ? 40 : 30;
-    return participant.stats.assists / requiredAssists;
+    const requiredAssists = match.info.queueId === ARAM_HOWLING_ABYSS ? 40 : 30;
+    return participant.assists / requiredAssists;
   },
   checkLive: ({ allPlayers, account, gameData }) => {
     const accountPlayer = allPlayers.find(

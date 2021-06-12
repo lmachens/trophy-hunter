@@ -12,7 +12,7 @@ const unleashThePower: Trophy = {
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
     const requiredTimelimt =
-      match.queueId === ARAM_HOWLING_ABYSS ? 20000 : 30000;
+      match.info.queueId === ARAM_HOWLING_ABYSS ? 20000 : 30000;
 
     const levelUps = getLevelUps(events, participant.participantId);
     const levelSix = levelUps[5];

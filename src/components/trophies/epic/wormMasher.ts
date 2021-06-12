@@ -9,7 +9,7 @@ const wormMasher: Trophy = {
     'Kill the giant worm called Baron Nashor three times in a match.',
   category: 'epic',
   checkProgress: ({ match, events, participant }) => {
-    const teamIds = match.participants
+    const teamIds = match.info.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId
       )

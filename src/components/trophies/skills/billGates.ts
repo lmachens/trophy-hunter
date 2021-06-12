@@ -8,7 +8,7 @@ const billGates: Trophy = {
   description: 'Gain more than 20000 gold.',
   category: 'skills',
   checkProgress: ({ participant }) => {
-    return participant.stats.goldEarned / 20000;
+    return participant.goldEarned / 20000;
   },
   checkLive: ({ activePlayer }) => {
     if (!activePlayer) {

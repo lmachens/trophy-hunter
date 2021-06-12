@@ -21,7 +21,7 @@ const annihilation: Trophy = {
       (event) => event[1] && event[0].timestamp + 25000 >= event[1].timestamp
     ).length;
 
-    if (match.queueId === ARAM_HOWLING_ABYSS) {
+    if (match.info.queueId === ARAM_HOWLING_ABYSS) {
       return annihilations / 2;
     }
     return annihilations;

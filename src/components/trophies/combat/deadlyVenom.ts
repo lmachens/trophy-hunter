@@ -9,10 +9,8 @@ const deadlyVenom: Trophy = {
     'Deal at least 25% more damage to champions than the next player.',
   category: 'combat',
   checkProgress: ({ match, participant }) => {
-    const sortedParticipants = match.participants.sort(
-      (a, b) =>
-        b.stats.totalDamageDealtToChampions -
-        a.stats.totalDamageDealtToChampions
+    const sortedParticipants = match.info.participants.sort(
+      (a, b) => b.totalDamageDealtToChampions - a.totalDamageDealtToChampions
     );
     const otherParticipants = sortedParticipants.filter(
       (otherParticipant) =>
@@ -21,8 +19,8 @@ const deadlyVenom: Trophy = {
     const highestDamageParticipant = otherParticipants[0];
 
     const progress =
-      participant.stats.totalDamageDealtToChampions /
-      highestDamageParticipant.stats.totalDamageDealtToChampions /
+      participant.totalDamageDealtToChampions /
+      highestDamageParticipant.totalDamageDealtToChampions /
       1.25;
 
     return progress;

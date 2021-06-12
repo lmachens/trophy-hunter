@@ -24,7 +24,7 @@ const theGrandChallenge: Trophy = {
           )) &&
         (event.buildingType === 'INHIBITOR_BUILDING' ||
           (event.buildingType === 'TOWER_BUILDING' &&
-            event.towerType === 'BASE_TOWER'))
+            event.towerType === 'BASE_TURRET'))
     );
 
     const validKills = soloKills.filter((event) =>

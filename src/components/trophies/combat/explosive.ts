@@ -10,9 +10,9 @@ const explosive: Trophy = {
   category: 'combat',
   checkProgress: ({ participant }) => {
     const progress =
-      Number(participant.stats.largestKillingSpree >= 5) +
-      Number(participant.stats.largestMultiKill >= 3) +
-      Number(participant.stats.largestCriticalStrike >= 800);
+      Number(participant.largestKillingSpree >= 5) +
+      Number(participant.largestMultiKill >= 3) +
+      Number(participant.largestCriticalStrike >= 800);
 
     return progress / 3;
   },

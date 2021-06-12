@@ -25,13 +25,13 @@ const siegeMaster: Trophy = {
     }).length;
 
     const maxDamageDealtToTurrets = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.damageDealtToTurrets
+      ...match.info.participants.map(
+        (participant) => participant.damageDealtToTurrets
       )
     );
 
     return Number(
-      participant.stats.damageDealtToTurrets >= maxDamageDealtToTurrets &&
+      participant.damageDealtToTurrets >= maxDamageDealtToTurrets &&
         underTurretKills >= 5
     );
   },

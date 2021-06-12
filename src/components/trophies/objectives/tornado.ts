@@ -8,7 +8,7 @@ const tornado: Trophy = {
   description: 'Kill three air dragons.',
   category: 'objectives',
   checkProgress: ({ match, events, participant }) => {
-    const teamIds = match.participants
+    const teamIds = match.info.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId
       )

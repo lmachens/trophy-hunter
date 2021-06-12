@@ -8,16 +8,16 @@ const goliath: Trophy = {
   description: 'Have the single highest champion level at the end of the game.',
   category: 'skills',
   checkProgress: ({ match, participant }) => {
-    const otherParticipants = match.participants.filter(
+    const otherParticipants = match.info.participants.filter(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId
     );
 
     const otherMaxChampLevel = Math.max(
-      ...otherParticipants.map((participant) => participant.stats.kills)
+      ...otherParticipants.map((participant) => participant.kills)
     );
 
-    return Number(participant.stats.champLevel > otherMaxChampLevel);
+    return Number(participant.champLevel > otherMaxChampLevel);
   },
 };
 

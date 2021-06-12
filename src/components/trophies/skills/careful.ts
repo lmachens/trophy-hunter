@@ -8,10 +8,10 @@ const careful: Trophy = {
   description: 'Have the least number of deaths.',
   category: 'skills',
   checkProgress: ({ match, participant }) => {
-    const lessDeathsParticipants = match.participants.filter(
+    const lessDeathsParticipants = match.info.participants.filter(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&
-        otherParticipant.stats.deaths < participant.stats.deaths
+        otherParticipant.deaths < participant.deaths
     ).length;
 
     return (9 - lessDeathsParticipants) / 9;

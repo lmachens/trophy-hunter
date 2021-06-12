@@ -11,17 +11,16 @@ const gloriousEvolution: Trophy = {
   category: 'combat',
   checkProgress: ({ match, events, participant }) => {
     const maxDamage = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.totalDamageDealtToChampions
+      ...match.info.participants.map(
+        (participant) => participant.totalDamageDealtToChampions
       )
     );
 
     const deaths = getParticipantDeaths(events, participant.participantId);
-    const gameLongEnough = match.gameDuration > 30 * 60;
-    const mostDamage =
-      participant.stats.totalDamageDealtToChampions === maxDamage;
+    const gameLongEnough = match.info.gameDuration > 30 * 60;
+    const mostDamage = participant.totalDamageDealtToChampions === maxDamage;
     const notDieAfter30Minutes = deaths.every(
-      (death) => death.timestamp < match.gameDuration * 1000 - 300000
+      (death) => death.timestamp < match.info.gameDuration * 1000 - 300000
     );
     return Number(gameLongEnough && mostDamage && notDieAfter30Minutes);
   },

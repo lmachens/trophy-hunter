@@ -8,7 +8,7 @@ const dominating: Trophy = {
   description: 'Achieve a killing spree of 6.',
   category: 'skills',
   checkProgress: ({ participant }) => {
-    return participant.stats.largestKillingSpree / 6;
+    return participant.largestKillingSpree / 6;
   },
   checkLive: ({ events, account }) => {
     const killsAndDeaths = events.filter(

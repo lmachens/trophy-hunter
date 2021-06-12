@@ -10,11 +10,11 @@ const fullHouse: Trophy = {
   category: 'combat',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {
-    let progress = Math.min(1, participant.stats.tripleKills);
-    if (match.queueId === ARAM_HOWLING_ABYSS) {
-      progress += Math.min(1, participant.stats.doubleKills / 3);
+    let progress = Math.min(1, participant.tripleKills);
+    if (match.info.queueId === ARAM_HOWLING_ABYSS) {
+      progress += Math.min(1, participant.doubleKills / 3);
     } else {
-      progress += Math.min(1, participant.stats.doubleKills);
+      progress += Math.min(1, participant.doubleKills);
     }
     return progress / 2;
   },

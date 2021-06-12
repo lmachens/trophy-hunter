@@ -16,11 +16,7 @@ import {
   aramTrophies,
 } from '../../components/trophies/trophiesByMap';
 import { newAccount } from '../../api/accounts/server';
-import {
-  getAllEvents,
-  getParticipantByAccount,
-  getParticipantIdentity,
-} from '../../api/riot/helpers';
+import { getAllEvents, getParticipantByAccount } from '../../api/riot/helpers';
 import { ARAM_HOWLING_ABYSS, SUPPORTED_QUEUE_IDS } from '../../api/overwolf';
 import { log } from '../../api/logs';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
@@ -44,8 +40,10 @@ export default applyMiddleware(
       return res.status(404).end('Not Found');
     }
 
-    if (!SUPPORTED_QUEUE_IDS.includes(match.queueId)) {
-      return res.status(403).end(`Game mode ${match.queueId} is not supported`);
+    if (!SUPPORTED_QUEUE_IDS.includes(match.info.queueId)) {
+      return res
+        .status(403)
+        .end(`Game mode ${match.info.queueId} is not supported`);
     }
 
     const events = getAllEvents(timeline);
@@ -62,13 +60,12 @@ export default applyMiddleware(
     const timeLabel = `Check ${matchId} of ${account.summoner.name} ${account.summoner.platformId}`;
     console.time(timeLabel);
 
-    const participantIdentity = getParticipantIdentity(match, account);
-    if (!participantIdentity) {
+    const participant = getParticipantByAccount(match, account);
+    if (!participant) {
       log(`Participant not found ${matchId} ${account.summoner.name}`);
       return res.status(403).end('Participant not found');
     }
 
-    const participant = getParticipantByAccount(match, account);
     const teammateAccounts = await getTeammateAccounts(match, participant);
 
     const activeMission = await getMissionsCollection().findOne({
@@ -112,7 +109,7 @@ export default applyMiddleware(
     }
 
     const trophiesAboutToCheck =
-      match.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
+      match.info.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
     const checkedTrophies = trophiesAboutToCheck.reduce(
       (current, trophy) => ({
         ...current,

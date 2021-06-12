@@ -9,14 +9,13 @@ const disruptor: Trophy = {
   category: 'skills',
   checkProgress: ({ match, participant }) => {
     const maxTotalTimeCrowdControlDealt = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.totalTimeCrowdControlDealt
+      ...match.info.participants.map(
+        (participant) => participant.totalTimeCrowdControlDealt
       )
     );
 
     return Number(
-      participant.stats.totalTimeCrowdControlDealt >=
-        maxTotalTimeCrowdControlDealt
+      participant.totalTimeCrowdControlDealt >= maxTotalTimeCrowdControlDealt
     );
   },
 };

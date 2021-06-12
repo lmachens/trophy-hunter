@@ -9,7 +9,7 @@ const baronNashor: Trophy = {
     'Kill the giant worm called Baron Nashor twice on the same match.',
   category: 'objectives',
   checkProgress: ({ match, events, participant }) => {
-    const teamIds = match.participants
+    const teamIds = match.info.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId
       )

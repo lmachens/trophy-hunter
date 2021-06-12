@@ -9,8 +9,7 @@ const quackery: Trophy = {
   category: 'teamwork',
   checkProgress: ({ participant }) => {
     return Number(
-      participant.stats.totalHeal >= 15000 &&
-        participant.stats.totalUnitsHealed >= 5
+      participant.totalHeal >= 15000 && participant.totalUnitsHealed >= 5
     );
   },
 };

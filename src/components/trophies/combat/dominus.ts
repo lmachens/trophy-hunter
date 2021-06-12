@@ -10,7 +10,7 @@ const dominus: Trophy = {
     'Achieve a 10 cs advantage over your opponent, 3 kills (at least one of them is a solo kill) at 10 minutes into the game.',
   category: 'combat',
   checkProgress: ({ match, events, participant, timeline }) => {
-    const laneOpponent = getLaneOpponent(match.participants, participant);
+    const laneOpponent = getLaneOpponent(match.info.participants, participant);
     if (!laneOpponent) {
       return 0;
     }

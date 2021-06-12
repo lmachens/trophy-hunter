@@ -9,8 +9,7 @@ const healer: Trophy = {
   category: 'teamwork',
   checkProgress: ({ participant }) => {
     return Number(
-      participant.stats.totalHeal >= 25000 &&
-        participant.stats.totalUnitsHealed >= 5
+      participant.totalHeal >= 25000 && participant.totalUnitsHealed >= 5
     );
   },
 };

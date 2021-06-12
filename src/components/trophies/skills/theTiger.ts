@@ -11,9 +11,9 @@ const theTiger: Trophy = {
   maxProgress: 3,
   checkProgress: ({ match, account, participant }) => {
     const maxKills = Math.max(
-      ...match.participants.map((participant) => participant.stats.kills)
+      ...match.info.participants.map((participant) => participant.kills)
     );
-    const mostKills = participant.stats.kills >= maxKills;
+    const mostKills = participant.kills >= maxKills;
     if (!mostKills) {
       return 0;
     }

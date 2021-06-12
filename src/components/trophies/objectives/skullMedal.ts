@@ -9,8 +9,7 @@ const skullMedal: Trophy = {
   category: 'objectives',
   checkProgress: ({ participant }) => {
     return Number(
-      participant.stats.killingSprees >= 2 &&
-        participant.stats.inhibitorKills >= 2
+      participant.killingSprees >= 2 && participant.inhibitorKills >= 2
     );
   },
   checkLive: ({ events, account }) => {

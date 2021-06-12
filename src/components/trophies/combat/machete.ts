@@ -11,9 +11,7 @@ const machete: Trophy = {
   maxProgress: 50000,
   checkProgress: ({ account, participant }) => {
     const trophyProgress = getTrophyProgress(account, 'machete');
-    return (
-      participant.stats.totalDamageDealtToChampions / 50000 + trophyProgress
-    );
+    return participant.totalDamageDealtToChampions / 50000 + trophyProgress;
   },
 };
 

@@ -9,15 +9,15 @@ const silverBullets: Trophy = {
     'Deal more physical damage to champions than anyone else total damage to champions.',
   category: 'combat',
   checkProgress: ({ match, participant }) => {
-    const others = match.participants.filter(
+    const others = match.info.participants.filter(
       (other) => other.participantId !== participant.participantId
     );
     const maxTotalDamageDealtToChampions = Math.max(
-      ...others.map((other) => other.stats.totalDamageDealtToChampions)
+      ...others.map((other) => other.totalDamageDealtToChampions)
     );
 
     return Number(
-      participant.stats.physicalDamageDealtToChampions >=
+      participant.physicalDamageDealtToChampions >=
         maxTotalDamageDealtToChampions
     );
   },

@@ -12,7 +12,8 @@ const tripleAssist: Trophy = {
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
-    const requiredTripleAssists = match.queueId === ARAM_HOWLING_ABYSS ? 2 : 1;
+    const requiredTripleAssists =
+      match.info.queueId === ARAM_HOWLING_ABYSS ? 2 : 1;
 
     const assists = getParticipantAssists(events, participant.participantId);
 

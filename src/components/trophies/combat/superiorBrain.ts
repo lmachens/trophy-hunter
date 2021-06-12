@@ -10,8 +10,8 @@ const superiorBrain: Trophy = {
   category: 'combat',
   checkProgress: ({ participant }) => {
     const damageDealtToTakenRatio =
-      participant.stats.totalDamageDealtToChampions /
-      Math.max(1, participant.stats.totalDamageTaken);
+      participant.totalDamageDealtToChampions /
+      Math.max(1, participant.totalDamageTaken);
 
     return damageDealtToTakenRatio / 2;
   },

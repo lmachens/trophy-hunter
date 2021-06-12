@@ -10,8 +10,8 @@ const purifyer: Trophy = {
   category: 'epic',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {
-    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 32 : 30;
-    return participant.stats.kills / requiredKills;
+    const requiredKills = match.info.queueId === ARAM_HOWLING_ABYSS ? 32 : 30;
+    return participant.kills / requiredKills;
   },
   checkLive: ({ allPlayers, account, gameData }) => {
     const accountPlayer = allPlayers.find(

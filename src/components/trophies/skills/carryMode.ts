@@ -8,19 +8,19 @@ const carryMode: Trophy = {
   description: 'Win a game where you have more than half of your teams kills.',
   category: 'skills',
   checkProgress: ({ match, participant }) => {
-    const team = match.teams.find((team) => team.teamId === participant.teamId);
-    const teammates = match.participants.filter(
+    const team = match.info.teams.find(
+      (team) => team.teamId === participant.teamId
+    );
+    const teammates = match.info.participants.filter(
       (other) =>
         other.teamId === participant.teamId &&
         other.participantId !== participant.participantId
     );
 
     const teamKills = teammates
-      .map((participant) => participant.stats.kills)
+      .map((participant) => participant.kills)
       .reduce((current, kills) => current + kills);
-    return Number(
-      participant.stats.kills > teamKills / 2 && team.win === 'Win'
-    );
+    return Number(participant.kills > teamKills / 2 && team.win);
   },
 };
 

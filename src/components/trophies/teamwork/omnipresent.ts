@@ -11,7 +11,7 @@ const omnipresent: Trophy = {
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ match, events, participant }) => {
-    const teamParticipantIds = match.participants
+    const teamParticipantIds = match.info.participants
       .filter((other) => other.teamId === participant.teamId)
       .map((teammate) => teammate.participantId);
 
@@ -26,7 +26,7 @@ const omnipresent: Trophy = {
         teamParticipantIds.includes(event.killerId)
     ).length;
 
-    const killRatio = match.queueId === ARAM_HOWLING_ABYSS ? 0.9 : 0.8;
+    const killRatio = match.info.queueId === ARAM_HOWLING_ABYSS ? 0.9 : 0.8;
     return Number(killsAndAssists / teamkills >= killRatio);
   },
 };

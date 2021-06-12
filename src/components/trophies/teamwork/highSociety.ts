@@ -11,7 +11,7 @@ const highSociety: Trophy = {
   maxProgress: 20,
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'highSociety');
-    return participant.stats.assists / 20 + trophyProgress;
+    return participant.assists / 20 + trophyProgress;
   },
   checkLive: ({ allPlayers, account }) => {
     const accountPlayer = allPlayers.find(

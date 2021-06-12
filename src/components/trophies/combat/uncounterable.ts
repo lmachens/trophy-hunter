@@ -9,7 +9,7 @@ const uncounterable: Trophy = {
   category: 'combat',
   maxProgress: 5000,
   checkProgress: ({ participant }) => {
-    return participant.stats.trueDamageDealtToChampions / 5000;
+    return participant.trueDamageDealtToChampions / 5000;
   },
 };
 

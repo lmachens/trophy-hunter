@@ -14,7 +14,7 @@ const oneTrickPony: Trophy = {
   ProgressDetails: LastChampions,
   aramSupport: true,
   checkProgress: ({ account, participant }) => {
-    if (!participant.stats.win) {
+    if (!participant.win) {
       return {
         progress: 0,
         details: [],

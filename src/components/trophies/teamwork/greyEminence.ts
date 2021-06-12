@@ -9,15 +9,14 @@ const greyEminence: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, participant }) => {
     const maxAssists = Math.max(
-      ...match.participants.map((participant) => participant.stats.assists)
+      ...match.info.participants.map((participant) => participant.assists)
     );
     const minDeaths = Math.min(
-      ...match.participants.map((participant) => participant.stats.deaths)
+      ...match.info.participants.map((participant) => participant.deaths)
     );
 
     return Number(
-      participant.stats.assists >= maxAssists &&
-        participant.stats.deaths <= minDeaths
+      participant.assists >= maxAssists && participant.deaths <= minDeaths
     );
   },
 };

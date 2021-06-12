@@ -9,9 +9,9 @@ const smartness: Trophy = {
     'Score a killing spree, at least ten assists and die at most five times.',
   category: 'combat',
   checkProgress: ({ participant }) => {
-    const hasKillingSpree = Number(participant.stats.killingSprees >= 1);
-    const hasTenAssists = Number(participant.stats.assists >= 10);
-    const hasLessThanFiveDeaths = Number(participant.stats.deaths <= 5);
+    const hasKillingSpree = Number(participant.killingSprees >= 1);
+    const hasTenAssists = Number(participant.assists >= 10);
+    const hasLessThanFiveDeaths = Number(participant.deaths <= 5);
 
     return (hasKillingSpree + hasTenAssists + hasLessThanFiveDeaths) / 3;
   },

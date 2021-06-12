@@ -8,11 +8,11 @@ const thePhoenix: Trophy = {
   description: 'Win a game even though you lost three inhibitors.',
   category: 'epic',
   checkProgress: ({ match, participant }) => {
-    const opponentTeam = match.teams.find(
+    const opponentTeam = match.info.teams.find(
       (team) => team.teamId !== participant.teamId
     );
 
-    return Number(participant.stats.win && opponentTeam.inhibitorKills >= 3);
+    return Number(participant.win && opponentTeam.inhibitorKills >= 3);
   },
 };
 

@@ -8,7 +8,7 @@ const theSphinx: Trophy = {
   description: 'Kill three earth dragons.',
   category: 'objectives',
   checkProgress: ({ match, events, participant }) => {
-    const teamIds = match.participants
+    const teamIds = match.info.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId
       )

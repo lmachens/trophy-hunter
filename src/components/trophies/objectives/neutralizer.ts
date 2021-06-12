@@ -10,7 +10,7 @@ const neutralizer: Trophy = {
     'Participate in clearing three baron buffs from the opposing team (kill an opponent with baron buff).',
   category: 'objectives',
   checkProgress: ({ match, events, participant }) => {
-    const opponentTeamIds = match.participants
+    const opponentTeamIds = match.info.participants
       .filter((other) => other.teamId !== participant.teamId)
       .map((other) => other.participantId);
 
@@ -21,6 +21,7 @@ const neutralizer: Trophy = {
 
     const opponentBaronKills = events.filter(
       (event) =>
+        event.type === 'ELITE_MONSTER_KILL' &&
         event.monsterType === 'BARON_NASHOR' &&
         opponentTeamIds.includes(event.killerId)
     );

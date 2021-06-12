@@ -9,17 +9,17 @@ const plague: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, participant }) => {
     const maxKillParticipation = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.kills + participant.stats.assists
+      ...match.info.participants.map(
+        (participant) => participant.kills + participant.assists
       )
     );
     const maxTotalHeal = Math.max(
-      ...match.participants.map((participant) => participant.stats.totalHeal)
+      ...match.info.participants.map((participant) => participant.totalHeal)
     );
 
     return Number(
-      participant.stats.kills + participant.stats.assists >=
-        maxKillParticipation && participant.stats.totalHeal >= maxTotalHeal
+      participant.kills + participant.assists >= maxKillParticipation &&
+        participant.totalHeal >= maxTotalHeal
     );
   },
 };

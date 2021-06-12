@@ -24,7 +24,7 @@ const theViking: Trophy = {
 
     if (
       !hasSoloKillBefore10 ||
-      (!participant.stats.firstTowerKill && !participant.stats.firstTowerAssist)
+      (!participant.firstTowerKill && !participant.firstTowerAssist)
     ) {
       return 0;
     }

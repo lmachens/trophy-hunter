@@ -9,9 +9,7 @@ const pesticide: Trophy = {
   category: 'epic',
   checkProgress: ({ participant }) => {
     return (
-      (participant.stats.totalMinionsKilled +
-        participant.stats.neutralMinionsKilled) /
-      380
+      (participant.totalMinionsKilled + participant.neutralMinionsKilled) / 380
     );
   },
   checkLive: ({ allPlayers, account }) => {

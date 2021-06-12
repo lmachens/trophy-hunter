@@ -8,7 +8,7 @@ const tripleKill: Trophy = {
   description: 'Achieve a triplekill.',
   category: 'combat',
   checkProgress: ({ participant }) => {
-    return Number(participant.stats.tripleKills > 0);
+    return Number(participant.tripleKills > 0);
   },
   checkLive: ({ events, account }) => {
     const hasTripleKill = events.some(

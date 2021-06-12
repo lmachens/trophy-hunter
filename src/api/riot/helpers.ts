@@ -1,10 +1,10 @@
 import {
   MatchTimeline,
-  MatchPostion,
+  Position,
   Match,
-  ParticipantIdentity,
   Participant,
-  MatchEvents,
+  MatchEvent,
+  ChampionKillEvent,
 } from './types';
 import { Account } from '../accounts';
 import {
@@ -51,8 +51,8 @@ export const calcDeathTime = (level: number, timestamp: number): number => {
   return deathTime;
 };
 
-export const getAllEvents = (timeline: MatchTimeline): MatchEvents => {
-  return timeline.frames.reduce(
+export const getAllEvents = (timeline: MatchTimeline): MatchEvent[] => {
+  return timeline.info.frames.reduce(
     (current, frame) => [...current, ...frame.events],
     []
   );
@@ -63,7 +63,7 @@ export const getMinionsAtMin = (
   minute: number,
   participantId: number
 ): number => {
-  const frame = timeline.frames.find(
+  const frame = timeline.info.frames.find(
     (frame) => frame.timestamp > minute * 60 * 1000
   );
   if (!frame) {
@@ -76,9 +76,9 @@ export const getMinionsAtMin = (
 };
 
 export const getLevelUps = (
-  events: MatchEvents,
+  events: MatchEvent[],
   participantId: number
-): MatchEvents => {
+): MatchEvent[] => {
   return events.filter(
     (event) =>
       event.type === 'SKILL_LEVEL_UP' &&
@@ -88,7 +88,7 @@ export const getLevelUps = (
 };
 
 export const calcLevel = (
-  events: MatchEvents,
+  events: MatchEvent[],
   participantId: number,
   timestamp: number
 ): number => {
@@ -133,7 +133,7 @@ export const BUFF_POSITIONS = [
 ];
 
 export const isInEnemyTurretRange = (
-  position: MatchPostion,
+  position: Position,
   teamId: number
 ): boolean => {
   const turretPositions = TURRET_POSITIONS_BY_TEAM[teamId];
@@ -147,59 +147,42 @@ export const isInEnemyTurretRange = (
   );
 };
 
-export const getParticipantIdentity = (
-  match: Match,
-  account: Account
-): ParticipantIdentity => {
-  return match.participantIdentities.find(
-    (participantIdentity) =>
-      participantIdentity.player.currentAccountId === account.summoner.accountId
-  );
-};
-
-export const getParticipant = (
-  match: Match,
-  participantIdentity: ParticipantIdentity
-): Participant => {
-  return match.participants.find(
-    (participant) =>
-      participant.participantId === participantIdentity.participantId
-  );
-};
-
 export const getParticipantByAccount = (
   match: Match,
   account: Account
 ): Participant => {
-  const participantIdentity = getParticipantIdentity(match, account);
-  return getParticipant(match, participantIdentity);
+  return match.info.participants.find(
+    (participant) => participant.summonerId === account.summoner.id
+  );
 };
 
 export const getAllEventsByType = (
-  events: MatchEvents,
+  events: MatchEvent[],
   type: string
-): MatchEvents => {
+): MatchEvent[] => {
   return events.filter((event) => event.type === type);
 };
 
-export const getAllKills = (events: MatchEvents): MatchEvents => {
-  return getAllEventsByType(events, 'CHAMPION_KILL');
+export const getAllKills = (events: MatchEvent[]): ChampionKillEvent[] => {
+  return <ChampionKillEvent[]>getAllEventsByType(events, 'CHAMPION_KILL');
 };
 
 export const getParticipantKills = (
-  events: MatchEvents,
+  events: MatchEvent[],
   participantId: number
-): MatchEvents => {
-  return events.filter(
-    (event) =>
-      event.type === 'CHAMPION_KILL' && event.killerId === participantId
+): ChampionKillEvent[] => {
+  return <ChampionKillEvent[]>(
+    events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' && event.killerId === participantId
+    )
   );
 };
 
 export const getParticipantSoloKills = (
-  events: MatchEvents,
+  events: MatchEvent[],
   participantId: number
-): MatchEvents => {
+): MatchEvent[] => {
   return events.filter(
     (event) =>
       event.type === 'CHAMPION_KILL' &&
@@ -209,35 +192,41 @@ export const getParticipantSoloKills = (
 };
 
 export const getParticipantKillsAndAssists = (
-  events: MatchEvents,
+  events: MatchEvent[],
   participantId: number
-): MatchEvents => {
-  return events.filter(
-    (event) =>
-      event.type === 'CHAMPION_KILL' &&
-      (event.killerId === participantId ||
-        event.assistingParticipantIds.includes(participantId))
+): ChampionKillEvent[] => {
+  return <ChampionKillEvent[]>(
+    events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        (event.killerId === participantId ||
+          event.assistingParticipantIds.includes(participantId))
+    )
   );
 };
 
 export const getParticipantDeaths = (
-  events: MatchEvents,
+  events: MatchEvent[],
   participantId: number
-): MatchEvents => {
-  return events.filter(
-    (event) =>
-      event.type === 'CHAMPION_KILL' && event.victimId === participantId
+): ChampionKillEvent[] => {
+  return <ChampionKillEvent[]>(
+    events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' && event.victimId === participantId
+    )
   );
 };
 
 export const getParticipantAssists = (
-  events: MatchEvents,
+  events: MatchEvent[],
   participantId: number
-): MatchEvents => {
-  return events.filter(
-    (event) =>
-      event.type === 'CHAMPION_KILL' &&
-      event.assistingParticipantIds.includes(participantId)
+): ChampionKillEvent[] => {
+  return <ChampionKillEvent[]>(
+    events.filter(
+      (event) =>
+        event.type === 'CHAMPION_KILL' &&
+        event.assistingParticipantIds.includes(participantId)
+    )
   );
 };
 
@@ -248,8 +237,8 @@ export const getLaneOpponent = (
   const laneOpponents = participants.filter(
     (otherParticipant) =>
       otherParticipant.teamId !== participant.teamId &&
-      otherParticipant.timeline.lane === participant.timeline.lane &&
-      otherParticipant.timeline.role === participant.timeline.role
+      otherParticipant.lane === participant.lane &&
+      otherParticipant.role === participant.role
   );
 
   if (laneOpponents.length === 0) {
@@ -262,11 +251,11 @@ export const getLaneOpponent = (
   if (laneOpponents.length === 2) {
     // this can happen on botlane if the system doesnt understand who is adc and who is support
     const laneOpponent1CS =
-      laneOpponents[0].stats.totalMinionsKilled +
-      laneOpponents[0].stats.neutralMinionsKilled;
+      laneOpponents[0].totalMinionsKilled +
+      laneOpponents[0].neutralMinionsKilled;
     const laneOpponent2CS =
-      laneOpponents[1].stats.totalMinionsKilled +
-      laneOpponents[1].stats.neutralMinionsKilled;
+      laneOpponents[1].totalMinionsKilled +
+      laneOpponents[1].neutralMinionsKilled;
     return laneOpponent1CS > laneOpponent2CS
       ? laneOpponents[0]
       : laneOpponents[1];
@@ -277,7 +266,7 @@ export const getTeammates = (
   match: Match,
   participant: Participant
 ): Participant[] => {
-  return match.participants.filter(
+  return match.info.participants.filter(
     (matchParticipant) =>
       matchParticipant.teamId === participant.teamId &&
       matchParticipant.participantId !== participant.participantId
@@ -288,13 +277,13 @@ export const getOpponents = (
   match: Match,
   participant: Participant
 ): Participant[] => {
-  return match.participants.filter(
+  return match.info.participants.filter(
     (matchParticipant) => matchParticipant.teamId !== participant.teamId
   );
 };
 
 export const getTeam = (match: Match, teamId: number): Participant[] => {
-  return match.participants.filter(
+  return match.info.participants.filter(
     (matchParticipant) => matchParticipant.teamId === teamId
   );
 };
@@ -303,7 +292,7 @@ export const getOtherParticipants = (
   match: Match,
   participant: Participant
 ): Participant[] => {
-  return match.participants.filter(
+  return match.info.participants.filter(
     (matchParticipant) =>
       matchParticipant.participantId !== participant.participantId
   );
@@ -314,7 +303,7 @@ export const calcTotalGoldFrames = (
   teamId: number
 ) => {
   const teamThreshold = 5;
-  return timeline.frames.map(({ participantFrames }) => {
+  return timeline.info.frames.map(({ participantFrames }) => {
     let result = 0;
     let from;
     let to;
@@ -335,8 +324,5 @@ export const calcTotalGoldFrames = (
 };
 
 export const calcKDA = (participant: Participant) => {
-  return (
-    (participant.stats.kills + participant.stats.assists) /
-      participant.stats.deaths || 0
-  );
+  return (participant.kills + participant.assists) / participant.deaths || 0;
 };

@@ -12,8 +12,8 @@ const bloodThirst: Trophy = {
   checkProgress: ({ match, events, participant }) => {
     const kills = getParticipantKills(events, participant.participantId);
 
-    const gameLongEnough = match.gameDuration > 20 * 60;
-    const atLeastOneKill = participant.stats.kills > 0;
+    const gameLongEnough = match.info.gameDuration > 20 * 60;
+    const atLeastOneKill = participant.kills > 0;
     const killTimingsOK = kills.every((kill, index) => {
       let killInTiming = true;
       if (index === 0) {
@@ -26,7 +26,8 @@ const bloodThirst: Trophy = {
       if (index === kills.length - 1) {
         // In 5 min before end
         killInTiming =
-          killInTiming && kill.timestamp >= match.gameDuration * 1000 - 300000;
+          killInTiming &&
+          kill.timestamp >= match.info.gameDuration * 1000 - 300000;
       }
       return killInTiming;
     });

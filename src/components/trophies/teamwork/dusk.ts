@@ -8,7 +8,7 @@ const dusk: Trophy = {
   description: 'Destroy at least six enemy wards.',
   category: 'teamwork',
   checkProgress: ({ participant }) => {
-    return participant.stats.wardsKilled / 6;
+    return participant.wardsKilled / 6;
   },
 };
 

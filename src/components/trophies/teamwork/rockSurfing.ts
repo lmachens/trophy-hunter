@@ -10,10 +10,7 @@ const rockSurfing: Trophy = {
     'Participate in two kills on bottom lane before 10 minutes as a midlaner.',
   category: 'teamwork',
   checkProgress: ({ events, participant }) => {
-    if (
-      participant.timeline.lane !== 'MIDDLE' ||
-      participant.timeline.role !== 'SOLO'
-    ) {
+    if (participant.lane !== 'MIDDLE' || participant.role !== 'SOLO') {
       return 0;
     }
 

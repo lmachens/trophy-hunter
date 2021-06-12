@@ -12,8 +12,7 @@ const soulHarvest: Trophy = {
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'soulHarvest');
 
-    const damage =
-      participant.stats.perk0 === 8128 ? participant.stats.perk0Var1 : 0;
+    const damage = participant.perk0 === 8128 ? participant.perk0Var1 : 0;
 
     return damage / 2000 + trophyProgress;
   },

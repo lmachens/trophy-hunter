@@ -11,15 +11,15 @@ const theTortoise: Trophy = {
   aramSupport: true,
   checkProgress: ({ match, participant }) => {
     const requiredTimelimit =
-      match.queueId === ARAM_HOWLING_ABYSS ? 1200 : 1800;
+      match.info.queueId === ARAM_HOWLING_ABYSS ? 1200 : 1800;
     if (
-      !participant.stats.longestTimeSpentLiving &&
-      match.gameDuration >= requiredTimelimit
+      !participant.longestTimeSpentLiving &&
+      match.info.gameDuration >= requiredTimelimit
     ) {
       return 1;
     }
 
-    return participant.stats.longestTimeSpentLiving / requiredTimelimit;
+    return participant.longestTimeSpentLiving / requiredTimelimit;
   },
   checkLive: ({ events, gameData, account }) => {
     const requiredTimelimit = gameData.gameMode === 'ARAM' ? 1200 : 1800;

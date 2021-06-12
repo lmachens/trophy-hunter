@@ -11,7 +11,7 @@ const teamEffort: Trophy = {
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
-    const requiredTeamKills = match.queueId === ARAM_HOWLING_ABYSS ? 9 : 3;
+    const requiredTeamKills = match.info.queueId === ARAM_HOWLING_ABYSS ? 9 : 3;
 
     const killsAndAssists = getParticipantKillsAndAssists(
       events,

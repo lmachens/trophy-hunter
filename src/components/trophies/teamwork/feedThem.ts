@@ -26,7 +26,7 @@ const feedThem: Trophy = {
       },
       {}
     );
-    if (match.queueId === ARAM_HOWLING_ABYSS) {
+    if (match.info.queueId === ARAM_HOWLING_ABYSS) {
       const validAssists = Object.values(assists).filter(
         (assist) => assist >= 3
       ).length;

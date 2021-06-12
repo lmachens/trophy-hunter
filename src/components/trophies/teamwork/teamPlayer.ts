@@ -10,8 +10,8 @@ const teamPlayer: Trophy = {
   category: 'teamwork',
   aramSupport: true,
   checkProgress: ({ participant, match }) => {
-    const requiredAssists = match.queueId === ARAM_HOWLING_ABYSS ? 20 : 10;
-    return participant.stats.assists / requiredAssists;
+    const requiredAssists = match.info.queueId === ARAM_HOWLING_ABYSS ? 20 : 10;
+    return participant.assists / requiredAssists;
   },
   checkLive: ({ events, account, gameData }) => {
     const requiredAssists = gameData.gameMode === 'ARAM' ? 20 : 10;

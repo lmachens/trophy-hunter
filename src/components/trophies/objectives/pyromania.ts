@@ -8,7 +8,7 @@ const pyromania: Trophy = {
   description: 'Kill three fire dragons on the same match.',
   category: 'objectives',
   checkProgress: ({ match, events, participant }) => {
-    const teamIds = match.participants
+    const teamIds = match.info.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId
       )

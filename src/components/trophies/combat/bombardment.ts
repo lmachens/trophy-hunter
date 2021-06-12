@@ -11,9 +11,9 @@ const bombardment: Trophy = {
   aramSupport: true,
   checkProgress: ({ match, participant }) => {
     const damagePerMinute =
-      (60 * participant.stats.totalDamageDealtToChampions) / match.gameDuration;
+      (60 * participant.totalDamageDealtToChampions) / match.info.gameDuration;
 
-    if (match.queueId === ARAM_HOWLING_ABYSS) {
+    if (match.info.queueId === ARAM_HOWLING_ABYSS) {
       return damagePerMinute / 1500;
     }
 

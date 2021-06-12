@@ -12,7 +12,7 @@ const skullHunter: Trophy = {
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'skullHunter');
 
-    const killsAssists = participant.stats.assists + participant.stats.kills;
+    const killsAssists = participant.assists + participant.kills;
     return killsAssists / 20 + trophyProgress;
   },
   checkLive: ({ allPlayers, trophyData, gameData, account }) => {

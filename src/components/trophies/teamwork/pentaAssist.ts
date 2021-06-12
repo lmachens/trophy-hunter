@@ -44,7 +44,8 @@ const pentaAssist: Trophy = {
       );
     }).length;
 
-    const requiredPentaAsissts = match.queueId === ARAM_HOWLING_ABYSS ? 2 : 1;
+    const requiredPentaAsissts =
+      match.info.queueId === ARAM_HOWLING_ABYSS ? 2 : 1;
     return pentaAssists / requiredPentaAsissts;
   },
   checkLive: ({ events, account, gameData }) => {

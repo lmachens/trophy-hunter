@@ -8,7 +8,7 @@ const hextechLord: Trophy = {
   description: 'Gain more than 15000 gold.',
   category: 'skills',
   checkProgress: ({ participant }) => {
-    return participant.stats.goldEarned / 15000;
+    return participant.goldEarned / 15000;
   },
   checkLive: ({ activePlayer }) => {
     if (!activePlayer) {

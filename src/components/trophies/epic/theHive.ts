@@ -1,4 +1,5 @@
 import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
+import { ChampionKillEvent } from '../../../api/riot/types';
 import { Trophy } from '../types';
 
 const theHive: Trophy = {
@@ -10,15 +11,17 @@ const theHive: Trophy = {
   category: 'epic',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
-    const hiveKills = events.filter(
-      (event) =>
-        event.type === 'CHAMPION_KILL' &&
-        event.assistingParticipantIds.some(
-          (assister) => assister === participant.participantId
-        ) &&
-        event.assistingParticipantIds.length >= 4
+    const hiveKills = <ChampionKillEvent[]>(
+      events.filter(
+        (event) =>
+          event.type === 'CHAMPION_KILL' &&
+          event.assistingParticipantIds.some(
+            (assister) => assister === participant.participantId
+          ) &&
+          event.assistingParticipantIds.length >= 4
+      )
     );
-    if (match.queueId === ARAM_HOWLING_ABYSS) {
+    if (match.info.queueId === ARAM_HOWLING_ABYSS) {
       return hiveKills.length / 12;
     }
 

@@ -8,7 +8,7 @@ const godlike: Trophy = {
   description: 'Achieve a killing spree of seven.',
   category: 'skills',
   checkProgress: ({ participant }) => {
-    return participant.stats.largestKillingSpree / 7;
+    return participant.largestKillingSpree / 7;
   },
   checkLive: ({ events, account }) => {
     const killsAndDeaths = events.filter(

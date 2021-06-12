@@ -8,7 +8,7 @@ const controller: Trophy = {
   description: 'Place at least 6 control wards.',
   category: 'teamwork',
   checkProgress: ({ participant }) => {
-    return participant.stats.visionWardsBoughtInGame / 6;
+    return participant.visionWardsBoughtInGame / 6;
   },
 };
 

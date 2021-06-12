@@ -17,7 +17,7 @@ const sai: Trophy = {
         event.timestamp <= 10 * 60000
     ).length;
 
-    const requiredTakedowns = match.queueId === ARAM_HOWLING_ABYSS ? 5 : 4;
+    const requiredTakedowns = match.info.queueId === ARAM_HOWLING_ABYSS ? 5 : 4;
     return killsBefore10 / requiredTakedowns;
   },
   checkLive: ({ events, account, gameData }) => {

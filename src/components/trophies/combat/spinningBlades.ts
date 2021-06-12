@@ -12,8 +12,7 @@ const spinningBlades: Trophy = {
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'spinningBlades');
 
-    const damage =
-      participant.stats.perk0 === 8005 ? participant.stats.perk0Var1 : 0;
+    const damage = participant.perk0 === 8005 ? participant.perk0Var1 : 0;
 
     return damage / 2500 + trophyProgress;
   },

@@ -9,11 +9,11 @@ const tuorsAxe: Trophy = {
     'Deal at least 50% more damage to champions than the next player.',
   category: 'combat',
   checkProgress: ({ match, participant }) => {
-    const sortedParticipants = match.participants.sort(
+    const sortedParticipants = match.info.participants.sort(
       (participantA, participantB) => {
         return (
-          participantB.stats.totalDamageDealtToChampions -
-          participantA.stats.totalDamageDealtToChampions
+          participantB.totalDamageDealtToChampions -
+          participantA.totalDamageDealtToChampions
         );
       }
     );
@@ -24,8 +24,8 @@ const tuorsAxe: Trophy = {
     const secondMostDamageParticipant = sortedParticipants[1];
 
     return (
-      (participant.stats.totalDamageDealtToChampions / 1.5) *
-      secondMostDamageParticipant.stats.totalDamageDealtToChampions
+      (participant.totalDamageDealtToChampions / 1.5) *
+      secondMostDamageParticipant.totalDamageDealtToChampions
     );
   },
 };

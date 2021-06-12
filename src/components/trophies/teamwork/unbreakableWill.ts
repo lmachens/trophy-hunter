@@ -10,21 +10,21 @@ const unbreakableWill: Trophy = {
     'Have highest self-mitigated damage and most assists of your team as a support.',
   category: 'teamwork',
   checkProgress: ({ match, participant }) => {
-    if (participant.timeline.role !== 'DUO_SUPPORT') {
+    if (participant.role !== 'DUO_SUPPORT') {
       return 0;
     }
 
     const team = getTeammates(match, participant);
     const maxAssists = Math.max(
-      ...team.map((participant) => participant.stats.assists)
+      ...team.map((participant) => participant.assists)
     );
     const maxDamageSelfMitigated = Math.max(
-      ...team.map((participant) => participant.stats.damageSelfMitigated)
+      ...team.map((participant) => participant.damageSelfMitigated)
     );
 
     return Number(
-      participant.stats.assists >= maxAssists &&
-        participant.stats.damageSelfMitigated >= maxDamageSelfMitigated
+      participant.assists >= maxAssists &&
+        participant.damageSelfMitigated >= maxDamageSelfMitigated
     );
   },
 };

@@ -8,7 +8,7 @@ const intruder: Trophy = {
   description: 'Take at least 25 cs from the enemy jungle.',
   category: 'skills',
   checkProgress: ({ participant }) => {
-    return Number(participant.stats.neutralMinionsKilledEnemyJungle >= 25);
+    return Number(participant.neutralMinionsKilledEnemyJungle >= 25);
   },
 };
 

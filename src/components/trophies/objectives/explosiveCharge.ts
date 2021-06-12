@@ -8,7 +8,7 @@ const explosiveCharge: Trophy = {
   description: 'Deal more than 10000 damage to turrets.',
   category: 'objectives',
   checkProgress: ({ participant }) => {
-    return participant.stats.damageDealtToTurrets / 10000;
+    return participant.damageDealtToTurrets / 10000;
   },
 };
 

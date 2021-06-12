@@ -1,4 +1,5 @@
 import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
+import { BuildingKillEvent } from '../../../api/riot/types';
 import { Trophy } from '../types';
 
 const theCannon: Trophy = {
@@ -10,15 +11,17 @@ const theCannon: Trophy = {
   category: 'objectives',
   aramSupport: true,
   checkProgress: ({ participant, events, match }) => {
-    const firstTurretDeath = events.find(
-      (event) =>
-        event.type === 'BUILDING_KILL' &&
-        event.buildingType === 'TOWER_BUILDING'
+    const firstTurretDeath = <BuildingKillEvent>(
+      events.find(
+        (event) =>
+          event.type === 'BUILDING_KILL' &&
+          event.buildingType === 'TOWER_BUILDING'
+      )
     );
     if (!firstTurretDeath) {
       return 0;
     }
-    const requiredMinutes = match.queueId === ARAM_HOWLING_ABYSS ? 5 : 10;
+    const requiredMinutes = match.info.queueId === ARAM_HOWLING_ABYSS ? 5 : 10;
     const isEarly = firstTurretDeath.timestamp < requiredMinutes * 60 * 1000;
     const isKiller = firstTurretDeath.killerId === participant.participantId;
     const isAssistant = firstTurretDeath.assistingParticipantIds.some(

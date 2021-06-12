@@ -11,15 +11,15 @@ const precision: Trophy = {
     'Be 15 cs ahead of your lane opponent at 10 minutes as top, mid or adc.',
   category: 'skills',
   checkProgress: ({ match, account, participant, timeline }) => {
-    const opponent = match.participants.find(
+    const opponent = match.info.participants.find(
       (otherParticipant) =>
         otherParticipant.participantId !== participant.participantId &&
-        otherParticipant.timeline.role === participant.timeline.role &&
-        otherParticipant.timeline.lane === participant.timeline.lane
+        otherParticipant.role === participant.role &&
+        otherParticipant.lane === participant.lane
     );
     if (!opponent) {
       warn(
-        `Can not find lane opponent for ${account.summoner.name} as ${participant.timeline.role} ${participant.timeline.lane}`
+        `Can not find lane opponent for ${account.summoner.name} as ${participant.role} ${participant.lane}`
       );
       return 0;
     }

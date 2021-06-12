@@ -1,4 +1,5 @@
 import { ARAM_HOWLING_ABYSS } from '../../../api/overwolf';
+import { ChampionKillEvent } from '../../../api/riot/types';
 import { Trophy } from '../types';
 
 const keyTargets: Trophy = {
@@ -10,18 +11,20 @@ const keyTargets: Trophy = {
   category: 'combat',
   aramSupport: true,
   checkProgress: ({ match, timeline, participant }) => {
-    const opponentIds = match.participants
+    const opponentIds = match.info.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId !== participant.teamId
       )
       .map((opponent) => opponent.participantId);
 
-    const keyTargetKills = timeline.frames.reduce(
+    const keyTargetKills = timeline.info.frames.reduce(
       (currentKeyTargetKills, frame) => {
-        const participantKills = frame.events.filter(
-          (event) =>
-            event.type === 'CHAMPION_KILL' &&
-            event.killerId === participant.participantId
+        const participantKills = <ChampionKillEvent[]>(
+          frame.events.filter(
+            (event) =>
+              event.type === 'CHAMPION_KILL' &&
+              event.killerId === participant.participantId
+          )
         );
         if (participantKills.length === 0) {
           return currentKeyTargetKills;
@@ -40,7 +43,7 @@ const keyTargets: Trophy = {
       0
     );
 
-    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 4 : 3;
+    const requiredKills = match.info.queueId === ARAM_HOWLING_ABYSS ? 4 : 3;
     return keyTargetKills / requiredKills;
   },
 };

@@ -8,7 +8,7 @@ const doubleKill: Trophy = {
   description: 'Achieve a double kill.',
   category: 'combat',
   checkProgress: ({ participant }) => {
-    return participant.stats.doubleKills;
+    return participant.doubleKills;
   },
   checkLive: ({ events, trophyData, account }) => {
     if (!events.length || trophyData.doubleKill) {

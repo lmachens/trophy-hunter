@@ -1,3 +1,5 @@
+export type TeamId = 100 | 200;
+
 export interface Summoner {
   platformId: string;
   accountId: string;
@@ -9,260 +11,411 @@ export interface Summoner {
   summonerLevel: number;
 }
 
-export interface Match {
-  gameId: number;
-  platformId: string;
-  gameCreation: number;
-  gameDuration: number;
-  queueId: number;
-  mapId: number;
-  seasonId: number;
-  gameVersion: string;
-  gameMode: string;
-  gameType: string;
-  teams: Team[];
-  participants: Participant[];
-  participantIdentities: ParticipantIdentity[];
-}
-
-export interface Team {
-  teamId: number;
-  win: string;
-  firstBlood: boolean;
-  firstTower: boolean;
-  firstInhibitor: boolean;
-  firstBaron: boolean;
-  firstDragon: boolean;
-  firstRiftHerald: boolean;
-  towerKills: number;
-  inhibitorKills: number;
-  baronKills: number;
-  dragonKills: number;
-  vilemawKills: number;
-  riftHeraldKills: number;
-  dominionVictoryScore: number;
-  bans: [
-    {
-      championId: number;
-      pickTurn: number;
-    }[]
-  ];
-}
-
-export interface Participant {
-  participantId: number;
-  teamId: number;
-  championId: number;
-  spell1Id: number;
-  spell2Id: number;
-  stats: {
-    participantId: number;
-    win: boolean;
-    item0: number;
-    item1: number;
-    item2: number;
-    item3: number;
-    item4: number;
-    item5: number;
-    item6: number;
-    kills: number;
-    deaths: number;
-    assists: number;
-    largestKillingSpree: number;
-    largestMultiKill: number;
-    killingSprees: number;
-    longestTimeSpentLiving: number;
-    doubleKills: number;
-    tripleKills: number;
-    quadraKills: number;
-    pentaKills: number;
-    unrealKills: number;
-    totalDamageDealt: number;
-    magicDamageDealt: number;
-    physicalDamageDealt: number;
-    trueDamageDealt: number;
-    largestCriticalStrike: number;
-    totalDamageDealtToChampions: number;
-    magicDamageDealtToChampions: number;
-    physicalDamageDealtToChampions: number;
-    trueDamageDealtToChampions: number;
-    totalHeal: number;
-    totalUnitsHealed: number;
-    damageSelfMitigated: number;
-    damageDealtToObjectives: number;
-    damageDealtToTurrets: number;
-    visionScore: number;
-    timeCCingOthers: number;
-    totalDamageTaken: number;
-    magicalDamageTaken: number;
-    physicalDamageTaken: number;
-    trueDamageTaken: number;
-    goldEarned: number;
-    goldSpent: number;
-    turretKills: number;
-    inhibitorKills: number;
-    totalMinionsKilled: number;
-    neutralMinionsKilled: number;
-    neutralMinionsKilledTeamJungle: number;
-    neutralMinionsKilledEnemyJungle: number;
-    totalTimeCrowdControlDealt: number;
-    champLevel: number;
-    visionWardsBoughtInGame: number;
-    sightWardsBoughtInGame: number;
-    wardsPlaced: number;
-    wardsKilled: number;
-    firstBloodKill: boolean;
-    firstBloodAssist: boolean;
-    firstTowerKill: boolean;
-    firstTowerAssist: boolean;
-    firstInhibitorKill: boolean;
-    firstInhibitorAssist: boolean;
-    combatPlayerScore: number;
-    objectivePlayerScore: number;
-    totalPlayerScore: number;
-    totalScoreRank: number;
-    playerScore0: number;
-    playerScore1: number;
-    playerScore2: number;
-    playerScore3: number;
-    playerScore4: number;
-    playerScore5: number;
-    playerScore6: number;
-    playerScore7: number;
-    playerScore8: number;
-    playerScore9: number;
-    perk0: number;
-    perk0Var1: number;
-    perk0Var2: number;
-    perk0Var3: number;
-    perk1: number;
-    perk1Var1: number;
-    perk1Var2: number;
-    perk1Var3: number;
-    perk2: number;
-    perk2Var1: number;
-    perk2Var2: number;
-    perk2Var3: number;
-    perk3: number;
-    perk3Var1: number;
-    perk3Var2: number;
-    perk3Var3: number;
-    perk4: number;
-    perk4Var1: number;
-    perk4Var2: number;
-    perk4Var3: number;
-    perk5: number;
-    perk5Var1: number;
-    perk5Var2: number;
-    perk5Var3: number;
-    perkPrimaryStyle: number;
-    perkSubStyle: number;
-    statPerk0: number;
-    statPerk1: number;
-    statPerk2: number;
-  };
-  timeline: {
-    participantId: 1;
-    creepsPerMinDeltas: {
-      [delta: string]: number;
-    };
-    xpPerMinDeltas: {
-      [delta: string]: number;
-    };
-    goldPerMinDeltas: {
-      [delta: string]: number;
-    };
-    csDiffPerMinDeltas: {
-      [delta: string]: number;
-    };
-    xpDiffPerMinDeltas: {
-      [delta: string]: number;
-      7;
-    };
-    damageTakenPerMinDeltas: {
-      [delta: string]: number;
-    };
-    damageTakenDiffPerMinDeltas: {
-      [delta: string]: number;
-    };
-    role: string;
-    lane: string;
-  };
-}
-
-export interface ParticipantIdentity {
-  participantId: number;
-  player: {
-    platformId: string;
-    accountId: string;
-    summonerName: string;
-    summonerId: string;
-    currentPlatformId: string;
-    currentAccountId: string;
-    matchHistoryUri: string;
-    profileIcon: number;
-  };
-}
-
-export interface MatchTimeline {
-  frames: MatchFrame[];
-  frameInterval: number;
-}
-
-export interface MatchTimeline {
-  frames: MatchFrame[];
-  frameInterval: number;
-}
-
-export interface MatchFrame {
-  participantFrames: {
-    [frameNumber: string]: MatchParticipantFrame;
-  };
-  events: MatchEvents;
-  timestamp: number;
-}
-
-export interface MatchParticipantFrame {
-  participantId: number;
-  minionsKilled: number;
-  teamScore: number;
-  dominionScore: number;
-  totalGold: number;
-  level: number;
-  xp: number;
-  currentGold: number;
-  position: MatchPostion;
-  jungleMinionsKilled: number;
-}
-
-export type MatchEvents = MatchEvent[];
-export interface MatchEvent {
-  laneType?: string;
-  skillSlot?: number;
-  ascendedType?: number;
-  creatorId?: number;
-  afterId?: number;
-  eventType?: string;
-  type: string;
-  levelUpType?: string;
-  wardType?: string;
-  participantId?: number;
-  towerType?: string;
-  itemId?: number;
-  beforeId?: number;
-  pointCaptured?: string;
-  monsterType?: string;
-  monsterSubType?: string;
-  teamId?: number;
-  position?: MatchPostion;
-  killerId?: number;
-  timestamp: number;
-  assistingParticipantIds?: number[];
-  buildingType?: string;
-  victimId?: number;
-}
-
-export interface MatchPostion {
+export type Position = {
   x: number;
   y: number;
+};
+
+export type Match = {
+  metadata: {
+    dataVersion: string;
+    matchId: string;
+    participants: string[];
+  };
+  info: {
+    gameCreation: number;
+    gameDuration: number;
+    gameId: number;
+    gameMode: string;
+    gameName: string;
+    gameStartTimestamp: number;
+    gameType: string;
+    gameVersion: string;
+    mapId: number;
+    participants: Participant[];
+    platformId: string;
+    queueId: number;
+    teams: {
+      bans: {
+        championId: number;
+        pickTurn: number;
+      }[];
+      objectives: {
+        baron: {
+          first: boolean;
+          kills: number;
+        };
+        champion: {
+          first: boolean;
+          kills: number;
+        };
+        dragon: {
+          first: boolean;
+          kills: number;
+        };
+        inhibitor: {
+          first: boolean;
+          kills: number;
+        };
+        riftHerald: {
+          first: boolean;
+          kills: number;
+        };
+        tower: {
+          first: boolean;
+          kills: number;
+        };
+      };
+      teamId: TeamId;
+      win: boolean;
+    }[];
+  };
+};
+
+export type Participant = {
+  assists: number;
+  baronKills: number;
+  bountyLevel: number;
+  champExperience: number;
+  champLevel: number;
+  championId: number;
+  championName: string;
+  championTransform: number;
+  consumablesPurchased: number;
+  damageDealtToBuildings: number;
+  damageDealtToObjectives: number;
+  damageDealtToTurrets: number;
+  damageSelfMitigated: number;
+  deaths: number;
+  detectorWardsPlaced: number;
+  doubleKills: number;
+  dragonKills: number;
+  firstBloodAssist: boolean;
+  firstBloodKill: boolean;
+  firstTowerAssist: boolean;
+  firstTowerKill: boolean;
+  gameEndedInEarlySurrender: boolean;
+  gameEndedInSurrender: boolean;
+  goldEarned: number;
+  goldSpent: number;
+  individualPosition: string;
+  inhibitorKills: number;
+  inhibitorsLost: number;
+  item0: number;
+  item1: number;
+  item2: number;
+  item3: number;
+  item4: number;
+  item5: number;
+  item6: number;
+  itemsPurchased: number;
+  killingSprees: number;
+  kills: number;
+  lane: string;
+  largestCriticalStrike: number;
+  largestKillingSpree: number;
+  largestMultiKill: number;
+  longestTimeSpentLiving: number;
+  magicDamageDealt: number;
+  magicDamageDealtToChampions: number;
+  magicDamageTaken: number;
+  neutralMinionsKilled: number;
+  nexusKills: number;
+  nexusLost: number;
+  objectivesStolen: number;
+  objectivesStolenAssists: number;
+  participantId: number;
+  pentaKills: number;
+  perks: {
+    statPerks: {
+      defense: number;
+      flex: number;
+      offense: number;
+    };
+    styles: {
+      description: 'primaryStyle' | 'subStyle';
+      selections: {
+        perk: number;
+        var1: number;
+        var2: number;
+        var3: number;
+      }[];
+
+      style: number;
+    }[];
+  };
+  physicalDamageDealt: number;
+  physicalDamageDealtToChampions: number;
+  physicalDamageTaken: number;
+  profileIcon: number;
+  puuid: string;
+  quadraKills: number;
+  riotIdName: string;
+  riotIdTagline: string;
+  role: string;
+  sightWardsBoughtInGame: number;
+  spell1Casts: number;
+  spell2Casts: number;
+  spell3Casts: number;
+  spell4Casts: number;
+  summoner1Casts: number;
+  summoner1Id: number;
+  summoner2Casts: number;
+  summoner2Id: number;
+  summonerId: string;
+  summonerLevel: number;
+  summonerName: string;
+  teamEarlySurrendered: boolean;
+  teamId: TeamId;
+  teamPosition: string;
+  timeCCingOthers: number;
+  timePlayed: number;
+  totalDamageDealt: number;
+  totalDamageDealtToChampions: number;
+  totalDamageShieldedOnTeammates: number;
+  totalDamageTaken: number;
+  totalHeal: number;
+  totalHealsOnTeammates: number;
+  totalMinionsKilled: number;
+  totalTimeCCDealt: number;
+  totalTimeSpentDead: number;
+  totalUnitsHealed: number;
+  tripleKills: number;
+  trueDamageDealt: number;
+  trueDamageDealtToChampions: number;
+  trueDamageTaken: number;
+  turretKills: number;
+  turretsLost: number;
+  unrealKills: number;
+  visionScore: number;
+  visionWardsBoughtInGame: number;
+  wardsKilled: number;
+  wardsPlaced: number;
+  win: boolean;
+};
+
+export type ItemPurchasedEvent = {
+  itemId: number;
+  participantId: number;
+  timestamp: number;
+  type: 'ITEM_PURCHASED';
+};
+
+export type LevelUpEvent = {
+  level: number;
+  participantId: number;
+  timestamp: number;
+  type: 'LEVEL_UP';
+};
+
+export type SkillLevelUpEvent = {
+  levelUpType: string;
+  participantId: number;
+  skillSlot: number;
+  timestamp: number;
+  type: 'SKILL_LEVEL_UP';
+};
+
+export type WardPlacedEvent = {
+  creatorId: number;
+  timestamp: number;
+  type: 'WARD_PLACED';
+  wardType: 'YELLOW_TRINKET' | 'SIGHT_WARD' | 'CONTROL_WARD' | 'BLUE_TRINKET';
+};
+
+export type WardKillEvent = {
+  killerId: number;
+  timestamp: number;
+  type: 'WARD_KILL';
+  wardType: 'YELLOW_TRINKET' | 'SIGHT_WARD' | 'CONTROL_WARD' | 'BLUE_TRINKET';
+};
+
+export type ItemDestroyedEvent = {
+  itemId: number;
+  participantId: number;
+  timestamp: number;
+  type: 'ITEM_DESTROYED';
+};
+
+export type BuildingKillEvent = {
+  assistingParticipantIds?: number[];
+  buildingType: 'TOWER_BUILDING' | 'INHIBITOR_BUILDING';
+  killerId: number;
+  laneType: 'TOP_LANE' | 'MID_LANE' | 'BOT_LANE';
+  position: Position;
+  teamId: TeamId;
+  timestamp: number;
+  towerType?: 'OUTER_TURRET' | 'INNER_TURRET' | 'BASE_TURRET' | 'NEXUS_TURRET';
+  type: 'BUILDING_KILL';
+};
+
+export type TurretPlateDestroyedEvent = {
+  killerId: number;
+  laneType: 'TOP_LANE' | 'MID_LANE' | 'BOT_LANE';
+  position: Position;
+  teamId: TeamId;
+  timestamp: number;
+  type: 'TURRET_PLATE_DESTROYED';
+};
+
+export type ChampionKillEvent = {
+  assistingParticipantIds: number[];
+  bounty: number;
+  killStreakLength: number;
+  killerId: number;
+  position: Position;
+  timestamp: number;
+  type: 'CHAMPION_KILL';
+  victimDamageDealt: {
+    basic: boolean;
+    magicDamage: number;
+    name: string;
+    participantId: number;
+    physicalDamage: number;
+    spellName: string;
+    spellSlot: number;
+    trueDamage: number;
+    type: string;
+  }[];
+  victimDamageReceived: {
+    basic: boolean;
+    magicDamage: number;
+    name: string;
+    participantId: number;
+    physicalDamage: number;
+    spellName: string;
+    spellSlot: number;
+    trueDamage: number;
+    type: string;
+  }[];
+  victimId: number;
+};
+
+export type PauseEndEvent = {
+  realTimestamp: number;
+  timestamp: number;
+  type: 'PAUSE_END';
+};
+
+export type ChampionSpecialKillEvent = {
+  killType: 'KILL_FIRST_BLOOD' | 'KILL_MULTI';
+  killerId: number;
+  multiKillLength?: number;
+  position: Position;
+  timestamp: number;
+  type: 'CHAMPION_SPECIAL_KILL';
+};
+
+export type GameEndEvent = {
+  gameId: number;
+  realTimestamp: number;
+  timestamp: number;
+  type: 'GAME_END';
+  winningTeam: number;
+};
+
+export type EliteMonsterKill = {
+  assistingParticipantIds?: number[];
+  killerId: number;
+  killerTeamId: TeamId;
+  monsterSubType?:
+    | 'FIRE_DRAGON'
+    | 'EARTH_DRAGON'
+    | 'AIR_DRAGON'
+    | 'WATER_DRAGON'
+    | 'ELDER_DRAGON';
+  monsterType: 'RIFTHERALD' | 'DRAGON' | 'BARON_NASHOR';
+  position: Position;
+  timestamp: number;
+  type: 'ELITE_MONSTER_KILL';
+};
+
+export type MatchEvent =
+  | PauseEndEvent
+  | ItemPurchasedEvent
+  | LevelUpEvent
+  | SkillLevelUpEvent
+  | WardPlacedEvent
+  | WardKillEvent
+  | ItemDestroyedEvent
+  | BuildingKillEvent
+  | TurretPlateDestroyedEvent
+  | ChampionKillEvent
+  | ChampionSpecialKillEvent
+  | GameEndEvent
+  | EliteMonsterKill;
+
+export interface MatchTimeline {
+  metadata: {
+    dataVersion: string;
+    matchId: string;
+    participants: string[];
+  };
+  info: {
+    frameInterval: number;
+    frames: {
+      events: MatchEvent[];
+      participantFrames: {
+        [id: string]: {
+          championStats: {
+            abilityHaste: number;
+            abilityPower: number;
+            armor: number;
+            armorPen: number;
+            armorPenPercent: number;
+            attackDamage: number;
+            attackSpeed: number;
+            bonusArmorPenPercent: number;
+            bonusMagicPenPercent: number;
+            ccReduction: number;
+            cooldownReduction: number;
+            health: number;
+            healthMax: number;
+            healthRegen: number;
+            lifesteal: number;
+            magicPen: number;
+            magicPenPercent: number;
+            magicResist: number;
+            movementSpeed: number;
+            omnivamp: number;
+            physicalVamp: number;
+            power: number;
+            powerMax: number;
+            powerRegen: number;
+            spellVamp: number;
+          };
+          currentGold: number;
+          damageStats: {
+            magicDamageDone: number;
+            magicDamageDoneToChampions: number;
+            magicDamageTaken: number;
+            physicalDamageDone: number;
+            physicalDamageDoneToChampions: number;
+            physicalDamageTaken: number;
+            totalDamageDone: number;
+            totalDamageDoneToChampions: number;
+            totalDamageTaken: number;
+            trueDamageDone: number;
+            trueDamageDoneToChampions: number;
+            trueDamageTaken: number;
+          };
+          goldPerSecond: number;
+          jungleMinionsKilled: number;
+          level: number;
+          minionsKilled: number;
+          participantId: number;
+          position: Position;
+          timeEnemySpentControlled: number;
+          totalGold: number;
+          xp: number;
+        };
+      };
+      timestamp: number;
+    }[];
+    gameId: number;
+    participants: {
+      participantId: number;
+      puuid: string;
+    }[];
+  };
 }

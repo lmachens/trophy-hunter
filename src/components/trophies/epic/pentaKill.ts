@@ -8,7 +8,7 @@ const pentaKill: Trophy = {
   description: 'Achieve a penta kill.',
   category: 'epic',
   checkProgress: ({ participant }) => {
-    return participant.stats.pentaKills;
+    return participant.pentaKills;
   },
   checkLive: ({ events, account }) => {
     const hasPentaKill = events.some(

@@ -10,11 +10,11 @@ const firstBloodKing: Trophy = {
   category: 'epic',
   maxProgress: 3,
   checkProgress: ({ participant, account }) => {
-    if (!participant.stats.firstBloodKill) {
+    if (!participant.firstBloodKill) {
       return 0;
     }
     const trophyProgress = getTrophyProgress(account, 'firstBloodKing');
-    return Number(participant.stats.firstBloodKill) / 3 + trophyProgress;
+    return Number(participant.firstBloodKill) / 3 + trophyProgress;
   },
   checkLive: ({ events, account }) => {
     const firstKill = events.find(

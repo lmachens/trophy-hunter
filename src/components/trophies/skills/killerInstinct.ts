@@ -9,10 +9,10 @@ const killerInstinct: Trophy = {
   category: 'skills',
   checkProgress: ({ participant, match }) => {
     const maxKills = Math.max(
-      ...match.participants.map((participant) => participant.stats.kills)
+      ...match.info.participants.map((participant) => participant.kills)
     );
 
-    return Number(participant.stats.kills >= maxKills);
+    return Number(participant.kills >= maxKills);
   },
 };
 

@@ -11,10 +11,9 @@ const bigBrother: Trophy = {
   maxProgress: 3,
   checkProgress: ({ match, account, participant }) => {
     const maxVisionScore = Math.max(
-      ...match.participants.map((other) => other.stats.visionScore)
+      ...match.info.participants.map((other) => other.visionScore)
     );
-    const hasHighestVisionScore =
-      participant.stats.visionScore >= maxVisionScore;
+    const hasHighestVisionScore = participant.visionScore >= maxVisionScore;
 
     const trophyProgress = getTrophyProgress(account, 'bigBrother');
     return Number(hasHighestVisionScore) / 3 + trophyProgress;

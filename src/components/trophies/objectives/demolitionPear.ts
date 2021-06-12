@@ -8,7 +8,7 @@ const demolitionPear: Trophy = {
   description: 'Takedown at least 5 turrets.',
   category: 'objectives',
   checkProgress: ({ participant }) => {
-    return participant.stats.turretKills / 5;
+    return participant.turretKills / 5;
   },
   checkLive: ({ events, account }) => {
     const turretKills = events.filter(

@@ -5,24 +5,24 @@ const myJungle: Trophy = {
   name: 'myJungle',
   level: 'skills2',
   title: 'My Jungle',
-  description: 'Kill most team jungle creeps and most enemy jungle creeps.',
+  description: 'Have most jungle cs.',
   category: 'skills',
-  checkProgress: ({ match, participant }) => {
-    const maxEnemyJungleCsOthers = Math.max(
-      ...match.participants.map((participant) => participant.stats.kills)
-    );
-    const maxTeamJungleCsOthers = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.neutralMinionsKilledTeamJungle
+  checkProgress: ({ participant, timeline }) => {
+    const lastFrames = timeline.info.frames[timeline.info.frames.length - 1];
+    const lastParticipantFrames = Object.values(lastFrames.participantFrames);
+
+    const maxJungleMinionsKilled = Math.max(
+      ...lastParticipantFrames.map(
+        (participantFrame) => participantFrame.jungleMinionsKilled
       )
     );
+    const participantFrame =
+      lastFrames.participantFrames[participant.participantId];
 
-    return Number(
-      participant.stats.neutralMinionsKilledEnemyJungle >=
-        maxEnemyJungleCsOthers &&
-        participant.stats.neutralMinionsKilledTeamJungle >=
-          maxTeamJungleCsOthers
-    );
+    const mostJungleMinionsKilled =
+      participantFrame.jungleMinionsKilled >= maxJungleMinionsKilled;
+
+    return Number(mostJungleMinionsKilled);
   },
 };
 

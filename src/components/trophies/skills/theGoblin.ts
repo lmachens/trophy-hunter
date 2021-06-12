@@ -9,24 +9,24 @@ const theGoblin: Trophy = {
   description: 'Have most jungle cs three times in a row.',
   category: 'skills',
   maxProgress: 3,
-  checkProgress: ({ match, participant, account }) => {
-    const maxEnemyJungleCsOthers = Math.max(
-      ...match.participants.map((participant) => participant.stats.kills)
-    );
-    const maxTeamJungleCsOthers = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.neutralMinionsKilledTeamJungle
+  checkProgress: ({ participant, account, timeline }) => {
+    const lastFrames = timeline.info.frames[timeline.info.frames.length - 1];
+    const lastParticipantFrames = Object.values(lastFrames.participantFrames);
+
+    const maxJunglMinionsKilled = Math.max(
+      ...lastParticipantFrames.map(
+        (participantFrame) => participantFrame.jungleMinionsKilled
       )
     );
-    const mostJungleCS =
-      participant.stats.neutralMinionsKilledEnemyJungle >=
-        maxEnemyJungleCsOthers &&
-      participant.stats.neutralMinionsKilledTeamJungle >= maxTeamJungleCsOthers;
-    if (!mostJungleCS) {
+    const participantFrame =
+      lastFrames.participantFrames[participant.participantId];
+    const mostJungleMinionsKilled =
+      participantFrame.jungleMinionsKilled >= maxJunglMinionsKilled;
+    if (!mostJungleMinionsKilled) {
       return 0;
     }
     const trophyProgress = getTrophyProgress(account, 'theGoblin');
-    return Number(mostJungleCS) / 3 + trophyProgress;
+    return Number(mostJungleMinionsKilled) / 3 + trophyProgress;
   },
 };
 

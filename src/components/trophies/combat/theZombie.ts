@@ -14,7 +14,7 @@ const theZombie: Trophy = {
   category: 'combat',
   aramSupport: true,
   checkProgress: ({ events, participant, match }) => {
-    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 3 : 2;
+    const requiredKills = match.info.queueId === ARAM_HOWLING_ABYSS ? 3 : 2;
 
     const deaths = getParticipantDeaths(events, participant.participantId);
     const kills = getParticipantKills(events, participant.participantId);

@@ -11,8 +11,8 @@ const darkinBlade: Trophy = {
   checkProgress: ({ events, participant }) => {
     const darkinBladeBuy = events.find(
       (event) =>
-        event.participantId === participant.participantId &&
         event.type === 'ITEM_PURCHASED' &&
+        event.participantId === participant.participantId &&
         event.itemId === 3124
     );
     if (!darkinBladeBuy) {

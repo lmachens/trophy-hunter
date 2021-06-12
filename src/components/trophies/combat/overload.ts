@@ -12,8 +12,7 @@ const overload: Trophy = {
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'overload');
 
-    const damage =
-      participant.stats.perk0 === 8112 ? participant.stats.perk0Var1 : 0;
+    const damage = participant.perk0 === 8112 ? participant.perk0Var1 : 0;
 
     return damage / 2500 + trophyProgress;
   },

@@ -10,11 +10,11 @@ const theSpartan: Trophy = {
     'Have a 1200 xp lead over the opposing solo laner at 10 minutes (approximatley 1.5 level difference).',
   category: 'skills',
   checkProgress: ({ match, participant }) => {
-    if (participant.timeline.role !== 'SOLO') {
+    if (participant.role !== 'SOLO') {
       return 0;
     }
-    const xpAt10 = participant.timeline.xpPerMinDeltas['0-10'] * 10;
-    const laneOpponent = getLaneOpponent(match.participants, participant);
+    const xpAt10 = participant.xpPerMinDeltas['0-10'] * 10;
+    const laneOpponent = getLaneOpponent(match.info.participants, participant);
 
     if (!laneOpponent) {
       return 0;

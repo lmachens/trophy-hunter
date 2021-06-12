@@ -8,7 +8,7 @@ const firstBlood: Trophy = {
   description: 'Take first blood.',
   category: 'combat',
   checkProgress: ({ participant }) => {
-    return Number(participant.stats.firstBloodKill);
+    return Number(participant.firstBloodKill);
   },
   checkLive: ({ events, account }) => {
     const firstKill = events.find(

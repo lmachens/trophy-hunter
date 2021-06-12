@@ -11,8 +11,10 @@ const theBlackFlag: Trophy = {
     'Never resign! Come back in a game where you have been 10000 gold down.',
   category: 'epic',
   checkProgress: ({ match, timeline, participant }) => {
-    const team = match.teams.find((team) => team.teamId === participant.teamId);
-    const opponent = match.teams.find(
+    const team = match.info.teams.find(
+      (team) => team.teamId === participant.teamId
+    );
+    const opponent = match.info.teams.find(
       (team) => team.teamId !== participant.teamId
     );
 

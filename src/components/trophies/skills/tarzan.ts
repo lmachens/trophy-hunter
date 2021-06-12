@@ -11,19 +11,19 @@ const tarzan: Trophy = {
   category: 'skills',
   checkProgress: ({ match, participant }) => {
     const maxNeutralMinionsKilled = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.neutralMinionsKilled
+      ...match.info.participants.map(
+        (participant) => participant.neutralMinionsKilled
       )
     );
 
     const others = getOtherParticipants(match, participant);
     const otherMaxChampLevel = Math.max(
-      ...others.map((other) => other.stats.champLevel)
+      ...others.map((other) => other.champLevel)
     );
 
     return Number(
-      participant.stats.neutralMinionsKilled >= maxNeutralMinionsKilled &&
-        participant.stats.champLevel > otherMaxChampLevel
+      participant.neutralMinionsKilled >= maxNeutralMinionsKilled &&
+        participant.champLevel > otherMaxChampLevel
     );
   },
 };

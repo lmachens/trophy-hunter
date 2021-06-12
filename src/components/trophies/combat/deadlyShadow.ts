@@ -9,17 +9,17 @@ const deadlyShadow: Trophy = {
   category: 'combat',
   checkProgress: ({ match, participant }) => {
     const maxKills = Math.max(
-      ...match.participants.map((participant) => participant.stats.kills)
+      ...match.info.participants.map((participant) => participant.kills)
     );
     const minTotalDamageTaken = Math.min(
-      ...match.participants.map(
-        (participant) => participant.stats.totalDamageTaken
+      ...match.info.participants.map(
+        (participant) => participant.totalDamageTaken
       )
     );
 
     return Number(
-      participant.stats.kills >= maxKills &&
-        participant.stats.totalDamageTaken === minTotalDamageTaken
+      participant.kills >= maxKills &&
+        participant.totalDamageTaken === minTotalDamageTaken
     );
   },
 };

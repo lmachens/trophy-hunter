@@ -10,20 +10,20 @@ const sniper: Trophy = {
   category: 'combat',
   checkProgress: ({ match, participant }) => {
     const maxTotalDamageDealtToChampions = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.totalDamageDealtToChampions
+      ...match.info.participants.map(
+        (participant) => participant.totalDamageDealtToChampions
       )
     );
     const minTotalDamageTaken = Math.min(
-      ...match.participants.map(
-        (participant) => participant.stats.totalDamageTaken
+      ...match.info.participants.map(
+        (participant) => participant.totalDamageTaken
       )
     );
 
     return Number(
-      participant.stats.totalDamageDealtToChampions >=
+      participant.totalDamageDealtToChampions >=
         maxTotalDamageDealtToChampions &&
-        participant.stats.totalDamageTaken === minTotalDamageTaken
+        participant.totalDamageTaken === minTotalDamageTaken
     );
   },
 };

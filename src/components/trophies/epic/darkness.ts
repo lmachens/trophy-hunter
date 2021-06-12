@@ -11,7 +11,7 @@ const darkness: Trophy = {
   maxProgress: 15,
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'darkness');
-    return participant.stats.wardsKilled / 15 + trophyProgress;
+    return participant.wardsKilled / 15 + trophyProgress;
   },
 };
 

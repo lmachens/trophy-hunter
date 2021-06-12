@@ -9,15 +9,14 @@ const flameHorizon: Trophy = {
   description: 'Kill at least 100 more minions than your lane opponent.',
   category: 'skills',
   checkProgress: ({ match, participant }) => {
-    const laneOpponent = getLaneOpponent(match.participants, participant);
+    const laneOpponent = getLaneOpponent(match.info.participants, participant);
     if (!laneOpponent) {
       return 0;
     }
     return (
-      (participant.stats.totalMinionsKilled +
-        participant.stats.neutralMinionsKilled) /
-      (laneOpponent.stats.totalMinionsKilled +
-        laneOpponent.stats.neutralMinionsKilled +
+      (participant.totalMinionsKilled + participant.neutralMinionsKilled) /
+      (laneOpponent.totalMinionsKilled +
+        laneOpponent.neutralMinionsKilled +
         100)
     );
   },

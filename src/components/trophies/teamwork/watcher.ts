@@ -11,7 +11,7 @@ const watcher: Trophy = {
   maxProgress: 15,
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'watcher');
-    return participant.stats.wardsPlaced / 15 + trophyProgress;
+    return participant.wardsPlaced / 15 + trophyProgress;
   },
 };
 

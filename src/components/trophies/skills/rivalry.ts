@@ -11,8 +11,10 @@ const rivalry: Trophy = {
     'Win a game where the gold difference in the first 15 minutes was always less than 2000.',
   category: 'skills',
   checkProgress: ({ match, timeline, participant }) => {
-    const team = match.teams.find((team) => team.teamId === participant.teamId);
-    const opponent = match.teams.find(
+    const team = match.info.teams.find(
+      (team) => team.teamId === participant.teamId
+    );
+    const opponent = match.info.teams.find(
       (team) => team.teamId !== participant.teamId
     );
 
@@ -27,7 +29,7 @@ const rivalry: Trophy = {
       .slice(0, 15)
       .every((diff) => Math.abs(diff) < 2000);
 
-    return Number(isRivalry && participant.stats.win);
+    return Number(isRivalry && participant.win);
   },
 };
 

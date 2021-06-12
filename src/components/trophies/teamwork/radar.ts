@@ -9,21 +9,21 @@ const radar: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, participant }) => {
     const maxWardsPlaced = Math.max(
-      ...match.participants.map((participant) => participant.stats.wardsPlaced)
+      ...match.info.participants.map((participant) => participant.wardsPlaced)
     );
     const maxWardsKilled = Math.max(
-      ...match.participants.map((participant) => participant.stats.wardsKilled)
+      ...match.info.participants.map((participant) => participant.wardsKilled)
     );
     const maxVisionWardsBoughtInGame = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.visionWardsBoughtInGame
+      ...match.info.participants.map(
+        (participant) => participant.visionWardsBoughtInGame
       )
     );
 
     return Number(
-      participant.stats.wardsPlaced >= maxWardsPlaced &&
-        participant.stats.wardsKilled >= maxWardsKilled &&
-        participant.stats.visionWardsBoughtInGame >= maxVisionWardsBoughtInGame
+      participant.wardsPlaced >= maxWardsPlaced &&
+        participant.wardsKilled >= maxWardsKilled &&
+        participant.visionWardsBoughtInGame >= maxVisionWardsBoughtInGame
     );
   },
 };

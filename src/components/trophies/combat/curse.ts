@@ -12,7 +12,7 @@ const curse: Trophy = {
   category: 'combat',
   checkProgress: ({ participant }) => {
     return (
-      participant.stats.totalTimeCrowdControlDealt /
+      participant.totalTimeCrowdControlDealt /
       minutesToSeconds(REQUIRED_MINUTES)
     );
   },

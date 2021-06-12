@@ -11,7 +11,7 @@ const hardHitter: Trophy = {
   maxProgress: 150000,
   checkProgress: ({ participant, account }) => {
     const trophyProgress = getTrophyProgress(account, 'hardHitter');
-    return participant.stats.totalDamageDealt / 150000 + trophyProgress;
+    return participant.totalDamageDealt / 150000 + trophyProgress;
   },
 };
 

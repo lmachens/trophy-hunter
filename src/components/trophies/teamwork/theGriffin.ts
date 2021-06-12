@@ -9,13 +9,12 @@ const theGriffin: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, participant }) => {
     const maxKillParticipation = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.kills + participant.stats.assists
+      ...match.info.participants.map(
+        (participant) => participant.kills + participant.assists
       )
     );
     return Number(
-      participant.stats.assists + participant.stats.kills >=
-        maxKillParticipation
+      participant.assists + participant.kills >= maxKillParticipation
     );
   },
 };

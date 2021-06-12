@@ -8,7 +8,7 @@ const unstoppable: Trophy = {
   description: 'Achieve a killing spree of five.',
   category: 'skills',
   checkProgress: ({ participant }) => {
-    return participant.stats.largestKillingSpree / 5;
+    return participant.largestKillingSpree / 5;
   },
   checkLive: ({ events, account }) => {
     const killsAndDeaths = events.filter(

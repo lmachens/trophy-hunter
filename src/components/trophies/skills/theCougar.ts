@@ -8,22 +8,25 @@ const theCougar: Trophy = {
   description:
     'Have a 1000 gold lead over the opposing jungler as a jungler at 10 minutes.',
   category: 'skills',
-  checkProgress: ({ match, participant }) => {
-    if (participant.timeline.lane !== 'JUNGLE') {
+  checkProgress: ({ match, participant, timeline }) => {
+    if (participant.lane !== 'JUNGLE') {
       return 0;
     }
-    const otherJungler = match.participants.find(
+    const otherJungler = match.info.participants.find(
       (player) =>
-        player.timeline.lane === 'JUNGLE' &&
-        player.teamId !== participant.teamId
+        player.lane === 'JUNGLE' && player.teamId !== participant.teamId
     );
     if (!otherJungler) {
       return 0;
     }
+    const frameAt10 = timeline.info.frames[9].participantFrames;
+    if (!frameAt10) {
+      return 0;
+    }
 
-    const goldAt10 = participant.timeline.goldPerMinDeltas['0-10'] * 10;
+    const goldAt10 = frameAt10[participant.participantId].currentGold;
     const goldAt10OtherJungler =
-      otherJungler.timeline.goldPerMinDeltas['0-10'] * 10;
+      frameAt10[otherJungler.participantId].currentGold;
 
     const theCougar = goldAt10OtherJungler + 1000 <= goldAt10;
     return Number(theCougar);

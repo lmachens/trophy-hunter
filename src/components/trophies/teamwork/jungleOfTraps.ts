@@ -8,14 +8,12 @@ const jungleOfTraps: Trophy = {
   description:
     'Place at least four control wards, remove four enemy wards, kill two dragons and score a killing spree.',
   category: 'teamwork',
-  checkProgress: ({ match, participant }) => {
-    const team = match.teams.find((team) => team.teamId === participant.teamId);
-
+  checkProgress: ({ participant }) => {
     return Number(
-      participant.stats.visionWardsBoughtInGame >= 4 &&
-        participant.stats.wardsKilled >= 4 &&
-        participant.stats.killingSprees >= 1 &&
-        team.dragonKills >= 2
+      participant.visionWardsBoughtInGame >= 4 &&
+        participant.wardsKilled >= 4 &&
+        participant.killingSprees >= 1 &&
+        participant.dragonKills >= 2
     );
   },
 };

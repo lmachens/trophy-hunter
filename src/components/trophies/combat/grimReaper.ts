@@ -13,7 +13,7 @@ const grimReaper: Trophy = {
       (event) =>
         event.type === 'CHAMPION_KILL' &&
         event.killerId === participant.participantId &&
-        event.timestamp >= match.gameDuration * 1000 - 60000
+        event.timestamp >= match.info.gameDuration * 1000 - 60000
     ).length;
 
     return killsAtEndgame / 3;

@@ -14,10 +14,10 @@ const theFinalHour: Trophy = {
       (event) =>
         event.type === 'CHAMPION_KILL' &&
         event.killerId === participant.participantId &&
-        event.timestamp >= match.gameDuration * 1000 - 600000
+        event.timestamp >= match.info.gameDuration * 1000 - 600000
     ).length;
 
-    const requiredKills = match.queueId === ARAM_HOWLING_ABYSS ? 14 : 10;
+    const requiredKills = match.info.queueId === ARAM_HOWLING_ABYSS ? 14 : 10;
     return killsAtEndgame / requiredKills;
   },
 };

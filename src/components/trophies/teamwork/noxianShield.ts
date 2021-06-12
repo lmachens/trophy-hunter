@@ -12,21 +12,19 @@ const noxianShield: Trophy = {
   checkProgress: ({ match, participant }) => {
     const teammates = getTeammates(match, participant);
     const minTeamDeaths = Math.min(
-      ...teammates.map((participant) => participant.stats.deaths)
+      ...teammates.map((participant) => participant.deaths)
     );
 
     const maxTeamDamageTanked = Math.max(
       ...teammates.map(
         (participant) =>
-          participant.stats.totalDamageTaken +
-          participant.stats.damageSelfMitigated
+          participant.totalDamageTaken + participant.damageSelfMitigated
       )
     );
 
-    const hasLeastDeaths = participant.stats.deaths <= minTeamDeaths;
+    const hasLeastDeaths = participant.deaths <= minTeamDeaths;
     const hasMostTankedDamage =
-      participant.stats.totalDamageTaken +
-        participant.stats.damageSelfMitigated >=
+      participant.totalDamageTaken + participant.damageSelfMitigated >=
       maxTeamDamageTanked;
     return Number(hasLeastDeaths && hasMostTankedDamage);
   },

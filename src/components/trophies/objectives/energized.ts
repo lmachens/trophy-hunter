@@ -10,7 +10,7 @@ const energized: Trophy = {
   category: 'objectives',
   maxProgress: 5,
   checkProgress: ({ match, events, participant, account }) => {
-    const teamIds = match.participants
+    const teamIds = match.info.participants
       .filter(
         (matchParticipant) => matchParticipant.teamId === participant.teamId
       )

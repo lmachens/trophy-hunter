@@ -8,7 +8,7 @@ const uncleScrooge: Trophy = {
   description: 'Gain more than 28000 gold.',
   category: 'epic',
   checkProgress: ({ participant }) => {
-    return participant.stats.goldEarned / 28000;
+    return participant.goldEarned / 28000;
   },
   checkLive: ({ activePlayer }) => {
     return activePlayer.currentGold / 28000;

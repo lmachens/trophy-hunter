@@ -9,10 +9,10 @@ const octopus: Trophy = {
   category: 'teamwork',
   checkProgress: ({ match, participant }) => {
     const maxAssists = Math.max(
-      ...match.participants.map((other) => other.stats.assists)
+      ...match.info.participants.map((other) => other.assists)
     );
 
-    return Number(participant.stats.assists >= maxAssists);
+    return Number(participant.assists >= maxAssists);
   },
 };
 

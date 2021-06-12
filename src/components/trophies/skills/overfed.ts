@@ -11,10 +11,10 @@ const overfed: Trophy = {
   checkProgress: ({ match, participant }) => {
     const maxGoldSpentOthers = Math.max(
       ...getOtherParticipants(match, participant).map(
-        (other) => other.stats.goldSpent
+        (other) => other.goldSpent
       )
     );
-    return Number(participant.stats.goldSpent >= 1.25 * maxGoldSpentOthers);
+    return Number(participant.goldSpent >= 1.25 * maxGoldSpentOthers);
   },
 };
 

@@ -9,9 +9,7 @@ const farmer: Trophy = {
   category: 'skills',
   checkProgress: ({ participant }) => {
     return (
-      (participant.stats.totalMinionsKilled +
-        participant.stats.neutralMinionsKilled) /
-      200
+      (participant.totalMinionsKilled + participant.neutralMinionsKilled) / 200
     );
   },
   checkLive: ({ allPlayers, account }) => {

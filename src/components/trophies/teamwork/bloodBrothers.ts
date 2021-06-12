@@ -35,7 +35,7 @@ const bloodBrothers: Trophy = {
       {}
     );
     const duoKills = Math.max(...Object.values(duoKillsEvents), 0);
-    if (match.queueId === ARAM_HOWLING_ABYSS) {
+    if (match.info.queueId === ARAM_HOWLING_ABYSS) {
       return duoKills / 5;
     }
     return duoKills / 7;

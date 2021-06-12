@@ -8,7 +8,7 @@ const legendary: Trophy = {
   description: 'Achieve a killing spree of eight.',
   category: 'skills',
   checkProgress: ({ participant }) => {
-    return participant.stats.largestKillingSpree / 8;
+    return participant.largestKillingSpree / 8;
   },
   checkLive: ({ events, account }) => {
     const killsAndDeaths = events.filter(

@@ -2,9 +2,7 @@ import { Trophy } from '../types';
 import { Participant } from '../../../api/riot/types';
 
 const calculateDamagePerGold = (participant: Participant) => {
-  return (
-    participant.stats.totalDamageDealtToChampions / participant.stats.goldEarned
-  );
+  return participant.totalDamageDealtToChampions / participant.goldEarned;
 };
 
 const flail: Trophy = {
@@ -16,7 +14,7 @@ const flail: Trophy = {
     'Have the highest damage to champions output per gold. (damage / gold works similar to KDA)',
   category: 'combat',
   checkProgress: ({ match, participant }) => {
-    const sortedParticipants = match.participants.sort(
+    const sortedParticipants = match.info.participants.sort(
       (participantA, participantB) => {
         return (
           calculateDamagePerGold(participantB) -

@@ -11,13 +11,12 @@ const thePiranha: Trophy = {
   maxProgress: 3,
   checkProgress: ({ match, account, participant }) => {
     const maxDamage = Math.max(
-      ...match.participants.map(
-        (participant) => participant.stats.totalDamageDealtToChampions
+      ...match.info.participants.map(
+        (participant) => participant.totalDamageDealtToChampions
       )
     );
 
-    const mostDamage =
-      participant.stats.totalDamageDealtToChampions === maxDamage;
+    const mostDamage = participant.totalDamageDealtToChampions === maxDamage;
 
     if (!mostDamage) {
       return 0;

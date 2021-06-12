@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 import SettingsButton from './SettingsButton';
-import SettingsToggle from './SettingsToggle';
+import Toggle from '../common/Toggle';
 import usePersistentState from '../../hooks/usePersistentState';
 import useHotkey from '../../hooks/useHotkey';
 import { trackLink, trackSettingsChanged } from '../../api/performance';
@@ -23,7 +23,7 @@ const Divider = styled.div`
   margin: 0px 12px;
 `;
 
-const Setting = styled.div`
+const Setting = styled.label`
   margin: 8px 0px;
   display: flex;
   justify-content: space-between;
@@ -76,7 +76,7 @@ const Settings: FC = () => {
           </Setting>
           <Setting>
             Auto Launch
-            <SettingsToggle
+            <Toggle
               checked={autoLaunch}
               onChange={(event) => {
                 setAutoLaunch(event.target.checked);
@@ -90,7 +90,7 @@ const Settings: FC = () => {
           </Setting>
           <Setting>
             Changelog Updates
-            <SettingsToggle
+            <Toggle
               checked={changelogUpdates}
               onChange={(event) => {
                 setChangelogUpdates(event.target.checked);
@@ -108,7 +108,7 @@ const Settings: FC = () => {
           <h3>In-Game Notifications</h3>
           <Setting>
             Trophy near completion
-            <SettingsToggle
+            <Toggle
               checked={trophyNearCompletion}
               onChange={(event) => {
                 setTrophyNearCompletion(event.target.checked);
@@ -122,7 +122,7 @@ const Settings: FC = () => {
           </Setting>
           <Setting>
             Trophy completed
-            <SettingsToggle
+            <Toggle
               checked={trophyCompleted}
               onChange={(event) => {
                 setTrophyCompleted(event.target.checked);

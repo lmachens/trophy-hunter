@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { FC } from 'react';
 
-const Switch = styled.label`
+const Label = styled.label`
   position: relative;
   display: inline-block;
   width: 30px;
@@ -51,15 +50,13 @@ const Switch = styled.label`
   }
 `;
 
-const SettingsToggle: FC<React.InputHTMLAttributes<
-  HTMLInputElement
->> = props => {
+const Toggle = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
   return (
-    <Switch>
+    <Label>
       <input type="checkbox" {...props} />
       <span />
-    </Switch>
+    </Label>
   );
 };
 
-export default SettingsToggle;
+export default Toggle;

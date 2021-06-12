@@ -7,6 +7,7 @@ import Squid from '../icons/Squid';
 import { trackLink } from '../../api/performance';
 import { useAccount } from '../../contexts/account';
 import Button from '../common/Button';
+import Toggle from '../common/Toggle';
 
 const Container = styled.div`
   font-family: Roboto Mono;
@@ -47,42 +48,45 @@ const NoMatches = styled.div`
   }
 `;
 
+const Label = styled.label`
+  margin: 8px 0px;
+  font-family: 'Lato', sans-serif;
+
+  > * {
+    margin-left: 12px;
+  }
+`;
+
 const History = () => {
   const [onlyWithTrophies, setOnlyWithTrophies] = useState<boolean>(false);
 
   const { account } = useAccount();
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery(
-    ['matches', account?._id, onlyWithTrophies],
-    ({ pageParam = 0 }) =>
-      getHistoryMatches({
-        summonerName: account.summoner.name,
-        platformId: account.summoner.platformId,
-        onlyWithTrophies,
-        page: pageParam,
-      }),
-    {
-      enabled: !!account,
-      getNextPageParam: (result) =>
-        result.hasMore ? result.currentPage + 1 : null,
-    }
-  );
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery(
+      ['matches', account?._id, onlyWithTrophies],
+      ({ pageParam = 0 }) =>
+        getHistoryMatches({
+          summonerName: account.summoner.name,
+          platformId: account.summoner.platformId,
+          onlyWithTrophies,
+          page: pageParam,
+        }),
+      {
+        enabled: !!account,
+        getNextPageParam: (result) =>
+          result.hasMore ? result.currentPage + 1 : null,
+      }
+    );
 
   return (
     <Container>
-      <div>
-        <Button
-          active={onlyWithTrophies}
-          onClick={() => setOnlyWithTrophies(!onlyWithTrophies)}
-        >
-          Only with trophies
-        </Button>
-      </div>
+      <Label>
+        Only with trophies
+        <Toggle
+          checked={onlyWithTrophies}
+          onChange={() => setOnlyWithTrophies(!onlyWithTrophies)}
+        />
+      </Label>
       <Matches>
         {status === 'success' && (
           <>

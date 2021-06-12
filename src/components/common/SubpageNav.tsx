@@ -17,6 +17,7 @@ const Nav = styled.nav`
 const BackButton = styled(FancyButton)`
   margin: 0;
   text-decoration: none;
+  text-transform: initial;
 
   :active {
     text-decoration: none;

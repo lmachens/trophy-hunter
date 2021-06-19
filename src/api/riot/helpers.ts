@@ -5,6 +5,8 @@ import {
   Participant,
   MatchEvent,
   ChampionKillEvent,
+  MatchTimelineFrame,
+  ParticipantFrame,
 } from './types';
 import { Account } from '../accounts';
 import {
@@ -228,6 +230,25 @@ export const getParticipantAssists = (
         event.assistingParticipantIds.includes(participantId)
     )
   );
+};
+
+export const getFrameAtMin = (
+  timeline: MatchTimeline,
+  min: number
+): MatchTimelineFrame | undefined => {
+  return timeline.info.frames[min - 1];
+};
+
+export const getParticipantFrameAtMin = (
+  timeline: MatchTimeline,
+  participantId: number,
+  min: number
+): ParticipantFrame | undefined => {
+  const frame = getFrameAtMin(timeline, min);
+  if (!frame) {
+    return undefined;
+  }
+  return frame.participantFrames[participantId];
 };
 
 export const getLaneOpponent = (

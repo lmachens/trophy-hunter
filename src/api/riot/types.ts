@@ -345,7 +345,7 @@ export type MatchEvent =
   | GameEndEvent
   | EliteMonsterKill;
 
-export interface MatchTimeline {
+export type MatchTimeline = {
   metadata: {
     dataVersion: string;
     matchId: string;
@@ -353,69 +353,73 @@ export interface MatchTimeline {
   };
   info: {
     frameInterval: number;
-    frames: {
-      events: MatchEvent[];
-      participantFrames: {
-        [id: string]: {
-          championStats: {
-            abilityHaste: number;
-            abilityPower: number;
-            armor: number;
-            armorPen: number;
-            armorPenPercent: number;
-            attackDamage: number;
-            attackSpeed: number;
-            bonusArmorPenPercent: number;
-            bonusMagicPenPercent: number;
-            ccReduction: number;
-            cooldownReduction: number;
-            health: number;
-            healthMax: number;
-            healthRegen: number;
-            lifesteal: number;
-            magicPen: number;
-            magicPenPercent: number;
-            magicResist: number;
-            movementSpeed: number;
-            omnivamp: number;
-            physicalVamp: number;
-            power: number;
-            powerMax: number;
-            powerRegen: number;
-            spellVamp: number;
-          };
-          currentGold: number;
-          damageStats: {
-            magicDamageDone: number;
-            magicDamageDoneToChampions: number;
-            magicDamageTaken: number;
-            physicalDamageDone: number;
-            physicalDamageDoneToChampions: number;
-            physicalDamageTaken: number;
-            totalDamageDone: number;
-            totalDamageDoneToChampions: number;
-            totalDamageTaken: number;
-            trueDamageDone: number;
-            trueDamageDoneToChampions: number;
-            trueDamageTaken: number;
-          };
-          goldPerSecond: number;
-          jungleMinionsKilled: number;
-          level: number;
-          minionsKilled: number;
-          participantId: number;
-          position: Position;
-          timeEnemySpentControlled: number;
-          totalGold: number;
-          xp: number;
-        };
-      };
-      timestamp: number;
-    }[];
+    frames: MatchTimelineFrame[];
     gameId: number;
     participants: {
       participantId: number;
       puuid: string;
     }[];
   };
-}
+};
+
+export type MatchTimelineFrame = {
+  events: MatchEvent[];
+  participantFrames: {
+    [id: string]: ParticipantFrame;
+  };
+  timestamp: number;
+};
+
+export type ParticipantFrame = {
+  championStats: {
+    abilityHaste: number;
+    abilityPower: number;
+    armor: number;
+    armorPen: number;
+    armorPenPercent: number;
+    attackDamage: number;
+    attackSpeed: number;
+    bonusArmorPenPercent: number;
+    bonusMagicPenPercent: number;
+    ccReduction: number;
+    cooldownReduction: number;
+    health: number;
+    healthMax: number;
+    healthRegen: number;
+    lifesteal: number;
+    magicPen: number;
+    magicPenPercent: number;
+    magicResist: number;
+    movementSpeed: number;
+    omnivamp: number;
+    physicalVamp: number;
+    power: number;
+    powerMax: number;
+    powerRegen: number;
+    spellVamp: number;
+  };
+  currentGold: number;
+  damageStats: {
+    magicDamageDone: number;
+    magicDamageDoneToChampions: number;
+    magicDamageTaken: number;
+    physicalDamageDone: number;
+    physicalDamageDoneToChampions: number;
+    physicalDamageTaken: number;
+    totalDamageDone: number;
+    totalDamageDoneToChampions: number;
+    totalDamageTaken: number;
+    trueDamageDone: number;
+    trueDamageDoneToChampions: number;
+    trueDamageTaken: number;
+  };
+  goldPerSecond: number;
+  jungleMinionsKilled: number;
+  level: number;
+  minionsKilled: number;
+  participantId: number;
+  position: Position;
+  timeEnemySpentControlled: number;
+  totalGold: number;
+  xp: number;
+};

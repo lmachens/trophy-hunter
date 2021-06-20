@@ -21,7 +21,6 @@ import MinimizeButton from './MinimizeButton';
 import ChangelogModal from '../guides/ChangelogModal';
 import { isAppUpdated } from '../../api/overwolf';
 import { getLocalStorageItem } from '../../api/utils/storage';
-import { trackLink } from '../../api/performance';
 
 const DiscordButtonLink = HeaderButton.withComponent('a');
 
@@ -83,11 +82,7 @@ const AppHeader: FC = () => {
             <Grow />
             <AlienwareChallenge />
           </ErrorBoundary>
-          <DiscordButtonLink
-            href="https://discord.gg/NTZu8Px"
-            target="_blank"
-            onClick={() => trackLink('https://discord.gg/NTZu8Px')}
-          >
+          <DiscordButtonLink href="https://discord.gg/NTZu8Px" target="_blank">
             <Discord />
           </DiscordButtonLink>
           <HeaderButton

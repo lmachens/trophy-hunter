@@ -4,7 +4,6 @@ import { useInfiniteQuery } from 'react-query';
 import Match from './Match';
 import { getHistoryMatches, HistoryMatch } from '../../api/matches';
 import Squid from '../icons/Squid';
-import { trackLink } from '../../api/performance';
 import { useAccount } from '../../contexts/account';
 import Button from '../common/Button';
 import Toggle from '../common/Toggle';
@@ -123,7 +122,6 @@ const History = () => {
                     href="https://discord.gg/NTZu8Px"
                     target="_blank"
                     rel="noreferrer"
-                    onClick={() => trackLink('https://discord.gg/NTZu8Px')}
                   >
                     Discord
                   </a>{' '}

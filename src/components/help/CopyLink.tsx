@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { copyTextToClipboard } from '../../api/utils/clipboard';
-import { trackCopyLink } from '../../api/performance';
 import FancyButton from '../common/FancyButton';
 
 const CopyContainer = styled.div`
@@ -35,7 +34,6 @@ const CopyLink = () => {
   }, [copied]);
 
   const handleClick = () => {
-    trackCopyLink();
     if (copyTextToClipboard(URL)) {
       setCopied(true);
     }

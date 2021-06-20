@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import useVersion from '../../hooks/useVersion';
 import styled from '@emotion/styled';
 import usePersistentState from '../../hooks/usePersistentState';
-import { trackSettingsChanged } from '../../api/performance';
 
 const Releases = styled.section`
   hr {
@@ -46,9 +45,6 @@ const ChangelogModal: FC<ChangelogModalProps> = ({ onClose }) => {
       title="Changelog"
       onShowAgainChange={(showAgain) => {
         setChangelogUpdates(showAgain);
-        trackSettingsChanged(
-          `Changelog Updates (Modal) [${showAgain ? 'checked' : 'unchecked'}]`
-        );
       }}
       showAgain={changelogUpdates}
     >

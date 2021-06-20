@@ -25,7 +25,6 @@ import {
   stopLiveCheck,
 } from '../api/overwolf/live';
 import { useAccount } from '../contexts/account';
-import { trackHotkey } from '../api/performance';
 import { getLocalStorageItem } from '../api/utils/storage';
 
 getAppVersion().then((version) => log(`Running ${version}`));
@@ -49,7 +48,6 @@ const Background: NextPage = () => {
       event: overwolf.settings.hotkeys.OnPressedEvent
     ) => {
       if (event.name === 'show_trophy_hunter') {
-        trackHotkey(event.name);
         const playingSupportedGame = await isPlayingSupportedGame();
         if (!playingSupportedGame) {
           log('Not playing a supported game');

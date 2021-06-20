@@ -1,5 +1,4 @@
 import React from 'react';
-import { trackLink } from '../../api/performance';
 import styled from '@emotion/styled';
 
 const Container = styled.section`
@@ -97,7 +96,6 @@ const Help = () => {
               href="https://discord.gg/NTZu8Px"
               target="_blank"
               rel="noreferrer"
-              onClick={() => trackLink('https://discord.gg/NTZu8Px')}
             >
               Discord
             </a>
@@ -106,9 +104,6 @@ const Help = () => {
               href="https://github.com/lmachens/trophy-hunter"
               target="_blank"
               rel="noreferrer"
-              onClick={() =>
-                trackLink('https://github.com/lmachens/trophy-hunter')
-              }
             >
               GitHub
             </a>
@@ -177,11 +172,6 @@ const Help = () => {
               href="https://support.overwolf.com/support/solutions/articles/9000176827-how-to-get-your-overwolf-logs"
               target="_blank"
               rel="noreferrer"
-              onClick={() =>
-                trackLink(
-                  'https://support.overwolf.com/support/solutions/articles/9000176827-how-to-get-your-overwolf-logs'
-                )
-              }
             >
               here
             </a>

@@ -39,7 +39,6 @@ import HeaderButton from '../components/headers/HeaderButton';
 import Monitor from '../components/icons/Monitor';
 import useDisplays from '../hooks/useDisplays';
 import useCenterWindow from '../hooks/useCenterWindow';
-import { trackHotkey } from '../api/performance';
 import { SpecialGradients } from '../components/levels/special';
 import SearchingSquid from '../components/icons/SearchingSquid';
 
@@ -198,10 +197,8 @@ const SecondScreen: NextPage = () => {
       event: overwolf.settings.hotkeys.OnPressedEvent
     ) => {
       if (event.name === 'next_page_trophy_hunter') {
-        trackHotkey('next_page_trophy_hunter');
         setFilterIndex((filterIndex) => getNextIndex(filterIndex));
       } else if (event.name === 'toggle_monitor_trophy_hunter') {
-        trackHotkey('toggle_monitor_trophy_hunter');
         setPreferedWindow((gameWindow) =>
           gameWindow === 'in_game' ? 'second_screen' : 'in_game'
         );

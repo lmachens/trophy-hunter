@@ -10,7 +10,6 @@ import { categoriesMap } from '../trophies/categories';
 import { toggleArrayElement } from '../../api/utils/arrays';
 import Checkbox from '../common/Checkbox';
 import IconButton from '../common/IconButton';
-import { trackFilter } from '../../api/performance';
 import Empty from '../icons/Empty';
 import { useTargetAccount } from '../../contexts/account';
 import { useMission } from '../../contexts/account/useMission';
@@ -76,7 +75,6 @@ const MapOverview = () => {
   const handleCategoryChange = (category) => () => {
     const newCategories = toggleArrayElement(categories, category);
     setCategories(newCategories);
-    trackFilter(`${category} changed`);
   };
 
   const trophies = availableTrophies.filter(
@@ -104,11 +102,6 @@ const MapOverview = () => {
                 categories.length === 7
                   ? setCategories([])
                   : setCategories(Object.keys(categoriesMap));
-                trackFilter(
-                  categories.length === 7
-                    ? 'Select no categories'
-                    : 'Select all category'
-                );
               }}
               label="Select all"
             />
@@ -140,7 +133,6 @@ const MapOverview = () => {
             active={onlyMissions}
             onClick={() => {
               setOnlyMissions(!onlyMissions);
-              trackFilter(onlyMissions ? 'Not only missions' : 'Only missions');
             }}
             data-track-content
           >

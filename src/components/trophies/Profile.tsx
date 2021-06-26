@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { getRecentVersion } from '../../api/riot';
 import { useTargetAccount } from '../../contexts/account';
+import MissionsModal from '../modals/MissionsModal';
 import { Tooltip } from '../tooltip';
 import * as trophies from './index';
 
@@ -18,9 +20,19 @@ const Avatar = styled.img`
   border: 1px solid #eaeaea;
 `;
 
+const ModalLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+
+  :active {
+    text-decoration: none;
+  }
+`;
+
 const Profile = () => {
   const account = useTargetAccount();
   const { data: version } = useQuery('version', getRecentVersion);
+  const [showMissions, setShowMissions] = useState(false);
 
   return (
     <Container>
@@ -48,10 +60,18 @@ const Profile = () => {
             text="Missions are random trophies which are shuffled every Sunday. They are not part of the trophies count."
             placement="top"
           >
-            <span>{account?.missionTrophiesCompleted || 0} Missions</span>
+            <ModalLink onClick={() => setShowMissions(true)}>
+              {account?.missionTrophiesCompleted || 0} Missions
+            </ModalLink>
           </Tooltip>
         </p>
       </div>
+      {showMissions && (
+        <MissionsModal
+          onClose={() => setShowMissions(false)}
+          account={account}
+        />
+      )}
     </Container>
   );
 };

@@ -50,6 +50,7 @@ const NoMatches = styled.div`
 const Label = styled.label`
   margin: 8px 0px;
   font-family: 'Lato', sans-serif;
+  justify-self: start;
 
   > * {
     margin-left: 12px;

@@ -13,6 +13,9 @@ const config = {
   env: {
     PUBLIC_DIR: '',
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 if (process.env.TARGET === 'OVERWOLF') {

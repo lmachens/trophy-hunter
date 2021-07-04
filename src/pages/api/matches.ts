@@ -1,6 +1,7 @@
 import { FilterQuery } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getAccountsCollection } from '../../api/accounts/server/collection';
+import type { Account } from '../../api/accounts/types';
 import { getHistoryMatches } from '../../api/matches/server/functions';
 import { normalizeQuery } from '../../api/utils/router';
 import {

@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm ci
+RUN npm ci --only=production --ignore-scripts
 
 RUN npm run build
 

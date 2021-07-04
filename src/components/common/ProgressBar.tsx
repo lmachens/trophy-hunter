@@ -6,18 +6,19 @@ interface ProgressBarProps {
   category: string;
   max?: number;
   percentage?: boolean;
+  hideMessage?: boolean;
 }
 
 const Container = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 `;
 
 const Progress = styled.div`
   width: 100%;
   height: 9px;
-  border: 1px solid #eaeaea;
-  background: #2b2a30;
+  background: #1f1f1f;
   position: relative;
   margin-right: 4px;
 `;
@@ -43,6 +44,7 @@ const ProgressBar: FC<ProgressBarProps> = ({
   max,
   category,
   percentage,
+  hideMessage,
 }) => {
   const fixedProgress = Math.min(100, Math.round(progress * 100));
   const message = percentage
@@ -53,7 +55,7 @@ const ProgressBar: FC<ProgressBarProps> = ({
       <Progress>
         <Bar progress={fixedProgress} category={category} />
       </Progress>
-      {message}
+      {!hideMessage && message}
     </Container>
   );
 };

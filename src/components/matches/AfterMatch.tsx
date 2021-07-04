@@ -48,7 +48,12 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
   );
   const queryClient = useQueryClient();
 
-  const { mutate: check, data: match, status, reset } = useMutation(postCheck, {
+  const {
+    mutate: check,
+    data: match,
+    status,
+    reset,
+  } = useMutation(postCheck, {
     onMutate: () => {
       setShowModal(true);
     },
@@ -147,6 +152,7 @@ const AfterMatch: FC<AfterMatchProps> = ({ className }) => {
             }
           }}
           trophyNames={[...match.trophyNames, ...match.missionTrophyNames]}
+          allTrophiesProgress={match.allTrophiesProgress}
         />
       )}
       {showModal && match && showUnlockedIslandNames && (

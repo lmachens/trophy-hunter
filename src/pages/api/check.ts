@@ -35,6 +35,7 @@ import {
 } from '../../components/trophies/trophiesByMap';
 import { getTrophyProgress } from '../../api/accounts/helpers';
 import { getMissionsCollection } from '../../api/missions/server/collection';
+import { TrophyProgress } from '../../api/matches';
 
 const activeChecks: string[] = [];
 
@@ -333,23 +334,7 @@ export default applyMiddleware(
         }
       );
 
-      res.json({
-        trophyNames: completedTrophyNames,
-        unlockedIslandNames: unlockedIslandNames,
-        missionTrophyNames,
-      });
-
-      await addHistoryMatch({
-        accountId: account._id,
-        gameId: match.gameId,
-        championId: participant.championId,
-        win: participant.stats.win,
-        queueId: match.queueId,
-        gameDuration: match.gameDuration,
-        gameCreatedAt: new Date(match.gameCreation),
-        trophyNames: completedTrophyNames,
-      });
-
+      const allTrophiesProgress: TrophyProgress[] = [];
       const trophiesAboutToCheck =
         match.queueId === ARAM_HOWLING_ABYSS ? aramTrophies : allTrophies;
       trophiesAboutToCheck.forEach((trophy) => {
@@ -362,6 +347,7 @@ export default applyMiddleware(
           teammateAccounts,
           missionTrophiesCompleted: missionTrophyNames.length,
         });
+        allTrophiesProgress.push({ trophyName: trophy.name, progress: result });
         const { progress } =
           typeof result === 'number' ? { progress: result } : result;
 
@@ -380,6 +366,25 @@ export default applyMiddleware(
           championId: participant.championId,
           obtained,
         });
+      });
+
+      await addHistoryMatch({
+        accountId: account._id,
+        gameId: match.gameId,
+        championId: participant.championId,
+        win: participant.stats.win,
+        queueId: match.queueId,
+        gameDuration: match.gameDuration,
+        gameCreatedAt: new Date(match.gameCreation),
+        trophyNames: completedTrophyNames,
+        allTrophiesProgress,
+      });
+
+      res.json({
+        trophyNames: completedTrophyNames,
+        unlockedIslandNames: unlockedIslandNames,
+        missionTrophyNames,
+        allTrophiesProgress,
       });
     } finally {
       activeChecks.splice(activeChecks.indexOf(authToken), 1);

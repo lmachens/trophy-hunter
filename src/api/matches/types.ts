@@ -1,3 +1,13 @@
+export type TrophyProgress = {
+  trophyName: string;
+  progress:
+    | {
+        progress: number;
+        details: any;
+      }
+    | number;
+};
+
 export type HistoryMatch = {
   accountId: string;
   gameId: number;
@@ -7,4 +17,5 @@ export type HistoryMatch = {
   gameDuration: number;
   gameCreatedAt: Date;
   trophyNames: string[];
+  allTrophiesProgress: TrophyProgress[];
 };

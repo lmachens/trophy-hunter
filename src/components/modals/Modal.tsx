@@ -6,7 +6,7 @@ import Checkbox from '../common/Checkbox';
 import FancyButton from '../common/FancyButton';
 
 const Container = styled.div`
-  width: 500px;
+  width: 600px;
   height: 451px;
   background: #3f3e43;
   position: relative;

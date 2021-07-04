@@ -105,6 +105,11 @@ const GlobalStyles = () => (
       details {
         margin: 4px 0px;
       }
+
+      strong {
+        font-weight: normal;
+        font-style: italic;
+      }
     `}
   />
 );

@@ -11,6 +11,7 @@ import TrophyList from '../trophies/TrophyList';
 import * as trophies from '../trophies';
 import { useAccount } from '../../contexts/account';
 import { apiEndoint } from '../../api/utils/runtime';
+import MatchStats from '../matches/MatchStats';
 
 type Props = {
   match?: HistoryMatch;
@@ -160,11 +161,9 @@ const Match = ({ match }: Props) => {
           <TrophyIcons trophyNames={match.trophyNames} />
         </div>
       )}
-      {match?.trophyNames.length > 0 && (
-        <MoreButton onClick={() => setOpen(!open)}>
-          {open ? <ArrowRight /> : <ArrowLeft />}
-        </MoreButton>
-      )}
+      <MoreButton onClick={() => setOpen(!open)}>
+        {open ? <ArrowRight /> : <ArrowLeft />}
+      </MoreButton>
       {open && match && (
         <Details>
           {match.trophyNames.map((trophyName) => (
@@ -174,6 +173,12 @@ const Match = ({ match }: Props) => {
               key={trophyName}
             />
           ))}
+          {!match.allTrophiesProgress && (
+            <strong>Stats are available since v2.21.0</strong>
+          )}
+          {match.allTrophiesProgress && (
+            <MatchStats allTrophiesProgress={match.allTrophiesProgress} />
+          )}
         </Details>
       )}
     </Container>

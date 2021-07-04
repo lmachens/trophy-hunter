@@ -1,6 +1,7 @@
 import { Account, Credential, Ranking, SeasonAccount } from './types';
 import { postJSON, getJSON } from '../utils/request';
 import { log } from '../logs';
+import { TrophyProgress } from '../matches';
 export * from './types';
 
 export const postLogin = (credential: Credential) => {
@@ -23,6 +24,7 @@ export const postCheck = (matchId: number) => {
     trophyNames: string[];
     unlockedIslandNames: string[];
     missionTrophyNames: string[];
+    allTrophiesProgress: TrophyProgress[];
   }>('/api/check', { matchId });
 };
 
